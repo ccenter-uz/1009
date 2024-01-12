@@ -1,13 +1,13 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import { toast } from 'react-toastify'
-import { getCookie } from '../service/helper'
 
 export const api = axios.create({ baseURL: 'https://example.uz/' })
 
 // Interceptor for all api request
 api.interceptors.request.use(
   function (config) {
-    const token = getCookie('access_token')
+    const token = Cookies.get('access_token')
     config.headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',

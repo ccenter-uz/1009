@@ -2,7 +2,10 @@ import { NextIntlClientProvider, useMessages } from 'next-intl'
 import { Metadata } from 'next'
 import { MainContext } from '@/@core/service/context/main'
 import { ToastContainer } from 'react-toastify'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProviders } from '@/lib/chakraProvider'
+import Footer from '@/@core/components/footer'
+import '@/@core/style/global.css'
+import Header from '@/@core/components/header'
 
 export const metadata: Metadata = {
   title: 'Contact-center',
@@ -16,9 +19,15 @@ const RootLayout = ({ children, params: { locale } }: { children: React.ReactNod
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <ChakraProvider>
-            <MainContext>{children}</MainContext>
-          </ChakraProvider>
+          <ChakraProviders>
+            <MainContext>
+              <main className='wrapper'>
+                <Header />
+                {children}
+                <Footer />
+              </main>
+            </MainContext>
+          </ChakraProviders>
         </NextIntlClientProvider>
         <ToastContainer />
       </body>

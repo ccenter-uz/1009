@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { useLang } from '@/@core/service/hooks/useLang'
+import './style.scss'
 
 const Footer: FC = () => {
   const { t } = useLang()

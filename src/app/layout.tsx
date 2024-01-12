@@ -1,4 +1,3 @@
-import '@/@core/style/global.css'
 import { ReactNode } from 'react'
 // style for toast
 import 'react-toastify/dist/ReactToastify.min.css'
