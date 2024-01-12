@@ -20,7 +20,7 @@ const RootLayout = ({ children, params: { locale } }: { children: React.ReactNod
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ChakraProviders>
             <MainContext>
-              <main className='wrapper'>
+              <main>
                 <Header />
                 {children}
                 <Footer />

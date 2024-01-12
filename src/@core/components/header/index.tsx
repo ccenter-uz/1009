@@ -4,14 +4,13 @@ import { Box, Divider, Flex, Heading, Image, List, ListItem, useColorMode } from
 import './style.scss'
 import Link from 'next/link'
 import { defaultLinks } from '@/@core/service/helpers/links'
-import ButtonGen from '../reusable/Button'
 
 const Header: FC = () => {
   const { colorMode, toggleColorMode } = useColorMode()
 
   return (
-    <nav className='header'>
-      <Flex py={'39px'} justifyContent={'space-between'} alignItems={'center'}>
+    <nav className='header wrapper'>
+      <Flex pt={'39px'} justifyContent={'space-between'} alignItems={'center'}>
         <Box w={'100%'}>
           <Heading>LOGO</Heading>
         </Box>
@@ -57,7 +56,6 @@ const Header: FC = () => {
           </Box>
         </Box>
       </Flex>
-      <ButtonGen>click me</ButtonGen>
     </nav>
   )
 }
