@@ -4,7 +4,6 @@ import { MainContext } from '@/@core/service/context/main'
 import { ToastContainer } from 'react-toastify'
 import { ChakraProviders } from '@/lib/chakraProvider'
 import Footer from '@/@core/components/footer'
-import '@/@core/style/global.css'
 import Header from '@/@core/components/header'
 
 export const metadata: Metadata = {
