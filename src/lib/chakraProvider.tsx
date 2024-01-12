@@ -1,5 +1,6 @@
 'use client'
 
+import { colorTheme } from '@/@core/service/helpers/colorTheme'
 import theme from '@/@core/service/helpers/theme'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'

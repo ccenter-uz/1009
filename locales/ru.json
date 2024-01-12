@@ -1,3 +1,7 @@
 {
-  "NOT_FOUND": "Страница не найдено !"
+  "NOT_FOUND": "Страница не найдено !",
+  "hero-left-title": "Информационный центр Республики Узбекистан",
+  "hero-left-p": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. ",
+  "search-btn": "Поиск",
+  "search-placeholder": "Поиск информации"
 }
