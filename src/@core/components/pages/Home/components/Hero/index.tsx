@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, SimpleGrid, Text } from '@chakra-ui/react'
+import { Box, Heading, SimpleGrid, Text, useColorMode } from '@chakra-ui/react'
 import './style.scss'
 import { FC } from 'react'
 import { useLang } from '@/@core/service/hooks/useLang'
