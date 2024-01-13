@@ -1,3 +1,4 @@
+import { scssVariables } from '@/@core/utils/scss-variables'
 import { extendTheme } from '@chakra-ui/react'
 
 const theme = extendTheme({
@@ -9,7 +10,8 @@ const theme = extendTheme({
   styles: {
     global: (props: any) => ({
       body: {
-        bg: props.colorMode === 'dark' ? 'darkMode.background' : 'white'
+        bg: props.colorMode === 'dark' ? 'darkMode.background' : 'white',
+        fontFamily: 'inherit'
       }
     })
   },

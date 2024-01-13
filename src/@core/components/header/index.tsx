@@ -33,7 +33,7 @@ const Header: FC = () => {
                 cursor={'pointer'}
                 _hover={{ opacity: '0.8' }}
                 transition={'all 0.3s ease'}
-                src='/assets/header/dark-mode.svg'
+                src='/header/dark-mode.svg'
                 alt='moon'
                 onClick={toggleColorMode}
               />
@@ -42,7 +42,7 @@ const Header: FC = () => {
                 cursor={'pointer'}
                 _hover={{ opacity: '0.8' }}
                 transition={'all 0.3s ease'}
-                src='/assets/header/light-mode.svg'
+                src='/header/light-mode.svg'
                 alt='moon'
                 onClick={toggleColorMode}
               />
@@ -52,7 +52,7 @@ const Header: FC = () => {
           <Box>Uz</Box>
           <Divider orientation='vertical' />
           <Box>
-            <Image src='/assets/header/user.svg' alt='user' />
+            <Image src='/header/user.svg' alt='user' />
           </Box>
         </Box>
       </Flex>
