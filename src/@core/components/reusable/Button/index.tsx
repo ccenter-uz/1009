@@ -3,9 +3,9 @@ import { FC, ReactNode } from 'react'
 
 type IButtonGen = {
   children: string | ReactNode
-  width: string
-  height: string
-  radius: string
+  width: string | ButtonProps
+  height: string | ButtonProps
+  radius: string | { base: string; sm: string; md: string; xl: string }
   props: ButtonProps
 }
 

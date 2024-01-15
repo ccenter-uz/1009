@@ -14,22 +14,22 @@ const Footer: FC = () => {
     <footer className='wrapper'>
       <SimpleGrid
         columns={{ sm: 1, md: 3, xl: 4 }}
-        gap={{ base: '8px', sm: '10px', md: '15px', xl: '24px' }}
-        pt={'60px'}
+        gap={{ base: '15px', sm: '15px', md: '20px', xl: '24px' }}
+        pt={{ base: '48px', sm: '48px', md: '62px', xl: '62px' }}
         marginBottom={{ base: '40px', sm: '40px', md: '80px', xl: '130px' }}
       >
         <Box
           display={'flex'}
           alignItems={{ base: 'center', sm: 'center', md: 'flex-start', xl: 'flex-start' }}
           flexDirection={'column'}
-          gap={{ base: '10px', sm: '15px', md: '20px', xl: '24px' }}
+          gap={{ base: '15px', sm: '15px', md: '20px', xl: '24px' }}
         >
           <Link href={'#'}>
             <Heading>Logo</Heading>
           </Link>
           <Link href={'#'}>
             <Text
-              fontSize={{ base: '18px', sm: '', md: '', xl: '' }}
+              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-phone')}
@@ -37,7 +37,7 @@ const Footer: FC = () => {
           </Link>
           <Link href={'#'}>
             <Text
-              fontSize={{ base: '18px', sm: '', md: '', xl: '' }}
+              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-email')}
@@ -48,11 +48,11 @@ const Footer: FC = () => {
           display={'flex'}
           alignItems={{ base: 'center', sm: 'center', md: 'center', xl: 'flex-start' }}
           flexDirection={'column'}
-          gap={{ base: '10px', sm: '15px', md: '20px', xl: '24px' }}
+          gap={{ base: '15px', sm: '15px', md: '20px', xl: '24px' }}
         >
           <Link href={'#'}>
             <Text
-              fontSize={{ base: '18px', sm: '', md: '', xl: '' }}
+              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-opportunity')}
@@ -60,7 +60,7 @@ const Footer: FC = () => {
           </Link>
           <Link href={'#'}>
             <Text
-              fontSize={{ base: '18px', sm: '', md: '', xl: '' }}
+              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-tarif')}
@@ -71,11 +71,11 @@ const Footer: FC = () => {
           display={'flex'}
           alignItems={{ base: 'center', sm: 'center', md: 'flex-end', xl: 'flex-start' }}
           flexDirection={'column'}
-          gap={{ base: '10px', sm: '15px', md: '20px', xl: '24px' }}
+          gap={{ base: '15px', sm: '15px', md: '20px', xl: '24px' }}
         >
           <Link href={'#'}>
             <Text
-              fontSize={{ base: '18px', sm: '', md: '', xl: '' }}
+              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-add-organization')}
@@ -83,7 +83,7 @@ const Footer: FC = () => {
           </Link>
           <Link href={'#'}>
             <Text
-              fontSize={{ base: '18px', sm: '', md: '', xl: '' }}
+              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-help')}
@@ -94,11 +94,11 @@ const Footer: FC = () => {
           display={'flex'}
           alignItems={{ base: 'center', sm: 'center', md: 'flex-start', xl: 'flex-end' }}
           flexDirection={'column'}
-          gap={{ base: '10px', sm: '15px', md: '20px', xl: '24px' }}
+          gap={{ base: '24px', sm: '24px', md: '24px', xl: '24px' }}
         >
           <Link href={'#'}>
             <Text
-              fontSize={{ base: '18px', sm: '', md: '', xl: '' }}
+              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-follow')}
@@ -110,6 +110,7 @@ const Footer: FC = () => {
             borderRadius={'6px'}
             height={'50px'}
             rightWidth='50px'
+            fontSize={{ base: '14px', sm: '14px', md: '14px', xl: '16px' }}
             button={
               <Button
                 _hover={{ opacity: '0.8' }}

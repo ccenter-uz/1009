@@ -2,9 +2,9 @@ import { Input, InputGroup, InputProps, InputRightElement } from '@chakra-ui/rea
 import { FC, ReactNode } from 'react'
 
 type Iinput = {
-  width: string
+  width: string | InputProps
   button: ReactNode | null
-  rightWidth: string | '100px'
+  rightWidth: string | '100px' | any
 }
 
 const InputGen: FC<Partial<Iinput & InputProps>> = ({ button = null, rightWidth, width, ...props }) => {

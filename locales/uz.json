@@ -13,5 +13,17 @@
   "footer-your-email": "Sizning e-mailingiz",
   "footer-license": "© 2024  •  Xizmatlar litsenziyalangan",
   "footer-phone": "+1 (7635) 547-12-97",
-  "footer-email": "support@lift.tghdhy"
+  "footer-email": "support@lift.tghdhy",
+  "instruction-title": "Foydalanish bo'yicha video qo'llanma",
+  "tariffs": "Tariflar",
+  "tariffs-pre-title": "Bir dona ma'lumot uchun",
+  "tariffs-btn": "Sotib olish",
+  "add-organization": "Tashkilot qo'shish",
+  "partner-title": "Hamkorlar",
+  "question-title": "Savollar bormi?",
+  "question-callback": "Aloqa markaziga murojat qiling",
+  "question-p": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.",
+  "question-leed": "Yoki raqamingizni qoldiring, biz bog'lanamiz",
+  "question-input-placeholder": "Raqamingizni kiriting",
+  "send-btn": "Yuborish"
 }
