@@ -142,23 +142,23 @@ const Footer: FC = () => {
         >
           <Link href='/'>
             {colorMode === 'light' ? (
-              <Image src='/facebook.svg' alt='facebook img' />
+              <Image src='/footer/facebook.svg' alt='facebook img' />
             ) : (
-              <Image src='/facebook-white.svg' alt='facebook img' />
+              <Image src='/footer/facebook-white.svg' alt='facebook img' />
             )}
           </Link>
           <Link href='/'>
             {colorMode === 'light' ? (
-              <Image src='/instagram.svg' alt='facebook img' />
+              <Image src='/footer/instagram.svg' alt='facebook img' />
             ) : (
-              <Image src='/instagram-white.svg' alt='facebook img' />
+              <Image src='/footer/instagram-white.svg' alt='facebook img' />
             )}
           </Link>
           <Link href='/'>
             {colorMode === 'light' ? (
-              <Image src='/telegram.svg' alt='facebook img' />
+              <Image src='/footer/telegram.svg' alt='facebook img' />
             ) : (
-              <Image src='/telegram-white.svg' alt='facebook img' />
+              <Image src='/footer/telegram-white.svg' alt='facebook img' />
             )}
           </Link>
         </Box>
@@ -174,15 +174,15 @@ const Footer: FC = () => {
           gap={'30px'}
         >
           {colorMode === 'light' ? (
-            <Image src='/qms.svg' alt='certified qms img' />
+            <Image src='/footer/qms.svg' alt='certified qms img' />
           ) : (
-            <Image src='/qms-white.svg' alt='certified qms img' />
+            <Image src='/footer/qms-white.svg' alt='certified qms img' />
           )}
 
           {colorMode === 'light' ? (
-            <Image src='/iso.svg' alt='iso img' />
+            <Image src='/footer/iso.svg' alt='iso img' />
           ) : (
-            <Image src='/iso-white.svg' alt='iso img' />
+            <Image src='/footer/iso-white.svg' alt='iso img' />
           )}
         </Box>
       </SimpleGrid>

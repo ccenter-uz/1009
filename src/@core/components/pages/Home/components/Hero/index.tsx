@@ -1,8 +1,30 @@
-import { Box, Heading, SimpleGrid, Text, useColorMode } from '@chakra-ui/react'
-import './style.scss'
+import { Box, Heading, SimpleGrid, Text } from '@chakra-ui/react'
 import { FC } from 'react'
 import { useLang } from '@/@core/service/hooks/useLang'
-import { scssVariables } from '@/@core/utils/scss-variables'
+import HeroCard from '@/@core/components/reusable/HeroCard'
+
+const heroCards = [
+  {
+    id: 1,
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.',
+    image: '/hero/card-1.svg'
+  },
+  {
+    id: 2,
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.',
+    image: '/hero/card-2.svg'
+  },
+  {
+    id: 3,
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.',
+    image: '/hero/card-3.svg'
+  },
+  {
+    id: 4,
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.',
+    image: '/hero/card-1.svg'
+  }
+]
 
 const Hero: FC = () => {
   const { t } = useLang()
@@ -33,54 +55,13 @@ const Hero: FC = () => {
           </Text>
         </Box>
         <SimpleGrid w={'100%'} columns={{ base: 2, sm: 2, md: 2, xl: 2 }} gap={'25px'} justifyContent={'center'}>
-          <Box
-            w={scssVariables.cardHeader.w}
-            h={scssVariables.cardHeader.h}
-            borderRadius={'15px'}
-            display={'flex'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            border={'1px solid red'}
-            boxShadow={'0px 6.914663791656494px 27.658655166625977px 0px #A08ED733'}
-          >
-            1
-          </Box>
-          <Box
-            w={scssVariables.cardHeader.w}
-            h={scssVariables.cardHeader.h}
-            borderRadius={'15px'}
-            display={'flex'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            border={'1px solid red'}
-            boxShadow={'0px 6.914663791656494px 27.658655166625977px 0px #A08ED733'}
-          >
-            2
-          </Box>
-          <Box
-            w={scssVariables.cardHeader.w}
-            h={scssVariables.cardHeader.h}
-            borderRadius={'15px'}
-            display={'flex'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            border={'1px solid red'}
-            boxShadow={'0px 6.914663791656494px 27.658655166625977px 0px #A08ED733'}
-          >
-            3
-          </Box>
-          <Box
-            w={scssVariables.cardHeader.w}
-            h={scssVariables.cardHeader.h}
-            display={'flex'}
-            borderRadius={'15px'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            border={'1px solid red'}
-            boxShadow={'0px 6.914663791656494px 27.658655166625977px 0px #A08ED733'}
-          >
-            4
-          </Box>
+          {heroCards.map((card: { id: number; text: string; image: string }) => {
+            return (
+              <Box key={card.id}>
+                <HeroCard text={card.text} image={card.image} />
+              </Box>
+            )
+          })}
         </SimpleGrid>
       </SimpleGrid>
     </section>

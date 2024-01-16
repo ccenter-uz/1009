@@ -1,8 +1,44 @@
 'use client'
+import PartnerCard from '@/@core/components/reusable/PartnerCard'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Box, Heading, SimpleGrid, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
+
+const PartnersItem = [
+  {
+    id: 1,
+    image: '/partners/airbnb.png'
+  },
+  {
+    id: 2,
+    image: '/partners/google.png'
+  },
+  {
+    id: 3,
+    image: '/partners/microsoft.png'
+  },
+  {
+    id: 4,
+    image: '/partners/oyo.png'
+  },
+  {
+    id: 5,
+    image: '/partners/fedex.png'
+  },
+  {
+    id: 6,
+    image: '/partners/amazon.png'
+  },
+  {
+    id: 7,
+    image: '/partners/ola.png'
+  },
+  {
+    id: 8,
+    image: '/partners/walmart.png'
+  }
+]
 
 const Partners: FC = () => {
   const { t } = useLang()
@@ -13,7 +49,8 @@ const Partners: FC = () => {
       display={'flex'}
       flexDirection={'column'}
       justifyContent={'space-between'}
-      h={{ base: '200px', sm: '200px', md: '257px', xl: '357px' }}
+      minH={{ base: '200px', sm: '200px', md: '257px', xl: '357px' }}
+      h={'100%'}
       mt={{ base: '38px', sm: '38px', md: '60px', xl: '71px' }}
     >
       <Heading
@@ -24,83 +61,21 @@ const Partners: FC = () => {
       >
         {t('partner-title')}
       </Heading>
-      <SimpleGrid
+      <Box
         bg={colorMode === 'dark' ? scssVariables.darkBg : '#fff'}
-        overflow={'hidden'}
+        width={'100%'}
+        minHeight={'246px'}
+        display={'flex'}
         alignItems={'center'}
-        columns={6}
-        w={'100%'}
-        height={'246px'}
-        gap={'0 48px'}
+        flexWrap={'wrap'}
+        justifyContent={'center'}
+        gap={'20px 48px'}
         px={'24px'}
       >
-        <Box
-          m={'auto'}
-          w={{ base: '85px', sm: '85px', md: '150px', xl: '170px' }}
-          h={{ base: '48px', sm: '48px', md: '86px', xl: '96px' }}
-          borderRadius={'9px'}
-          bg={'#fff'}
-          color={'#000'}
-          boxShadow={scssVariables.boxShadowPartnerBox}
-        >
-          1
-        </Box>
-        <Box
-          m={'auto'}
-          w={{ base: '85px', sm: '85px', md: '150px', xl: '170px' }}
-          h={{ base: '48px', sm: '48px', md: '86px', xl: '96px' }}
-          borderRadius={'9px'}
-          bg={'#fff'}
-          color={'#000'}
-          boxShadow={scssVariables.boxShadowPartnerBox}
-        >
-          2
-        </Box>
-        <Box
-          m={'auto'}
-          w={{ base: '85px', sm: '85px', md: '150px', xl: '170px' }}
-          h={{ base: '48px', sm: '48px', md: '86px', xl: '96px' }}
-          borderRadius={'9px'}
-          bg={'#fff'}
-          color={'#000'}
-          boxShadow={scssVariables.boxShadowPartnerBox}
-        >
-          3
-        </Box>
-        <Box
-          m={'auto'}
-          w={{ base: '85px', sm: '85px', md: '150px', xl: '170px' }}
-          h={{ base: '48px', sm: '48px', md: '86px', xl: '96px' }}
-          borderRadius={'9px'}
-          bg={'#fff'}
-          color={'#000'}
-          boxShadow={scssVariables.boxShadowPartnerBox}
-        >
-          4
-        </Box>
-        <Box
-          m={'auto'}
-          w={{ base: '85px', sm: '85px', md: '150px', xl: '170px' }}
-          h={{ base: '48px', sm: '48px', md: '86px', xl: '96px' }}
-          borderRadius={'9px'}
-          bg={'#fff'}
-          color={'#000'}
-          boxShadow={scssVariables.boxShadowPartnerBox}
-        >
-          5
-        </Box>
-        <Box
-          m={'auto'}
-          w={{ base: '85px', sm: '85px', md: '150px', xl: '170px' }}
-          h={{ base: '48px', sm: '48px', md: '86px', xl: '96px' }}
-          borderRadius={'9px'}
-          bg={'#fff'}
-          color={'#000'}
-          boxShadow={scssVariables.boxShadowPartnerBox}
-        >
-          6
-        </Box>
-      </SimpleGrid>
+        {PartnersItem.map(card => {
+          return <PartnerCard key={card.id} image={card.image} />
+        })}
+      </Box>
     </Box>
   )
 }

@@ -1,7 +1,6 @@
 'use client'
 import InputGen from '@/@core/components/reusable/Input'
 import { Box, useColorMode } from '@chakra-ui/react'
-import './style.scss'
 import { FC } from 'react'
 import ButtonGen from '@/@core/components/reusable/Button'
 import { useLang } from '@/@core/service/hooks/useLang'

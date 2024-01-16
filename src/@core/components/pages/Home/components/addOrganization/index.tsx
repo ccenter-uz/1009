@@ -12,21 +12,33 @@ const AddOrganization: FC = () => {
   return (
     <Box
       display={'flex'}
-      flexWrap={'wrap-reverse'}
+      flexDirection={{ base: 'column', sm: 'column', md: 'column', xl: 'row' }}
       alignItems={'center'}
       position={'relative'}
-      minH={'469px'}
+      h={{ base: 'max-content', sm: 'max-content', md: 'max-content', xl: '469px' }}
       p={'16px 18px'}
       mt={{ base: '48px', sm: '48px', md: '', xl: '207px' }}
       bg={colorMode === 'dark' ? scssVariables.darkBg : scssVariables.mainColor}
       gap={{ base: '26px 0', sm: '26px 0', md: '50px 0', xl: '0 244px' }}
     >
-      <Box w={'100%'} maxW={'735px'} h={'100%'}>
-        <Image src='/addOrganization/picture.png' alt='girl-laptop' />
+      <Box
+        w={'100%'}
+        maxW={{ md: '100%', xl: '735px' }}
+        h={'100%'}
+        display={{ base: 'none', sm: 'none', md: 'none', xl: 'block' }}
+      >
+        <Image
+          src='/addOrganization/img.png'
+          alt='girl-laptop'
+          position={'absolute'}
+          top={{ md: '0', xl: '-7.3rem' }}
+          bottom={0}
+          left={0}
+        />
       </Box>
       <Box
         w={'100%'}
-        maxW={{ base: '100%', sm: '100%', md: '620px', xl: '620px' }}
+        maxW={{ base: '100%', sm: '100%', md: '80%', xl: '620px' }}
         h={'100%'}
         p={{ base: '', sm: '', md: '', xl: '40px 0' }}
         display={'flex'}
@@ -61,6 +73,16 @@ const AddOrganization: FC = () => {
         >
           {t('add-organization')}
         </ButtonGen>
+      </Box>
+      <Box w={'100%'} display={{ base: 'block', sm: 'block', md: 'block', xl: 'none' }}>
+        <Image
+          h={'100%'}
+          src='/addOrganization/picture-small.png'
+          alt='girl-laptop'
+          position={'relative'}
+          bottom={'-1rem'}
+          left={0}
+        />
       </Box>
     </Box>
   )

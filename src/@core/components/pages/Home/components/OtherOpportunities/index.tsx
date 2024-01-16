@@ -1,11 +1,53 @@
 import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
-import './style.scss'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
+import OpportunityCard, { IOpportunityCard } from '@/@core/components/reusable/OpportunitiesCard'
 
 const OtherOpportunities: FC = () => {
   const { t } = useLang()
+
+  const OpportunitiesCard: IOpportunityCard[] = useMemo(
+    () => [
+      {
+        id: 1,
+        title: t('opportunity-card-title-1'),
+        options: t('opportunity-card-text-1'),
+        image: '/opportunities/card-1.svg'
+      },
+      {
+        id: 2,
+        title: t('opportunity-card-title-2'),
+        options: t('opportunity-card-text-2'),
+        image: '/opportunities/card-2.svg'
+      },
+      {
+        id: 3,
+        title: t('opportunity-card-title-3'),
+        options: t('opportunity-card-text-3'),
+        image: '/opportunities/card-3.svg'
+      },
+      {
+        id: 4,
+        title: t('opportunity-card-title-4'),
+        options: t('opportunity-card-text-4'),
+        image: '/opportunities/card-4.svg'
+      },
+      {
+        id: 5,
+        title: t('opportunity-card-title-5'),
+        options: t('opportunity-card-text-5'),
+        image: '/opportunities/card-5.svg'
+      },
+      {
+        id: 6,
+        title: t('opportunity-card-title-6'),
+        options: t('opportunity-card-text-6'),
+        image: '/opportunities/card-6.svg'
+      }
+    ],
+    [t]
+  )
 
   return (
     <Box
@@ -23,66 +65,11 @@ const OtherOpportunities: FC = () => {
         {t('opportunities-heading')}
       </Heading>
       <SimpleGrid columns={{ base: 1, sm: 1, md: 1, xl: 2 }} gap={{ base: '16px', sm: '16px', md: '45px', xl: '45px' }}>
-        <Box
-          borderRadius={'15px'}
-          w={'100%'}
-          maxWidth={scssVariables.cardOpportunities.w}
-          height={scssVariables.cardOpportunities.h}
-          border={'1px solid red'}
-          margin={'0 auto'}
-        >
-          1
-        </Box>
-        <Box
-          borderRadius={'15px'}
-          w={'100%'}
-          maxWidth={scssVariables.cardOpportunities.w}
-          height={scssVariables.cardOpportunities.h}
-          border={'1px solid red'}
-          margin={'0 auto'}
-        >
-          2
-        </Box>
-        <Box
-          borderRadius={'15px'}
-          w={'100%'}
-          maxWidth={scssVariables.cardOpportunities.w}
-          height={scssVariables.cardOpportunities.h}
-          border={'1px solid red'}
-          margin={'0 auto'}
-        >
-          3
-        </Box>
-        <Box
-          borderRadius={'15px'}
-          w={'100%'}
-          maxWidth={scssVariables.cardOpportunities.w}
-          height={scssVariables.cardOpportunities.h}
-          border={'1px solid red'}
-          margin={'0 auto'}
-        >
-          4
-        </Box>
-        <Box
-          borderRadius={'15px'}
-          w={'100%'}
-          maxWidth={scssVariables.cardOpportunities.w}
-          height={scssVariables.cardOpportunities.h}
-          border={'1px solid red'}
-          margin={'0 auto'}
-        >
-          5
-        </Box>
-        <Box
-          borderRadius={'15px'}
-          w={'100%'}
-          maxWidth={scssVariables.cardOpportunities.w}
-          height={scssVariables.cardOpportunities.h}
-          border={'1px solid red'}
-          margin={'0 auto'}
-        >
-          6
-        </Box>
+        {OpportunitiesCard?.map((card: IOpportunityCard) => {
+          return (
+            <OpportunityCard key={card.id} id={card.id} title={card.title} options={card.options} image={card.image} />
+          )
+        })}
       </SimpleGrid>
     </Box>
   )
