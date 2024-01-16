@@ -1,18 +1,18 @@
-import { Button } from '@chakra-ui/react'
+import { Button, ButtonProps } from '@chakra-ui/react'
 import { FC, ReactNode } from 'react'
 
 type IButtonGen = {
   children: string | ReactNode
-  width: string
-  height: string
-  radius: string
-  onClick: () => void
+  width: string | ButtonProps
+  height: string | ButtonProps
+  radius: string | { base: string; sm: string; md: string; xl: string }
+  props: ButtonProps
 }
 
-const ButtonGen: FC<Partial<IButtonGen>> = ({ children, width, height, radius, onClick }) => {
+const ButtonGen: FC<Partial<IButtonGen & ButtonProps>> = ({ children, width, height, radius, ...props }) => {
   return (
     <Button
-      onClick={onClick}
+      {...props}
       color={'#fff'}
       borderRadius={radius || '51px'}
       width={width || '243px'}
