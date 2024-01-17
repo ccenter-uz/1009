@@ -17,7 +17,7 @@ const SearchPanel: FC = () => {
       alignItems={'center'}
       justifyContent={'center'}
       minH={{ base: 'max-content', sm: 'max-content', md: '250px', xl: '250px' }}
-      bg={colorMode === 'dark' ? scssVariables.darkBg : scssVariables.blockBgColor}
+      bg={colorMode === 'dark' ? scssVariables.gradientColor : scssVariables.blockBgColor}
     >
       <Box w={'100%'} m={'15px 0'} display={'flex'} alignItems={'center'} justifyContent={'center'} className='wrapper'>
         <InputGen

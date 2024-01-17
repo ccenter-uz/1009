@@ -17,10 +17,9 @@ const Header: FC = () => {
   }
 
   return (
-    <nav className='header wrapper'>
+    <nav className='wrapper'>
       <Flex
-        pt={{ base: '18px', sm: '18px', md: '39px', xl: '39px' }}
-        pb={'8px'}
+        pt={{ base: ' 18px', sm: '18px', md: '39px', xl: '39px' }}
         justifyContent={'space-between'}
         alignItems={'center'}
         borderBottom={{

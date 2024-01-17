@@ -2,7 +2,7 @@
 import ButtonGen from '@/@core/components/reusable/Button'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
-import { Box, Heading, Image, SimpleGrid, Text, useColorMode } from '@chakra-ui/react'
+import { Box, Heading, Image, Text, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
 
 const AddOrganization: FC = () => {
