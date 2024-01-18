@@ -11,6 +11,7 @@ const AddOrganization: FC = () => {
 
   return (
     <Box
+      className='wrapper'
       display={'flex'}
       flexDirection={{ base: 'column', sm: 'column', md: 'column', xl: 'row' }}
       alignItems={'center'}

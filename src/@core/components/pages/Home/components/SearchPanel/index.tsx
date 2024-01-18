@@ -12,6 +12,7 @@ const SearchPanel: FC = () => {
 
   return (
     <Box
+      className='wrapper'
       display={'flex'}
       flexDirection={'column'}
       alignItems={'center'}

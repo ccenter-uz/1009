@@ -46,6 +46,7 @@ const Partners: FC = () => {
 
   return (
     <Box
+      className='wrapper'
       display={'flex'}
       flexDirection={'column'}
       justifyContent={'space-between'}

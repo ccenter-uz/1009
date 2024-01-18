@@ -12,6 +12,7 @@ const Questionier: FC = () => {
 
   return (
     <Box
+      className='wrapper'
       height={{ base: '328px', sm: '328px', md: '827px', xl: '827px' }}
       bg={colorMode !== 'dark' ? scssVariables.questionBg : scssVariables.darkBg}
     >
