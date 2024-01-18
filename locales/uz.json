@@ -37,5 +37,20 @@
   "opportunity-card-text-3": "Quis vestibulum diam vitae eget dissd.",
   "opportunity-card-text-4": "Quis vestibulum diam vitae eget dissd.",
   "opportunity-card-text-5": "Hudud, viloyatlar ... ",
-  "opportunity-card-text-6": "Quis vestibulum diam vitae eget dissd."
+  "opportunity-card-text-6": "Quis vestibulum diam vitae eget dissd.",
+  "auth-regis-title": "Ro'yxatdan o'tish",
+  "auth-sign-title": "Akkauntga kirish",
+  "auth-already-exists": "Ro'yxatdan o'tganmisiz?",
+  "auth-login": "Kirish",
+  "auth-regis": "Ro'yxatdan o'tish",
+  "auth-phone": "Telefon raqam",
+  "auth-password": "Parolni kiriting",
+  "auth-submit": "Tasdiqlash",
+  "auth-regis-fio": "F.I.Sh",
+  "auth-create-password": "Parol o'ylab toping",
+  "auth-check-number": "Kodni tasdiqlang",
+  "auth-or": "Yoki",
+  "auth-google": "Google orqali ro'yxatdan o'tish",
+  "auth-telegram": "Telegram orqali ro'yxatdan o'tish",
+  "auth-password-confirm": "Parolni tasdiqlang"
 }

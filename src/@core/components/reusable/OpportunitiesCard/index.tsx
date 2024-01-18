@@ -21,6 +21,7 @@ const OpportunityCard: FC<IOpportunityCard> = ({ title, options, image }) => {
       maxWidth={scssVariables.cardOpportunities.w}
       height={scssVariables.cardOpportunities.h}
       boxShadow={scssVariables.boxShadowPartnerBox}
+      border={'1px solid #eeecec'}
       margin={'0 auto'}
       display={'flex'}
       alignItems={'center'}

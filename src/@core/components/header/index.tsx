@@ -1,26 +1,38 @@
 'use client'
 import { FC, startTransition, useState } from 'react'
-import { Box, Divider, Flex, Heading, Image, List, ListItem, useColorMode } from '@chakra-ui/react'
+import { Box, Divider, Flex, Heading, Image, List, ListItem, Text, useColorMode } from '@chakra-ui/react'
 import Link from 'next/link'
 import { defaultLinks } from '@/@core/service/helpers/links'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import MenuDrawer from './components/Drawer'
+import Auth from '../Auth'
+import { useAuth } from '@/@core/service/hooks/useAuth'
+import { useLang } from '@/@core/service/hooks/useLang'
 
 const Header: FC = () => {
+  const { t } = useLang()
   const { colorMode, toggleColorMode } = useColorMode()
   const [isOpen, setIsOpen] = useState<boolean>(false)
-
+  const [openAuth, setOpenAuth] = useState<boolean>(false)
+  const { isAuth } = useAuth()
+  // close drawer on mobile size
   const onClose = (): void => {
     startTransition(() => {
       setIsOpen(false)
     })
   }
 
+  // close auth modal
+  const onCloseAuth = (): void => {
+    startTransition(() => {
+      setOpenAuth(false)
+    })
+  }
+
   return (
-    <nav className='header wrapper'>
+    <nav className='wrapper'>
       <Flex
-        pt={{ base: '18px', sm: '18px', md: '39px', xl: '39px' }}
-        pb={'8px'}
+        pt={{ base: ' 18px', sm: '18px', md: '39px', xl: '39px' }}
         justifyContent={'space-between'}
         alignItems={'center'}
         borderBottom={{
@@ -91,13 +103,29 @@ const Header: FC = () => {
           <Divider display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} orientation='vertical' />
           <Box display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }}>Uz</Box>
           <Divider display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} orientation='vertical' />
-          <Box>
-            <Image src='/header/user.svg' alt='user' />
-          </Box>
+          {isAuth ? (
+            <Box cursor={'pointer'}>
+              <Image src='/header/user.svg' alt='user' />
+            </Box>
+          ) : (
+            <Box
+              border={colorMode === 'dark' ? '1px solid #fff' : `1px solid ${scssVariables.mainColor}`}
+              borderRadius={'20px'}
+              onClick={() => setOpenAuth(true)}
+              cursor={'pointer'}
+              p={'5px 15px'}
+              color={colorMode === 'dark' ? '#fff' : scssVariables.mainColor}
+              transition={'all 0.3s ease'}
+              _hover={{ bg: scssVariables.mainColor, color: '#fff' }}
+            >
+              <Text>{t('auth-login')}</Text>
+            </Box>
+          )}
         </Box>
       </Flex>
       {/* Menu Drawer */}
       <MenuDrawer isOpen={isOpen} onClose={onClose} />
+      <Auth isOpen={openAuth} onClose={onCloseAuth} />
     </nav>
   )
 }

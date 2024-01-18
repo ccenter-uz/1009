@@ -37,5 +37,20 @@
   "opportunity-card-text-3": "Quis vestibulum diam vitae eget dissd.",
   "opportunity-card-text-4": "Quis vestibulum diam vitae eget dissd.",
   "opportunity-card-text-5": "Районы, областы ... ",
-  "opportunity-card-text-6": "Quis vestibulum diam vitae eget dissd."
+  "opportunity-card-text-6": "Quis vestibulum diam vitae eget dissd.",
+  "auth-regis-title": "Регистрация",
+  "auth-sign-title": "Войти в Аккаунт",
+  "auth-already-exists": "Уже зарегистрированы?",
+  "auth-login": "Войти",
+  "auth-regis": "Регистрация",
+  "auth-phone": "Номер Телефона",
+  "auth-password": "Введите Пароль",
+  "auth-submit": "Подтвердить",
+  "auth-regis-fio": "Ф.И.О",
+  "auth-create-password": "Придумайте Пароль",
+  "auth-check-number": "Подтвердить Код",
+  "auth-or": "Или",
+  "auth-google": "Авторизация через Google",
+  "auth-telegram": "Авторизация через Telegram",
+  "auth-password-confirm": "Подтвердите пароль"
 }
