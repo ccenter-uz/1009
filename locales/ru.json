@@ -52,5 +52,8 @@
   "auth-or": "Или",
   "auth-google": "Авторизация через Google",
   "auth-telegram": "Авторизация через Telegram",
-  "auth-password-confirm": "Подтвердите пароль"
+  "auth-password-confirm": "Подтвердите пароль",
+  "back": "Назад",
+  "auth-rerecieve-code": "Получить код повторно",
+  "auth-not-recieved-code": "Не плучили код по SMS?"
 }

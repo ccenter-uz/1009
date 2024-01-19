@@ -52,5 +52,8 @@
   "auth-or": "Yoki",
   "auth-google": "Google orqali ro'yxatdan o'tish",
   "auth-telegram": "Telegram orqali ro'yxatdan o'tish",
-  "auth-password-confirm": "Parolni tasdiqlang"
+  "auth-password-confirm": "Parolni tasdiqlang",
+  "back": "Ortga",
+  "auth-rerecieve-code": "Kodni qayta olish",
+  "auth-not-recieved-code": "Kodni SMS orqali olmadingizmi?"
 }

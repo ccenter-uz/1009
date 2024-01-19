@@ -1,25 +1,35 @@
 import { useLang } from '@/@core/service/hooks/useLang'
-import { Box, Button, Divider, Fade, FormControl, FormLabel, Image, Text } from '@chakra-ui/react'
-import { FC, useState } from 'react'
+import { Box, Button, Divider, FormControl, FormLabel, Image, Text } from '@chakra-ui/react'
+import { FC } from 'react'
 import InputGen from '../../reusable/Input'
 import { Regis } from '@/@core/service/helpers/actions'
 import ButtonGen from '../../reusable/Button'
-import CheckNumber from './checkNumber'
 
 const SignUp: FC = () => {
   const { t } = useLang()
-  const [checkNumber, setCheckNumber] = useState<boolean>(false)
 
-  const handleSubmit = async (values: FormData) => {
-    const res = await Regis(values)
-    res && setCheckNumber(true)
+  const handleSubmit = async (e: any) => {
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const body = {
+      fio: formData.get('fio'),
+      phone: formData.get('phone'),
+      password: formData.get('password'),
+      confirm_password: formData.get('confirm-password')
+    }
+    sessionStorage.setItem('user', JSON.stringify(body))
   }
 
   return (
     <>
-      <form id={'form-regis'} action={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+      <form
+        id={'form-regis'}
+        action={Regis}
+        onSubmit={handleSubmit}
+        style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}
+      >
         <FormControl>
-          <FormLabel>{t('auth-regis-fio')}</FormLabel>
+          <FormLabel fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>{t('auth-regis-fio')}</FormLabel>
           <InputGen
             height={'35px'}
             bg={'#fff'}
@@ -72,7 +82,7 @@ const SignUp: FC = () => {
             rightWidth={'43px'}
             borderRadius={'2px'}
             button={<Image width={'15px'} src='/lock-fill.svg' alt='lock-icon' />}
-            name='password'
+            name='confirm-password'
             placeholder='***'
           />
         </FormControl>
@@ -89,11 +99,6 @@ const SignUp: FC = () => {
           {t('auth-submit')}
         </ButtonGen>
       </form>
-      <Fade in={checkNumber}>
-        <Box display={checkNumber ? 'block' : 'none'} mt={'18px'}>
-          <CheckNumber />
-        </Box>
-      </Fade>
       <Box my={'18px'} display={'flex'} alignItems={'center'}>
         <Divider colorScheme='gray' />
         <Text>{t('auth-or')}</Text>

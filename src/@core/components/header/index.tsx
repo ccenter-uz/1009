@@ -1,31 +1,22 @@
 'use client'
 import { FC, startTransition, useState } from 'react'
 import { Box, Divider, Flex, Heading, Image, List, ListItem, Text, useColorMode } from '@chakra-ui/react'
-import Link from 'next/link'
 import { defaultLinks } from '@/@core/service/helpers/links'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import MenuDrawer from './components/Drawer'
-import Auth from '../Auth'
 import { useAuth } from '@/@core/service/hooks/useAuth'
 import { useLang } from '@/@core/service/hooks/useLang'
+import { Link } from '@/navigation'
 
 const Header: FC = () => {
   const { t } = useLang()
   const { colorMode, toggleColorMode } = useColorMode()
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [openAuth, setOpenAuth] = useState<boolean>(false)
   const { isAuth } = useAuth()
   // close drawer on mobile size
   const onClose = (): void => {
     startTransition(() => {
       setIsOpen(false)
-    })
-  }
-
-  // close auth modal
-  const onCloseAuth = (): void => {
-    startTransition(() => {
-      setOpenAuth(false)
     })
   }
 
@@ -64,7 +55,7 @@ const Header: FC = () => {
             {defaultLinks?.map(link => {
               return (
                 <ListItem key={link.id}>
-                  <Link href={link.href}>{link.title}</Link>
+                  <Link href={link?.href}>{link.title}</Link>
                 </ListItem>
               )
             })}
@@ -111,21 +102,21 @@ const Header: FC = () => {
             <Box
               border={colorMode === 'dark' ? '1px solid #fff' : `1px solid ${scssVariables.mainColor}`}
               borderRadius={'20px'}
-              onClick={() => setOpenAuth(true)}
               cursor={'pointer'}
               p={'5px 15px'}
               color={colorMode === 'dark' ? '#fff' : scssVariables.mainColor}
               transition={'all 0.3s ease'}
               _hover={{ bg: scssVariables.mainColor, color: '#fff' }}
             >
-              <Text>{t('auth-login')}</Text>
+              <Link href={'/signup'}>
+                <Text>{t('auth-login')}</Text>
+              </Link>
             </Box>
           )}
         </Box>
       </Flex>
       {/* Menu Drawer */}
       <MenuDrawer isOpen={isOpen} onClose={onClose} />
-      <Auth isOpen={openAuth} onClose={onCloseAuth} />
     </nav>
   )
 }
