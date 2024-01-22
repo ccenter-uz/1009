@@ -18,7 +18,7 @@ const CheckNumbers: FC = () => {
       alignItems={'center'}
       w={{ base: '354px', sm: '354px', md: '768px', xl: '768px' }}
       m={' 2rem auto'}
-      h={{ base: '305px', sm: '305px', md: '465px', xl: '465px' }}
+      h={{ base: '413px', sm: '413px', md: '465px', xl: '465px' }}
       borderRadius={'15px'}
       boxShadow={scssVariables.boxShadow}
       p={{ base: '16px', sm: '16px', md: '24px', xl: '24px' }}
@@ -38,7 +38,7 @@ const CheckNumbers: FC = () => {
         </Box>
       </Link>
       <Heading
-        mb={'32px'}
+        mb={'24px'}
         textAlign={'center'}
         fontWeight={500}
         fontSize={{ base: '16px', sm: '16px', md: '22px', xl: '24px' }}

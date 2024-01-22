@@ -48,12 +48,13 @@
   "auth-submit": "Подтвердить",
   "auth-regis-fio": "Ф.И.О",
   "auth-create-password": "Придумайте Пароль",
-  "auth-check-number": "Подтвердить Код",
+  "auth-check-number": "Подтвердить СМС Код",
   "auth-or": "Или",
   "auth-google": "Авторизация через Google",
   "auth-telegram": "Авторизация через Telegram",
   "auth-password-confirm": "Подтвердите пароль",
   "back": "Назад",
   "auth-rerecieve-code": "Получить код повторно",
-  "auth-not-recieved-code": "Не плучили код по SMS?"
+  "auth-not-recieved-code": "Не получили код по SMS?",
+  "notificaton-number": "На этот номер отправлено СМС код с кодом подтверждения"
 }

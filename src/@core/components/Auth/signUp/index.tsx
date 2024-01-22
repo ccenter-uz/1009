@@ -4,11 +4,13 @@ import { FC } from 'react'
 import InputGen from '../../reusable/Input'
 import { Regis } from '@/@core/service/helpers/actions'
 import ButtonGen from '../../reusable/Button'
+import { useFormStatus } from 'react-dom'
 
 const SignUp: FC = () => {
   const { t } = useLang()
+  const { pending } = useFormStatus()
 
-  const handleSubmit = async (e: any) => {
+  const handleFinish = async (e: any) => {
     const form = e.currentTarget
     const formData = new FormData(form)
     const body = {
@@ -25,12 +27,13 @@ const SignUp: FC = () => {
       <form
         id={'form-regis'}
         action={Regis}
-        onSubmit={handleSubmit}
+        onSubmit={handleFinish}
         style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}
       >
         <FormControl>
           <FormLabel fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>{t('auth-regis-fio')}</FormLabel>
           <InputGen
+            isDisabled={pending}
             height={'35px'}
             bg={'#fff'}
             width={'264px'}
@@ -41,9 +44,10 @@ const SignUp: FC = () => {
             placeholder='Eshmatov Toshmat'
           />
         </FormControl>
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>{t('auth-phone')}</FormLabel>
           <InputGen
+            isDisabled={pending}
             height={'35px'}
             bg={'#fff'}
             width={'264px'}
@@ -54,11 +58,12 @@ const SignUp: FC = () => {
             placeholder='+99890 123 45 78'
           />
         </FormControl>
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>
             {t('auth-create-password')}
           </FormLabel>
           <InputGen
+            isDisabled={pending}
             height={'35px'}
             bg={'#fff'}
             type='password'
@@ -70,11 +75,12 @@ const SignUp: FC = () => {
             placeholder='***'
           />
         </FormControl>
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>
             {t('auth-password-confirm')}
           </FormLabel>
           <InputGen
+            isDisabled={pending}
             height={'35px'}
             bg={'#fff'}
             type='password'
@@ -88,6 +94,7 @@ const SignUp: FC = () => {
         </FormControl>
 
         <ButtonGen
+          isLoading={pending}
           form='form-regis'
           width={'264px'}
           radius={'5px'}

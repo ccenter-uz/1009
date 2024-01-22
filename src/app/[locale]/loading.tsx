@@ -3,7 +3,7 @@ import { FC } from 'react'
 const Loading: FC = () => {
   return (
     <section style={{ height: '100dvh' }}>
-      <h2>LOADING...</h2>
+      <h1>LOADING...</h1>
     </section>
   )
 }
