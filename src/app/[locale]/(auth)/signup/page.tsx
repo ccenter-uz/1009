@@ -1,9 +1,10 @@
 'use client'
 import SignUp from '@/@core/components/Auth/signUp'
+import BoxGen from '@/@core/components/reusable/Box'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Link } from '@/navigation'
-import { Box, Heading, Text, useColorMode } from '@chakra-ui/react'
+import { Heading, Text, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
 
 const Signup: FC = () => {
@@ -11,8 +12,7 @@ const Signup: FC = () => {
   const { colorMode } = useColorMode()
 
   return (
-    <Box
-      bg={colorMode === 'dark' ? scssVariables.darkBg : 'transparent'}
+    <BoxGen
       display={'flex'}
       flexDirection={'column'}
       alignItems={'center'}
@@ -43,7 +43,7 @@ const Signup: FC = () => {
           {t('auth-login')}
         </Link>
       </Text>
-    </Box>
+    </BoxGen>
   )
 }
 

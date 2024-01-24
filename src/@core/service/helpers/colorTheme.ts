@@ -1,4 +1,5 @@
-import { extendTheme } from '@chakra-ui/react'
+import { scssVariables } from '@/@core/utils/scss-variables'
+import { background, extendTheme } from '@chakra-ui/react'
 
 const theme = extendTheme({
   colors: {
@@ -8,11 +9,18 @@ const theme = extendTheme({
   },
   styles: {
     global: (props: any) => ({
+      html: {
+        scrollBehavior: 'smooth'
+      },
       body: {
         bg: props.colorMode === 'dark' ? 'darkMode.background' : 'white',
         fontFamily: 'inherit'
       }
     })
+  },
+  config: {
+    initialColorMode: 'system',
+    useSystemColorMode: true
   },
   components: {
     // Input

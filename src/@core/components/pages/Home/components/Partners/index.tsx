@@ -1,8 +1,8 @@
-'use client'
+import BoxGen from '@/@core/components/reusable/Box'
 import PartnerCard from '@/@core/components/reusable/PartnerCard'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
-import { Box, Heading, SimpleGrid, useColorMode } from '@chakra-ui/react'
+import { Box, Heading } from '@chakra-ui/react'
 import { FC } from 'react'
 
 const PartnersItem = [
@@ -42,7 +42,6 @@ const PartnersItem = [
 
 const Partners: FC = () => {
   const { t } = useLang()
-  const { colorMode } = useColorMode()
 
   return (
     <Box
@@ -62,21 +61,20 @@ const Partners: FC = () => {
       >
         {t('partner-title')}
       </Heading>
-      <Box
-        bg={colorMode === 'dark' ? scssVariables.darkBg : '#fff'}
+      <BoxGen
         width={'100%'}
         minHeight={'246px'}
         display={'flex'}
         alignItems={'center'}
         flexWrap={'wrap'}
         justifyContent={'center'}
-        gap={'20px 48px'}
+        gap={'20px 24px'}
         px={'24px'}
       >
         {PartnersItem.map(card => {
           return <PartnerCard key={card.id} image={card.image} />
         })}
-      </Box>
+      </BoxGen>
     </Box>
   )
 }

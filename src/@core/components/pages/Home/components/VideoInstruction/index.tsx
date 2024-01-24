@@ -1,20 +1,18 @@
-'use client'
+import BoxGen from '@/@core/components/reusable/Box'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
-import { Box, Heading, useColorMode } from '@chakra-ui/react'
+import { Box, Heading } from '@chakra-ui/react'
 import { FC } from 'react'
 
 const VideoInstruction: FC = () => {
   const { t } = useLang()
-  const { colorMode } = useColorMode()
 
   return (
-    <Box
+    <BoxGen
       className='wrapper'
       minH={{ base: '417px', sm: '417px', md: '817px', xl: '917px' }}
       h={'100%'}
       boxShadow={scssVariables.boxShadow}
-      bg={colorMode === 'dark' ? '#1B1D1C' : '#fff'}
     >
       <Box
         w={'100%'}
@@ -43,7 +41,7 @@ const VideoInstruction: FC = () => {
         mt={{ base: '30px', sm: '30px', md: '80px', xl: '123px' }}
         mx={'auto'}
       ></Box>
-    </Box>
+    </BoxGen>
   )
 }
 

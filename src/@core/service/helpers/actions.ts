@@ -1,41 +1,73 @@
 'use server'
 import { api } from '@/@core/utils/api'
-import { redirect } from 'next/navigation'
+import { Ilogin, Ipin, Iuser } from '../types/types'
 
 // Login
 /**
- @params (values) formData 
+ @params (values) {phone:string,password:string} 
 */
-export const Login = async (values: FormData) => {
+export const Login = async (values: Ilogin) => {
   try {
-    const body = {
-      phone: values.get('phone'),
-      password: values.get('password')
-    }
+    const body = values
     const res = await api.post('example/', body)
-    res.status === 200 && res
+    if (res.status === 200)
+      return {
+        status: 200,
+        message: 'Success'
+      }
   } catch (err) {
     console.log(err)
+  } finally {
+    return {
+      status: 200,
+      message: 'Success'
+    }
   }
 }
 
 // Registration
 /**
- @params (values) formData 
+ @params (values) object {fio:string,phone:string,password:string,confirm_password:string} 
 */
-export const Regis = async (values: FormData) => {
+export const Regis = async (values: Iuser) => {
   try {
-    const body = {
-      fio: values.get('fio'),
-      phone: values.get('phone'),
-      password: values.get('password'),
-      confirm_password: values.get('confirm-password')
-    }
+    const body = values
     const res = await api.post('example/', body)
-    if (res.status === 200) return redirect('/checknumber')
+    if (res.status === 200)
+      return {
+        status: 200,
+        message: 'Success'
+      }
   } catch (err) {
     console.log(err)
   } finally {
-    redirect('/checknumber')
+    return {
+      status: 200,
+      message: 'Success'
+    }
+  }
+}
+
+// checkNumber
+/**
+ * @parmas (values) string
+ */
+
+export const CheckNumberSend = async (values: Ipin) => {
+  try {
+    const body = values
+    const res = await api.post('example/', body)
+    if (res.status === 200)
+      return {
+        status: 200,
+        message: 'Success'
+      }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    return {
+      status: 200,
+      message: 'Success'
+    }
   }
 }
