@@ -1,5 +1,5 @@
 import { useLang } from '@/@core/service/hooks/useLang'
-import { Box, Button, FormControl, FormLabel, Image, Text } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormLabel, Img, Text } from '@chakra-ui/react'
 import { FC } from 'react'
 import InputGen from '../../reusable/Input'
 import { Regis } from '@/@core/service/helpers/actions'
@@ -54,7 +54,7 @@ const SignUp: FC = () => {
             width={'264px'}
             rightWidth={'43px'}
             borderRadius={'2px'}
-            button={<Image width={'15px'} src='/user-fill.svg' alt='user-icon' />}
+            button={<Img width={'15px'} src='/user-fill.svg' alt='user-icon' />}
             name='fio'
             placeholder='Eshmatov Toshmat'
           />
@@ -82,7 +82,7 @@ const SignUp: FC = () => {
             width={'264px'}
             rightWidth={'43px'}
             borderRadius={'2px'}
-            button={<Image width={'15px'} src='/phone-fill.svg' alt='phone-icon' />}
+            button={<Img width={'15px'} src='/phone-fill.svg' alt='phone-icon' />}
             name='phone'
             placeholder='+99890 123 45 78'
           />
@@ -111,7 +111,7 @@ const SignUp: FC = () => {
             width={'264px'}
             rightWidth={'43px'}
             borderRadius={'2px'}
-            button={<Image width={'15px'} src='/lock-fill.svg' alt='lock-icon' />}
+            button={<Img width={'15px'} src='/lock-fill.svg' alt='lock-icon' />}
             name='password'
             placeholder='***'
           />
@@ -144,7 +144,7 @@ const SignUp: FC = () => {
             width={'264px'}
             rightWidth={'43px'}
             borderRadius={'2px'}
-            button={<Image width={'15px'} src='/lock-fill.svg' alt='lock-icon' />}
+            button={<Img width={'15px'} src='/lock-fill.svg' alt='lock-icon' />}
             name='confirm_password'
             placeholder='***'
           />
@@ -179,7 +179,7 @@ const SignUp: FC = () => {
           w={'100%'}
           fontWeight={400}
           fontSize={'14px'}
-          leftIcon={<Image src='/google.svg' alt='google-auth' />}
+          leftIcon={<Img src='/google.svg' alt='google-auth' />}
         >
           {t('auth-google')}
         </Button>
@@ -189,7 +189,7 @@ const SignUp: FC = () => {
           w={'100%'}
           fontWeight={400}
           fontSize={'14px'}
-          leftIcon={<Image src='/telegram-fill.svg' alt='telegram-auth' />}
+          leftIcon={<Img src='/telegram-fill.svg' alt='telegram-auth' />}
         >
           {t('auth-telegram')}
         </Button>

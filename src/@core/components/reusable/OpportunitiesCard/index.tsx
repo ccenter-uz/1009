@@ -1,6 +1,6 @@
 'use client'
 import { scssVariables } from '@/@core/utils/scss-variables'
-import { Box, Heading, Image, Text, useColorMode } from '@chakra-ui/react'
+import { Box, Heading, Img, Text, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
 
 export type IOpportunityCard = {
@@ -15,7 +15,6 @@ const OpportunityCard: FC<IOpportunityCard> = ({ title, options, image }) => {
 
   return (
     <Box
-      role='card'
       borderRadius={'9px'}
       w={'100%'}
       maxWidth={scssVariables.cardOpportunities.w}
@@ -41,7 +40,7 @@ const OpportunityCard: FC<IOpportunityCard> = ({ title, options, image }) => {
         </Heading>
         <Text fontSize={{ base: '10px', sm: '10px', md: '16px', xl: '16px' }}>{options}</Text>
       </Box>
-      <Image
+      <Img
         src={image}
         alt='cards'
         w={{ base: '47px', sm: '47px', md: '76px', xl: '76px' }}

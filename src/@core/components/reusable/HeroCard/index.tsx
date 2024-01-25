@@ -1,5 +1,5 @@
 import { scssVariables } from '@/@core/utils/scss-variables'
-import { Box, Image, Text } from '@chakra-ui/react'
+import { Box, Img, Text } from '@chakra-ui/react'
 import { FC } from 'react'
 
 type IHeroCard = {
@@ -51,7 +51,7 @@ const HeroCard: FC<IHeroCard> = ({ text, image }) => {
           bg={'#C2E5E5'}
           zIndex={1}
         >
-          <Image src={image} alt='card-images' w={'70%'} height={'70%'} />
+          <Img src={image} alt='card-images' w={'70%'} height={'70%'} />
         </Box>
       </Box>
     </Box>

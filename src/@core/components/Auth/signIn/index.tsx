@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Image, Text } from '@chakra-ui/react'
+import { FormControl, FormLabel, Img, Text } from '@chakra-ui/react'
 import { FC } from 'react'
 import InputGen from '../../reusable/Input'
 import { useLang } from '@/@core/service/hooks/useLang'
@@ -42,7 +42,7 @@ const SignIn: FC = () => {
           width={'264px'}
           rightWidth={'43px'}
           borderRadius={'2px'}
-          button={<Image width={'15px'} src='/phone-fill.svg' alt='phone-icon' />}
+          button={<Img width={'15px'} src='/phone-fill.svg' alt='phone-icon' />}
           name='phone'
           placeholder='+99890 123 45 78'
         />
@@ -64,7 +64,7 @@ const SignIn: FC = () => {
           width={'264px'}
           rightWidth={'43px'}
           borderRadius={'2px'}
-          button={<Image width={'15px'} src='/lock-fill.svg' alt='lock-icon' />}
+          button={<Img width={'15px'} src='/lock-fill.svg' alt='lock-icon' />}
           name='password'
           placeholder='***'
         />

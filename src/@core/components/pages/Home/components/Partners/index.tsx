@@ -1,10 +1,12 @@
 import BoxGen from '@/@core/components/reusable/Box'
-import PartnerCard from '@/@core/components/reusable/PartnerCard'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Box, Heading } from '@chakra-ui/react'
+import dynamic from 'next/dynamic'
 import { FC } from 'react'
 
+// dynamic import
+const PartnerCard = dynamic(() => import('@/@core/components/reusable/PartnerCard'))
 const PartnersItem = [
   {
     id: 1,

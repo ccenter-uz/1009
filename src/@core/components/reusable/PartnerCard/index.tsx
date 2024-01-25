@@ -1,5 +1,5 @@
 import { scssVariables } from '@/@core/utils/scss-variables'
-import { Box, Image } from '@chakra-ui/react'
+import { Box, Img } from '@chakra-ui/react'
 import { FC } from 'react'
 
 type IPartnerCard = {
@@ -9,7 +9,6 @@ type IPartnerCard = {
 const PartnerCard: FC<IPartnerCard> = ({ image }) => {
   return (
     <Box
-      role='card'
       width={'170px'}
       height={'96px'}
       m={'auto'}
@@ -21,7 +20,7 @@ const PartnerCard: FC<IPartnerCard> = ({ image }) => {
       alignItems={'center'}
       justifyContent={'center'}
     >
-      <Image src={image} alt='image-partner' loading='lazy' objectFit={'contain'} />
+      <Img src={image} alt='image-partner' loading='lazy' objectFit={'contain'} />
     </Box>
   )
 }

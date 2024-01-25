@@ -10,7 +10,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Heading,
-  Image,
+  Img,
   List,
   ListItem,
   useColorMode
@@ -59,7 +59,7 @@ const MenuDrawer: FC<IMenuDrawer> = ({ isOpen, onClose }) => {
           </Heading>
           {colorMode === 'light' ? (
             <Box display={'flex'} justifyContent={'center'} alignItems={'center'} gap={'11px'}>
-              <Image
+              <Img
                 cursor={'pointer'}
                 _hover={{ opacity: '0.8' }}
                 transition={'all 0.3s ease'}
@@ -71,7 +71,7 @@ const MenuDrawer: FC<IMenuDrawer> = ({ isOpen, onClose }) => {
             </Box>
           ) : (
             <Box display={'flex'} justifyContent={'center'} alignItems={'center'} gap={'11px'}>
-              <Image
+              <Img
                 cursor={'pointer'}
                 _hover={{ opacity: '0.8' }}
                 transition={'all 0.3s ease'}

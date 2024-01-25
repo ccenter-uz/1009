@@ -1,8 +1,11 @@
-import TariffCard from '@/@core/components/reusable/TariffCard'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
+import dynamic from 'next/dynamic'
 import { FC } from 'react'
+
+// dynamic import
+const TariffCard = dynamic(() => import('@/@core/components/reusable/TariffCard'))
 
 const optionsCard = [
   {

@@ -2,9 +2,11 @@
 import InputGen from '@/@core/components/reusable/Input'
 import { Box, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
-import ButtonGen from '@/@core/components/reusable/Button'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
+import dynamic from 'next/dynamic'
+// dynamic import
+const ButtonGen = dynamic(() => import('@/@core/components/reusable/Button'))
 
 const SearchPanel: FC = () => {
   const { t } = useLang()
