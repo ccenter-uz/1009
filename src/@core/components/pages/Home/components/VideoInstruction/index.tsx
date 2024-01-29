@@ -13,6 +13,7 @@ const VideoInstruction: FC = () => {
       minH={{ base: '417px', sm: '417px', md: '817px', xl: '917px' }}
       h={'100%'}
       boxShadow={scssVariables.boxShadow}
+      id={'help'}
     >
       <Box
         w={'100%'}

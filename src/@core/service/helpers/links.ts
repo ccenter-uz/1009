@@ -3,22 +3,60 @@ export const defaultLinks = [
   {
     id: 1,
     title: 'Возможности',
-    href: '/'
+    href: '#',
+    subMenu: [
+      {
+        id: 11,
+        title: 'Развлечения',
+        href: '/opportunities/entertainment',
+        icon: ''
+      },
+      {
+        id: 12,
+        title: 'Коммунальные услуги',
+        href: '/opportunities/communal',
+        icon: ''
+      },
+      {
+        id: 13,
+        title: 'Номера и коды',
+        href: '/opportunities/numbersCodes',
+        icon: ''
+      },
+      {
+        id: 14,
+        title: 'Это надо знать!',
+        href: '/opportunities/needToKnow',
+        icon: ''
+      },
+      {
+        id: 15,
+        title: 'Информация о г. Ташкент',
+        href: '/opportunities/infoTashkent',
+        icon: ''
+      },
+      {
+        id: 16,
+        title: 'Информация о в. Ташкент ',
+        href: '/opportunities/infoTashVillage',
+        icon: ''
+      }
+    ]
   },
   {
     id: 2,
     title: 'Тарифы',
-    href: '/'
+    href: '/tarif'
   },
   {
     id: 3,
     title: 'Добавить Организацию',
-    href: '/'
+    href: '/organize'
   },
   {
     id: 4,
     title: 'Помощь',
-    href: '/'
+    href: '/#help'
   }
 ]
 // user links

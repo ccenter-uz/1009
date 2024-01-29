@@ -49,7 +49,7 @@ const MenuDrawer: FC<IMenuDrawer> = ({ isOpen, onClose }) => {
             {defaultLinks?.map(link => {
               return (
                 <ListItem key={link.id} fontSize={'14px'} m={'20px 0'} fontWeight={400}>
-                  <Link href={link.href}>{link.title}</Link>
+                  <Link href={link?.href}>{link.title}</Link>
                 </ListItem>
               )
             })}

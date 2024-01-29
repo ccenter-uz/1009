@@ -1,18 +1,34 @@
 'use client'
 import { FC, startTransition, useState } from 'react'
-import { Box, Divider, Flex, Heading, Img, List, ListItem, Text, useColorMode } from '@chakra-ui/react'
+import {
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  Img,
+  List,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+  useColorMode
+} from '@chakra-ui/react'
 import { defaultLinks } from '@/@core/service/helpers/links'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import MenuDrawer from './components/Drawer'
 import { useAuth } from '@/@core/service/hooks/useAuth'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { Link } from '@/navigation'
+import { usePathname } from 'next/navigation'
 
 const Header: FC = () => {
-  const { t } = useLang()
+  const { t, locale } = useLang()
   const { colorMode, toggleColorMode } = useColorMode()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const { isAuth } = useAuth()
+  const pathname = usePathname()
+
   // close drawer on mobile size
   const onClose = (): void => {
     startTransition(() => {
@@ -51,16 +67,27 @@ const Header: FC = () => {
             fontWeight={500}
             justifyContent={'space-between'}
           >
-            {/* default-links */}
-            {defaultLinks?.map(link => {
-              return (
-                <ListItem key={link.id}>
-                  <Link href={link?.href} aria-current='page'>
-                    {link.title}
-                  </Link>
-                </ListItem>
-              )
-            })}
+            {/* default Links */}
+            {defaultLinks.map(link => (
+              <Menu key={link.id}>
+                <Link href={link?.href} className={`${pathname == `/${locale}${link.href}` ? 'active' : ''}`}>
+                  <MenuButton>{link.title}</MenuButton>
+                </Link>
+                {link.subMenu && (
+                  <MenuList>
+                    {link.subMenu.map(menu => (
+                      <Link
+                        key={menu.id}
+                        href={menu.href}
+                        className={`${pathname == `/${locale}${menu.href}` ? 'active' : ''}`}
+                      >
+                        <MenuItem>{menu.title}</MenuItem>
+                      </Link>
+                    ))}
+                  </MenuList>
+                )}
+              </Menu>
+            ))}
           </List>
         </Box>
         {/* other-utilities */}
@@ -101,7 +128,7 @@ const Header: FC = () => {
               <Img src='/header/user.svg' alt='user' />
             </Box>
           ) : (
-            <Link href={'/signup'}>
+            <Link href={'/signup'} aria-current='page'>
               <Box
                 border={colorMode === 'dark' ? '1px solid #fff' : `1px solid ${scssVariables.mainColor}`}
                 borderRadius={'20px'}
