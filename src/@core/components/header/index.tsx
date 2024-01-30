@@ -58,7 +58,9 @@ const Header: FC = () => {
           textAlign={{ base: 'center', sm: 'center', md: 'left', xl: 'left' }}
           flex={{ base: 1, sm: 1, md: 0.5, xl: 1 }}
         >
-          <Heading fontWeight={600}>Logo</Heading>
+          <Heading fontWeight={600}>
+            <Link href={'/'}>Logo</Link>
+          </Heading>
         </Box>
         {/* links */}
         <Box flex={{ base: 0, sm: 0, md: 2, xl: 1.3 }}>

@@ -20,25 +20,25 @@ export const defaultLinks = [
       {
         id: 13,
         title: 'Номера и коды',
-        href: '/opportunities/numbersCodes',
+        href: '/opportunities/numbers-codes',
         icon: ''
       },
       {
         id: 14,
         title: 'Это надо знать!',
-        href: '/opportunities/needToKnow',
+        href: '/opportunities/need-to-know',
         icon: ''
       },
       {
         id: 15,
         title: 'Информация о г. Ташкент',
-        href: '/opportunities/infoTashkent',
+        href: '/opportunities/info-tashkent',
         icon: ''
       },
       {
         id: 16,
-        title: 'Информация о в. Ташкент ',
-        href: '/opportunities/infoTashVillage',
+        title: 'Информация о в. Ташкент',
+        href: '/opportunities/info-tash-village',
         icon: ''
       }
     ]
