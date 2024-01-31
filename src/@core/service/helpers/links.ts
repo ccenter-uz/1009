@@ -46,12 +46,12 @@ export const defaultLinks = [
   {
     id: 2,
     title: 'Тарифы',
-    href: '/tarif'
+    href: '/tariff'
   },
   {
     id: 3,
     title: 'Добавить Организацию',
-    href: '/organize'
+    href: '/add-organization'
   },
   {
     id: 4,

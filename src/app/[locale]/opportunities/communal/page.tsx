@@ -15,4 +15,4 @@ const Communal: FC<Props> = props => {
     </main>
   )
 }
-export default Communal
+export default Communal;
