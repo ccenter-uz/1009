@@ -1,7 +1,8 @@
 'use client'
 import { FC } from 'react'
-import { Box, Heading, Text, SimpleGrid, Img, useColorMode } from '@chakra-ui/react'
+import { Box, Heading, Text, SimpleGrid, Img, useColorMode, Divider } from '@chakra-ui/react'
 import ButtonGen from '../../reusable/Button'
+import BoxGen from '../../reusable/Box'
 
 type Props = {}
 
@@ -9,13 +10,8 @@ const TariffPage: FC<Props> = () => {
   const { colorMode } = useColorMode()
 
   return (
-    <Box className='wrapper'>
-      <Box
-        display={'flex'}
-        boxShadow='0px 20px 50px 0px rgba(0, 0, 0, 0.10)'
-        borderRadius='16px'
-        background={colorMode === 'dark' ? '#1B1D1C' : '#fff'}
-      >
+    <main id='tarif' className='wrapper' aria-current='page'>
+      <BoxGen display={'flex'} boxShadow='0px 20px 50px 0px rgba(0, 0, 0, 0.10)' borderRadius='16px'>
         <Box
           width={'25%'}
           background={colorMode === 'dark' ? '#fff' : '#C2E5E5'}
@@ -59,15 +55,14 @@ const TariffPage: FC<Props> = () => {
               <Text>Оплата за одну информацию</Text>
             </Box>
           </SimpleGrid>
-          <hr style={{ border: '1px solid #C7C3C3' }} />
-
+          <Divider />
           <ButtonGen radius='8px' width='238px' height='40px' float={'right'} margin={'13px 42px'}>
             Купить
           </ButtonGen>
         </Box>
-      </Box>
-    </Box>
+      </BoxGen>
+    </main>
   )
 }
 
-export default TariffPage;
+export default TariffPage
