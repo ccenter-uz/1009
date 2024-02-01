@@ -2,7 +2,10 @@ import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
 import { FC, useMemo } from 'react'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
-import OpportunityCard, { IOpportunityCard } from '@/@core/components/reusable/OpportunitiesCard'
+import { IOpportunityCard } from '@/@core/components/reusable/OpportunitiesCard'
+import dynamic from 'next/dynamic'
+// dynamic import
+const OpportunityCard = dynamic(() => import('@/@core/components/reusable/OpportunitiesCard'))
 
 const OtherOpportunities: FC = () => {
   const { t } = useLang()

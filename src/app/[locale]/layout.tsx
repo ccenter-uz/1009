@@ -13,8 +13,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Contact-center',
-  description: 'This is basic web app for Contact center'
+  title: '1009',
+  description: 'Information center Republic of Uzbekistan'
 }
 
 const RootLayout = ({ children, params: { locale } }: { children: React.ReactNode; params: any }) => {

@@ -3,7 +3,7 @@ import ButtonGen from '@/@core/components/reusable/Button'
 import InputGen from '@/@core/components/reusable/Input'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
-import { Box, Heading, Image, Text, useColorMode } from '@chakra-ui/react'
+import { Box, Heading, Img, Text, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
 
 const Questionier: FC = () => {
@@ -27,7 +27,7 @@ const Questionier: FC = () => {
           {t('question-title')}
         </Heading>
         <Box display={'flex'} alignItems={'center'} justifyContent={'space-around'} gap={'0 34px'}>
-          <Image
+          <Img
             w={{ base: '131px', sm: '131px', md: 'auto', xl: 'auto' }}
             h={{ base: '257px', sm: '257px', md: 'auto', xl: 'auto' }}
             src='/question/Mobile.png'

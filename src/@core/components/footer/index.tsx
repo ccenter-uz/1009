@@ -1,7 +1,7 @@
 'use client'
 import { FC } from 'react'
 import { useLang } from '@/@core/service/hooks/useLang'
-import { Box, Button, Heading, Image, SimpleGrid, Text, useColorMode } from '@chakra-ui/react'
+import { Box, Button, Heading, Img, SimpleGrid, Text, useColorMode } from '@chakra-ui/react'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Link } from '@/navigation'
 import InputGen from '../reusable/Input'
@@ -142,23 +142,23 @@ const Footer: FC = () => {
         >
           <Link href='/'>
             {colorMode === 'light' ? (
-              <Image src='/footer/facebook.svg' alt='facebook img' />
+              <Img src='/footer/facebook.svg' alt='facebook img' />
             ) : (
-              <Image src='/footer/facebook-white.svg' alt='facebook img' />
+              <Img src='/footer/facebook-white.svg' alt='facebook img' />
             )}
           </Link>
           <Link href='/'>
             {colorMode === 'light' ? (
-              <Image src='/footer/instagram.svg' alt='facebook img' />
+              <Img src='/footer/instagram.svg' alt='facebook img' />
             ) : (
-              <Image src='/footer/instagram-white.svg' alt='facebook img' />
+              <Img src='/footer/instagram-white.svg' alt='facebook img' />
             )}
           </Link>
           <Link href='/'>
             {colorMode === 'light' ? (
-              <Image src='/footer/telegram.svg' alt='facebook img' />
+              <Img src='/footer/telegram.svg' alt='facebook img' />
             ) : (
-              <Image src='/footer/telegram-white.svg' alt='facebook img' />
+              <Img src='/footer/telegram-white.svg' alt='facebook img' />
             )}
           </Link>
         </Box>
@@ -174,15 +174,15 @@ const Footer: FC = () => {
           gap={'30px'}
         >
           {colorMode === 'light' ? (
-            <Image src='/footer/qms.svg' alt='certified qms img' />
+            <Img src='/footer/qms.svg' alt='certified qms img' />
           ) : (
-            <Image src='/footer/qms-white.svg' alt='certified qms img' />
+            <Img src='/footer/qms-white.svg' alt='certified qms img' />
           )}
 
           {colorMode === 'light' ? (
-            <Image src='/footer/iso.svg' alt='iso img' />
+            <Img src='/footer/iso.svg' alt='iso img' />
           ) : (
-            <Image src='/footer/iso-white.svg' alt='iso img' />
+            <Img src='/footer/iso-white.svg' alt='iso img' />
           )}
         </Box>
       </SimpleGrid>

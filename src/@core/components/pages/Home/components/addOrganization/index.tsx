@@ -2,7 +2,7 @@
 import ButtonGen from '@/@core/components/reusable/Button'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
-import { Box, Heading, Image, Text, useColorMode } from '@chakra-ui/react'
+import { Box, Heading, Img, Text, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
 
 const AddOrganization: FC = () => {
@@ -28,7 +28,7 @@ const AddOrganization: FC = () => {
         h={'100%'}
         display={{ base: 'none', sm: 'none', md: 'none', xl: 'block' }}
       >
-        <Image
+        <Img
           src='/addOrganization/img.png'
           alt='girl-laptop'
           position={'absolute'}
@@ -76,7 +76,7 @@ const AddOrganization: FC = () => {
         </ButtonGen>
       </Box>
       <Box w={'100%'} display={{ base: 'block', sm: 'block', md: 'block', xl: 'none' }}>
-        <Image
+        <Img
           h={'100%'}
           src='/addOrganization/picture-small.png'
           alt='girl-laptop'

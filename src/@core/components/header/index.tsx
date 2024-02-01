@@ -1,31 +1,38 @@
 'use client'
 import { FC, startTransition, useState } from 'react'
-import { Box, Divider, Flex, Heading, Image, List, ListItem, Text, useColorMode } from '@chakra-ui/react'
-import Link from 'next/link'
+import {
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  Img,
+  List,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+  useColorMode
+} from '@chakra-ui/react'
 import { defaultLinks } from '@/@core/service/helpers/links'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import MenuDrawer from './components/Drawer'
-import Auth from '../Auth'
 import { useAuth } from '@/@core/service/hooks/useAuth'
 import { useLang } from '@/@core/service/hooks/useLang'
+import { Link } from '@/navigation'
+import { usePathname } from 'next/navigation'
 
 const Header: FC = () => {
-  const { t } = useLang()
+  const { t, locale } = useLang()
   const { colorMode, toggleColorMode } = useColorMode()
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [openAuth, setOpenAuth] = useState<boolean>(false)
   const { isAuth } = useAuth()
+  const pathname = usePathname()
+
   // close drawer on mobile size
   const onClose = (): void => {
     startTransition(() => {
       setIsOpen(false)
-    })
-  }
-
-  // close auth modal
-  const onCloseAuth = (): void => {
-    startTransition(() => {
-      setOpenAuth(false)
     })
   }
 
@@ -44,14 +51,16 @@ const Header: FC = () => {
       >
         {/* hamburger-menu */}
         <Box display={{ base: 'block', sm: 'block', md: 'none', xl: 'none' }} flex={{ base: 1, sm: 1, md: 0, xl: 0 }}>
-          <Image role='button' onClick={() => setIsOpen(true)} src='/header/hamburger-menu.svg' alt='hamburger-manu' />
+          <Img role='button' onClick={() => setIsOpen(true)} src='/header/hamburger-menu.svg' alt='hamburger-manu' />
         </Box>
         {/* logo */}
         <Box
           textAlign={{ base: 'center', sm: 'center', md: 'left', xl: 'left' }}
           flex={{ base: 1, sm: 1, md: 0.5, xl: 1 }}
         >
-          <Heading fontWeight={600}>Logo</Heading>
+          <Heading fontWeight={600}>
+            <Link href={'/'}>Logo</Link>
+          </Heading>
         </Box>
         {/* links */}
         <Box flex={{ base: 0, sm: 0, md: 2, xl: 1.3 }}>
@@ -60,14 +69,27 @@ const Header: FC = () => {
             fontWeight={500}
             justifyContent={'space-between'}
           >
-            {/* default-links */}
-            {defaultLinks?.map(link => {
-              return (
-                <ListItem key={link.id}>
-                  <Link href={link.href}>{link.title}</Link>
-                </ListItem>
-              )
-            })}
+            {/* default Links */}
+            {defaultLinks.map(link => (
+              <Menu key={link.id}>
+                <Link href={link?.href} className={`${pathname == `/${locale}${link.href}` ? 'active' : ''}`}>
+                  <MenuButton>{link.title}</MenuButton>
+                </Link>
+                {link.subMenu && (
+                  <MenuList>
+                    {link.subMenu.map(menu => (
+                      <Link
+                        key={menu.id}
+                        href={menu.href}
+                        className={`${pathname == `/${locale}${menu.href}` ? 'active' : ''}`}
+                      >
+                        <MenuItem>{menu.title}</MenuItem>
+                      </Link>
+                    ))}
+                  </MenuList>
+                )}
+              </Menu>
+            ))}
           </List>
         </Box>
         {/* other-utilities */}
@@ -81,7 +103,7 @@ const Header: FC = () => {
         >
           <Box display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }}>
             {colorMode === 'light' ? (
-              <Image
+              <Img
                 cursor={'pointer'}
                 _hover={{ opacity: '0.8' }}
                 transition={'all 0.3s ease'}
@@ -90,7 +112,7 @@ const Header: FC = () => {
                 onClick={toggleColorMode}
               />
             ) : (
-              <Image
+              <Img
                 cursor={'pointer'}
                 _hover={{ opacity: '0.8' }}
                 transition={'all 0.3s ease'}
@@ -105,27 +127,27 @@ const Header: FC = () => {
           <Divider display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} orientation='vertical' />
           {isAuth ? (
             <Box cursor={'pointer'}>
-              <Image src='/header/user.svg' alt='user' />
+              <Img src='/header/user.svg' alt='user' />
             </Box>
           ) : (
-            <Box
-              border={colorMode === 'dark' ? '1px solid #fff' : `1px solid ${scssVariables.mainColor}`}
-              borderRadius={'20px'}
-              onClick={() => setOpenAuth(true)}
-              cursor={'pointer'}
-              p={'5px 15px'}
-              color={colorMode === 'dark' ? '#fff' : scssVariables.mainColor}
-              transition={'all 0.3s ease'}
-              _hover={{ bg: scssVariables.mainColor, color: '#fff' }}
-            >
-              <Text>{t('auth-login')}</Text>
-            </Box>
+            <Link href={'/signup'} aria-current='page'>
+              <Box
+                border={colorMode === 'dark' ? '1px solid #fff' : `1px solid ${scssVariables.mainColor}`}
+                borderRadius={'20px'}
+                cursor={'pointer'}
+                p={'5px 15px'}
+                color={colorMode === 'dark' ? '#fff' : scssVariables.mainColor}
+                transition={'all 0.3s ease'}
+                _hover={{ bg: scssVariables.mainColor, color: '#fff' }}
+              >
+                <Text>{t('auth-login')}</Text>
+              </Box>
+            </Link>
           )}
         </Box>
       </Flex>
       {/* Menu Drawer */}
       <MenuDrawer isOpen={isOpen} onClose={onClose} />
-      <Auth isOpen={openAuth} onClose={onCloseAuth} />
     </nav>
   )
 }

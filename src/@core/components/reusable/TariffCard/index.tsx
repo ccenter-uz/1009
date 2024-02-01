@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import ButtonGen from '../Button'
-import { Box, Heading, Image, Text } from '@chakra-ui/react'
+import { Box, Heading, Img, Text } from '@chakra-ui/react'
 import { scssVariables } from '../../../utils/scss-variables'
 import { useLang } from '@/@core/service/hooks/useLang'
 
@@ -77,7 +77,7 @@ const TariffCard: FC<ITarrifCard> = ({ title, active, options, price }) => {
                   alignItems={'center'}
                   gap={{ base: '1', sm: '1', md: '2', xl: '2' }}
                 >
-                  <Image src='/check.svg' alt='check icon' width={{ base: 15, sm: 15, md: 21, xl: 21 }} height={21} />
+                  <Img src='/check.svg' alt='check icon' width={{ base: 15, sm: 15, md: 21, xl: 21 }} height={21} />
                   <Text
                     fontSize={{ base: '12px', sm: '12px', md: '15px', xl: '15px' }}
                     textAlign={'center'}

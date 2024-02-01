@@ -1,4 +1,5 @@
 export const scssVariables = {
+  primary: '#446AEE',
   mainColor: '#009393',
   blockBgColor: '#C2E5E5',
   textGreyColor: '#64748B',

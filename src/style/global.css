@@ -22,6 +22,6 @@ body {
 
 .active {
   color: #009393;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #009393;
+  padding-bottom: 5px;
+  border-bottom: 1.5px solid #009393;
 }
