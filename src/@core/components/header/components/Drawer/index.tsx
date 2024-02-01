@@ -49,9 +49,9 @@ const MenuDrawer: FC<IMenuDrawer> = ({ isOpen, onClose }) => {
           color={scssVariables.mainColor}
         />
         <DrawerHeader textAlign={'center'}>
-          <Link href={'/'}>
-            <Heading fontWeight={600}>Logo</Heading>
-          </Link>
+          <Heading fontWeight={600}>
+            <Link href={'/'}>Logo</Link>
+          </Heading>
         </DrawerHeader>
 
         <DrawerBody>
