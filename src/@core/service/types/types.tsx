@@ -31,6 +31,8 @@ export type IrowTable ={
 export type ItableType={
   columns:IcolumnTable[]
   dataSource:IrowTable[]
-  variant :'striped' | 'simple',
   ColBg?:string
+  RowBg?:string
+  border?:boolean,
+  pagination?:boolean
 }
