@@ -1,107 +1,242 @@
-import React, { useState, useEffect } from 'react';
-import {Table} from '@chakra-ui/react'
+'use client'
+// EditableTable.js
+import { startTransition, useState } from 'react'
+import Spreadsheet from 'react-spreadsheet'
+import {
+  TableContainer,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Td,
+  Th,
+  Modal,
+  useColorMode,
+  Box,
+  Button,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  Divider,
+  Textarea,
+  FormControl,
+  FormLabel,
+  Text
+} from '@chakra-ui/react'
+import { scssVariables } from '@/@core/utils/scss-variables'
 
-const EditableTable = ({ initialColumns, initialRows, onSaveChanges }) => {
-  const [columns, setColumns] = useState(initialColumns);
-  const [tableData, setTableData] = useState(initialRows);
+const EditableTable = ({ isOpen, onClose }) => {
+  const { colorMode } = useColorMode()
+  const row = [[]]
+  const columns = []
 
-  const handleCellEdit = (newValue, rowIndex, columnIndex) => {
-    const updatedData = [...tableData];
-    updatedData[rowIndex][columns[columnIndex].key] = newValue;
-    setTableData(updatedData);
-  };
+  const [data, setData] = useState(row)
 
-  const addColumn = () => {
-    const newColumn = { key: `newColumn${columns.length + 1}`, title: `New Column ${columns.length + 1}` };
-    setColumns([...columns, newColumn]);
+  const handleAddRow = () => {
+    setData(prevData => [...prevData, Array(prevData.length > 0 ? prevData[0].length : prevData).fill({ value: '' })])
+  }
 
-    // Initialize new column values for existing rows
-    const updatedData = tableData.map(row => ({ ...row, [newColumn.key]: '' }));
-    setTableData(updatedData);
-  };
+  const handleAddColumn = () => {
+    setData(prevData => prevData.map((row, rowIndex) => [...row, { value: '' }]))
+  }
 
-  const removeColumn = (columnIndex) => {
-    const updatedColumns = [...columns];
-    updatedColumns.splice(columnIndex, 1);
-    setColumns(updatedColumns);
+  const handleDeleteRow = index => {
+    setData(prevData => prevData.filter((_, i) => i !== index))
+  }
 
-    // Remove the corresponding values in each row for the removed column
-    const updatedData = tableData.map(row => {
-      const { [columns[columnIndex].key]: omit, ...rest } = row;
+  const handleDeleteColumn = index => {
+    setData(prevData => prevData.map(row => row.filter((_, i) => i !== index)))
+  }
 
-      return rest;
-    });
-    setTableData(updatedData);
-  };
+  const handleSave = e => {
+    e.preventDefault()
+    const current = e.currentTarget
+    const formData = new FormData(current)
+    const body = {
+      header: data[0],
+      rows: data.slice(1),
+      warning: formData.get('warning'),
+      mention: formData.get('mention')
+    }
+    console.log(body, 'data')
+  }
 
-  const addRow = () => {
-    const newRow = {};
-    columns.forEach(column => {
-      newRow[column.key] = '';
-    });
-    setTableData([...tableData, newRow]);
-  };
-
-  const removeRow = (rowIndex) => {
-    const updatedData = [...tableData];
-    updatedData.splice(rowIndex, 1);
-    setTableData(updatedData);
-  };
-
-  const handleSaveChanges = () => {
-    // Pass the updated data to the parent component
-    onSaveChanges(tableData);
-  };
-
-  useEffect(() => {
-    // You can perform any initial data fetching here
-    // For example, fetch data from your backend API
-    // axios.get('your-backend-api-endpoint')
-    //   .then(response => {
-    //     setTableData(response.data);
-    //   })
-    //   .catch(error => {
-    //     console.error('Error fetching data:', error);
-    //   });
-  }, []);
+  // modal
+  const handleCloseModal = () => {
+    startTransition(() => {
+      setData([[]])
+      onClose(false)
+    })
+  }
 
   return (
-    <div>
-      <button onClick={addColumn}>Add Column</button>
-      <button onClick={addRow}>Add Row</button>
-      <Table>
-        <thead>
-          <tr>
-            {columns.map((column, columnIndex) => (
-              <th key={columnIndex}>
-                {column.title}
-                <button onClick={() => removeColumn(columnIndex)}>Remove</button>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {columns.map((column, columnIndex) => (
-                <td key={columnIndex}>
-                  <input
-                    type="text"
-                    value={row[column.key]}
-                    onChange={(e) => handleCellEdit(e.target.value, rowIndex, columnIndex)}
-                  />
-                </td>
-              ))}
-              <td>
-                <button onClick={() => removeRow(rowIndex)}>Remove Row</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      <button onClick={handleSaveChanges}>Save Changes</button>
-    </div>
-  );
-};
+    <Modal size={'full'} isOpen={isOpen} aria-modal onClose={handleCloseModal}>
+      <ModalContent padding={'1em'}>
+        <ModalHeader fontSize={{ base: '14px', sm: '14px', md: '20px', xl: '20px' }}>Create or Edit Table</ModalHeader>
+        <Divider mb={'1em'} />
+        <ModalCloseButton />
+        <form id='table-modal-form' onSubmit={handleSave}>
+          <FormControl>
+            <FormLabel color='#FF7C7C' htmlFor='warning-text'>
+              Warning information:
+            </FormLabel>
+            <Textarea
+              name='warning'
+              id='warning-text'
+              size={'sm'}
+              resize={'vertical'}
+              placeholder='Type for warnings!'
+              mb={'8px'}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel color={'#4493bd'} htmlFor='mention-text'>
+              Mention information:
+            </FormLabel>
+            <Textarea
+              name='mention'
+              id='mention-text'
+              size={'sm'}
+              resize={'vertical'}
+              placeholder='Type for mentions!'
+              mb={'8px'}
+            />
+          </FormControl>
+        </form>
+        <Box boxShadow={scssVariables.boxShadow} borderRadius={'12px'} my={'2em'} p={'1em'}>
+          <Box display='flex' alignItems='center' gap='5px' mb={'8px'}>
+            <Button
+              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
+              h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
+              onClick={handleAddColumn}
+            >
+              Add Column
+            </Button>
+            {/* area for warnings */}
+            {data[0].length > 0 && (
+              <Button
+                fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
+                h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
+                onClick={handleAddRow}
+              >
+                Add Row
+              </Button>
+            )}
+          </Box>
+          <Box w={'100%'} aria-label='excel-table'>
+            {data[0].length > 0 && (
+              <TableContainer>
+                <Spreadsheet
+                  data={data}
+                  onChange={setData}
+                  columnLabels={columns} // Customize column labels as needed
+                />
+              </TableContainer>
+            )}
+          </Box>
 
-export default EditableTable;
+          {data[0].length > 0 && (
+            <TableContainer borderRadius={'4px'} border={'1px solid #E2E8F0'}>
+              <Table aria-label='table'>
+                <Thead>
+                  <Tr bg={colorMode === 'dark' ? '#484a4a' : scssVariables.blockBgColor}>
+                    {data[0].map((col, colIndex) => (
+                      <Th
+                        key={colIndex}
+                        textAlign='center'
+                        fontWeight={600}
+                        textTransform={'capitalize'}
+                        fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
+                        p={{ base: '8px 10px', sm: '8px 10px', md: '16px 24px', xl: '16px 24px' }}
+                        borderRight={'1px solid #E2E8F0'}
+                      >
+                        {col.value}
+                        <Button
+                          aria-label='button-delete-column'
+                          fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
+                          h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
+                          colorScheme='red'
+                          ml={'1rem'}
+                          onClick={() => handleDeleteColumn(colIndex)}
+                        >
+                          -
+                        </Button>
+                      </Th>
+                    ))}
+                    <Th
+                      fontWeight={600}
+                      textTransform={'capitalize'}
+                      fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
+                      p={{ base: '8px 10px', sm: '8px 10px', md: '16px 24px', xl: '16px 24px' }}
+                      borderRight={'1px solid #E2E8F0'}
+                      textAlign='center'
+                    >
+                      {data[0].length > 0 ? 'Action' : null}
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {data.slice(1).map((row, rowIndex) => (
+                    <Tr
+                      key={rowIndex}
+                      _even={
+                        colorMode === 'dark' ? { background: '#484a4a' } : { background: scssVariables.blockBgColor }
+                      }
+                    >
+                      {row.map((cell, columnIndex) => (
+                        <Td
+                          fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}
+                          p={{ base: '8px 10px', sm: '8px 10px', md: '16px 24px', xl: '16px 24px' }}
+                          borderRight={'1px solid #E2E8F0'}
+                          textAlign='center'
+                          key={columnIndex}
+                        >
+                          {cell.value}
+                        </Td>
+                      ))}
+                      <Td
+                        fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}
+                        p={{ base: '8px 10px', sm: '8px 10px', md: '16px 24px', xl: '16px 24px' }}
+                        borderRight={'1px solid #E2E8F0'}
+                        textAlign='center'
+                      >
+                        {row.length > 0 ? (
+                          <Button
+                            aria-label='button-delete-rowCell'
+                            colorScheme='red'
+                            fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
+                            h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
+                            onClick={() => handleDeleteRow(rowIndex)}
+                          >
+                            -
+                          </Button>
+                        ) : null}
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          )}
+        </Box>
+        <Box display='flex' alignItems='center' justifyContent='flex-end'>
+          {data[0].length > 0 && (
+            <Button
+              aria-label='button-save'
+              colorScheme='teal'
+              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
+              h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
+              form='table-modal-form'
+              mb={'8px'}
+              type='submit'
+            >
+              Save
+            </Button>
+          )}
+        </Box>
+      </ModalContent>
+    </Modal>
+  )
+}
+
+export default EditableTable

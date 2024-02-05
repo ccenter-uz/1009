@@ -7,7 +7,6 @@ import {
   Heading,
   Img,
   List,
-  ListItem,
   Menu,
   MenuButton,
   MenuItem,

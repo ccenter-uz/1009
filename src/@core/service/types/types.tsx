@@ -36,3 +36,16 @@ export type ItableType={
   border?:boolean,
   pagination?:boolean
 }
+
+type IGuestTableRow ={
+  value:string
+}
+type IGuestTableColumn ={
+  title:string
+  id:number
+}
+
+export type IGuestTable ={
+  row:IGuestTableRow[][],
+  columns:IGuestTableColumn[]
+}

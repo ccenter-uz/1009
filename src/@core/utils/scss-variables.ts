@@ -11,7 +11,8 @@ export const scssVariables = {
   darkBg: '#1B1D1C',
   questionBg: '#F5FEFD',
   fonts: {
-    titleSize: { base: '20px', sm: '20px', md: '32px', xl: '32px' }
+    titleSize: { base: '20px', sm: '20px', md: '32px', xl: '32px' },
+    paragraph:{ base: '12px', sm: '12px', md: '16px', xl: '16px' }
   },
   cardOpportunities: {
     w: { base: '390px', sm: '390px', md: '620px', xl: '620px' },

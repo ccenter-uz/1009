@@ -1,0 +1,8 @@
+{
+    "editor.fontFamily": "Consolas, 'Courier New', monospace",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.cursorBlinking": "expand",
+    "files.autoSave": "onWindowChange",
+    "editor.tabSize": 4,
+    "editor.wordWrap": "on",
+}

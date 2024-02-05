@@ -2,14 +2,31 @@
 import { ItableType } from '@/@core/service/types/types'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr, useColorMode } from '@chakra-ui/react'
-import { FC, Fragment } from 'react'
+import { FC } from 'react'
 import Pagination from '../Pagination'
+
+/* 
+columns=[
+  {
+    title:'example',
+    dataIndex:'example',
+    key:'example',
+    align:'center'
+  }
+] 
+dataSource=[
+    {
+      key:string,
+      title:string
+    }
+  ]
+*/
 
 const TableGen: FC<ItableType> = ({ columns, dataSource, border = false, RowBg, ColBg, pagination = false }) => {
   const { colorMode } = useColorMode()
 
   return (
-    <Fragment>
+    <>
       <TableContainer borderRadius={'4px'} border={border ? '1px solid #E2E8F0' : 'none'}>
         <Table aria-label='table'>
           <Thead>
@@ -59,7 +76,7 @@ const TableGen: FC<ItableType> = ({ columns, dataSource, border = false, RowBg, 
         </Table>
       </TableContainer>
       {pagination && <Pagination />}
-    </Fragment>
+    </>
   )
 }
 
