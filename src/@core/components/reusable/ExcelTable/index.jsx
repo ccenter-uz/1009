@@ -1,5 +1,4 @@
 'use client'
-// EditableTable.js
 import { startTransition, useState } from 'react'
 import Spreadsheet from 'react-spreadsheet'
 import {
@@ -21,7 +20,9 @@ import {
   Textarea,
   FormControl,
   FormLabel,
-  Text
+  Image,
+  Text,
+  Input
 } from '@chakra-ui/react'
 import { scssVariables } from '@/@core/utils/scss-variables'
 
@@ -53,10 +54,12 @@ const EditableTable = ({ isOpen, onClose }) => {
     const current = e.currentTarget
     const formData = new FormData(current)
     const body = {
-      header: data[0],
-      rows: data.slice(1),
+      title: formData.get('title'),
+      type:'table',
       warning: formData.get('warning'),
-      mention: formData.get('mention')
+      mention: formData.get('mention'),
+      header: data[0],
+      rows: data.slice(1)
     }
     console.log(body, 'data')
   }
@@ -77,10 +80,27 @@ const EditableTable = ({ isOpen, onClose }) => {
         <ModalCloseButton />
         <form id='table-modal-form' onSubmit={handleSave}>
           <FormControl>
-            <FormLabel color='#FF7C7C' htmlFor='warning-text'>
+            <FormLabel htmlFor='title' fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}>
+              Title of section:
+            </FormLabel>
+            <Input
+              name='title'
+              id='title'
+              mb={'8px'}
+              placeholder='example'
+              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel
+              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
+              color='#FF7C7C'
+              htmlFor='warning-text'
+            >
               Warning information:
             </FormLabel>
             <Textarea
+              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
               name='warning'
               id='warning-text'
               size={'sm'}
@@ -90,10 +110,15 @@ const EditableTable = ({ isOpen, onClose }) => {
             />
           </FormControl>
           <FormControl>
-            <FormLabel color={'#4493bd'} htmlFor='mention-text'>
+            <FormLabel
+              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
+              color={'#4493bd'}
+              htmlFor='mention-text'
+            >
               Mention information:
             </FormLabel>
             <Textarea
+              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
               name='mention'
               id='mention-text'
               size={'sm'}
@@ -150,17 +175,18 @@ const EditableTable = ({ isOpen, onClose }) => {
                         p={{ base: '8px 10px', sm: '8px 10px', md: '16px 24px', xl: '16px 24px' }}
                         borderRight={'1px solid #E2E8F0'}
                       >
-                        {col.value}
-                        <Button
-                          aria-label='button-delete-column'
-                          fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
-                          h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
-                          colorScheme='red'
-                          ml={'1rem'}
-                          onClick={() => handleDeleteColumn(colIndex)}
-                        >
-                          -
-                        </Button>
+                        <Text>{col.value}</Text>
+                        <Box display={'flex'} alignItems={'center'} justifyContent={'flex-end'}>
+                          <Image
+                            _hover={{ opacity: '0.8' }}
+                            role='button'
+                            aria-label='delete-col-button'
+                            onClick={() => handleDeleteColumn(colIndex)}
+                            loading='lazy'
+                            src='/delete.svg'
+                            alt={`delete-${colIndex}`}
+                          />
+                        </Box>
                       </Th>
                     ))}
                     <Th
@@ -201,15 +227,17 @@ const EditableTable = ({ isOpen, onClose }) => {
                         textAlign='center'
                       >
                         {row.length > 0 ? (
-                          <Button
-                            aria-label='button-delete-rowCell'
-                            colorScheme='red'
-                            fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
-                            h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
-                            onClick={() => handleDeleteRow(rowIndex)}
-                          >
-                            -
-                          </Button>
+                          <Box display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                            <Image
+                              _hover={{ opacity: '0.8' }}
+                              role='button'
+                              aria-label='delete-row-button'
+                              onClick={() => handleDeleteRow(rowIndex)}
+                              loading='lazy'
+                              src='/delete.svg'
+                              alt={`delete-row`}
+                            />
+                          </Box>
                         ) : null}
                       </Td>
                     </Tr>

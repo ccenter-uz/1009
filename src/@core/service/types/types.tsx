@@ -49,3 +49,7 @@ export type IGuestTable ={
   row:IGuestTableRow[][],
   columns:IGuestTableColumn[]
 }
+
+// RICH EDITOR
+
+export type IRichEditor ={}

@@ -8,7 +8,8 @@ type IMentionText = {
 
 const MentionText: FC<IMentionText> = ({ text }) => {
   return (
-    <Box
+    <Box 
+    my={{base:'16px',sm:'16px',md:'24px',xl:'24px'}}
       position={'relative'}
       _before={{
         content: `""`,
@@ -24,7 +25,7 @@ const MentionText: FC<IMentionText> = ({ text }) => {
     linear-gradient(90.05deg, #45BFFF 27.8%, #00A7FF 98.65%);
     `}
     >
-      <Text p={'1em'} fontSize={scssVariables.fonts.paragraph}>
+      <Text p={'1em'} color={scssVariables.textBlackColor} fontSize={scssVariables.fonts.paragraph}>
         {text}
       </Text>
     </Box>
