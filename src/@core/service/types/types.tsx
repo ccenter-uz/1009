@@ -1,3 +1,5 @@
+import { SetStateAction } from 'react'
+
 // signUp user type
 export type Iuser = {
   fio: string
@@ -15,41 +17,46 @@ export type Ilogin = {
   password: string
 }
 
-// TABLE 
-export type IcolumnTable ={
-  title: string;
-  dataIndex: string;
-  key: string;
-  align?: 'left' | 'center' | 'right' | any;
-  width?:string,
-  height?:string
+// TABLE
+export type IcolumnTable = {
+  title: string
+  dataIndex: string
+  key: string
+  align?: 'left' | 'center' | 'right' | any
+  width?: string
+  height?: string
 }
-export type IrowTable ={
-  key: string;
-  [key: string]: React.ReactNode;
+export type IrowTable = {
+  key: string
+  [key: string]: React.ReactNode
 }
-export type ItableType={
-  columns:IcolumnTable[]
-  dataSource:IrowTable[]
-  ColBg?:string
-  RowBg?:string
-  border?:boolean,
-  pagination?:boolean
-}
-
-type IGuestTableRow ={
-  value:string
-}
-type IGuestTableColumn ={
-  title:string
-  id:number
+export type ItableType = {
+  columns: IcolumnTable[]
+  dataSource: IrowTable[]
+  ColBg?: string
+  RowBg?: string
+  border?: boolean
+  pagination?: boolean
 }
 
-export type IGuestTable ={
-  row:IGuestTableRow[][],
-  columns:IGuestTableColumn[]
+type IGuestTableRow = {
+  value: string
+}
+type IGuestTableColumn = {
+  title: string
+  id: number
+}
+
+export type IGuestTable = {
+  row: IGuestTableRow[][]
+  columns: IGuestTableColumn[]
 }
 
 // RICH EDITOR
+export type IRichEditor = {
+  isOpen: boolean
+  onClose: SetStateAction<any>
+  record: any
+  setRecord: SetStateAction<any>
+}
 
-export type IRichEditor ={}

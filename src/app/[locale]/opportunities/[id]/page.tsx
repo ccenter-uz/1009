@@ -1,5 +1,5 @@
 'use client'
-import { FC, useState } from 'react'
+import { FC, startTransition, useState } from 'react'
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
 import EditableTable from '@/@core/components/reusable/ExcelTable'
 import {
@@ -20,7 +20,6 @@ import MentionText from '@/@core/components/reusable/MentionText'
 import WarningText from '@/@core/components/reusable/WarningText'
 import RichEditor from '@/@core/components/RichEditor'
 import DOMPurify from 'isomorphic-dompurify'
-import BoxGen from '@/@core/components/reusable/Box'
 
 type Props = {}
 
@@ -32,11 +31,12 @@ const Communal: FC<Props> = props => {
   const { colorMode } = useColorMode()
   const [isExcelTableOpen, setIsExcelTableOpen] = useState<boolean>(false)
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false)
+  const [record, setRecord] = useState<any>(null)
 
   const exampleData = [
     {
       id: 1,
-      title: 'Table example data',
+      title: 'Table title',
       type: 'table',
       warning:
         'Таким образом, за счёт дополнительных нерабочих дней и переноса субботы в период празднования Нового года узбекистанцы отдохнут четыре дня подряд (с 31 декабря 2022 года по 3 января 2023 года).. ',
@@ -55,7 +55,7 @@ const Communal: FC<Props> = props => {
     },
     {
       id: 2,
-      title: 'Editor example data',
+      title: 'Editor title',
       type: 'text',
       warning:
         'Таким образом, за счёт дополнительных нерабочих дней и переноса субботы в период празднования Нового года узбекистанцы отдохнут четыре дня подряд (с 31 декабря 2022 года по 3 января 2023 года).. ',
@@ -64,6 +64,13 @@ const Communal: FC<Props> = props => {
       content: '<p>HELLO WORLD</p>'
     }
   ]
+
+  // handleDelete
+  const handleDelete = (id: any) => {
+    const sectionItem = exampleData.filter(item => item.id === id)[0].id.toString()
+
+    console.log(sectionItem, 'sectionID')
+  }
 
   return (
     <main id='communal' aria-current='page'>
@@ -90,7 +97,7 @@ const Communal: FC<Props> = props => {
       </Box>
       {/* Accordion renders from API data */}
       {exampleData?.map(data => (
-        <Accordion key={data.id} allowMultiple my={{ base: '8px', sm: '8px', md: '1em', xl: '1em' }}>
+        <Accordion  key={data.id} allowMultiple my={{ base: '8px', sm: '8px', md: '1em', xl: '1em' }}>
           <AccordionItem
             borderTop={'none'}
             borderBottom={'none'}
@@ -120,10 +127,9 @@ const Communal: FC<Props> = props => {
                     role='button'
                     aria-label='delete-button'
                     onClick={() =>
-                      console.log(
-                        exampleData.filter(item => item.id === data.id),
-                        'target'
-                      )
+                      data.type === 'text'
+                        ? (setRecord(exampleData.filter(item => item.id === data.id)), setIsEditorOpen(true))
+                        : (setRecord(exampleData.filter(item => item.id === data.id)), setIsExcelTableOpen(true))
                     }
                   />
                 </Tooltip>
@@ -135,12 +141,7 @@ const Communal: FC<Props> = props => {
                     alt='edit'
                     role='button'
                     aria-label='delete-button'
-                    onClick={() =>
-                      console.log(
-                        exampleData.filter(item => item.id === data.id),
-                        'target'
-                      )
-                    }
+                    onClick={() => handleDelete(data.id)}
                   />
                 </Tooltip>
               </Box>
@@ -163,9 +164,13 @@ const Communal: FC<Props> = props => {
         </Accordion>
       ))}
       {/* editableTable */}
-      <EditableTable isOpen={isExcelTableOpen} onClose={setIsExcelTableOpen} />
+      {isExcelTableOpen && (
+        <EditableTable record={record} setRecord={setRecord} isOpen={isExcelTableOpen} onClose={setIsExcelTableOpen} />
+      )}
       {/* richEditor */}
-      <RichEditor isOpen={isEditorOpen} onClose={setIsEditorOpen} />
+      {isEditorOpen && (
+        <RichEditor record={record} setRecord={setRecord} isOpen={isEditorOpen} onClose={setIsEditorOpen} />
+      )}
     </main>
   )
 }

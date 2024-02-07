@@ -1,7 +1,7 @@
 'use client'
 import Loading from '@/app/[locale]/loading'
 import dynamic from 'next/dynamic'
-import { FC, FormEvent, SetStateAction, memo, startTransition, useState } from 'react'
+import { FC, FormEvent, memo, startTransition, useState } from 'react'
 import 'react-quill/dist/quill.snow.css'
 import { formats } from './formats'
 import { modules } from './modules'
@@ -23,13 +23,14 @@ import { scssVariables } from '@/@core/utils/scss-variables'
 // dynamic import Quill
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <Loading /> })
 
-const RichEditor: FC<IRichEditor & { isOpen: boolean; onClose: SetStateAction<any> }> = ({ isOpen, onClose }) => {
-  const [value, setValue] = useState('')
+const RichEditor: FC<IRichEditor> = ({ isOpen, record, setRecord, onClose }) => {
+  const [value, setValue] = useState<string>(record ? record[0].content : '')
 
   // handleClose
   const handleClose = () => {
     startTransition(() => {
       onClose((prev: boolean) => !prev), setValue('')
+      setRecord(null)
     })
   }
 
@@ -40,7 +41,7 @@ const RichEditor: FC<IRichEditor & { isOpen: boolean; onClose: SetStateAction<an
     const formData = new FormData(current)
     const body = {
       title: formData.get('title'),
-      type:"text",
+      type: 'text',
       warning: formData.get('warning'),
       mention: formData.get('mention'),
       content: value
@@ -63,6 +64,7 @@ const RichEditor: FC<IRichEditor & { isOpen: boolean; onClose: SetStateAction<an
               name='title'
               id='title'
               mb={'8px'}
+              defaultValue={record ? record[0].title : null}
               placeholder='example'
               fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
             />
@@ -76,6 +78,7 @@ const RichEditor: FC<IRichEditor & { isOpen: boolean; onClose: SetStateAction<an
               Warning information:
             </FormLabel>
             <Textarea
+              defaultValue={record ? record[0].warning : null}
               fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
               name='warning'
               id='warning-text'
@@ -94,6 +97,7 @@ const RichEditor: FC<IRichEditor & { isOpen: boolean; onClose: SetStateAction<an
               Mention information:
             </FormLabel>
             <Textarea
+              defaultValue={record ? record[0].mention : null}
               fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
               name='mention'
               id='mention-text'

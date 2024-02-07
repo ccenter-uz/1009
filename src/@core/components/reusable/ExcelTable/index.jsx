@@ -26,10 +26,9 @@ import {
 } from '@chakra-ui/react'
 import { scssVariables } from '@/@core/utils/scss-variables'
 
-const EditableTable = ({ isOpen, onClose }) => {
+const EditableTable = ({ isOpen,record,setRecord, onClose }) => {
   const { colorMode } = useColorMode()
-  const row = [[]]
-  const columns = []
+  const row = (record && [record[0].header.map(item => ({ value: item.title })), ...record[0].rows]) || [[]]
 
   const [data, setData] = useState(row)
 
@@ -55,7 +54,7 @@ const EditableTable = ({ isOpen, onClose }) => {
     const formData = new FormData(current)
     const body = {
       title: formData.get('title'),
-      type:'table',
+      type: 'table',
       warning: formData.get('warning'),
       mention: formData.get('mention'),
       header: data[0],
@@ -69,6 +68,7 @@ const EditableTable = ({ isOpen, onClose }) => {
     startTransition(() => {
       setData([[]])
       onClose(false)
+      setRecord(null)
     })
   }
 
@@ -84,6 +84,7 @@ const EditableTable = ({ isOpen, onClose }) => {
               Title of section:
             </FormLabel>
             <Input
+              defaultValue={record && record[0].title}
               name='title'
               id='title'
               mb={'8px'}
@@ -100,6 +101,7 @@ const EditableTable = ({ isOpen, onClose }) => {
               Warning information:
             </FormLabel>
             <Textarea
+              defaultValue={record && record[0].warning}
               fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
               name='warning'
               id='warning-text'
@@ -118,6 +120,7 @@ const EditableTable = ({ isOpen, onClose }) => {
               Mention information:
             </FormLabel>
             <Textarea
+              defaultValue={record && record[0].mention}
               fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
               name='mention'
               id='mention-text'
@@ -151,11 +154,7 @@ const EditableTable = ({ isOpen, onClose }) => {
           <Box w={'100%'} aria-label='excel-table'>
             {data[0].length > 0 && (
               <TableContainer>
-                <Spreadsheet
-                  data={data}
-                  onChange={setData}
-                  columnLabels={columns} // Customize column labels as needed
-                />
+                <Spreadsheet data={data} onChange={setData} columnLabels={[]} />
               </TableContainer>
             )}
           </Box>
