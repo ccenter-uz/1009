@@ -10,7 +10,7 @@ type Iinput = {
 const InputGen: FC<Partial<Iinput & InputProps>> = forwardRef(({ button = null, rightWidth, width, ...props }, ref) => {
   return (
     <InputGroup width={width}>
-      <Input {...props} ref={ref} focusBorderColor='teal.400' />
+      <Input {...props} ref={ref} focusBorderColor='teal.400' _focus={{boxShadow:'none'}} />
       <InputRightElement width={rightWidth} h={'100%'}>
         {button}
       </InputRightElement>

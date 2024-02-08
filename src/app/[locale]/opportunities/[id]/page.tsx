@@ -1,5 +1,5 @@
 'use client'
-import { FC, startTransition, useState } from 'react'
+import { FC, useState } from 'react'
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
 import EditableTable from '@/@core/components/reusable/ExcelTable'
 import {
@@ -20,13 +20,22 @@ import MentionText from '@/@core/components/reusable/MentionText'
 import WarningText from '@/@core/components/reusable/WarningText'
 import RichEditor from '@/@core/components/RichEditor'
 import DOMPurify from 'isomorphic-dompurify'
+import SearchPanelOpportunities from '@/@core/components/pages/Opportunities/components/SearchPanel'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useLang } from '@/@core/service/hooks/useLang'
+import EntertainmentLinks from '@/@core/components/pages/Opportunities/components/EntertainmentLinks'
 
 type Props = {}
 
 const Communal: FC<Props> = props => {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const lastLink = pathname.replaceAll('/', ' ').split(' ').slice(-1).join()
+  const { t } = useLang()
   const breadcrumblinks = [
-    { id: 1, title: 'Коммунальные услуги' },
-    { id: 2, title: 'Общие' }
+    { id: 1, title: `${t('opportunities')}` },
+    { id: 2, title: `${t(`${lastLink}`)}` },
+    { id: 3, title: `${searchParams.has('page') ? searchParams.get('page') : t('all')}` }
   ]
   const { colorMode } = useColorMode()
   const [isExcelTableOpen, setIsExcelTableOpen] = useState<boolean>(false)
@@ -38,8 +47,6 @@ const Communal: FC<Props> = props => {
       id: 1,
       title: 'Table title',
       type: 'table',
-      warning:
-        'Таким образом, за счёт дополнительных нерабочих дней и переноса субботы в период празднования Нового года узбекистанцы отдохнут четыре дня подряд (с 31 декабря 2022 года по 3 января 2023 года).. ',
       mention:
         'В связи с тем, что 1 октября (День учителя и наставника) выпадает на воскресенье, нерабочий день в 2023 году переносится на 2 октября (понедельник) в соответствии с новой редакцией Трудового кодекса',
       rows: [
@@ -59,14 +66,12 @@ const Communal: FC<Props> = props => {
       type: 'text',
       warning:
         'Таким образом, за счёт дополнительных нерабочих дней и переноса субботы в период празднования Нового года узбекистанцы отдохнут четыре дня подряд (с 31 декабря 2022 года по 3 января 2023 года).. ',
-      mention:
-        'В связи с тем, что 1 октября (День учителя и наставника) выпадает на воскресенье, нерабочий день в 2023 году переносится на 2 октября (понедельник) в соответствии с новой редакцией Трудового кодекса',
       content: '<p>HELLO WORLD</p>'
     }
   ]
 
   // handleDelete
-  const handleDelete = (id: any) => {
+  const handleDelete = (id: string | number) => {
     const sectionItem = exampleData.filter(item => item.id === id)[0].id.toString()
 
     console.log(sectionItem, 'sectionID')
@@ -75,6 +80,8 @@ const Communal: FC<Props> = props => {
   return (
     <main id='communal' aria-current='page'>
       <BreadCrumb item={breadcrumblinks} />
+      <SearchPanelOpportunities options={exampleData.map(option => ({ label: option.title, value: option.title }))} />
+      {lastLink === 'entertainment' && <EntertainmentLinks />}
       <Box display={'flex'} alignItems={'center'} gap={'0 8px'}>
         <Button
           leftIcon={<img src='/add.svg' alt='add-circle-table' />}
@@ -97,13 +104,8 @@ const Communal: FC<Props> = props => {
       </Box>
       {/* Accordion renders from API data */}
       {exampleData?.map(data => (
-        <Accordion  key={data.id} allowMultiple my={{ base: '8px', sm: '8px', md: '1em', xl: '1em' }}>
-          <AccordionItem
-            borderTop={'none'}
-            borderBottom={'none'}
-            style={{ borderBottom: '0.5px solid #d3d3d373' }}
-            boxShadow={scssVariables.boxShadowPartnerBox}
-          >
+        <Accordion key={data.id} allowMultiple my={{ base: '8px', sm: '8px', md: '1em', xl: '1em' }}>
+          <AccordionItem borderTop={'none'} style={{ borderBottom: '0.5px solid #d3d3d373' }}>
             <AccordionButton
               textTransform={'capitalize'}
               h={{ base: '37px', sm: '37px', md: '45px', xl: '45px' }}
@@ -116,7 +118,11 @@ const Communal: FC<Props> = props => {
               <AccordionIcon />
             </AccordionButton>
 
-            <AccordionPanel bg={colorMode === 'dark' ? scssVariables.darkBg : '#F8FFFF'}>
+            <AccordionPanel
+              boxShadow={scssVariables.boxShadowPartnerBox}
+              mb={{ base: '24px', sm: '24px', md: '48px', xl: '48px' }}
+              bg={colorMode === 'dark' ? scssVariables.darkBg : '#F8FFFF'}
+            >
               <Box display={'flex'} gap={'8px'} alignItems={'center'} justifyContent={'flex-end'}>
                 <Tooltip label='Изменить' aria-label='A tooltip'>
                   <Image
@@ -145,8 +151,8 @@ const Communal: FC<Props> = props => {
                   />
                 </Tooltip>
               </Box>
-              <MentionText text={data.mention} />
-              <WarningText text={data.warning} />
+              {data.mention && <MentionText text={data.mention} />}
+              {data.warning && <WarningText text={data.warning} />}
               {data.type === 'text' ? (
                 <div
                   style={

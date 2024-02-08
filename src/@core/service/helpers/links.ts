@@ -8,7 +8,7 @@ export const defaultLinks = [
       {
         id: 11,
         title: 'Развлечения',
-        href: '/opportunities/entertainment',
+        href: `/opportunities/entertainment`,
         icon: ''
       },
       {

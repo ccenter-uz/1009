@@ -31,7 +31,7 @@
   "opportunity-card-title-3": "Номера и коды",
   "opportunity-card-title-4": "Это надо знать!",
   "opportunity-card-title-5": "Информация о г. Ташкент",
-  "opportunity-card-title-6": "Информация о г. Ташкент",
+  "opportunity-card-title-6": "Информация о п. Ташкент",
   "opportunity-card-text-1": "Кино, Театры,Выставки, Парки",
   "opportunity-card-text-2": "Свет, Газ..",
   "opportunity-card-text-3": "Quis vestibulum diam vitae eget dissd.",
@@ -56,5 +56,13 @@
   "back": "Назад",
   "auth-rerecieve-code": "Получить код повторно",
   "auth-not-recieved-code": "Не получили код по SMS?",
-  "notificaton-number": "На этот номер отправлено СМС код с кодом подтверждения"
+  "notificaton-number": "На этот номер отправлено СМС код с кодом подтверждения",
+  "communal": "Коммунальные услуги",
+  "entertainment": "Развлечения",
+  "numbers-codes": "Номера и коды",
+  "need-to-know": "Это надо знать!",
+  "info-tashkent": "Информация о г. Ташкент",
+  "info-tash-village": "Информация о п. Ташкент ",
+  "opportunities":"Возможности",
+  "all":"Общие"
 }

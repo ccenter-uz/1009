@@ -60,3 +60,14 @@ export type IRichEditor = {
   setRecord: SetStateAction<any>
 }
 
+
+// Autocomplete
+export type IOption= {
+  value:string 
+  label:string
+}
+
+export type ISelectAutocomplelte = {
+options: IOption[]
+onSelect: (selectedOption: IOption) => void
+}
