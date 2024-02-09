@@ -27,6 +27,8 @@ const Tariffs: FC = () => {
 
   return (
     <Box
+      scrollMarginTop={0}
+      id='tariffs'
       className='wrapper'
       mt={{ base: '42px', sm: '42px', md: '72px', xl: '72px' }}
       display={'flex'}

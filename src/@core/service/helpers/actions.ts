@@ -71,3 +71,27 @@ export const CheckNumberSend = async (values: Ipin) => {
     }
   }
 }
+
+
+// DialogEntertainmentLinks
+/**
+ * @parmas (values) string
+ */
+export const DialogEntertainmentLinksAction =async (values:string)=>{
+  try {
+    const body = values
+    const res = await api.post('example/', body)
+    if (res.status === 200)
+      return {
+        status: 200,
+        message: 'Success'
+      }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    return {
+      status: 200,
+      message: 'Success'
+    }
+  }
+}

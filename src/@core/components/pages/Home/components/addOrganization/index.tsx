@@ -2,6 +2,7 @@
 import ButtonGen from '@/@core/components/reusable/Button'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { scssVariables } from '@/@core/utils/scss-variables'
+import { Link } from '@/navigation'
 import { Box, Heading, Img, Text, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
 
@@ -11,6 +12,8 @@ const AddOrganization: FC = () => {
 
   return (
     <Box
+      scrollMarginTop={0}
+      id='addOrganization'
       className='wrapper'
       display={'flex'}
       flexDirection={{ base: 'column', sm: 'column', md: 'column', xl: 'row' }}
@@ -63,17 +66,19 @@ const AddOrganization: FC = () => {
           Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis
           tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu.
         </Text>
-        <ButtonGen
-          width={{ base: '285px', sm: '285px', md: '400px', xl: '420px' }}
-          height={{ base: '40px', sm: '40px', md: '60px', xl: '67px' }}
-          bgImage={'linear-gradient(176.62deg, #67FFE4 -30.13%, #0DC4B8 118.94%)'}
-          radius={{ base: '9px', sm: '9px', md: '20px', xl: '21px' }}
-          fontSize={{ base: '16px', sm: '16px', md: '18px', xl: '20px' }}
-          fontWeight={'500'}
-          m={{ base: 'auto', sm: 'auto', md: '0', xl: '0' }}
-        >
-          {t('add-organization')}
-        </ButtonGen>
+        <Link href={'/add-organization'}>
+          <ButtonGen
+            width={{ base: '285px', sm: '285px', md: '400px', xl: '420px' }}
+            height={{ base: '40px', sm: '40px', md: '60px', xl: '67px' }}
+            bgImage={'linear-gradient(176.62deg, #67FFE4 -30.13%, #0DC4B8 118.94%)'}
+            radius={{ base: '9px', sm: '9px', md: '20px', xl: '21px' }}
+            fontSize={{ base: '16px', sm: '16px', md: '18px', xl: '20px' }}
+            fontWeight={'500'}
+            m={{ base: 'auto', sm: 'auto', md: '0', xl: '0' }}
+          >
+            {t('add-organization')}
+          </ButtonGen>
+        </Link>
       </Box>
       <Box w={'100%'} display={{ base: 'block', sm: 'block', md: 'block', xl: 'none' }}>
         <Img

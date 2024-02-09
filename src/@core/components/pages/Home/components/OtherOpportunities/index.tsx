@@ -62,6 +62,8 @@ const OtherOpportunities: FC = () => {
 
   return (
     <Box
+      scrollMarginTop={0}
+      id='opportunities'
       className='wrapper'
       pt={{ base: '56px', sm: '56px', md: '72px', xl: '72px' }}
       mb={{ base: '48px', sm: '48px', md: '136px', xl: '136px' }}

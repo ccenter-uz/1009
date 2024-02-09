@@ -50,7 +50,7 @@ const Footer: FC = () => {
           flexDirection={'column'}
           gap={{ base: '15px', sm: '15px', md: '20px', xl: '24px' }}
         >
-          <Link href={'#'}>
+          <Link href={'#opportunities'}>
             <Text
               fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
@@ -58,7 +58,7 @@ const Footer: FC = () => {
               {t('footer-opportunity')}
             </Text>
           </Link>
-          <Link href={'#'}>
+          <Link href={'#tariffs'}>
             <Text
               fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
@@ -73,7 +73,7 @@ const Footer: FC = () => {
           flexDirection={'column'}
           gap={{ base: '15px', sm: '15px', md: '20px', xl: '24px' }}
         >
-          <Link href={'#'}>
+          <Link href={'#addOrganization'}>
             <Text
               fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
@@ -81,7 +81,7 @@ const Footer: FC = () => {
               {t('footer-add-organization')}
             </Text>
           </Link>
-          <Link href={'#'}>
+          <Link href={'#help'}>
             <Text
               fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
