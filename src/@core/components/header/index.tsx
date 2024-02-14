@@ -7,7 +7,6 @@ import {
   Heading,
   Img,
   List,
-  ListItem,
   Menu,
   MenuButton,
   MenuItem,
@@ -60,12 +59,16 @@ const Header: FC = () => {
           flex={{ base: 1, sm: 1, md: 0.5, xl: 1 }}
         >
           <Heading fontWeight={600}>
-            <Link href={'/'}>Logo</Link>
+            <Link aria-current='page' href={'/'}>
+              Logo
+            </Link>
           </Heading>
         </Box>
         {/* links */}
         <Box flex={{ base: 0, sm: 0, md: 2, xl: 1.3 }}>
           <List
+            role='menu'
+            aria-current='page'
             display={{ base: 'none', sm: 'none', md: 'flex', xl: 'flex' }}
             fontWeight={500}
             justifyContent={'space-between'}
@@ -73,13 +76,20 @@ const Header: FC = () => {
             {/* default Links */}
             {defaultLinks.map(link => (
               <Menu key={link.id}>
-                <Link href={link?.href} className={`${pathname == `/${locale}${link.href}` ? 'active' : ''}`}>
+                <Link
+                  role='menuItem'
+                  aria-current='page'
+                  href={link?.href}
+                  className={`${pathname == `/${locale}${link.href}` ? 'active' : ''}`}
+                >
                   <MenuButton>{link.title}</MenuButton>
                 </Link>
                 {link.subMenu && (
                   <MenuList>
                     {link.subMenu.map(menu => (
                       <Link
+                        role='menuItem'
+                        aria-current='page'
                         key={menu.id}
                         href={menu.href}
                         className={`${pathname == `/${locale}${menu.href}` ? 'active' : ''}`}

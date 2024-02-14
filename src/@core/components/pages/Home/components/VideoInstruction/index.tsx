@@ -9,6 +9,7 @@ const VideoInstruction: FC = () => {
 
   return (
     <BoxGen
+      scrollMarginTop={0}
       className='wrapper'
       minH={{ base: '417px', sm: '417px', md: '817px', xl: '917px' }}
       h={'100%'}

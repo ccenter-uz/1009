@@ -84,7 +84,7 @@ const SignUp: FC = () => {
             borderRadius={'2px'}
             button={<Img width={'15px'} src='/phone-fill.svg' alt='phone-icon' />}
             name='phone'
-            placeholder='+99890 123 45 78'
+            placeholder='+998901234578'
           />
           {errors.phone && (
             <Text color={'red'} fontSize={'12px'}>
@@ -101,7 +101,7 @@ const SignUp: FC = () => {
             aria-invalid={errors.password ? 'true' : 'false'}
             {...register('password', {
               required: true,
-              minLength: 3
+              minLength: 6
             })}
             id='password'
             isDisabled={pending}
@@ -113,11 +113,11 @@ const SignUp: FC = () => {
             borderRadius={'2px'}
             button={<Img width={'15px'} src='/lock-fill.svg' alt='lock-icon' />}
             name='password'
-            placeholder='***'
+            placeholder='******'
           />
           {errors.password && (
             <Text color={'red'} fontSize={'12px'}>
-              Password must contain minimum 3 letters
+              Password must contain minimum 6 letters
             </Text>
           )}
         </FormControl>
@@ -146,7 +146,7 @@ const SignUp: FC = () => {
             borderRadius={'2px'}
             button={<Img width={'15px'} src='/lock-fill.svg' alt='lock-icon' />}
             name='confirm_password'
-            placeholder='***'
+            placeholder='******'
           />
           {errors.confirm_password && (
             <Text color={'red'} fontSize={'12px'}>

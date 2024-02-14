@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import dynamic from 'next/dynamic'
+import './style.scss'
 
 // dynamic imports
 const Hero = dynamic(() => import('./components/Hero'))
@@ -13,7 +14,7 @@ const Questionier = dynamic(() => import('./components/Questionier'))
 
 const Home: FC = () => {
   return (
-    <main>
+    <main id='home'>
       <Hero />
       <SearchPanel />
       <OtherOpportunities />

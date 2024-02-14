@@ -7,7 +7,7 @@ export type IOpportunityCard = {
   id: number
   title: string
   options: string
-  image?: string
+  image?: string,
 }
 
 const OpportunityCard: FC<IOpportunityCard> = ({ title, options, image }) => {
