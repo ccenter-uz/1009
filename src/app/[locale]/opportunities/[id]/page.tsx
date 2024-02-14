@@ -24,6 +24,8 @@ import SearchPanelOpportunities from '@/@core/components/pages/Opportunities/com
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useLang } from '@/@core/service/hooks/useLang'
 import EntertainmentLinks from '@/@core/components/pages/Opportunities/components/EntertainmentLinks'
+import './style.scss'
+
 
 type Props = {}
 
@@ -78,7 +80,7 @@ const Communal: FC<Props> = props => {
   }
 
   return (
-    <main id='communal' aria-current='page'>
+    <Box id='opportunities' aria-current='page' minH={{ base: '100%', sm: '100%', md: '1080px', xl: '1080px' }}>
       <BreadCrumb item={breadcrumblinks} />
       <SearchPanelOpportunities options={exampleData.map(option => ({ label: option.title, value: option.title }))} />
       {lastLink === 'entertainment' && <EntertainmentLinks />}
@@ -177,7 +179,7 @@ const Communal: FC<Props> = props => {
       {isEditorOpen && (
         <RichEditor record={record} setRecord={setRecord} isOpen={isEditorOpen} onClose={setIsEditorOpen} />
       )}
-    </main>
+    </Box>
   )
 }
 export default Communal

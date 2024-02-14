@@ -1,6 +1,9 @@
+import TabListMonitoring from '@/@core/components/pages/Monitoring/components/TabList'
+import TabPanelMonitoring from '@/@core/components/pages/Monitoring/components/TabPanel'
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
-import { Box, Heading } from '@chakra-ui/react'
+import { Box, Tabs } from '@chakra-ui/react'
 import { FC } from 'react'
+import './style.scss'
 
 const Monitoring: FC = () => {
   const breadcrumblinks = [
@@ -15,9 +18,17 @@ const Monitoring: FC = () => {
   ]
 
   return (
-    <Box aria-label='section' id='monitoring' className='wrapper'>
-      <BreadCrumb item={breadcrumblinks}/>
-      <Heading style={{ textAlign: 'center' }}>MONITORING</Heading>
+    <Box
+      minH={{ base: '100%', sm: '100%', md: '768px', xl: '768px' }}
+      aria-label='section'
+      id='monitoring'
+      className='wrapper'
+    >
+      <BreadCrumb item={breadcrumblinks} />
+      <Tabs>
+        <TabListMonitoring />
+        <TabPanelMonitoring />
+      </Tabs>
     </Box>
   )
 }

@@ -24,6 +24,7 @@ const SearchPanel: FC = () => {
     >
       <Box w={'100%'} m={'15px 0'} display={'flex'} alignItems={'center'} justifyContent={'center'} className='wrapper'>
         <InputGen
+        style={{border:'0.5px solid lightgrey'}}
           boxShadow={scssVariables.boxShadowPartnerBox}
           fontSize={{ base: '12px', sm: '12px', md: '18px', xl: '24px' }}
           p={{ base: '4px 10px', sm: '4px 10px', md: '25px', xl: '30px' }}

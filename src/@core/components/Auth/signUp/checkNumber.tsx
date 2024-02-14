@@ -8,6 +8,7 @@ import CountdownTimer from '../../CountDown'
 import { Ipin, Iuser } from '@/@core/service/types/types'
 import TextGen from '../../reusable/Text'
 import { CheckNumberSend, Regis } from '@/@core/service/helpers/actions'
+import { toast } from 'react-toastify'
 
 const CheckNumber: FC = () => {
   const { t } = useLang()
@@ -18,6 +19,9 @@ const CheckNumber: FC = () => {
 
   // send Pin to api
   const handleComplete = async () => {
+    if (pin === 'undefined' || (pin === '' && pin.length < 5))
+      return toast.warn('Pin must not be empty and must containt minimum 6 letters', { position: 'bottom-right' })
+    
     const res = await CheckNumberSend({ pin })
 
     if (!res) return

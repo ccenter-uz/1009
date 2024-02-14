@@ -51,7 +51,7 @@ export const defaultLinks = [
   {
     id: 3,
     title: 'Добавить Организацию',
-    href: '/add-organization'
+    href: '/addorg'
   },
   {
     id: 4,

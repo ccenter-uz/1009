@@ -1,18 +1,9 @@
 import { api } from '@/@core/utils/api'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Link } from '@/navigation'
-import {
-  Box,
-  Button,
-
-  Switch,
-  TableContainer,
-  Text,
-  Tooltip,
-  useColorMode
-} from '@chakra-ui/react'
+import { Box, Button, Switch, TableContainer, Text, Tooltip, useColorMode } from '@chakra-ui/react'
 import { useSearchParams } from 'next/navigation'
-import { FC,  useLayoutEffect, useState } from 'react'
+import { FC, useLayoutEffect, useState } from 'react'
 import DialogEntertainmentLinks from './dialog'
 
 // links for button
@@ -57,7 +48,7 @@ const EntertainmentLinks: FC = () => {
   }
 
   return (
-    <>
+    <Box id='enterLinks' aria-label='enter-links'>
       <Box display={'flex'} alignItems={'center'} gap={'5px'} justifyContent={'flex-end'} mb={'0.2em'}>
         <label aria-label='label-edit-switch' htmlFor='label-edit-switch'>
           <img width={'18px'} height={'18px'} src='/pencil.svg' alt='edit' />
@@ -137,7 +128,7 @@ const EntertainmentLinks: FC = () => {
         )}
       </TableContainer>
       <DialogEntertainmentLinks isOpen={linkDialog} onClose={setLinkDialog} />
-    </>
+    </Box>
   )
 }
 

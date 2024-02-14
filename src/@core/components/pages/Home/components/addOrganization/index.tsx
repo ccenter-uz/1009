@@ -66,7 +66,7 @@ const AddOrganization: FC = () => {
           Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis
           tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu.
         </Text>
-        <Link href={'/add-organization'}>
+        <Link href={'/addorg'}>
           <ButtonGen
             width={{ base: '285px', sm: '285px', md: '400px', xl: '420px' }}
             height={{ base: '40px', sm: '40px', md: '60px', xl: '67px' }}

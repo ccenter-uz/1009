@@ -20,15 +20,15 @@ const BreadCrumb: FC<Ibreadcrumb> = ({ item }) => {
       {item?.map((value: Iitem) => (
         <BreadcrumbItem key={value.id}>
           {value.href ? (
-            <BreadcrumbLink
-            aria-current='page'
+            <BreadcrumbLink color={'gray'}
+              aria-current='page'
               href={value.href ? value.href : ''}
               fontSize={{ base: '14px', sm: '14px', md: '16px', xl: '16px' }}
             >
               {value.title}
             </BreadcrumbLink>
           ) : (
-            <Text fontSize={{ base: '14px', sm: '14px', md: '16px', xl: '16px' }}>{value.title}</Text>
+            <Text color={'gray'} fontSize={{ base: '14px', sm: '14px', md: '16px', xl: '16px' }}>{value.title}</Text>
           )}
         </BreadcrumbItem>
       ))}

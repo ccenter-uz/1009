@@ -25,3 +25,12 @@ body {
   padding-bottom: 5px;
   border-bottom: 1.5px solid #009393;
 }
+
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-in {
+    to {
+      opacity: 1;
+    }
+  }
+}

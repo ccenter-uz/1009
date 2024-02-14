@@ -95,3 +95,49 @@ export const DialogEntertainmentLinksAction =async (values:string)=>{
     }
   }
 }
+
+
+// User-settings
+/**
+ * @parmas (values) string
+ */
+export const UserSettingAction =async (values:string)=>{
+  try {
+    const body = values
+    const res = await api.post('example/', body)
+    if (res.status === 200)
+      return {
+        status: 200,
+        message: 'Success'
+      }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    return {
+      status: 200,
+      message: 'Success'
+    }
+  }
+}
+
+/**
+ * @parmas (values) string
+ */
+export const UserSettingPhoneAction =async (values:string)=>{
+  try {
+    const body = values
+    const res = await api.post('example/', body)
+    if (res.status === 200)
+      return {
+        status: 200,
+        message: 'Success'
+      }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    return {
+      status: 200,
+      message: 'Success'
+    }
+  }
+}

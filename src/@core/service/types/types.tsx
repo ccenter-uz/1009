@@ -27,7 +27,6 @@ export type IcolumnTable = {
   height?: string
 }
 export type IrowTable = {
-  key: string
   [key: string]: React.ReactNode
 }
 export type ItableType = {
@@ -70,4 +69,10 @@ export type IOption= {
 export type ISelectAutocomplelte = {
 options: IOption[]
 onSelect: (selectedOption: IOption) => void
+}
+
+
+// PAGINATION
+export type IPagination={
+  pageLimiter?:boolean
 }

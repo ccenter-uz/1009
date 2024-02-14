@@ -1,7 +1,45 @@
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
 import { scssVariables } from '@/@core/utils/scss-variables'
-import { Box, Button, Card, Divider, FormControl, FormLabel, Input, SimpleGrid } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
 import { FC } from 'react'
+import BoxGen from '@/@core/components/reusable/Box'
+import SettingChangeData from './_components/changedata'
+import SettingChangePhone from './_components/changephone'
+import './style.scss'
+
+// styles
+const styles = {
+  inputStyle: {
+    h: { base: '30px', sm: '30px', md: '40px', xl: '40px' },
+    borderRadius: '4px',
+    _focus: { boxShadow: '0 0 0.5px 0.5px teal' },
+    style: { borderColor: 'lightgrey' }
+  },
+  formControlStyle: {
+    mb: { base: '0.5em', sm: '0.5em', md: '1em', xl: '1em' }
+  },
+  buttonStyle: {
+    h: { base: '30px', sm: '30px', md: '40px', xl: '40px' },
+    fontSize: scssVariables.fonts.paragraph,
+    colorScheme: 'teal'
+  },
+  labelStyle: {
+    fontWeight: 400,
+    color: 'grey',
+    fontSize: scssVariables.fonts.paragraph
+  },
+  textStyle: {
+    fontWeight: 600,
+    mb: '1em',
+    fontSize: { base: '13px', sm: '13px', md: '18px', xl: '18px' }
+  },
+  buttonBoxStyle: {
+    mt: { base: '0.5em', sm: '0.5em', md: '1.5em', xl: '1.5em' },
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  }
+}
 
 const Settings: FC = () => {
   const breadcrumblinks = [
@@ -16,43 +54,24 @@ const Settings: FC = () => {
   ]
 
   return (
-    <Box id='settings' aria-label='section' className='wrapper'>
+    <Box
+      id='settings'
+      minH={{ base: '100%', sm: '100%', md: '1080px', xl: '1080px' }}
+      aria-label='section'
+      className='wrapper'
+    >
       <BreadCrumb item={breadcrumblinks} />
-      <Card p={'2em'} boxShadow={scssVariables.boxShadow}>
-        <form>
-          <FormControl>
-            <FormLabel htmlFor='fio-setting'>Ф.И.О:</FormLabel>
-            <Input id='fio-setting' mb={{ base: '0.5em', sm: '0.5em', md: '1.5em', xl: '1em' }} />
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor='oldPassword-setting'>Ведите Старый Пароль:</FormLabel>
-            <Input id='oldPassword-setting' mb={{ base: '0.5em', sm: '0.5em', md: '1.5em', xl: '1em' }} />
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor='newPassword-setting'>Новый Пароль:</FormLabel>
-            <Input id='newPassword-setting' mb={{ base: '0.5em', sm: '0.5em', md: '1.5em', xl: '1em' }} />
-          </FormControl>
-          <Divider my={{ base: '0.5em', sm: '0.5em', md: '1.5em', xl: '1.5em' }} />
-          <SimpleGrid columns={{ base: 1, sm: 1, md: 2, xl: 2 }} gap={'24px'}>
-            <FormControl>
-              <FormLabel htmlFor='phone-setting'>Номер Телефона:</FormLabel>
-              <Input id='phone-setting' mb={{ base: '0.5em', sm: '0.5em', md: '1.5em', xl: '1em' }} />
-            </FormControl>
-            <FormControl w={{ base: '100%', sm: '100%', md: '200px', xl: '200px' }}>
-              <FormLabel htmlFor='code-setting'>Введите СМС Код:</FormLabel>
-              <Input id='code-setting' mb={{ base: '0.5em', sm: '0.5em', md: '1.5em', xl: '1em' }} />
-            </FormControl>
-          </SimpleGrid>
-          <Box
-            mt={{ base: '0.5em', sm: '0.5em', md: '1.5em', xl: '1.5em' }}
-            display={'flex'}
-            justifyContent={'flex-end'}
-            alignItems={'center'}
-          >
-            <Button colorScheme='teal'>Save</Button>
-          </Box>
-        </form>
-      </Card>
+      <BoxGen
+        p={{ base: '1em', sm: '1em', md: '2em', xl: '2em' }}
+        borderRadius={'8px'}
+        boxShadow={scssVariables.boxShadow}
+      >
+        {/* data */}
+        <Text {...styles.textStyle}>Изменить данные о пользователя</Text>
+        <SettingChangeData styles={styles} />
+        {/* phone */}
+        <SettingChangePhone styles={styles} />
+      </BoxGen>
     </Box>
   )
 }
