@@ -74,5 +74,20 @@ onSelect: (selectedOption: IOption) => void
 
 // PAGINATION
 export type IPagination={
-  pageLimiter?:boolean
+  total:number 
+  pageSize:number 
+  current:number 
+  onChange:(arg0:number)=>void
+  onPageSizeChange:(arg0:number)=>void 
+}
+
+export type IPaginationItems ={
+  total:number 
+  pageSize:number 
+  current:number 
+}
+
+export type IFilterTable ={
+  open:boolean 
+  onChange:(values:any)=>void
 }

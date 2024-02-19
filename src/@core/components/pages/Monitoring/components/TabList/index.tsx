@@ -23,7 +23,9 @@ const styles = {
 const TabListMonitoring: FC = () => {
   return (
     <TabList {...styles.tablistStyle}>
-      <Tab {...styles.tab}>Транзакция</Tab>
+      <Tab {...styles.tab} fontSize={scssVariables.fonts.paragraph}>
+        Транзакция
+      </Tab>
     </TabList>
   )
 }
