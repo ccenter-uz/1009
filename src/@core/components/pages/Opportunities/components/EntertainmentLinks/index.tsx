@@ -1,50 +1,115 @@
-import { api } from '@/@core/utils/api'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Link } from '@/navigation'
 import { Box, Button, Switch, TableContainer, Text, Tooltip, useColorMode } from '@chakra-ui/react'
-import { useSearchParams } from 'next/navigation'
-import { FC, useLayoutEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Dispatch, FC, SetStateAction, useEffect, useLayoutEffect, useState } from 'react'
 import DialogEntertainmentLinks from './dialog'
+import { deleteCat, getDataByid, getCat } from '@/app/[locale]/opportunities/[id]/action'
+import Loading from '@/app/[locale]/loading'
+import './style.scss'
+import { IdataInfoFromApi } from '@/@core/service/types/types'
+import Swal from 'sweetalert2'
 
-// links for button
-const selectPageLinks = [
-  {
-    id: 1,
-    title: 'Театр',
-    index: 'Театр'
-  },
-  {
-    id: 2,
-    title: 'Кино',
-    index: 'Кино'
-  },
-  {
-    id: 3,
-    title: 'Выставки',
-    index: 'Выставки'
-  }
-]
+type IenterLinks = {
+  index: string
+  id: number
+  title: string
+}
 
-const EntertainmentLinks: FC = () => {
+type IEnterLinksType = {
+  setData: Dispatch<SetStateAction<any>>
+}
+
+const EntertainmentLinks: FC<IEnterLinksType> = ({ setData }) => {
   const { colorMode } = useColorMode()
   const searchParams = useSearchParams()
-  const selectedPage = searchParams.get('page') || 'Театр'
+  const selectedPage = searchParams.get('page')
   const [linkDialog, setLinkDialog] = useState<boolean>(false)
   const [editLinks, setEditLinks] = useState<boolean>(false)
+  const [enterLinks, setEnterLinks] = useState<IenterLinks[]>()
+  const [editInfo, setEditInfo] = useState<{ title: string; id: number }>()
+  const router = useRouter()
+  // getDatabyId
+  const getDataById = async (id: number) => {
+    if (id !== undefined) {
+      const res = await getDataByid(id)
+      setData(
+        res?.entertainments.map((item: IdataInfoFromApi) => {
+          if (item?.type === 'text') {
+            return {
+              id: item.id,
+              mention: item.mention,
+              warning: item.warning,
+              title: item?.title,
+              type: 'text',
+              content: item.text
+            }
+          } else {
+            return {
+              id: item.id,
+              mention: item.mention,
+              warning: item.warning,
+              title: item?.title,
+              type: 'table',
+              rows: item.table_arr.row,
+              header: item.table_arr.header.map((col: { value: string; title: string }) => ({
+                id: col.value,
+                title: col.value
+              }))
+            }
+          }
+        })
+      )
+    }
+  }
 
+  // getCategories
+  const getCategories = async () => {
+    const res = await getCat()
+
+    if (res) {
+      selectedPage && (await getDataById(res?.filter((link: IenterLinks) => link.title === selectedPage)[0]?.id))
+      setEnterLinks(res.map((link: IenterLinks) => ({ ...link, index: link.title })))
+    }
+  }
+
+  // effect for fetch data by query params
   useLayoutEffect(() => {
-    // try {
-    //   const res = api.get('entertainment', { params: { page: selectedPage } })
-    // } catch (err) {
-    //   console.log(err,'err')
-    // }
+    getCategories()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    console.log(selectedPage, 'slecet')
+  // watch selectedPage change
+  useEffect(() => {
+    if (selectedPage) {
+      const filter = enterLinks?.filter((link: IenterLinks) => link.title === selectedPage)
+      filter && getDataById(filter[0]?.id)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPage])
 
   // handleChangeSwitch
   const handleChangeSwitch = () => {
     setEditLinks(prevState => !prevState)
+  }
+
+  // handleDelete
+  const handleDelete = (id: number) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'if you delete, content inside also will be removed and you won`t be able to revert it!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async result => {
+      if (result.isConfirmed) {
+        await deleteCat(id)
+        router.replace('/opportunities/entertainment')
+        getCategories()
+      }
+    })
   }
 
   return (
@@ -53,7 +118,13 @@ const EntertainmentLinks: FC = () => {
         <label aria-label='label-edit-switch' htmlFor='label-edit-switch'>
           <img width={'18px'} height={'18px'} src='/pencil.svg' alt='edit' />
         </label>
-        <Switch id='label-edit-switch' colorScheme='teal' onChange={handleChangeSwitch} />
+        <Switch
+          id='label-edit-switch'
+          aria-disabled={enterLinks ? false : true}
+          isDisabled={enterLinks ? false : true}
+          colorScheme='teal'
+          onChange={handleChangeSwitch}
+        />
       </Box>
       <TableContainer
         borderRadius={'4px'}
@@ -66,52 +137,89 @@ const EntertainmentLinks: FC = () => {
         px={'20px'}
         mb={'24px'}
       >
-        {selectPageLinks.map(link => {
-          return (
-            <Link key={link.id} href={`?page=${link.index}`} scroll={false}>
-              <Button
-                rightIcon={
-                  editLinks ? (
-                    <Text
-                      as={'span'}
-                      role='button'
-                      aria-label='delete-enter-links'
-                      onClick={e => {
-                        e.preventDefault()
-                        console.log(link.id, 'clicked')
-                      }}
-                      fontSize={scssVariables.fonts.paragraph}
-                      style={{
-                        position: 'absolute',
-                        top: '-0.5em',
-                        right: '-0.5em',
-                        width: '15px',
-                        height: '15px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRadius: '50%',
-                        background: '#e53e3e',
-                        color: 'white',
-                        fontSize: '10px',
-                        zIndex: 99
-                      }}
-                    >
-                      X
-                    </Text>
-                  ) : undefined
-                }
-                className={`${selectedPage?.includes(link.index) && 'active'}`}
-                bg={colorMode === 'dark' ? '#444343' : 'white'}
-                w={{ base: '99px', sm: '99px', md: '167px', xl: '167px' }}
-                h={{ base: '30px', sm: '30px', md: '39px', xl: '39px' }}
-                fontSize={scssVariables.fonts.paragraph}
-              >
-                {link.title}
-              </Button>
-            </Link>
-          )
-        })}
+        {!enterLinks ? (
+          <Loading />
+        ) : (
+          enterLinks?.map((link: IenterLinks) => {
+            return (
+              <Link id='enterlink-btns' key={link.id} href={`?page=${link.index}`} scroll={false}>
+                <Button
+                  onClick={() => sessionStorage.setItem('catId', JSON.stringify(link.id))}
+                  leftIcon={
+                    editLinks ? (
+                      <Text
+                        as={'span'}
+                        role='button'
+                        aria-label='delete-enter-links'
+                        onClick={e => {
+                          e.preventDefault()
+                          setEditInfo({ title: link.title, id: link.id })
+                          setLinkDialog(prevState => !prevState)
+                        }}
+                        fontSize={scssVariables.fonts.paragraph}
+                        style={{
+                          position: 'absolute',
+                          top: '-0.5em',
+                          left: '-0.5em',
+                          width: '15px',
+                          height: '15px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '50%',
+                          background: 'lightgrey',
+                          color: 'white',
+                          fontSize: '10px',
+                          zIndex: 99
+                        }}
+                      >
+                        <img src='/pencil.svg' alt='pencil' width={'12px'} height={'12px'} />
+                      </Text>
+                    ) : undefined
+                  }
+                  rightIcon={
+                    editLinks ? (
+                      <Text
+                        as={'span'}
+                        role='button'
+                        aria-label='delete-enter-links'
+                        onClick={e => {
+                          e.preventDefault()
+                          handleDelete(link.id)
+                        }}
+                        fontSize={scssVariables.fonts.paragraph}
+                        style={{
+                          position: 'absolute',
+                          top: '-0.5em',
+                          right: '-0.5em',
+                          width: '15px',
+                          height: '15px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '50%',
+                          background: '#e53e3e',
+                          color: 'white',
+                          fontSize: '10px',
+                          zIndex: 99
+                        }}
+                      >
+                        X
+                      </Text>
+                    ) : undefined
+                  }
+                  className={`${selectedPage?.includes(link.index) && 'active'}`}
+                  bg={colorMode === 'dark' ? '#444343' : 'white'}
+                  w={{ base: '99px', sm: '99px', md: '167px', xl: '167px' }}
+                  h={{ base: '30px', sm: '30px', md: '39px', xl: '39px' }}
+                  fontSize={scssVariables.fonts.paragraph}
+                >
+                  {link.title}
+                </Button>
+              </Link>
+            )
+          })
+        )}
         {editLinks && (
           <Tooltip label={`Добавить`}>
             <img
@@ -127,7 +235,12 @@ const EntertainmentLinks: FC = () => {
           </Tooltip>
         )}
       </TableContainer>
-      <DialogEntertainmentLinks isOpen={linkDialog} onClose={setLinkDialog} />
+      <DialogEntertainmentLinks
+        isOpen={linkDialog}
+        onClose={setLinkDialog}
+        editInfo={editInfo}
+        getCategories={getCategories}
+      />
     </Box>
   )
 }

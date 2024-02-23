@@ -25,11 +25,15 @@ import {
   Input
 } from '@chakra-ui/react'
 import { scssVariables } from '@/@core/utils/scss-variables'
+import { usePathname } from 'next/navigation'
+import { getUrl } from '@/@core/utils/fn'
+import { createContent, updateContent } from '@/app/[locale]/opportunities/[id]/action'
 
-const EditableTable = ({ isOpen,record,setRecord, onClose }) => {
+const EditableTable = ({ isOpen, record, setRecord, onClose }) => {
   const { colorMode } = useColorMode()
   const row = (record && [record[0].header.map(item => ({ value: item.title })), ...record[0].rows]) || [[]]
-
+  const pathname = usePathname()
+  const lastLink = pathname.replaceAll('/', ' ').split(' ').slice(-1).join()
   const [data, setData] = useState(row)
 
   const handleAddRow = () => {
@@ -47,20 +51,36 @@ const EditableTable = ({ isOpen,record,setRecord, onClose }) => {
   const handleDeleteColumn = index => {
     setData(prevData => prevData.map(row => row.filter((_, i) => i !== index)))
   }
-
-  const handleSave = e => {
+  const handleSave = async e => {
     e.preventDefault()
     const current = e.currentTarget
     const formData = new FormData(current)
-    const body = {
-      title: formData.get('title'),
-      type: 'table',
-      warning: formData.get('warning'),
-      mention: formData.get('mention'),
-      header: data[0],
-      rows: data.slice(1)
-    }
-    console.log(body, 'data')
+    let body
+    lastLink === 'entertainment'
+      ? (body = {
+          category_id: JSON.parse(sessionStorage.getItem('catId')),
+          title: formData.get('title'),
+          type: 'table',
+          warning: formData.get('warning'),
+          mention: formData.get('mention'),
+          table_arr: {
+            header: data[0],
+            row: data.slice(1)
+          }
+        })
+      : (body = {
+          title: formData.get('title'),
+          type: 'table',
+          warning: formData.get('warning'),
+          mention: formData.get('mention'),
+          table_arr: {
+            header: data[0],
+            row: data.slice(1)
+          }
+        })
+    !record
+      ? await createContent(`${getUrl(lastLink)}`, body)
+      : await updateContent(`${getUrl(lastLink)}`, body, record[0]?.id)
   }
 
   // modal

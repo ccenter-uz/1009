@@ -1,7 +1,7 @@
 'use client'
 import { IPagination } from '@/@core/service/types/types'
 import { Box, Button, Select, Text } from '@chakra-ui/react'
-import { ChangeEvent, FC } from 'react'
+import { ChangeEvent, FC, memo } from 'react'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Link } from '@/navigation'
 import { useRouter } from 'next/navigation'
@@ -54,14 +54,16 @@ const selectStyle = {
 const Pagination: FC<IPagination> = ({ total, pageSize, current, onChange, onPageSizeChange }) => {
   const totalPages = Math.ceil(total / pageSize)
   const maxButtons = 5
-  const router =useRouter()
+  const router = useRouter()
 
+  // page-changer
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
       onChange(newPage)
     }
   }
 
+  // size-changer
   const handlePageSizeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const newSize = parseInt(e.target.value)
     onPageSizeChange(newSize)
@@ -69,10 +71,25 @@ const Pagination: FC<IPagination> = ({ total, pageSize, current, onChange, onPag
     router.replace(`?page=${1}&pageSize=${newSize}`)
   }
 
+  // middle-buttons
   const renderPaginationButtons = () => {
     const buttons = []
     const startPage = Math.max(1, current - Math.floor(maxButtons / 2))
     const endPage = Math.min(startPage + maxButtons - 1, totalPages)
+
+    // Add the "First" button
+    buttons.push(
+      <Button
+        {...buttonStyle}
+        isDisabled={current === 1}
+        aria-disabled={current === 1}
+        href={`?page=${1}&pageSize=${pageSize}`}
+        key={0}
+        onClick={() => handlePageChange(1)}
+      >
+        {'<<'}
+      </Button>
+    )
 
     for (let i = startPage; i <= endPage; i++) {
       buttons.push(
@@ -87,6 +104,20 @@ const Pagination: FC<IPagination> = ({ total, pageSize, current, onChange, onPag
         </Button>
       )
     }
+
+    // Add the "Last" button
+    buttons.push(
+      <Button
+        {...buttonStyle}
+        href={`?page=${totalPages}&pageSize=${pageSize}`}
+        key={totalPages + 1}
+        isDisabled={current === totalPages}
+        aria-disabled={current === totalPages}
+        onClick={() => handlePageChange(totalPages)}
+      >
+        {'>>'}
+      </Button>
+    )
 
     return buttons
   }
@@ -116,7 +147,7 @@ const Pagination: FC<IPagination> = ({ total, pageSize, current, onChange, onPag
       {renderPaginationButtons()}
       <Button
         {...buttonStyle}
-        href={`?page=${current === totalPages ? totalPages:current + 1}&pageSize=${pageSize}`}
+        href={`?page=${current === totalPages ? totalPages : current + 1}&pageSize=${pageSize}`}
         isDisabled={current === totalPages}
         aria-disabled={current === totalPages}
         onClick={() => handlePageChange(current + 1)}
@@ -134,4 +165,4 @@ const Pagination: FC<IPagination> = ({ total, pageSize, current, onChange, onPag
   )
 }
 
-export default Pagination
+export default memo(Pagination)

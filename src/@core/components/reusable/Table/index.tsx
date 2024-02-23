@@ -3,7 +3,6 @@ import { ItableType } from '@/@core/service/types/types'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
-import Pagination from '../Pagination'
 
 /* 
 columns=[
@@ -22,7 +21,7 @@ dataSource=[
   ]
 */
 
-const TableGen: FC<ItableType> = ({ columns, dataSource, border = false, RowBg, ColBg, pagination = false }) => {
+const TableGen: FC<ItableType> = ({ columns, dataSource, border = false, RowBg, ColBg }) => {
   const { colorMode } = useColorMode()
 
   return (
@@ -59,15 +58,15 @@ const TableGen: FC<ItableType> = ({ columns, dataSource, border = false, RowBg, 
                 }
                 key={rowIndex}
               >
-                {columns.map(column => (
+                {columns.map((column, colIndex) => (
                   <Td
                     fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}
                     p={{ base: '8px 10px', sm: '8px 10px', md: '16px 24px', xl: '16px 24px' }}
                     borderRight={border ? '1px solid #E2E8F0' : 'none'}
                     textAlign={column.align}
-                    key={column.key}
+                    key={colIndex}
                   >
-                    {row[column.dataIndex]}
+                    {column?.render ? column?.render(row[column.dataIndex], row, rowIndex) : row[column.dataIndex]}
                   </Td>
                 ))}
               </Tr>
@@ -75,7 +74,6 @@ const TableGen: FC<ItableType> = ({ columns, dataSource, border = false, RowBg, 
           </Tbody>
         </Table>
       </TableContainer>
-      {pagination && <Pagination />}
     </>
   )
 }

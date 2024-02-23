@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import dynamic from 'next/dynamic'
 import './style.scss'
+import Hero from './components/Hero'
+import SearchPanel from './components/SearchPanel'
 
 // dynamic imports
-const Hero = dynamic(() => import('./components/Hero'))
-const SearchPanel = dynamic(() => import('./components/SearchPanel'))
 const OtherOpportunities = dynamic(() => import('./components/OtherOpportunities'))
 const VideoInstruction = dynamic(() => import('./components/VideoInstruction'))
 const Tariffs = dynamic(() => import('./components/Tariffs'))

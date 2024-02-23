@@ -20,11 +20,16 @@ import {
 } from '@chakra-ui/react'
 import { IRichEditor } from '@/@core/service/types/types'
 import { scssVariables } from '@/@core/utils/scss-variables'
+import { createContent, updateContent } from '@/app/[locale]/opportunities/[id]/action'
+import { getUrl } from '@/@core/utils/fn'
+import { usePathname } from 'next/navigation'
 // dynamic import Quill
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <Loading /> })
 
 const RichEditor: FC<IRichEditor> = ({ isOpen, record, setRecord, onClose }) => {
   const [value, setValue] = useState<string>(record ? record[0].content : '')
+  const pathname = usePathname()
+  const lastLink = pathname.replaceAll('/', ' ').split(' ').slice(-1).join()
 
   // handleClose
   const handleClose = () => {
@@ -35,18 +40,30 @@ const RichEditor: FC<IRichEditor> = ({ isOpen, record, setRecord, onClose }) => 
   }
 
   // handleSave
-  const handleSave = (e: FormEvent<HTMLFormElement>) => {
+  const handleSave = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const current = e.currentTarget
     const formData = new FormData(current)
-    const body = {
-      title: formData.get('title'),
-      type: 'text',
-      warning: formData.get('warning'),
-      mention: formData.get('mention'),
-      content: value
-    }
-    console.log(body, 'data')
+    let body
+    lastLink === 'entertainment'
+      ? (body = {
+          category_id: JSON.parse(sessionStorage.getItem('catId')),
+          title: formData.get('title'),
+          type: 'text',
+          warning: formData.get('warning'),
+          mention: formData.get('mention'),
+          text: value
+        })
+      : (body = {
+          title: formData.get('title'),
+          type: 'text',
+          warning: formData.get('warning'),
+          mention: formData.get('mention'),
+          text: value
+        })
+    !record
+      ? await createContent(`${getUrl(lastLink)}`, body)
+      : await updateContent(`${getUrl(lastLink)}`, body, record[0]?.id)
   }
 
   return (

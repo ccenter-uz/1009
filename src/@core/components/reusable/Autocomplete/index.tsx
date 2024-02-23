@@ -7,7 +7,7 @@ import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 const SelectAutocomplete: FC<ISelectAutocomplelte> = ({ options, onSelect }) => {
   const [inputValue, setInputValue] = useState('')
   const [isOpen, setIsOpen] = useState(false)
-  const optionFilter = options.filter(option => option.label.toLowerCase().includes(inputValue.toLowerCase()))
+  const optionFilter = options?.filter(option => option.label.toLowerCase().includes(inputValue.toLowerCase()))
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

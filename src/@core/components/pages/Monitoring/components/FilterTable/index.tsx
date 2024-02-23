@@ -1,9 +1,27 @@
-'use client'
 import { Box, Button, FormControl, FormLabel, Input, Select, SimpleGrid } from '@chakra-ui/react'
 import { FC } from 'react'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { IFilterTable } from '@/@core/service/types/types'
 import { useForm } from 'react-hook-form'
+
+// select-style
+const styleSelect = {
+  _focus: {
+    border: `1px solid teal`,
+    boxShadow: `0 0 2px ${scssVariables.blockBgColor}`
+  },
+  h: { base: '25px', sm: '25px', md: '35px', xl: '35px' },
+  borderRadius: '4px',
+  border: '1px solid lightgrey',
+  cursor: 'pointer',
+  fontSize: scssVariables.fonts.paragraph
+}
+// buttonStyle
+const buttonStyle = {
+  w: { base: '85px', sm: '85px', md: 'auto', xl: 'auto' },
+  h: { base: '28px', sm: '28px', md: '35px', xl: '40px' },
+  fontSize: scssVariables.fonts.paragraph
+}
 
 const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
   const { register, handleSubmit, reset } = useForm()
@@ -21,16 +39,7 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
             <FormLabel fontWeight={400} m={0} htmlFor='status' fontSize={scssVariables.fonts.paragraph}>
               Статус:
             </FormLabel>
-            <Select
-              {...register('status')}
-              h={{ base: '25px', sm: '25px', md: '35px', xl: '35px' }}
-              borderRadius={'4px'}
-              border={'1px solid lightgrey'}
-              cursor={'pointer'}
-              id='status'
-              defaultValue={'all'}
-              fontSize={scssVariables.fonts.paragraph}
-            >
+            <Select {...styleSelect} {...register('status')} id='status' defaultValue={'all'}>
               <option value={'all'}>Все</option>
               <option value={'success'}>Успешно</option>
               <option value={'failed'}>Неуспешный</option>
@@ -42,13 +51,10 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
               cумма:
             </FormLabel>
             <Input
+              {...styleSelect}
               {...register('amount')}
               p={{ base: '5px', sm: '5px', md: 'auto', xl: 'auto' }}
-              fontSize={scssVariables.fonts.paragraph}
-              h={{ base: '25px', sm: '25px', md: '35px', xl: '35px' }}
-              borderRadius={'4px'}
               type='text'
-              border={'1px solid lightgrey'}
               id='amount'
             />
           </FormControl>
@@ -57,13 +63,10 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
               c:
             </FormLabel>
             <Input
+              {...styleSelect}
               {...register('date_from')}
               p={{ base: '5px', sm: '5px', md: 'auto', xl: 'auto' }}
-              fontSize={scssVariables.fonts.paragraph}
-              h={{ base: '25px', sm: '25px', md: '35px', xl: '35px' }}
-              borderRadius={'4px'}
               type='date'
-              border={'1px solid lightgrey'}
               id='date-from'
             />
           </FormControl>
@@ -72,13 +75,10 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
               до:
             </FormLabel>
             <Input
+              {...styleSelect}
               {...register('date_to')}
               p={{ base: '5px', sm: '5px', md: 'auto', xl: 'auto' }}
-              fontSize={scssVariables.fonts.paragraph}
-              h={{ base: '25px', sm: '25px', md: '35px', xl: '35px' }}
-              borderRadius={'4px'}
               type='date'
-              border={'1px solid lightgrey'}
               id='date-to'
             />
           </FormControl>
@@ -87,13 +87,10 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
               c:
             </FormLabel>
             <Input
+              {...styleSelect}
               {...register('time_from')}
               p={{ base: '5px', sm: '5px', md: 'auto', xl: 'auto' }}
-              fontSize={scssVariables.fonts.paragraph}
-              h={{ base: '25px', sm: '25px', md: '35px', xl: '35px' }}
-              borderRadius={'4px'}
               type='time'
-              border={'1px solid lightgrey'}
               id='time_from'
             />
           </FormControl>
@@ -102,37 +99,19 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
               до:
             </FormLabel>
             <Input
+              {...styleSelect}
               {...register('time_to')}
               p={{ base: '5px', sm: '5px', md: 'auto', xl: 'auto' }}
-              fontSize={scssVariables.fonts.paragraph}
-              h={{ base: '25px', sm: '25px', md: '35px', xl: '35px' }}
-              borderRadius={'4px'}
               type='time'
-              border={'1px solid lightgrey'}
               id='time_to'
             />
           </FormControl>
         </SimpleGrid>
         <Box display={'flex'} alignItems={'center'} gap={'8px'} justifyContent={'flex-end'}>
-          <Button
-            type='submit'
-            form='filter-form'
-            w={{ base: '85px', sm: '85px', md: 'auto', xl: 'auto' }}
-            h={{ base: '28px', sm: '28px', md: '35px', xl: '40px' }}
-            fontSize={scssVariables.fonts.paragraph}
-            variant='primary'
-            bg={'teal'}
-            color={'#fff'}
-          >
+          <Button {...buttonStyle} type='submit' form='filter-form' variant='primary' bg={'teal'} color={'#fff'}>
             Пременить
           </Button>
-          <Button
-            onClick={handleReset}
-            w={{ base: '85px', sm: '85px', md: 'auto', xl: 'auto' }}
-            h={{ base: '28px', sm: '28px', md: '35px', xl: '40px' }}
-            fontSize={scssVariables.fonts.paragraph}
-            color={'#252525'}
-          >
+          <Button {...buttonStyle} onClick={handleReset} color={'#252525'}>
             Отменить
           </Button>
         </Box>

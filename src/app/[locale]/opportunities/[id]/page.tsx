@@ -1,5 +1,5 @@
 'use client'
-import { FC, useState } from 'react'
+import { FC, useLayoutEffect, useState } from 'react'
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
 import EditableTable from '@/@core/components/reusable/ExcelTable'
 import {
@@ -25,14 +25,15 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { useLang } from '@/@core/service/hooks/useLang'
 import EntertainmentLinks from '@/@core/components/pages/Opportunities/components/EntertainmentLinks'
 import './style.scss'
+import { IdataInfo, IdataInfoFromApi } from '@/@core/service/types/types'
+import Swal from 'sweetalert2'
+import { deleteContent, getData } from './action'
+import { getUrl } from '@/@core/utils/fn'
 
-
-type Props = {}
-
-const Communal: FC<Props> = props => {
+const Opportunities: FC = () => {
   const pathname = usePathname()
-  const searchParams = useSearchParams()
   const lastLink = pathname.replaceAll('/', ' ').split(' ').slice(-1).join()
+  const searchParams = useSearchParams()
   const { t } = useLang()
   const breadcrumblinks = [
     { id: 1, title: `${t('opportunities')}` },
@@ -43,54 +44,81 @@ const Communal: FC<Props> = props => {
   const [isExcelTableOpen, setIsExcelTableOpen] = useState<boolean>(false)
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false)
   const [record, setRecord] = useState<any>(null)
-
-  const exampleData = [
-    {
-      id: 1,
-      title: 'Table title',
-      type: 'table',
-      mention:
-        'В связи с тем, что 1 октября (День учителя и наставника) выпадает на воскресенье, нерабочий день в 2023 году переносится на 2 октября (понедельник) в соответствии с новой редакцией Трудового кодекса',
-      rows: [
-        [{ value: '1' }, { value: '2' }, { value: '3' }],
-        [{ value: '1' }, { value: '2' }, { value: '3' }],
-        [{ value: '1' }, { value: '2' }, { value: '3' }]
-      ],
-      header: [
-        { id: 1, title: 'Column 1' },
-        { id: 2, title: 'Column 2' },
-        { id: 3, title: 'Column 3' }
-      ]
-    },
-    {
-      id: 2,
-      title: 'Editor title',
-      type: 'text',
-      warning:
-        'Таким образом, за счёт дополнительных нерабочих дней и переноса субботы в период празднования Нового года узбекистанцы отдохнут четыре дня подряд (с 31 декабря 2022 года по 3 января 2023 года).. ',
-      content: '<p>HELLO WORLD</p>'
-    }
-  ]
+  const [dataInfo, setData] = useState<IdataInfo[]>([])
 
   // handleDelete
   const handleDelete = (id: string | number) => {
-    const sectionItem = exampleData.filter(item => item.id === id)[0].id.toString()
-
-    console.log(sectionItem, 'sectionID')
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'if you delete, content inside also will be removed and you won`t be able to revert it!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async result => {
+      if (result.isConfirmed) {
+        await deleteContent(`${getUrl(lastLink)}`, id)
+      }
+    })
   }
+
+  // chooseCat
+  const chooseCat = (content: 'table' | 'editor') => {
+    if (lastLink === 'entertainment' && searchParams.size === 0) {
+      Swal.fire({ text: 'Please, choose category first!', icon: 'warning' })
+    } else {
+      content === 'table' ? setIsExcelTableOpen(prev => !prev) : setIsEditorOpen(prev => !prev)
+    }
+  }
+
+  useLayoutEffect(() => {
+    if (lastLink !== 'entertainment') {
+      getData(`${getUrl(lastLink)}`).then(res => {
+        setData(
+          res?.map((item: IdataInfoFromApi) => {
+            if (item?.type === 'text') {
+              return {
+                id: item.id,
+                mention: item.mention,
+                warning: item.warning,
+                title: item?.title,
+                type: 'text',
+                content: item.text
+              }
+            } else {
+              return {
+                id: item.id,
+                mention: item.mention,
+                warning: item.warning,
+                title: item?.title,
+                type: 'table',
+                rows: item.table_arr.row,
+                header: item.table_arr.header.map((col: { value: string; title: string }) => ({
+                  id: col.value,
+                  title: col.value
+                }))
+              }
+            }
+          })
+        )
+      })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Box id='opportunities' aria-current='page' minH={{ base: '100%', sm: '100%', md: '1080px', xl: '1080px' }}>
       <BreadCrumb item={breadcrumblinks} />
-      <SearchPanelOpportunities options={exampleData.map(option => ({ label: option.title, value: option.title }))} />
-      {lastLink === 'entertainment' && <EntertainmentLinks />}
+      <SearchPanelOpportunities options={dataInfo?.map(option => ({ label: option.title, value: option.title }))} />
+      {lastLink === 'entertainment' && <EntertainmentLinks setData={setData} />}
       <Box display={'flex'} alignItems={'center'} gap={'0 8px'}>
         <Button
           leftIcon={<img src='/add.svg' alt='add-circle-table' />}
           aria-label='create-table'
           fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
           h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
-          onClick={() => setIsExcelTableOpen(prev => !prev)}
+          onClick={() => chooseCat('table')}
         >
           Create table
         </Button>
@@ -99,13 +127,13 @@ const Communal: FC<Props> = props => {
           aria-label='create-text'
           fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
           h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
-          onClick={() => setIsEditorOpen(prev => !prev)}
+          onClick={() => chooseCat('editor')}
         >
           Create Editor
         </Button>
       </Box>
       {/* Accordion renders from API data */}
-      {exampleData?.map(data => (
+      {dataInfo?.map(data => (
         <Accordion key={data.id} allowMultiple my={{ base: '8px', sm: '8px', md: '1em', xl: '1em' }}>
           <AccordionItem borderTop={'none'} style={{ borderBottom: '0.5px solid #d3d3d373' }}>
             <AccordionButton
@@ -136,8 +164,8 @@ const Communal: FC<Props> = props => {
                     aria-label='delete-button'
                     onClick={() =>
                       data.type === 'text'
-                        ? (setRecord(exampleData.filter(item => item.id === data.id)), setIsEditorOpen(true))
-                        : (setRecord(exampleData.filter(item => item.id === data.id)), setIsExcelTableOpen(true))
+                        ? (setRecord(dataInfo.filter(item => item.id === data.id)), setIsEditorOpen(true))
+                        : (setRecord(dataInfo.filter(item => item.id === data.id)), setIsExcelTableOpen(true))
                     }
                   />
                 </Tooltip>
@@ -182,4 +210,4 @@ const Communal: FC<Props> = props => {
     </Box>
   )
 }
-export default Communal
+export default Opportunities

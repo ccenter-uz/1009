@@ -17,7 +17,7 @@ row={[
   ]} 
   */
 
-const GuestTable: FC<IGuestTable> = ({ row = [[]], columns = [] }) => {
+const GuestTable: FC<IGuestTable> = ({ row, columns = [] }) => {
   const { colorMode } = useColorMode()
 
   return (
@@ -42,7 +42,7 @@ const GuestTable: FC<IGuestTable> = ({ row = [[]], columns = [] }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {row.map((row, rowIndex) => (
+          {row?.map((row, rowIndex) => (
             <Tr
               key={rowIndex}
               _even={colorMode === 'dark' ? { background: '#484a4a' } : { background: scssVariables.blockBgColor }}

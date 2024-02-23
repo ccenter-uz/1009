@@ -34,12 +34,6 @@ export const defaultLinks = [
         title: 'Информация о г. Ташкент',
         href: '/opportunities/info-tashkent',
         icon: ''
-      },
-      {
-        id: 16,
-        title: 'Информация о в. Ташкент',
-        href: '/opportunities/info-tash-village',
-        icon: ''
       }
     ]
   },

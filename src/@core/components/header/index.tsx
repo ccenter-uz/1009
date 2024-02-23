@@ -88,7 +88,7 @@ const Header: FC = () => {
                   <MenuList>
                     {link.subMenu.map(menu => (
                       <Link
-                        role='menuItem'
+                        role='menuItem-inside'
                         aria-current='page'
                         key={menu.id}
                         href={menu.href}

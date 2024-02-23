@@ -1,5 +1,5 @@
 'use client'
-import FilterTable from '@/@core/components/FilterTable'
+import FilterTable from '@/@core/components/pages/Monitoring/components/FilterTable'
 import BoxGen from '@/@core/components/reusable/Box'
 import Pagination from '@/@core/components/reusable/Pagination'
 import TableGen from '@/@core/components/reusable/Table'
@@ -7,7 +7,7 @@ import { IPaginationItems } from '@/@core/service/types/types'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Box, Button, Text } from '@chakra-ui/react'
 import { useSearchParams } from 'next/navigation'
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 
 const styleTabpanel = {
   p: { base: '0.5em', sm: '0.5em', md: '1em', xl: '1em' },
@@ -64,17 +64,17 @@ const TransactionsPanel: FC = () => {
   ]
 
   // Pagination
-  const handlePagination = (page: number) => {
+  const handlePagination = useCallback((page: number) => {
     setPagination(prevState => ({ ...prevState, current: page }))
-  }
+  }, [])
 
   // pageSizeChange
-  const handlePageSizeChange = (pageSize: number) => {
+  const handlePageSizeChange = useCallback((pageSize: number) => {
     setPagination(prevState => ({ ...prevState, pageSize: pageSize }))
-  }
+  }, [])
 
   // handleFilter
-  const handleFilter = values => {
+  const handleFilter = (values: any) => {
     console.log(values, 'value')
   }
 
@@ -84,6 +84,9 @@ const TransactionsPanel: FC = () => {
         <Text fontSize={scssVariables.fonts.paragraph}>Отчет о транзакции:</Text>
         <Box display={'flex'} alignItems={'center'} gap={'10px'}>
           <Box
+            w={{ base: '16px', sm: '16px', md: '22px', xl: '22px' }}
+            h={{ base: '16px', sm: '16px', md: '22px', xl: '22px' }}
+            _hover={{ cursor: 'pointer', opacity: '0.7', transition: 'all 0.3s ease' }}
             as='img'
             src='/equalizer-fill.svg'
             alt='equalizer-fill'

@@ -1,4 +1,4 @@
-import { SetStateAction } from 'react'
+import { ReactNode, SetStateAction } from 'react'
 
 // signUp user type
 export type Iuser = {
@@ -25,6 +25,7 @@ export type IcolumnTable = {
   align?: 'left' | 'center' | 'right' | any
   width?: string
   height?: string
+  render?: any
 }
 export type IrowTable = {
   [key: string]: React.ReactNode
@@ -35,7 +36,6 @@ export type ItableType = {
   ColBg?: string
   RowBg?: string
   border?: boolean
-  pagination?: boolean
 }
 
 type IGuestTableRow = {
@@ -59,35 +59,58 @@ export type IRichEditor = {
   setRecord: SetStateAction<any>
 }
 
-
 // Autocomplete
-export type IOption= {
-  value:string 
-  label:string
+export type IOption = {
+  value: string
+  label: string
 }
 
 export type ISelectAutocomplelte = {
-options: IOption[]
-onSelect: (selectedOption: IOption) => void
+  options: IOption[]
+  onSelect: (selectedOption: IOption) => void
 }
-
 
 // PAGINATION
-export type IPagination={
-  total:number 
-  pageSize:number 
-  current:number 
-  onChange:(arg0:number)=>void
-  onPageSizeChange:(arg0:number)=>void 
+export type IPagination = {
+  total: number
+  pageSize: number
+  current: number
+  onChange: (arg0: number) => void
+  onPageSizeChange: (arg0: number) => void
 }
 
-export type IPaginationItems ={
-  total:number 
-  pageSize:number 
-  current:number 
+export type IPaginationItems = {
+  total: number
+  pageSize: number
+  current: number
 }
 
-export type IFilterTable ={
-  open:boolean 
-  onChange:(values:any)=>void
+export type IFilterTable = {
+  open: boolean
+  onChange: (values: any) => void
+  children?: ReactNode
+}
+
+export type IdataInfoFromApi = {
+  id: string
+  mention: string
+  table_arr: {
+    header: any
+    row: any
+  }
+  text: string
+  title: string
+  warning: string
+  type: 'text' | 'table'
+}
+
+export type IdataInfo = {
+  id: string
+  mention: string
+  warning: string
+  title: string
+  type: 'text' | 'table'
+  content?: string
+  rows?: any
+  header?: any
 }

@@ -1,5 +1,5 @@
 import InputGen from '@/@core/components/reusable/Input'
-import { DialogEntertainmentLinksAction } from '@/@core/service/helpers/actions'
+import { createCat, updateCat } from '@/app/[locale]/opportunities/[id]/action'
 import {
   Box,
   Button,
@@ -11,32 +11,46 @@ import {
   ModalHeader,
   ModalOverlay
 } from '@chakra-ui/react'
-import { Dispatch, FC, SetStateAction } from 'react'
+import { useRouter } from 'next/navigation'
+import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
 import { useForm } from 'react-hook-form'
 
 type IDialogTypes = {
   isOpen: boolean
   onClose: Dispatch<SetStateAction<boolean>>
+  editInfo?: { title: string; id: number }
+  getCategories: () => void
 }
 
-const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose }) => {
+const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, editInfo, getCategories }) => {
   const { pending } = useFormStatus()
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, reset } = useForm()
+  const router = useRouter()
   //   handleClose
   const handleClose = () => {
     onClose(prevState => (prevState = false))
+    reset({ title: '' })
   }
 
   //   actionSubmit
   const actionSubmit = async (e: any) => {
-    const res = await DialogEntertainmentLinksAction(e)
-
-    if (!res) return
-    if (res.status === 200) {
-      console.log(res.message, 'res')
+    if (editInfo) {
+      await updateCat(editInfo.id, e)
+      handleClose()
+      router.replace('/opportunities/entertainment')
+      getCategories()
+    } else {
+      await createCat(e)
+      handleClose()
+      getCategories()
     }
   }
+
+  useEffect(() => {
+    editInfo && reset({ title: editInfo.title })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editInfo])
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
