@@ -1,24 +1,23 @@
 'use server'
 import { api } from '@/@core/utils/api'
 import { Ilogin, Ipin, Iuser } from '../types/types'
+import { cookies } from 'next/headers'
 
 // Login
 export const Login = async (values: Ilogin) => {
   try {
     const body = values
-    const res = await api.post('example/', body)
-    if (res.status === 200)
+    const res = await api.post('/Auth/user/signIn', body)
+    if (res.status === 200) {
+      cookies().set('access_token', res.data.token)
+
       return {
         status: 200,
-        message: 'Success'
+        message: res.data.message
       }
+    }
   } catch (err) {
     console.log(err)
-  } finally {
-    return {
-      status: 200,
-      message: 'Success'
-    }
   }
 }
 

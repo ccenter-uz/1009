@@ -28,8 +28,9 @@ import { scssVariables } from '@/@core/utils/scss-variables'
 import { usePathname } from 'next/navigation'
 import { getUrl } from '@/@core/utils/fn'
 import { createContent, updateContent } from '@/app/[locale]/opportunities/[id]/action'
+import { toast } from 'react-toastify'
 
-const EditableTable = ({ isOpen, record, setRecord, onClose }) => {
+const EditableTable = ({ isOpen, record, setRecord, onClose, setGetAgain }) => {
   const { colorMode } = useColorMode()
   const row = (record && [record[0].header.map(item => ({ value: item.title })), ...record[0].rows]) || [[]]
   const pathname = usePathname()
@@ -78,9 +79,21 @@ const EditableTable = ({ isOpen, record, setRecord, onClose }) => {
             row: data.slice(1)
           }
         })
-    !record
-      ? await createContent(`${getUrl(lastLink)}`, body)
-      : await updateContent(`${getUrl(lastLink)}`, body, record[0]?.id)
+    if (!record) {
+      const res = await createContent(`${getUrl(lastLink)}`, body)
+      if (res?.status === 'success') {
+        toast.success(res.message, { position: 'bottom-right' })
+        setGetAgain(prev => !prev)
+        handleCloseModal()
+      }
+    } else {
+      const res = await updateContent(`${getUrl(lastLink)}`, body, record[0]?.id)
+      if (res?.status === 'success') {
+        toast.success(res.message, { position: 'bottom-right' })
+        setGetAgain(prev => !prev)
+        handleCloseModal()
+      }
+    }
   }
 
   // modal
@@ -99,11 +112,12 @@ const EditableTable = ({ isOpen, record, setRecord, onClose }) => {
         <Divider mb={'1em'} />
         <ModalCloseButton />
         <form id='table-modal-form' onSubmit={handleSave}>
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel htmlFor='title' fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}>
               Title of section:
             </FormLabel>
             <Input
+              _focus={{ border: `none`, boxShadow: '0 0 0px 2px teal' }}
               defaultValue={record && record[0].title}
               name='title'
               id='title'
@@ -121,6 +135,7 @@ const EditableTable = ({ isOpen, record, setRecord, onClose }) => {
               Warning information:
             </FormLabel>
             <Textarea
+              _focus={{ border: `none`, boxShadow: '0 0 0px 2px teal' }}
               defaultValue={record && record[0].warning}
               fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
               name='warning'
@@ -140,6 +155,7 @@ const EditableTable = ({ isOpen, record, setRecord, onClose }) => {
               Mention information:
             </FormLabel>
             <Textarea
+              _focus={{ border: `none`, boxShadow: '0 0 0px 2px teal' }}
               defaultValue={record && record[0].mention}
               fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
               name='mention'

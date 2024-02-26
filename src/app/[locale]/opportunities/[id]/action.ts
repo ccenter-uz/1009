@@ -1,7 +1,5 @@
-// 'use server'
+'use server'
 import { api } from '@/@core/utils/api'
-import { toast } from 'react-toastify'
-
 // ENTERTAINMENT->LINKS
 
 // GET-CAT
@@ -21,7 +19,7 @@ export const createCat = async (values: string) => {
     const body = values
     const res = await api.post('EntertainmentCategories/create', body)
     if (!res) return null
-    if (res.status === 201) return toast.success('Created', { position: 'bottom-right' })
+    if (res.status === 201) return { status: 'success', message: 'Created' }
   } catch (err) {
     console.log(err)
   }
@@ -33,7 +31,7 @@ export const deleteCat = async (id: number) => {
     const res = await api.delete(`EntertainmentCategories/delete/${id}`)
 
     if (!res) return null
-    if (res.status === 204) return toast.warn('Deleted', { position: 'bottom-right' })
+    if (res.status === 204) return { status: 'success', message: 'Deleted' }
   } catch (err) {
     console.log(err, 'err')
   }
@@ -45,7 +43,7 @@ export const updateCat = async (id: number, value: string) => {
     const body = value
     const res = await api.patch(`EntertainmentCategories/update/${id}`, body)
     if (!res) return null
-    if (res.status === 204) return toast.success('Updated', { position: 'bottom-right' })
+    if (res.status === 204) return { status: 'success', message: 'Updated' }
   } catch (err) {
     console.log(err, 'err')
   }
@@ -80,19 +78,19 @@ export const createContent = async (url: string, body: any) => {
   try {
     const res = await api.post(`${url}/create`, body)
     if (!res) return null
-    if (res.status === 201) return toast.success('Created', { position: 'bottom-right' })
+    if (res.status === 201) return { status: 'success', message: 'Created' }
   } catch (err) {
     console.log(err)
   }
 }
 
 // UPDATE
-export const updateContent = async (url: string, body: any,id:string | number) => {
+export const updateContent = async (url: string, body: any, id: string | number) => {
   try {
     const res = await api.patch(`${url}/update/${id}`, body)
 
     if (!res) return null
-    if (res.status === 204) return toast.success('Updated', { position: 'bottom-right' })
+    if (res.status === 204) return { status: 'success', message: 'Updated' }
   } catch (err) {
     console.log(err, 'err')
   }
@@ -103,7 +101,7 @@ export const deleteContent = async (url: string, id: any) => {
   try {
     const res = await api.delete(`${url}/delete/${id}`)
     if (!res) return null
-    if (res.status === 204) return toast.success('Deleted', { position: 'bottom-right' })
+    if (res.status === 204) return { status: 'success', message: 'Deleted' }
   } catch (err) {
     console.log(err)
   }

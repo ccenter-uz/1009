@@ -9,6 +9,7 @@ import Loading from '@/app/[locale]/loading'
 import './style.scss'
 import { IdataInfoFromApi } from '@/@core/service/types/types'
 import Swal from 'sweetalert2'
+import { toast } from 'react-toastify'
 
 type IenterLinks = {
   index: string
@@ -18,9 +19,10 @@ type IenterLinks = {
 
 type IEnterLinksType = {
   setData: Dispatch<SetStateAction<any>>
+  getAgain?: boolean
 }
 
-const EntertainmentLinks: FC<IEnterLinksType> = ({ setData }) => {
+const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
   const { colorMode } = useColorMode()
   const searchParams = useSearchParams()
   const selectedPage = searchParams.get('page')
@@ -77,7 +79,7 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData }) => {
   useLayoutEffect(() => {
     getCategories()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [getAgain])
 
   // watch selectedPage change
   useEffect(() => {
@@ -105,9 +107,12 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData }) => {
       confirmButtonText: 'Yes, delete it!'
     }).then(async result => {
       if (result.isConfirmed) {
-        await deleteCat(id)
-        router.replace('/opportunities/entertainment')
-        getCategories()
+        const res = await deleteCat(id)
+        if (res?.status === 'success') {
+          toast.success(res.message, { position: 'bottom-right' })
+          router.replace('/opportunities/entertainment')
+          getCategories()
+        }
       }
     })
   }

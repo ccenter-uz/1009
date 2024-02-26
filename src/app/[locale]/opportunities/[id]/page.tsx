@@ -29,6 +29,7 @@ import { IdataInfo, IdataInfoFromApi } from '@/@core/service/types/types'
 import Swal from 'sweetalert2'
 import { deleteContent, getData } from './action'
 import { getUrl } from '@/@core/utils/fn'
+import { toast } from 'react-toastify'
 
 const Opportunities: FC = () => {
   const pathname = usePathname()
@@ -45,6 +46,7 @@ const Opportunities: FC = () => {
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false)
   const [record, setRecord] = useState<any>(null)
   const [dataInfo, setData] = useState<IdataInfo[]>([])
+  const [getAgain, setGetAgain] = useState<boolean>(false)
 
   // handleDelete
   const handleDelete = (id: string | number) => {
@@ -58,7 +60,10 @@ const Opportunities: FC = () => {
       confirmButtonText: 'Yes, delete it!'
     }).then(async result => {
       if (result.isConfirmed) {
-        await deleteContent(`${getUrl(lastLink)}`, id)
+        const res = await deleteContent(`${getUrl(lastLink)}`, id)
+        if (res?.status === 'success') {
+          toast.success(res.message, { position: 'bottom-right' })
+        }
       }
     })
   }
@@ -72,9 +77,11 @@ const Opportunities: FC = () => {
     }
   }
 
-  useLayoutEffect(() => {
+  // getData
+  const getDataAnother = async () => {
     if (lastLink !== 'entertainment') {
-      getData(`${getUrl(lastLink)}`).then(res => {
+      const res = await getData(`${getUrl(lastLink)}`)
+      res &&
         setData(
           res?.map((item: IdataInfoFromApi) => {
             if (item?.type === 'text') {
@@ -102,16 +109,19 @@ const Opportunities: FC = () => {
             }
           })
         )
-      })
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }
+
+  useLayoutEffect(() => {
+    getDataAnother()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getAgain])
 
   return (
     <Box id='opportunities' aria-current='page' minH={{ base: '100%', sm: '100%', md: '1080px', xl: '1080px' }}>
       <BreadCrumb item={breadcrumblinks} />
       <SearchPanelOpportunities options={dataInfo?.map(option => ({ label: option.title, value: option.title }))} />
-      {lastLink === 'entertainment' && <EntertainmentLinks setData={setData} />}
+      {lastLink === 'entertainment' && <EntertainmentLinks getAgain={getAgain} setData={setData} />}
       <Box display={'flex'} alignItems={'center'} gap={'0 8px'}>
         <Button
           leftIcon={<img src='/add.svg' alt='add-circle-table' />}
@@ -201,11 +211,23 @@ const Opportunities: FC = () => {
       ))}
       {/* editableTable */}
       {isExcelTableOpen && (
-        <EditableTable record={record} setRecord={setRecord} isOpen={isExcelTableOpen} onClose={setIsExcelTableOpen} />
+        <EditableTable
+          setGetAgain={setGetAgain}
+          record={record}
+          setRecord={setRecord}
+          isOpen={isExcelTableOpen}
+          onClose={setIsExcelTableOpen}
+        />
       )}
       {/* richEditor */}
       {isEditorOpen && (
-        <RichEditor record={record} setRecord={setRecord} isOpen={isEditorOpen} onClose={setIsEditorOpen} />
+        <RichEditor
+          setGetAgain={setGetAgain}
+          record={record}
+          setRecord={setRecord}
+          isOpen={isEditorOpen}
+          onClose={setIsEditorOpen}
+        />
       )}
     </Box>
   )

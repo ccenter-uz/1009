@@ -23,10 +23,11 @@ import { scssVariables } from '@/@core/utils/scss-variables'
 import { createContent, updateContent } from '@/app/[locale]/opportunities/[id]/action'
 import { getUrl } from '@/@core/utils/fn'
 import { usePathname } from 'next/navigation'
+import { toast } from 'react-toastify'
 // dynamic import Quill
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <Loading /> })
 
-const RichEditor: FC<IRichEditor> = ({ isOpen, record, setRecord, onClose }) => {
+const RichEditor: FC<IRichEditor> = ({ isOpen, record, setRecord, onClose, setGetAgain }) => {
   const [value, setValue] = useState<string>(record ? record[0].content : '')
   const pathname = usePathname()
   const lastLink = pathname.replaceAll('/', ' ').split(' ').slice(-1).join()
@@ -61,9 +62,22 @@ const RichEditor: FC<IRichEditor> = ({ isOpen, record, setRecord, onClose }) => 
           mention: formData.get('mention'),
           text: value
         })
-    !record
-      ? await createContent(`${getUrl(lastLink)}`, body)
-      : await updateContent(`${getUrl(lastLink)}`, body, record[0]?.id)
+
+    if (!record) {
+      const res = await createContent(`${getUrl(lastLink)}`, body)
+      if (res?.status === 'success') {
+        toast.success(res.message, { position: 'bottom-right' })
+        setGetAgain((prev: boolean) => !prev)
+        handleClose()
+      }
+    } else {
+      const res = await updateContent(`${getUrl(lastLink)}`, body, record[0]?.id)
+      if (res?.status === 'success') {
+        toast.success(res.message, { position: 'bottom-right' })
+        setGetAgain((prev: boolean) => !prev)
+        handleClose()
+      }
+    }
   }
 
   return (
@@ -73,11 +87,12 @@ const RichEditor: FC<IRichEditor> = ({ isOpen, record, setRecord, onClose }) => 
         <Divider mb={'1em'} />
         <ModalCloseButton />
         <form id='editor-modal-form' onSubmit={handleSave}>
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel htmlFor='title' fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}>
               Title of section:
             </FormLabel>
             <Input
+              _focus={{ border: `none`, boxShadow: '0 0 0px 2px teal' }}
               name='title'
               id='title'
               mb={'8px'}
@@ -95,6 +110,7 @@ const RichEditor: FC<IRichEditor> = ({ isOpen, record, setRecord, onClose }) => 
               Warning information:
             </FormLabel>
             <Textarea
+              _focus={{ border: `none`, boxShadow: '0 0 0px 2px teal' }}
               defaultValue={record ? record[0].warning : null}
               fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
               name='warning'
@@ -114,6 +130,7 @@ const RichEditor: FC<IRichEditor> = ({ isOpen, record, setRecord, onClose }) => 
               Mention information:
             </FormLabel>
             <Textarea
+              _focus={{ border: `none`, boxShadow: '0 0 0px 2px teal' }}
               defaultValue={record ? record[0].mention : null}
               fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
               name='mention'
@@ -129,6 +146,8 @@ const RichEditor: FC<IRichEditor> = ({ isOpen, record, setRecord, onClose }) => 
           <ReactQuill theme='snow' value={value} formats={formats} modules={modules} onChange={setValue} />
         </Box>
         <Button
+          aria-disabled={value.length > 3 ? false : true}
+          isDisabled={value.length > 3 ? false : true}
           aria-label='button-save'
           colorScheme='teal'
           fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}

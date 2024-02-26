@@ -97,6 +97,7 @@ const SignUp: FC = () => {
             {t('auth-create-password')}
           </FormLabel>
           <InputGen
+            autoComplete='off'
             aria-label='password'
             aria-invalid={errors.password ? 'true' : 'false'}
             {...register('password', {
@@ -126,6 +127,7 @@ const SignUp: FC = () => {
             {t('auth-password-confirm')}
           </FormLabel>
           <InputGen
+            autoComplete='off'
             aria-label='confirm-password'
             aria-invalid={errors.confirm_password ? 'true' : 'false'}
             {...register('confirm_password', {

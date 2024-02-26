@@ -133,9 +133,9 @@ const Header: FC = () => {
               />
             )}
           </Box>
-          <Divider display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} orientation='vertical' />
+          <Divider display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} orientation='vertical' sx={{color:'lightgrey'}}/>
           <Box display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }}>Uz</Box>
-          <Divider display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} orientation='vertical' />
+          <Divider display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} orientation='vertical' sx={{color:'lightgrey'}}/>
           {isAuth ? (
             <Box cursor={'pointer'}>
               <Img src='/header/user.svg' alt='user' />

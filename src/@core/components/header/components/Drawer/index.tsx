@@ -55,20 +55,20 @@ const MenuDrawer: FC<IMenuDrawer> = ({ isOpen, onClose }) => {
         </DrawerHeader>
 
         <DrawerBody>
-          <List fontWeight={500} textAlign={'center'}>
+          <List fontWeight={500} textAlign={'center'} >
             {/* default-links */}
             {defaultLinks.map(link => (
               <Accordion key={link.id} allowMultiple>
                 <AccordionItem>
                   <Link href={link?.href} className={`${pathname == `/${locale}${link.href}` ? 'active' : ''}`}>
-                    <AccordionButton>{link.title}</AccordionButton>
+                    <AccordionButton fontSize={scssVariables.fonts.paragraph}>{link.title}</AccordionButton>
                   </Link>
                   {link.subMenu && (
                     <AccordionPanel bg={colorMode === 'dark' ? scssVariables.darkBg : scssVariables.blockBgColor}>
                       {link.subMenu.map(menu => (
                         <List key={menu.id}>
                           <Link href={menu.href} className={`${pathname == `/${locale}${menu.href}` ? 'active' : ''}`}>
-                            <ListItem p={'0.3rem 0'} textAlign={'left'} borderBottom={'1px solid grey'}>
+                            <ListItem fontSize={scssVariables.fonts.paragraph} p={'0.3rem 0'} textAlign={'left'} borderBottom={'1px solid grey'}>
                               {menu.title}
                             </ListItem>
                           </Link>
@@ -80,7 +80,7 @@ const MenuDrawer: FC<IMenuDrawer> = ({ isOpen, onClose }) => {
               </Accordion>
             ))}
           </List>
-          <Heading fontSize={'20px'} fontWeight={400} textAlign={'center'} mt={'3em'} mb={'20px'}>
+          <Heading fontSize={scssVariables.fonts.paragraph} fontWeight={400} textAlign={'center'} mt={'3em'} mb={'20px'}>
             +1 (7635) 547-12-97
           </Heading>
           {colorMode === 'light' ? (
@@ -93,7 +93,7 @@ const MenuDrawer: FC<IMenuDrawer> = ({ isOpen, onClose }) => {
                 alt='moon'
                 onClick={toggleColorMode}
               />
-              <Box color={scssVariables.mainColor}>Uz</Box>
+              <Box fontSize={scssVariables.fonts.paragraph} color={scssVariables.mainColor}>Uz</Box>
             </Box>
           ) : (
             <Box display={'flex'} justifyContent={'center'} alignItems={'center'} gap={'11px'}>
@@ -105,7 +105,7 @@ const MenuDrawer: FC<IMenuDrawer> = ({ isOpen, onClose }) => {
                 alt='moon'
                 onClick={toggleColorMode}
               />
-              <Box color={scssVariables.mainColor}>Uz</Box>
+              <Box fontSize={scssVariables.fonts.paragraph} color={scssVariables.mainColor}>Uz</Box>
             </Box>
           )}
         </DrawerBody>

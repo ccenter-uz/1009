@@ -1,4 +1,4 @@
-import { ReactNode, SetStateAction } from 'react'
+import { Dispatch, ReactNode, SetStateAction } from 'react'
 
 // signUp user type
 export type Iuser = {
@@ -57,6 +57,7 @@ export type IRichEditor = {
   onClose: SetStateAction<any>
   record: any
   setRecord: SetStateAction<any>
+  setGetAgain: Dispatch<SetStateAction<boolean>>
 }
 
 // Autocomplete

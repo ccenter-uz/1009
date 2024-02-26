@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation'
 import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 type IDialogTypes = {
   isOpen: boolean
@@ -36,14 +37,20 @@ const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, e
   //   actionSubmit
   const actionSubmit = async (e: any) => {
     if (editInfo) {
-      await updateCat(editInfo.id, e)
-      handleClose()
-      router.replace('/opportunities/entertainment')
-      getCategories()
+      const res = await updateCat(editInfo.id, e)
+      if (res?.status === 'success') {
+        toast.success(res.message, { position: 'bottom-right' })
+        handleClose()
+        router.replace('/opportunities/entertainment')
+        getCategories()
+      }
     } else {
-      await createCat(e)
-      handleClose()
-      getCategories()
+      const res = await createCat(e)
+      if (res?.status === 'success') {
+        toast.success(res.message, { position: 'bottom-right' })
+        handleClose()
+        getCategories()
+      }
     }
   }
 

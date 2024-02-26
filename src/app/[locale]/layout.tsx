@@ -6,6 +6,7 @@ import { ChakraProviders } from '@/lib/chakraProvider'
 import Header from '@/@core/components/header'
 import dynamic from 'next/dynamic'
 import { ToastContainer } from 'react-toastify'
+import Providers from '@/lib/nProgress'
 
 const Footer = dynamic(() => import('@/@core/components/footer'))
 
@@ -25,18 +26,20 @@ const RootLayout = ({ children, params: { locale } }: { children: React.ReactNod
   return (
     <html lang={locale} className={inter.className}>
       <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <ChakraProviders>
-            <MainContext>
-              <main>
-                <Header />
-                {children}
-                <Footer />
-              </main>
-            </MainContext>
-          </ChakraProviders>
-        </NextIntlClientProvider>
-        <ToastContainer/>
+        <Providers>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <ChakraProviders>
+              <MainContext>
+                <main>
+                  <Header />
+                  {children}
+                  <Footer />
+                </main>
+              </MainContext>
+            </ChakraProviders>
+          </NextIntlClientProvider>
+        </Providers>
+        <ToastContainer />
       </body>
     </html>
   )
