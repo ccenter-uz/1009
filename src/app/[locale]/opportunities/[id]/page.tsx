@@ -27,9 +27,10 @@ import EntertainmentLinks from '@/@core/components/pages/Opportunities/component
 import './style.scss'
 import { IdataInfo, IdataInfoFromApi } from '@/@core/service/types/types'
 import Swal from 'sweetalert2'
-import { deleteContent, getData } from './action'
+import { deleteContent } from './action'
 import { getUrl } from '@/@core/utils/fn'
 import { toast } from 'react-toastify'
+import { getData } from './serverAction'
 
 const Opportunities: FC = () => {
   const pathname = usePathname()

@@ -4,12 +4,13 @@ import { Box, Button, Switch, TableContainer, Text, Tooltip, useColorMode } from
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Dispatch, FC, SetStateAction, useEffect, useLayoutEffect, useState } from 'react'
 import DialogEntertainmentLinks from './dialog'
-import { deleteCat, getDataByid, getCat } from '@/app/[locale]/opportunities/[id]/action'
+import { deleteCat } from '@/app/[locale]/opportunities/[id]/action'
 import Loading from '@/app/[locale]/loading'
 import './style.scss'
 import { IdataInfoFromApi } from '@/@core/service/types/types'
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
+import { getCat, getDataByid } from '@/app/[locale]/opportunities/[id]/serverAction'
 
 type IenterLinks = {
   index: string

@@ -8,9 +8,7 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { useFormStatus } from 'react-dom'
 import { toast } from 'react-toastify'
-import { api } from '@/@core/utils/api'
 import { Login } from '@/@core/service/helpers/actions'
-import Cookies from 'js-cookie'
 
 const SignIn: FC = () => {
   const { t } = useLang()
@@ -24,13 +22,10 @@ const SignIn: FC = () => {
 
   // handleFinish
   const handleFinish = async (e: any) => {
-    const res = await api.post('/Auth/user/signIn', e)
+    const res = await Login(e)
     if (!res) return
     if (res.status === 200) {
-      console.log(res, 'res')
-      sessionStorage.setItem('access_token',res.data.token)
-      // Cookies.set('access_token', res.data.token,{secure:true,expires:12000})
-      toast.success(res.data.message, { position: 'bottom-center' })
+      toast.success(res.message, { position: 'bottom-center' })
       router.replace('/')
     }
   }

@@ -1,7 +1,14 @@
+import { useLayoutEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 
 export const useAuth = () => {
-  const isAuth = Cookies.get('access_token')
+  const [isAuth, setIsAuth] = useState(false)
 
-  return { isAuth }
+  useLayoutEffect(() => {
+    if (Cookies.get('access_token')) return setIsAuth(true)
+  }, [])
+
+  return {
+    isAuth
+  }
 }

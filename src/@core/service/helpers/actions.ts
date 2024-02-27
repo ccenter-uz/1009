@@ -9,7 +9,7 @@ export const Login = async (values: Ilogin) => {
     const body = values
     const res = await api.post('/Auth/user/signIn', body)
     if (res.status === 200) {
-      cookies().set('access_token', res.data.token)
+      cookies().set('access_token', res.data.token, { secure: true })
 
       return {
         status: 200,
