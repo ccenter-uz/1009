@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import dynamic from 'next/dynamic'
-import './style.scss'
 import Hero from './components/Hero'
 import SearchPanel from './components/SearchPanel'
 
@@ -14,7 +13,7 @@ const Questionier = dynamic(() => import('./components/Questionier'))
 
 const Home: FC = () => {
   return (
-    <main id='home'>
+    <main id='home' className='fade-in'>
       <Hero />
       <SearchPanel />
       <OtherOpportunities />

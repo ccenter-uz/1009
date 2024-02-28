@@ -3,11 +3,10 @@ import FilterTable from '@/@core/components/pages/Monitoring/components/FilterTa
 import BoxGen from '@/@core/components/reusable/Box'
 import Pagination from '@/@core/components/reusable/Pagination'
 import TableGen from '@/@core/components/reusable/Table'
-import { IPaginationItems } from '@/@core/service/types/types'
+import { usePagination } from '@/@core/service/hooks/usePaginate'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Box, Button, Text } from '@chakra-ui/react'
-import { useSearchParams } from 'next/navigation'
-import { FC, useCallback, useState } from 'react'
+import { FC,useState } from 'react'
 
 const styleTabpanel = {
   p: { base: '0.5em', sm: '0.5em', md: '1em', xl: '1em' },
@@ -15,13 +14,8 @@ const styleTabpanel = {
 }
 
 const TransactionsPanel: FC = () => {
-  const params = useSearchParams()
   const [open, setOpen] = useState<boolean>(false)
-  const [pagination, setPagination] = useState<IPaginationItems>({
-    current: Number(params.get('page') ? params.get('page') : 1),
-    pageSize: Number(params.get('pageSize') ? params.get('pageSize') : 10),
-    total: 100
-  })
+  const { current, pageSize, total,handlePageChange,handlePageSizeChange } = usePagination()
   const columns = [
     {
       id: 1,
@@ -63,15 +57,7 @@ const TransactionsPanel: FC = () => {
     }
   ]
 
-  // Pagination
-  const handlePagination = useCallback((page: number) => {
-    setPagination(prevState => ({ ...prevState, current: page }))
-  }, [])
 
-  // pageSizeChange
-  const handlePageSizeChange = useCallback((pageSize: number) => {
-    setPagination(prevState => ({ ...prevState, pageSize: pageSize }))
-  }, [])
 
   // handleFilter
   const handleFilter = (values: any) => {
@@ -108,10 +94,10 @@ const TransactionsPanel: FC = () => {
       <FilterTable open={open} onChange={handleFilter} />
       <TableGen columns={columns} dataSource={data} />
       <Pagination
-        total={pagination.total}
-        current={pagination.current}
-        pageSize={pagination.pageSize}
-        onChange={handlePagination}
+        total={total}
+        current={current}
+        pageSize={pageSize}
+        onChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
       />
     </BoxGen>

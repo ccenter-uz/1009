@@ -44,6 +44,13 @@ body {
   height: 0;
 }
 
+/* fade-animation-class */
+.fade-in {
+  opacity: 0;
+  animation: fade-in 0.5s linear forwards;
+}
+
+
 @media (prefers-reduced-motion: no-preference) {
   @keyframes fade-in {
     to {

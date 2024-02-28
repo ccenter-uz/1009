@@ -2,11 +2,9 @@
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
 import OrgCard from '@/@core/components/reusable/OrgCard'
 import { Box, Heading } from '@chakra-ui/react'
-import { FC, useCallback, useState } from 'react'
-import './style.scss'
-import { useSearchParams } from 'next/navigation'
-import { IPaginationItems } from '@/@core/service/types/types'
+import { FC } from 'react'
 import Pagination from '@/@core/components/reusable/Pagination'
+import { usePagination } from '@/@core/service/hooks/usePaginate'
 
 const MyOrganizationsOperator: FC = () => {
   const breadcrumblinks = [
@@ -19,25 +17,10 @@ const MyOrganizationsOperator: FC = () => {
       title: 'Общие'
     }
   ]
-  const params = useSearchParams()
-  const [pagination, setPagination] = useState<IPaginationItems>({
-    current: Number(params.get('page') ? params.get('page') : 1),
-    pageSize: Number(params.get('pageSize') ? params.get('pageSize') : 10),
-    total: 100
-  })
-
-  // Pagination
-  const handlePagination = useCallback((page: number) => {
-    setPagination(prevState => ({ ...prevState, current: page }))
-  }, [])
-
-  // pageSizeChange
-  const handlePageSizeChange = useCallback((pageSize: number) => {
-    setPagination(prevState => ({ ...prevState, pageSize: pageSize }))
-  }, [])
+  const { current, pageSize, total, handlePageChange, handlePageSizeChange } = usePagination()
 
   return (
-    <Box minH={'100dvh'} id='myorg' className='wrapper' aria-label='section'>
+    <Box minH={'100dvh'} id='myorg' className='wrapper fade-in' aria-label='section'>
       <BreadCrumb item={breadcrumblinks} />
       <Heading>OPERATOR</Heading>
       <OrgCard />
@@ -45,10 +28,10 @@ const MyOrganizationsOperator: FC = () => {
       <OrgCard />
 
       <Pagination
-        total={pagination.total}
-        current={pagination.current}
-        pageSize={pagination.pageSize}
-        onChange={handlePagination}
+        total={total}
+        current={current}
+        pageSize={pageSize}
+        onChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
       />
     </Box>

@@ -1,6 +1,5 @@
 import { Box, Heading } from '@chakra-ui/react'
 import { FC } from 'react'
-import './style.scss'
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
 
 const ResultItem: FC = () => {
@@ -16,7 +15,7 @@ const ResultItem: FC = () => {
   ]
 
   return (
-    <Box id='result-item' className='wrapper'>
+    <Box id='result-item' className='wrapper fade-in'>
       <BreadCrumb item={breadcrumblink} />
       <Heading>RESULT-ITEM</Heading>
     </Box>

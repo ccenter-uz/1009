@@ -6,7 +6,6 @@ import { Dispatch, FC, SetStateAction, useEffect, useLayoutEffect, useState } fr
 import DialogEntertainmentLinks from './dialog'
 import { deleteCat } from '@/app/[locale]/opportunities/[id]/action'
 import Loading from '@/app/[locale]/loading'
-import './style.scss'
 import { IdataInfoFromApi } from '@/@core/service/types/types'
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
@@ -148,7 +147,7 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
         ) : (
           enterLinks?.map((link: IenterLinks) => {
             return (
-              <Link id='enterlink-btns' key={link.id} href={`?page=${link.index}`} scroll={false}>
+              <Link id='enterlink-btns' className='fade-in' key={link.id} href={`?page=${link.index}`} scroll={false}>
                 <Button
                   onClick={() => sessionStorage.setItem('catId', JSON.stringify(link.id))}
                   leftIcon={

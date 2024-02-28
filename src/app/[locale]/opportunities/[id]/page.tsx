@@ -24,7 +24,6 @@ import SearchPanelOpportunities from '@/@core/components/pages/Opportunities/com
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useLang } from '@/@core/service/hooks/useLang'
 import EntertainmentLinks from '@/@core/components/pages/Opportunities/components/EntertainmentLinks'
-import './style.scss'
 import { IdataInfo, IdataInfoFromApi } from '@/@core/service/types/types'
 import Swal from 'sweetalert2'
 import { deleteContent } from './action'
@@ -119,7 +118,7 @@ const Opportunities: FC = () => {
   }, [getAgain])
 
   return (
-    <Box id='opportunities' aria-current='page' minH={{ base: '100%', sm: '100%', md: '1080px', xl: '1080px' }}>
+    <Box id='opportunities' className='fade-in' aria-current='page' minH={'100dvh'}>
       <BreadCrumb item={breadcrumblinks} />
       <SearchPanelOpportunities options={dataInfo?.map(option => ({ label: option.title, value: option.title }))} />
       {lastLink === 'entertainment' && <EntertainmentLinks getAgain={getAgain} setData={setData} />}
