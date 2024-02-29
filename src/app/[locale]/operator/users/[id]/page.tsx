@@ -9,7 +9,8 @@ const UserTransactions: FC = () => {
   const breadcrumbLinks = [
     {
       id: 1,
-      title: 'Пользователи'
+      title: 'Пользователи',
+      href:'/operator/users'
     },
     {
       id: 2,

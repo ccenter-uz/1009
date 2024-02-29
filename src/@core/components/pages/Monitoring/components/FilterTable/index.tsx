@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { IFilterTable } from '@/@core/service/types/types'
 import { useForm } from 'react-hook-form'
+import { useSearchParams } from 'next/navigation'
 
 // select-style
 const styleSelect = {
@@ -24,7 +25,17 @@ const buttonStyle = {
 }
 
 const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
-  const { register, handleSubmit, reset } = useForm()
+  const searchParams = useSearchParams()
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      status: searchParams.get('status'),
+      amount: searchParams.get('amount'),
+      date_from: searchParams.get('date_from'),
+      date_to: searchParams.get('date_to'),
+      time_from: searchParams.get('time_from'),
+      time_to: searchParams.get('time_to')
+    }
+  })
 
   // handleReset
   const handleReset = async () => {
