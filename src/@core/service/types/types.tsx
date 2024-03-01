@@ -55,9 +55,9 @@ export type IGuestTable = {
 export type IRichEditor = {
   isOpen: boolean
   onClose: SetStateAction<any>
-  record: any
-  setRecord: SetStateAction<any>
   setGetAgain: Dispatch<SetStateAction<boolean>>
+  value: string
+  setValue: Dispatch<SetStateAction<string>>
 }
 
 // Autocomplete
@@ -112,6 +112,14 @@ export type IdataInfo = {
   title: string
   type: 'text' | 'table'
   content?: string
-  rows?: any
-  header?: any
+  table_arr: {
+    rows?: any
+    header?: any
+  }
+}
+
+export type IcreateAccordionType = {
+  open: boolean
+  close: Dispatch<SetStateAction<boolean>>
+  setGetAgain: Dispatch<SetStateAction<boolean>>
 }

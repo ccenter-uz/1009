@@ -1,7 +1,6 @@
 'use client'
 import { FC, useLayoutEffect, useState } from 'react'
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
-import EditableTable from '@/@core/components/reusable/ExcelTable'
 import {
   Accordion,
   AccordionButton,
@@ -18,7 +17,6 @@ import { scssVariables } from '@/@core/utils/scss-variables'
 import GuestTable from '@/@core/components/reusable/GuestTable'
 import MentionText from '@/@core/components/reusable/MentionText'
 import WarningText from '@/@core/components/reusable/WarningText'
-import RichEditor from '@/@core/components/RichEditor'
 import DOMPurify from 'isomorphic-dompurify'
 import SearchPanelOpportunities from '@/@core/components/pages/Opportunities/components/SearchPanel'
 import { usePathname, useSearchParams } from 'next/navigation'
@@ -30,6 +28,8 @@ import { deleteContent } from './action'
 import { getUrl } from '@/@core/utils/fn'
 import { toast } from 'react-toastify'
 import { getData } from './serverAction'
+import CreateAccModal from '@/@core/components/pages/Opportunities/components/CreateAccordion'
+import { useOpportunityRecord } from '@/@core/service/context/opportunitiesRecord'
 
 const Opportunities: FC = () => {
   const pathname = usePathname()
@@ -42,13 +42,12 @@ const Opportunities: FC = () => {
     { id: 3, title: `${searchParams.has('page') ? searchParams.get('page') : t('all')}` }
   ]
   const { colorMode } = useColorMode()
-  const [isExcelTableOpen, setIsExcelTableOpen] = useState<boolean>(false)
-  const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false)
-  const [record, setRecord] = useState<any>(null)
+  const [iscreateAccordion, setIsCreateAccordion] = useState<boolean>(false)
+  const { setRecord } = useOpportunityRecord()
   const [dataInfo, setData] = useState<IdataInfo[]>([])
   const [getAgain, setGetAgain] = useState<boolean>(false)
 
-  // handleDelete
+  // DELETE
   const handleDelete = (id: string | number) => {
     Swal.fire({
       title: 'Are you sure?',
@@ -63,45 +62,27 @@ const Opportunities: FC = () => {
         const res = await deleteContent(`${getUrl(lastLink)}`, id)
         if (res?.status === 'success') {
           toast.success(res.message, { position: 'bottom-right' })
+          getDataAnother()
         }
       }
     })
   }
-
-  // chooseCat
-  const chooseCat = (content: 'table' | 'editor') => {
-    if (lastLink === 'entertainment' && searchParams.size === 0) {
-      Swal.fire({ text: 'Please, choose category first!', icon: 'warning' })
-    } else {
-      content === 'table' ? setIsExcelTableOpen(prev => !prev) : setIsEditorOpen(prev => !prev)
-    }
-  }
-
-  // getData
+  // GET
   const getDataAnother = async () => {
     if (lastLink !== 'entertainment') {
       const res = await getData(`${getUrl(lastLink)}`)
       res &&
         setData(
           res?.map((item: IdataInfoFromApi) => {
-            if (item?.type === 'text') {
-              return {
-                id: item.id,
-                mention: item.mention,
-                warning: item.warning,
-                title: item?.title,
-                type: 'text',
-                content: item.text
-              }
-            } else {
-              return {
-                id: item.id,
-                mention: item.mention,
-                warning: item.warning,
-                title: item?.title,
-                type: 'table',
-                rows: item.table_arr.row,
-                header: item.table_arr.header.map((col: { value: string; title: string }) => ({
+            return {
+              id: item.id,
+              mention: item.mention,
+              warning: item.warning,
+              title: item?.title,
+              content: item.text,
+              table_arr: {
+                rows: item.table_arr?.row,
+                header: item.table_arr?.header.map((col: { value: string; title: string }) => ({
                   id: col.value,
                   title: col.value
                 }))
@@ -111,7 +92,7 @@ const Opportunities: FC = () => {
         )
     }
   }
-
+  // REFETCH-DATA
   useLayoutEffect(() => {
     getDataAnother()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,22 +105,13 @@ const Opportunities: FC = () => {
       {lastLink === 'entertainment' && <EntertainmentLinks getAgain={getAgain} setData={setData} />}
       <Box display={'flex'} alignItems={'center'} gap={'0 8px'}>
         <Button
-          leftIcon={<img src='/add.svg' alt='add-circle-table' />}
-          aria-label='create-table'
-          fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
-          h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
-          onClick={() => chooseCat('table')}
-        >
-          Create table
-        </Button>
-        <Button
-          leftIcon={<img src='/add.svg' alt='add-circle-editor' />}
+          leftIcon={<img src='/add.svg' alt='add-circle-editor' width={'20px'} height={'20px'}/>}
           aria-label='create-text'
-          fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
-          h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
-          onClick={() => chooseCat('editor')}
+          fontSize={{ base: '12px', sm: '12px', md: '13px', xl: '14px' }}
+          h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
+          onClick={() => setIsCreateAccordion(prev => (prev = true))}
         >
-          Create Editor
+          Create Accordion
         </Button>
       </Box>
       {/* Accordion renders from API data */}
@@ -172,11 +144,9 @@ const Opportunities: FC = () => {
                     alt='edit'
                     role='button'
                     aria-label='delete-button'
-                    onClick={() =>
-                      data.type === 'text'
-                        ? (setRecord(dataInfo.filter(item => item.id === data.id)), setIsEditorOpen(true))
-                        : (setRecord(dataInfo.filter(item => item.id === data.id)), setIsExcelTableOpen(true))
-                    }
+                    onClick={() => (
+                      setRecord(dataInfo.filter(item => item.id === data.id)), setIsCreateAccordion(true)
+                    )}
                   />
                 </Tooltip>
                 <Tooltip label='Удалить' aria-label='A tooltip'>
@@ -193,41 +163,26 @@ const Opportunities: FC = () => {
               </Box>
               {data.mention && <MentionText text={data.mention} />}
               {data.warning && <WarningText text={data.warning} />}
-              {data.type === 'text' ? (
-                <div
-                  style={
-                    colorMode === 'dark'
-                      ? { background: '#757575', padding: '0.5em 1em', borderRadius: '8px' }
-                      : { background: '#f9f9f6', padding: '0.5em 1em', borderRadius: '8px' }
-                  }
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.content || '') }}
-                />
-              ) : (
-                <GuestTable row={data.rows || [[]]} columns={data.header || []} />
+              {data.table_arr && <GuestTable row={data.table_arr.rows || [[]]} columns={data.table_arr.header || []} />}
+              {data.content && (
+                <Box my={{ base: '16px', sm: '16px', md: '24px', xl: '24px' }}>
+                  <div
+                    style={
+                      colorMode === 'dark'
+                        ? { background: '#757575', padding: '0.5em 1em', borderRadius: '8px' }
+                        : { background: '#f9f9f6', padding: '0.5em 1em', borderRadius: '8px' }
+                    }
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.content || '') }}
+                  />
+                </Box>
               )}
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
       ))}
-      {/* editableTable */}
-      {isExcelTableOpen && (
-        <EditableTable
-          setGetAgain={setGetAgain}
-          record={record}
-          setRecord={setRecord}
-          isOpen={isExcelTableOpen}
-          onClose={setIsExcelTableOpen}
-        />
-      )}
-      {/* richEditor */}
-      {isEditorOpen && (
-        <RichEditor
-          setGetAgain={setGetAgain}
-          record={record}
-          setRecord={setRecord}
-          isOpen={isEditorOpen}
-          onClose={setIsEditorOpen}
-        />
+      {/* CreateAccordion */}
+      {iscreateAccordion && (
+        <CreateAccModal open={iscreateAccordion} close={setIsCreateAccordion} setGetAgain={setGetAgain} />
       )}
     </Box>
   )
