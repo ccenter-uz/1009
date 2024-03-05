@@ -16,7 +16,7 @@ import {
   ModalHeader,
   Divider,
   Input,
-  Image
+  Image,
 } from '@chakra-ui/react'
 import DOMPurify from 'dompurify'
 
@@ -156,7 +156,6 @@ const EditableTable: FC<TableProps> = ({
         </ModalHeader>
         <Divider mb={'1em'} />
         <ModalCloseButton />
-
         <Box>
           <Box display={'flex'} alignItems={'center'} gap={'8px'} my={'8px'}>
             <Button

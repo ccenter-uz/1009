@@ -46,13 +46,16 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
   const { register, handleSubmit } = useForm({
     defaultValues: {
       title: record && record[0].title,
+      title_ru: record && record[0].title_ru,
       warning: record && record[0].warning,
-      mention: record && record[0].mention
+      warning_ru: record && record[0].warning_ru,
+      mention: record && record[0].mention,
+      mention_ru: record && record[0].mention_ru
     }
   })
   const { colorMode } = useColorMode()
-  const [dataTable, setDataTable] = useState(record ? record[0].table_arr.table:[])
-  const [editorValue, setEditorValue] = useState<string>(record ? record[0]?.content : '')
+  const [dataTable, setDataTable] = useState(record ? record[0].table_arr.table : [])
+  const [editorValue, setEditorValue] = useState<any>(record ? record[0]?.content : [])
   const [isExcelTableOpen, setIsExcelTableOpen] = useState<boolean>(false)
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false)
   const [defaultTableData, setDefaultTableData] = useState<TableData[] | null>(null)
@@ -64,31 +67,41 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
   }
 
   // SAVE
-  const handleSave = async values => {
+  const handleSave = async (values: any) => {
     console.log(values)
     let body
     lastLink === 'entertainment'
       ? (body = {
           category_id: JSON.parse(sessionStorage.getItem('catId')),
           title: values.title,
-          title_ru:'Ruscha title',
+          title_ru: values.title_ru,
           type: 'text',
           warning: values.warning,
+          warning_ru: values.warning_ru,
           mention: values.mention,
-          text: editorValue,
+          mention_ru: values.mention_ru,
+          text: { content: editorValue },
           table_arr: {
-            table:dataTable
+            table: dataTable
+          },
+          table_arr_ru: {
+            table: dataTable
           }
         })
       : (body = {
           title: values.title,
-          title_ru:'Ruscha title',
+          title_ru: values.title_ru,
           type: 'text',
           warning: values.warning,
+          warning_ru: values.warning_ru,
           mention: values.mention,
-          text: editorValue,
+          mention_ru: values.mention_ru,
+          text: { content: editorValue },
           table_arr: {
-            table:dataTable
+            table: dataTable
+          },
+          table_arr_ru: {
+            table: dataTable
           }
         })
 
@@ -129,7 +142,13 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
             <FormLabel htmlFor='title' {...labelStyle}>
               Title accordion:
             </FormLabel>
-            <Input {...register('title')} {...inputsStyle} id='title' placeholder='Accordion' />
+            <Input {...register('title')} {...inputsStyle} id='title' placeholder='title' />
+          </FormControl>
+          <FormControl isRequired mb={{ base: '14px', sm: '14px', md: '2em', xl: '2em' }}>
+            <FormLabel htmlFor='title_ru' {...labelStyle}>
+              Title accordion_ru:
+            </FormLabel>
+            <Input {...register('title_ru')} {...inputsStyle} id='title_ru' placeholder='title ru' />
           </FormControl>
           <FormControl mb={{ base: '14px', sm: '14px', md: '14px', xl: '14px' }}>
             <FormLabel htmlFor='warning-text' {...labelStyle}>
@@ -143,6 +162,18 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
               resize={'vertical'}
             />
           </FormControl>
+          <FormControl mb={{ base: '14px', sm: '14px', md: '14px', xl: '14px' }}>
+            <FormLabel htmlFor='warning-text_ru' {...labelStyle}>
+              Warning information_ru:
+            </FormLabel>
+            <Textarea
+              {...register('warning_ru')}
+              {...inputsStyle}
+              id='warning-_ru'
+              placeholder='Type for warnings!'
+              resize={'vertical'}
+            />
+          </FormControl>
           <FormControl mb={{ base: '14px', sm: '14px', md: '2em', xl: '2em' }}>
             <FormLabel htmlFor='mention-text' {...labelStyle}>
               Mention information:
@@ -151,6 +182,18 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
               {...register('mention')}
               {...inputsStyle}
               id='mention-text'
+              placeholder='Type for mentions!'
+              resize={'vertical'}
+            />
+          </FormControl>
+          <FormControl mb={{ base: '14px', sm: '14px', md: '2em', xl: '2em' }}>
+            <FormLabel htmlFor='mention-text_ru' {...labelStyle}>
+              Mention information_ru:
+            </FormLabel>
+            <Textarea
+              {...register('mention_ru')}
+              {...inputsStyle}
+              id='mention-text_ru'
               placeholder='Type for mentions!'
               resize={'vertical'}
             />
@@ -213,42 +256,45 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
             )
           })}
         {/* EDITOR VIEW */}
-        {editorValue && (
-          <Box aria-label='editor-section'>
-            <Box display={'flex'} gap={'8px'} alignItems={'center'} justifyContent={'flex-end'}>
-              <Tooltip label='Изменить' aria-label='A tooltip'>
-                <Image
-                  width={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
-                  _hover={{ opacity: '0.8' }}
-                  src='/pencil.svg'
-                  alt='edit'
-                  role='button'
-                  aria-label='edit-button'
-                  onClick={() => setIsEditorOpen(true)}
+        {editorValue.length > 0 &&
+          editorValue.map((value: { id: number | string; text: string }) => {
+            return (
+              <Box key={value.id} aria-label='editor-section'>
+                <Box display={'flex'} gap={'8px'} alignItems={'center'} justifyContent={'flex-end'}>
+                  <Tooltip label='Изменить' aria-label='A tooltip'>
+                    <Image
+                      width={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
+                      _hover={{ opacity: '0.8' }}
+                      src='/pencil.svg'
+                      alt='edit'
+                      role='button'
+                      aria-label='edit-button'
+                      onClick={() => setIsEditorOpen(true)}
+                    />
+                  </Tooltip>
+                  <Tooltip label='Удалить' aria-label='A tooltip'>
+                    <Image
+                      width={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
+                      _hover={{ opacity: '0.8' }}
+                      src='/delete.svg'
+                      alt='delete'
+                      role='button'
+                      aria-label='delete-button'
+                      //   onClick={() => handleDelete(data.id)}
+                    />
+                  </Tooltip>
+                </Box>
+                <div
+                  style={
+                    colorMode === 'dark'
+                      ? { background: '#757575', padding: '0.5em 1em', borderRadius: '8px' }
+                      : { background: '#f9f9f6', padding: '0.5em 1em', borderRadius: '8px' }
+                  }
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(value.text) }}
                 />
-              </Tooltip>
-              <Tooltip label='Удалить' aria-label='A tooltip'>
-                <Image
-                  width={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
-                  _hover={{ opacity: '0.8' }}
-                  src='/delete.svg'
-                  alt='delete'
-                  role='button'
-                  aria-label='delete-button'
-                  //   onClick={() => handleDelete(data.id)}
-                />
-              </Tooltip>
-            </Box>
-            <div
-              style={
-                colorMode === 'dark'
-                  ? { background: '#757575', padding: '0.5em 1em', borderRadius: '8px' }
-                  : { background: '#f9f9f6', padding: '0.5em 1em', borderRadius: '8px' }
-              }
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(editorValue || '') }}
-            />
-          </Box>
-        )}
+              </Box>
+            )
+          })}
 
         <Box display='flex' alignItems='center' justifyContent='flex-end' my={'8px'}>
           <Button
@@ -266,7 +312,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
         {/* editableTable */}
         {isExcelTableOpen && (
           <EditableTable
-            recordId={defaultTableData ? defaultTableData[0].id :null}
+            recordId={defaultTableData ? defaultTableData[0].id : null}
             rows={defaultTableData ? defaultTableData[0].rows : []}
             columns={defaultTableData ? defaultTableData[0].header : []}
             isOpen={isExcelTableOpen}

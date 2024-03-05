@@ -59,7 +59,7 @@ export type IRichEditor = {
   onClose: SetStateAction<any>
   setGetAgain: Dispatch<SetStateAction<boolean>>
   value: string
-  setValue: Dispatch<SetStateAction<string>>
+  setValue: Dispatch<SetStateAction<any>>
 }
 
 // Autocomplete
@@ -97,24 +97,36 @@ export type IFilterTable = {
 export type IdataInfoFromApi = {
   id: string
   mention: string
+  mention_ru: string
   table_arr: {
-    table:TableData
+    table: TableData
   }
-  text: string
+  table_arr_ru: {
+    table: TableData
+  }
+  text: { content: { id: string | number; text: string }[] }
   title: string
+  title_ru: string
   warning: string
+  warning_ru: string
   type: 'text' | 'table'
 }
 
 export type IdataInfo = {
   id: string
   mention: string
+  mention_ru: string
   warning: string
+  warning_ru: string
   title: string
+  title_ru: string
   type: 'text' | 'table'
-  content?: string
+  content?: { id: string | number; text: string }[]
   table_arr: {
-   table:TableData[]
+    table: TableData[]
+  }
+  table_arr_ru: {
+    table: TableData[]
   }
 }
 

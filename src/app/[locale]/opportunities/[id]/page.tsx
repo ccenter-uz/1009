@@ -35,7 +35,7 @@ const Opportunities: FC = () => {
   const pathname = usePathname()
   const lastLink = pathname.replaceAll('/', ' ').split(' ').slice(-1).join()
   const searchParams = useSearchParams()
-  const { t } = useLang()
+  const { t, locale } = useLang()
   const breadcrumblinks = [
     { id: 1, title: `${t('opportunities')}` },
     { id: 2, title: `${t(`${lastLink}`)}` },
@@ -75,11 +75,12 @@ const Opportunities: FC = () => {
         setData(
           res?.map((item: IdataInfoFromApi) => {
             return {
+              ...item,
               id: item.id,
               mention: item.mention,
               warning: item.warning,
               title: item?.title,
-              content: item.text,
+              content: item.text.content,
               table_arr: item.table_arr
             }
           })
@@ -119,7 +120,7 @@ const Opportunities: FC = () => {
               fontSize={scssVariables.fonts.paragraph}
             >
               <Box aria-label='title-panel' as='span' flex='1' textAlign='left'>
-                {data.title}
+                {locale == 'ru' ? data.title_ru : data.title}
               </Box>
               <AccordionIcon />
             </AccordionButton>
@@ -155,12 +156,12 @@ const Opportunities: FC = () => {
                   />
                 </Tooltip>
               </Box>
-              {data.mention && <MentionText text={data.mention} />}
-              {data.warning && <WarningText text={data.warning} />}
+              {data.mention && <MentionText text={locale == 'ru' ? data.mention_ru :data.mention} />}
+              {data.warning && <WarningText text={locale == 'ru' ? data.warning_ru :data.warning} />}
               {data.table_arr.table &&
                 data.table_arr?.table.map(table => {
                   return (
-                    <Box key={table.id} my={{base:'8px',sm:'8px',md:'24px',xl:'24px'}}>
+                    <Box key={table.id} my={{ base: '8px', sm: '8px', md: '24px', xl: '24px' }}>
                       <GuestTable rows={table.rows} header={table.header} />
                     </Box>
                   )

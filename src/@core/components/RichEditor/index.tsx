@@ -1,7 +1,7 @@
 'use client'
 import Loading from '@/app/[locale]/loading'
 import dynamic from 'next/dynamic'
-import { FC, FormEvent, memo, startTransition } from 'react'
+import { FC, FormEvent, memo, startTransition, useState } from 'react'
 import 'react-quill/dist/quill.snow.css'
 import { formats } from './formats'
 import { modules } from './modules'
@@ -19,6 +19,7 @@ const RichEditor: FC<IRichEditor> = ({ isOpen, onClose, setGetAgain, value, setV
   const pathname = usePathname()
   const lastLink = pathname.replaceAll('/', ' ').split(' ').slice(-1).join()
   const { record } = useOpportunityRecord()
+  const [editorValue,setEditorValue]=useState('')
 
   // CLOSE
   const handleClose = () => {
@@ -28,43 +29,45 @@ const RichEditor: FC<IRichEditor> = ({ isOpen, onClose, setGetAgain, value, setV
   }
 
   // SAVE
-  const handleSave = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const current = e.currentTarget
-    const formData = new FormData(current)
-    let body
-    lastLink === 'entertainment'
-      ? (body = {
-          category_id: JSON.parse(sessionStorage.getItem('catId')),
-          title: formData.get('title'),
-          type: 'text',
-          warning: formData.get('warning'),
-          mention: formData.get('mention'),
-          text: value
-        })
-      : (body = {
-          title: formData.get('title'),
-          type: 'text',
-          warning: formData.get('warning'),
-          mention: formData.get('mention'),
-          text: value
-        })
+  const handleSave = async () => {
+    console.log([{id:Date.now(),text:editorValue}],'value')
+    setValue([...value,{id:Date.now(),text:editorValue}])
+    // e.preventDefault()
+    // const current = e.currentTarget
+    // const formData = new FormData(current)
+    // let body
+    // lastLink === 'entertainment'
+    //   ? (body = {
+    //       category_id: JSON.parse(sessionStorage.getItem('catId')),
+    //       title: formData.get('title'),
+    //       type: 'text',
+    //       warning: formData.get('warning'),
+    //       mention: formData.get('mention'),
+    //       text: value
+    //     })
+    //   : (body = {
+    //       title: formData.get('title'),
+    //       type: 'text',
+    //       warning: formData.get('warning'),
+    //       mention: formData.get('mention'),
+    //       text: value
+    //     })
 
-    if (!record) {
-      const res = await createContent(`${getUrl(lastLink)}`, body)
-      if (res?.status === 'success') {
-        toast.success(res.message, { position: 'bottom-right' })
-        setGetAgain((prev: boolean) => !prev)
-        handleClose()
-      }
-    } else {
-      const res = await updateContent(`${getUrl(lastLink)}`, body, record[0]?.id)
-      if (res?.status === 'success') {
-        toast.success(res.message, { position: 'bottom-right' })
-        setGetAgain((prev: boolean) => !prev)
-        handleClose()
-      }
-    }
+    // if (!record) {
+    //   const res = await createContent(`${getUrl(lastLink)}`, body)
+    //   if (res?.status === 'success') {
+    //     toast.success(res.message, { position: 'bottom-right' })
+    //     setGetAgain((prev: boolean) => !prev)
+    //     handleClose()
+    //   }
+    // } else {
+    //   const res = await updateContent(`${getUrl(lastLink)}`, body, record[0]?.id)
+    //   if (res?.status === 'success') {
+    //     toast.success(res.message, { position: 'bottom-right' })
+    //     setGetAgain((prev: boolean) => !prev)
+    //     handleClose()
+    //   }
+    // }
   }
 
   return (
@@ -78,10 +81,11 @@ const RichEditor: FC<IRichEditor> = ({ isOpen, onClose, setGetAgain, value, setV
         </ModalHeader>
         <Divider mb={'1em'} />
         <ModalCloseButton />
-        <ReactQuill theme='snow' value={value} formats={formats} modules={modules} onChange={setValue} />
+        <ReactQuill theme='snow' value={editorValue} formats={formats} modules={modules} onChange={setEditorValue} />
         <Button
-          aria-disabled={value.length > 3 ? false : true}
-          isDisabled={value.length > 3 ? false : true}
+          onClick={handleSave}
+          aria-disabled={editorValue.length > 3 ? false : true}
+          isDisabled={editorValue.length > 3 ? false : true}
           aria-label='button-save'
           colorScheme='teal'
           fontSize={{ base: '12px', sm: '12px', md: '13px', xl: '14px' }}
