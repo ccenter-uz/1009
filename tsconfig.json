@@ -31,6 +31,6 @@
     "src/@core/service/context/main.jsx",
     "src/@core/service/hooks/useAuthContext.jsx",
     "src/@core/service/hooks/useAuth.jsx"
-, "src/@core/components/reusable/ExcelTable/index.jsx", "src/@core/utils/fn.js"  ],
+, "src/@core/components/reusable/ExcelTable/index.tsx", "src/@core/utils/fn.js"  ],
   "exclude": ["node_modules"]
 }

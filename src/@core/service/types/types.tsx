@@ -20,7 +20,7 @@ export type Ilogin = {
 // TABLE
 export type IcolumnTable = {
   title: string
-  dataIndex: string
+  dataIndex?: string
   key: string
   align?: 'left' | 'center' | 'right' | any
   width?: string
@@ -38,17 +38,19 @@ export type ItableType = {
   border?: boolean
 }
 
-type IGuestTableRow = {
-  value: string
-}
-type IGuestTableColumn = {
+interface Column {
   title: string
-  id: number
+  key: string
 }
 
-export type IGuestTable = {
-  row: IGuestTableRow[][]
-  columns: IGuestTableColumn[]
+export interface Row {
+  [key: string]: string
+}
+
+export interface TableData {
+  id: number
+  header: Column[]
+  rows: Row[]
 }
 
 // RICH EDITOR
@@ -96,8 +98,7 @@ export type IdataInfoFromApi = {
   id: string
   mention: string
   table_arr: {
-    header: any
-    row: any
+    table:TableData
   }
   text: string
   title: string
@@ -113,8 +114,7 @@ export type IdataInfo = {
   type: 'text' | 'table'
   content?: string
   table_arr: {
-    rows?: any
-    header?: any
+   table:TableData[]
   }
 }
 

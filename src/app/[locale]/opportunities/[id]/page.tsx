@@ -80,13 +80,7 @@ const Opportunities: FC = () => {
               warning: item.warning,
               title: item?.title,
               content: item.text,
-              table_arr: {
-                rows: item.table_arr?.row,
-                header: item.table_arr?.header.map((col: { value: string; title: string }) => ({
-                  id: col.value,
-                  title: col.value
-                }))
-              }
+              table_arr: item.table_arr
             }
           })
         )
@@ -105,7 +99,7 @@ const Opportunities: FC = () => {
       {lastLink === 'entertainment' && <EntertainmentLinks getAgain={getAgain} setData={setData} />}
       <Box display={'flex'} alignItems={'center'} gap={'0 8px'}>
         <Button
-          leftIcon={<img src='/add.svg' alt='add-circle-editor' width={'20px'} height={'20px'}/>}
+          leftIcon={<img src='/add.svg' alt='add-circle-editor' width={'20px'} height={'20px'} />}
           aria-label='create-text'
           fontSize={{ base: '12px', sm: '12px', md: '13px', xl: '14px' }}
           h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
@@ -163,7 +157,14 @@ const Opportunities: FC = () => {
               </Box>
               {data.mention && <MentionText text={data.mention} />}
               {data.warning && <WarningText text={data.warning} />}
-              {data.table_arr && <GuestTable row={data.table_arr.rows || [[]]} columns={data.table_arr.header || []} />}
+              {data.table_arr.table &&
+                data.table_arr?.table.map(table => {
+                  return (
+                    <Box key={table.id} my={{base:'8px',sm:'8px',md:'24px',xl:'24px'}}>
+                      <GuestTable rows={table.rows} header={table.header} />
+                    </Box>
+                  )
+                })}
               {data.content && (
                 <Box my={{ base: '16px', sm: '16px', md: '24px', xl: '24px' }}>
                   <div

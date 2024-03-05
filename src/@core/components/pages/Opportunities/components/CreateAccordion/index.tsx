@@ -2,7 +2,7 @@ import RichEditor from '@/@core/components/RichEditor'
 import EditableTable from '@/@core/components/reusable/ExcelTable'
 import GuestTable from '@/@core/components/reusable/GuestTable'
 import { useOpportunityRecord } from '@/@core/service/context/opportunitiesRecord'
-import { IcreateAccordionType } from '@/@core/service/types/types'
+import { IcreateAccordionType, TableData } from '@/@core/service/types/types'
 import { getUrl } from '@/@core/utils/fn'
 import { createContent, updateContent } from '@/app/[locale]/opportunities/[id]/action'
 import {
@@ -51,10 +51,11 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
     }
   })
   const { colorMode } = useColorMode()
-  const [dataTable, setDataTable] = useState([])
-  const [editorValue, setEditorValue] = useState<string>(record && record[0]?.content )
+  const [dataTable, setDataTable] = useState(record ? record[0].table_arr.table:[])
+  const [editorValue, setEditorValue] = useState<string>(record ? record[0]?.content : '')
   const [isExcelTableOpen, setIsExcelTableOpen] = useState<boolean>(false)
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false)
+  const [defaultTableData, setDefaultTableData] = useState<TableData[] | null>(null)
 
   // CLOSE
   const handleClose = () => {
@@ -70,24 +71,24 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
       ? (body = {
           category_id: JSON.parse(sessionStorage.getItem('catId')),
           title: values.title,
-          type: 'text or table',
-          warning: values.warning,
-          mention: values.mention,
-          text: editorValue,
-          table_arr: {
-            header: dataTable[0],
-            row: dataTable.slice(1)
-          }
-        })
-      : (body = {
-          title: values.title,
+          title_ru:'Ruscha title',
           type: 'text',
           warning: values.warning,
           mention: values.mention,
           text: editorValue,
           table_arr: {
-            header: dataTable[0],
-            row: dataTable.slice(1)
+            table:dataTable
+          }
+        })
+      : (body = {
+          title: values.title,
+          title_ru:'Ruscha title',
+          type: 'text',
+          warning: values.warning,
+          mention: values.mention,
+          text: editorValue,
+          table_arr: {
+            table:dataTable
           }
         })
 
@@ -110,10 +111,10 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
 
   // CHOOSE-CATEGORY
   const chooseCat = (content: 'table' | 'editor') => {
-    content === 'table' ? setIsExcelTableOpen(prev => !prev) : setIsEditorOpen(prev => !prev)
+    content === 'table'
+      ? (setIsExcelTableOpen(prev => !prev), setDefaultTableData(null))
+      : setIsEditorOpen(prev => !prev)
   }
-
-
 
   return (
     <Modal size={'full'} aria-modal isOpen={open} onClose={handleClose}>
@@ -175,36 +176,44 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
             Create Editor
           </Button>
         </Box>
-        {record && record[0]?.table_arr && (
-          <Box aria-label='table-section'>
-            <Box display={'flex'} gap={'8px'} alignItems={'center'} justifyContent={'flex-end'}>
-              <Tooltip label='Изменить' aria-label='A tooltip'>
-                <Image
-                  width={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
-                  _hover={{ opacity: '0.8' }}
-                  src='/pencil.svg'
-                  alt='edit'
-                  role='button'
-                  aria-label='edit-button'
-                  onClick={() => setIsExcelTableOpen(true)}
-                />
-              </Tooltip>
-              <Tooltip label='Удалить' aria-label='A tooltip'>
-                <Image
-                  width={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
-                  _hover={{ opacity: '0.8' }}
-                  src='/delete.svg'
-                  alt='delete'
-                  role='button'
-                  aria-label='delete-button'
-                  //   onClick={() => handleDelete(data.id)}
-                />
-              </Tooltip>
-            </Box>
-            <GuestTable row={record[0].table_arr.rows || [[]]} columns={record[0].table_arr.header || []} />
-          </Box>
-        )}
-        {record && record[0]?.content && (
+        {/* TABLE VIEW */}
+        {dataTable?.length > 0 &&
+          dataTable.map((table: TableData) => {
+            return (
+              <Box key={table.id} aria-label='table-section' my={{ base: '8px', sm: '8px', md: '16px', xl: '16px' }}>
+                <Box display={'flex'} gap={'8px'} alignItems={'center'} justifyContent={'flex-end'}>
+                  <Tooltip label='Изменить' aria-label='A tooltip'>
+                    <Image
+                      width={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
+                      _hover={{ opacity: '0.8' }}
+                      src='/pencil.svg'
+                      alt='edit'
+                      role='button'
+                      aria-label='edit-button'
+                      onClick={() => {
+                        setDefaultTableData(dataTable.filter((item: TableData) => item.id == table.id)),
+                          setIsExcelTableOpen(true)
+                      }}
+                    />
+                  </Tooltip>
+                  <Tooltip label='Удалить' aria-label='A tooltip'>
+                    <Image
+                      width={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
+                      _hover={{ opacity: '0.8' }}
+                      src='/delete.svg'
+                      alt='delete'
+                      role='button'
+                      aria-label='delete-button'
+                      //   onClick={() => handleDelete(data.id)}
+                    />
+                  </Tooltip>
+                </Box>
+                <GuestTable rows={table.rows} header={table.header} />
+              </Box>
+            )
+          })}
+        {/* EDITOR VIEW */}
+        {editorValue && (
           <Box aria-label='editor-section'>
             <Box display={'flex'} gap={'8px'} alignItems={'center'} justifyContent={'flex-end'}>
               <Tooltip label='Изменить' aria-label='A tooltip'>
@@ -236,10 +245,11 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
                   ? { background: '#757575', padding: '0.5em 1em', borderRadius: '8px' }
                   : { background: '#f9f9f6', padding: '0.5em 1em', borderRadius: '8px' }
               }
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(record[0]?.content || '') }}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(editorValue || '') }}
             />
           </Box>
         )}
+
         <Box display='flex' alignItems='center' justifyContent='flex-end' my={'8px'}>
           <Button
             aria-label='button-save'
@@ -256,11 +266,13 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
         {/* editableTable */}
         {isExcelTableOpen && (
           <EditableTable
-            data={dataTable}
-            setData={setDataTable}
-            setGetAgain={setGetAgain}
+            recordId={defaultTableData ? defaultTableData[0].id :null}
+            rows={defaultTableData ? defaultTableData[0].rows : []}
+            columns={defaultTableData ? defaultTableData[0].header : []}
             isOpen={isExcelTableOpen}
             onClose={setIsExcelTableOpen}
+            setDataTable={setDataTable}
+            data={dataTable}
           />
         )}
         {/* richEditor */}

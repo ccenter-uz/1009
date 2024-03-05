@@ -6,7 +6,7 @@ import { FC } from 'react'
 import Pagination from '@/@core/components/reusable/Pagination'
 import { usePagination } from '@/@core/service/hooks/usePaginate'
 
-const MyOrganizationsOperator: FC = () => {
+const MyOrganizationsModerator: FC = () => {
   const breadcrumblinks = [
     {
       id: 1,
@@ -22,7 +22,7 @@ const MyOrganizationsOperator: FC = () => {
   return (
     <Box minH={'100dvh'} id='myorg' className='wrapper fade-in' aria-label='section'>
       <BreadCrumb item={breadcrumblinks} />
-      <Heading>OPERATOR</Heading>
+      <Heading>Moderator organizations</Heading>
       <OrgCard />
       <OrgCard />
       <OrgCard />
@@ -38,4 +38,4 @@ const MyOrganizationsOperator: FC = () => {
   )
 }
 
-export default MyOrganizationsOperator
+export default MyOrganizationsModerator

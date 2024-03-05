@@ -1,6 +1,5 @@
 'use client'
 import { ItableType } from '@/@core/service/types/types'
-import { scssVariables } from '@/@core/utils/scss-variables'
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
 
@@ -31,7 +30,7 @@ const TableGen: FC<ItableType> = ({ columns, dataSource, border = false, RowBg, 
           <Thead>
             <Tr
               style={
-                colorMode === 'dark' ? { background: '#484a4a' } : { background: ColBg || scssVariables.blockBgColor }
+                colorMode === 'dark' ? { background: '#484a4a' } : { background: ColBg || 'whitesmoke' }
               }
             >
               {columns.map(col => (
@@ -54,7 +53,7 @@ const TableGen: FC<ItableType> = ({ columns, dataSource, border = false, RowBg, 
             {dataSource.map((row, rowIndex) => (
               <Tr
                 _even={
-                  colorMode === 'dark' ? { background: '#484a4a' } : { background: RowBg || scssVariables.blockBgColor }
+                  colorMode === 'dark' ? { background: '#484a4a' } : { background: RowBg || 'whitesmoke' }
                 }
                 key={rowIndex}
               >
@@ -66,7 +65,7 @@ const TableGen: FC<ItableType> = ({ columns, dataSource, border = false, RowBg, 
                     textAlign={column.align}
                     key={colIndex}
                   >
-                    {column?.render ? column?.render(row[column.dataIndex], row, rowIndex) : row[column.dataIndex]}
+                    {column?.render ? column?.render(row[column.key], row, rowIndex) : row[column.key]}
                   </Td>
                 ))}
               </Tr>
