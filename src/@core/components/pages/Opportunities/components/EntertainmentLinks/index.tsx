@@ -10,11 +10,13 @@ import { IdataInfoFromApi } from '@/@core/service/types/types'
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
 import { getCat, getDataByid } from '@/app/[locale]/opportunities/[id]/serverAction'
+import { useLang } from '@/@core/service/hooks/useLang'
 
 type IenterLinks = {
   index: string
   id: number
   title: string
+  title_ru: string
 }
 
 type IEnterLinksType = {
@@ -24,12 +26,13 @@ type IEnterLinksType = {
 
 const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
   const { colorMode } = useColorMode()
+  const { locale } = useLang()
   const searchParams = useSearchParams()
   const selectedPage = searchParams.get('page')
   const [linkDialog, setLinkDialog] = useState<boolean>(false)
   const [editLinks, setEditLinks] = useState<boolean>(false)
   const [enterLinks, setEnterLinks] = useState<IenterLinks[]>()
-  const [editInfo, setEditInfo] = useState<{ title: string; id: number }>()
+  const [editInfo, setEditInfo] = useState<{ title: string; title_ru: string; id: number }>()
   const router = useRouter()
   // getDatabyId
   const getDataById = async (id: number) => {
@@ -37,28 +40,14 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
       const res = await getDataByid(id)
       setData(
         res?.entertainments.map((item: IdataInfoFromApi) => {
-          if (item?.type === 'text') {
-            return {
-              id: item.id,
-              mention: item.mention,
-              warning: item.warning,
-              title: item?.title,
-              type: 'text',
-              content: item.text
-            }
-          } else {
-            return {
-              id: item.id,
-              mention: item.mention,
-              warning: item.warning,
-              title: item?.title,
-              type: 'table',
-              rows: item.table_arr.row,
-              header: item.table_arr.header.map((col: { value: string; title: string }) => ({
-                id: col.value,
-                title: col.value
-              }))
-            }
+          return {
+            ...item,
+            id: item.id,
+            mention: item.mention,
+            warning: item.warning,
+            title: item?.title,
+            content: item.text.content,
+            table_arr: item.table_arr
           }
         })
       )
@@ -158,7 +147,7 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
                         aria-label='delete-enter-links'
                         onClick={e => {
                           e.preventDefault()
-                          setEditInfo({ title: link.title, id: link.id })
+                          setEditInfo({ title: link.title, title_ru: link.title_ru, id: link.id })
                           setLinkDialog(prevState => !prevState)
                         }}
                         fontSize={scssVariables.fonts.paragraph}
@@ -219,7 +208,9 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
                   h={{ base: '30px', sm: '30px', md: '39px', xl: '39px' }}
                   fontSize={scssVariables.fonts.paragraph}
                 >
-                  {link.title}
+                  {locale == 'ru'
+                    ? `${link.title_ru[0].toUpperCase()}${link.title_ru.slice(1)}`
+                    : `${link.title[0].toUpperCase()}${link.title.slice(1)}`}
                 </Button>
               </Link>
             )

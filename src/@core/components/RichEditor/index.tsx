@@ -1,73 +1,28 @@
 'use client'
 import Loading from '@/app/[locale]/loading'
 import dynamic from 'next/dynamic'
-import { FC, FormEvent, memo, startTransition, useState } from 'react'
+import { FC, memo, useState } from 'react'
 import 'react-quill/dist/quill.snow.css'
 import { formats } from './formats'
 import { modules } from './modules'
 import { Button, Divider, Modal, ModalCloseButton, ModalContent, ModalHeader } from '@chakra-ui/react'
 import { IRichEditor } from '@/@core/service/types/types'
-import { createContent, updateContent } from '@/app/[locale]/opportunities/[id]/action'
-import { getUrl } from '@/@core/utils/fn'
-import { usePathname } from 'next/navigation'
-import { toast } from 'react-toastify'
-import { useOpportunityRecord } from '@/@core/service/context/opportunitiesRecord'
 // dynamic import Quill
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <Loading /> })
 
-const RichEditor: FC<IRichEditor> = ({ isOpen, onClose, setGetAgain, value, setValue }) => {
-  const pathname = usePathname()
-  const lastLink = pathname.replaceAll('/', ' ').split(' ').slice(-1).join()
-  const { record } = useOpportunityRecord()
-  const [editorValue,setEditorValue]=useState('')
+const RichEditor: FC<IRichEditor> = ({ isOpen, onClose, defaultValue, value, setValue }) => {
+  const [editorValue, setEditorValue] = useState((defaultValue && defaultValue[0].text) || '')
 
   // CLOSE
   const handleClose = () => {
-    startTransition(() => {
-      onClose((prev: boolean) => !prev)
-    })
+    onClose((prev: boolean) => !prev)
   }
 
   // SAVE
   const handleSave = async () => {
-    console.log([{id:Date.now(),text:editorValue}],'value')
-    setValue([...value,{id:Date.now(),text:editorValue}])
-    // e.preventDefault()
-    // const current = e.currentTarget
-    // const formData = new FormData(current)
-    // let body
-    // lastLink === 'entertainment'
-    //   ? (body = {
-    //       category_id: JSON.parse(sessionStorage.getItem('catId')),
-    //       title: formData.get('title'),
-    //       type: 'text',
-    //       warning: formData.get('warning'),
-    //       mention: formData.get('mention'),
-    //       text: value
-    //     })
-    //   : (body = {
-    //       title: formData.get('title'),
-    //       type: 'text',
-    //       warning: formData.get('warning'),
-    //       mention: formData.get('mention'),
-    //       text: value
-    //     })
-
-    // if (!record) {
-    //   const res = await createContent(`${getUrl(lastLink)}`, body)
-    //   if (res?.status === 'success') {
-    //     toast.success(res.message, { position: 'bottom-right' })
-    //     setGetAgain((prev: boolean) => !prev)
-    //     handleClose()
-    //   }
-    // } else {
-    //   const res = await updateContent(`${getUrl(lastLink)}`, body, record[0]?.id)
-    //   if (res?.status === 'success') {
-    //     toast.success(res.message, { position: 'bottom-right' })
-    //     setGetAgain((prev: boolean) => !prev)
-    //     handleClose()
-    //   }
-    // }
+    const filtered = defaultValue ? value.filter(item => item.id !== defaultValue[0].id) : value
+    setValue([...filtered, { id: defaultValue ? defaultValue[0].id : Date.now(), text: editorValue }])
+    handleClose()
   }
 
   return (

@@ -16,7 +16,6 @@ const GuestTable: FC<Partial<TableData>> = ({ rows, header = [] }) => {
               <Th
                 bg={colorMode === 'dark' ? '#484a4a' : scssVariables.blockBgColor}
                 key={colIndex}
-                // textAlign='center'
                 fontWeight={600}
                 textTransform={'capitalize'}
                 fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
@@ -36,7 +35,6 @@ const GuestTable: FC<Partial<TableData>> = ({ rows, header = [] }) => {
                   fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}
                   p={{ base: '8px 10px', sm: '8px 10px', md: '16px 24px', xl: '16px 24px' }}
                   key={colIndex}
-                  // textAlign='center'
                 >
                   {row[column.key]}
                 </Td>

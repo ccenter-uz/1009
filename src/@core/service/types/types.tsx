@@ -57,8 +57,8 @@ export interface TableData {
 export type IRichEditor = {
   isOpen: boolean
   onClose: SetStateAction<any>
-  setGetAgain: Dispatch<SetStateAction<boolean>>
-  value: string
+  defaultValue:{id:string|number,text:string}[] | null
+  value:{id:number,text:string}[]
   setValue: Dispatch<SetStateAction<any>>
 }
 
@@ -71,6 +71,7 @@ export type IOption = {
 export type ISelectAutocomplelte = {
   options: IOption[]
   onSelect: (selectedOption: IOption) => void
+  
 }
 
 // PAGINATION
@@ -127,7 +128,8 @@ export type IdataInfo = {
   }
   table_arr_ru: {
     table: TableData[]
-  }
+  },
+  update_date:string
 }
 
 export type IcreateAccordionType = {

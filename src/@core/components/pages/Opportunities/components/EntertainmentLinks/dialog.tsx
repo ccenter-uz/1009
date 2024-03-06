@@ -12,6 +12,7 @@ import {
   ModalOverlay
 } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
+import { title } from 'process'
 import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
 import { useForm } from 'react-hook-form'
@@ -20,18 +21,19 @@ import { toast } from 'react-toastify'
 type IDialogTypes = {
   isOpen: boolean
   onClose: Dispatch<SetStateAction<boolean>>
-  editInfo?: { title: string; id: number }
+  editInfo?: { title: string; title_ru: string; id: number }
   getCategories: () => void
 }
 
 const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, editInfo, getCategories }) => {
   const { pending } = useFormStatus()
   const { register, handleSubmit, reset } = useForm()
+  
   const router = useRouter()
   //   handleClose
   const handleClose = () => {
     onClose(prevState => (prevState = false))
-    reset({ title: '' })
+    reset({title:null,title_ru:null})
   }
 
   //   actionSubmit
@@ -55,7 +57,7 @@ const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, e
   }
 
   useEffect(() => {
-    editInfo && reset({ title: editInfo.title })
+    editInfo && reset({ title: editInfo.title,title_ru:editInfo.title_ru })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editInfo])
 
@@ -63,12 +65,34 @@ const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, e
     <Modal isOpen={isOpen} onClose={handleClose}>
       <ModalOverlay />
       <ModalContent p={'1em'}>
-        <ModalHeader p={'0'}>Добавить линк</ModalHeader>
+        <ModalHeader p={'0'} fontSize={{ base: '16px', sm: '16px', md: '18px', xl: '18px' }}>
+          Добавить линк
+        </ModalHeader>
         <ModalCloseButton />
         <form onSubmit={handleSubmit(actionSubmit)} style={{ margin: '1em 0' }} id='link-entertainment-form'>
           <FormControl>
-            <FormLabel htmlFor='add-link'>Добавить:</FormLabel>
-            <InputGen isDisabled={pending} id='add-link' {...register('title')} />
+            <FormLabel htmlFor='add-link' fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
+              Добавить(UZ):
+            </FormLabel>
+            <InputGen
+              isDisabled={pending}
+              id='add-link'
+              {...register('title')}
+              fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}
+              h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
+            />
+          </FormControl>
+          <FormControl mt={'8px'}>
+            <FormLabel htmlFor='add-link' fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
+              Добавить(РУ):
+            </FormLabel>
+            <InputGen
+              isDisabled={pending}
+              id='add-link'
+              {...register('title_ru')}
+              fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}
+              h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
+            />
           </FormControl>
           <Box display={'flex'} justifyContent={'flex-end'}>
             <Button
@@ -78,6 +102,8 @@ const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, e
               w={{ base: '100%', sm: '100%', md: 'fit-content', xl: 'fit-content' }}
               mt={'1em'}
               colorScheme='teal'
+              fontSize={{ base: '12px', sm: '12px', md: '13px', xl: '14px' }}
+              h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
             >
               Сохранить
             </Button>

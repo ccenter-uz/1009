@@ -11,7 +11,8 @@ import {
   AccordionIcon,
   Image,
   Tooltip,
-  useColorMode
+  useColorMode,
+  Text
 } from '@chakra-ui/react'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import GuestTable from '@/@core/components/reusable/GuestTable'
@@ -46,6 +47,7 @@ const Opportunities: FC = () => {
   const { setRecord } = useOpportunityRecord()
   const [dataInfo, setData] = useState<IdataInfo[]>([])
   const [getAgain, setGetAgain] = useState<boolean>(false)
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   // DELETE
   const handleDelete = (id: string | number) => {
@@ -93,31 +95,52 @@ const Opportunities: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAgain])
 
+  // ACCORDION
+  const handleAccordion = () => {
+    if (lastLink === 'entertainment' && searchParams.size === 0) {
+      Swal.fire({ text: 'Please, choose category first!', icon: 'warning' })
+    } else {
+      setIsCreateAccordion(prev => (prev = true))
+    }
+  }
+
   return (
     <Box id='opportunities' className='fade-in' aria-current='page' minH={'100dvh'}>
       <BreadCrumb item={breadcrumblinks} />
-      <SearchPanelOpportunities options={dataInfo?.map(option => ({ label: option.title, value: option.title }))} />
+      <SearchPanelOpportunities
+        setOpenIndex={setOpenIndex}
+        options={dataInfo?.map(option => ({
+          label: locale == 'ru' ? option.title_ru.toLowerCase() : option.title.toLowerCase(),
+          value: locale == 'ru' ? option.title_ru.toLowerCase() : option.title.toLowerCase()
+        }))}
+      />
       {lastLink === 'entertainment' && <EntertainmentLinks getAgain={getAgain} setData={setData} />}
-      <Box display={'flex'} alignItems={'center'} gap={'0 8px'}>
+      <Box display={'flex'} alignItems={'center'} gap={'0 8px'} mb={{ base: '0', sm: '0', md: '4em', xl: '4em' }}>
         <Button
           leftIcon={<img src='/add.svg' alt='add-circle-editor' width={'20px'} height={'20px'} />}
           aria-label='create-text'
           fontSize={{ base: '12px', sm: '12px', md: '13px', xl: '14px' }}
           h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
-          onClick={() => setIsCreateAccordion(prev => (prev = true))}
+          onClick={handleAccordion}
         >
           Create Accordion
         </Button>
       </Box>
       {/* Accordion renders from API data */}
-      {dataInfo?.map(data => (
-        <Accordion key={data.id} allowMultiple my={{ base: '8px', sm: '8px', md: '1em', xl: '1em' }}>
-          <AccordionItem borderTop={'none'} style={{ borderBottom: '0.5px solid #d3d3d373' }}>
+      <Accordion allowMultiple index={[openIndex as number]}>
+        {dataInfo?.map((data, index) => (
+          <AccordionItem
+            id={index.toString()}
+            key={index}
+            borderTop={'none'}
+            style={{ borderBottom: '0.5px solid #d3d3d373' }}
+            my={{ base: '8px', sm: '8px', md: '1em', xl: '1em' }}
+          >
             <AccordionButton
               textTransform={'capitalize'}
               h={{ base: '37px', sm: '37px', md: '45px', xl: '45px' }}
-              color={scssVariables.mainColor}
               fontSize={scssVariables.fonts.paragraph}
+              p={{ base: '8px', sm: '8px', md: '16px', xl: '16px' }}
             >
               <Box aria-label='title-panel' as='span' flex='1' textAlign='left'>
                 {locale == 'ru' ? data.title_ru : data.title}
@@ -129,6 +152,7 @@ const Opportunities: FC = () => {
               boxShadow={scssVariables.boxShadowPartnerBox}
               mb={{ base: '24px', sm: '24px', md: '48px', xl: '48px' }}
               bg={colorMode === 'dark' ? scssVariables.darkBg : '#F8FFFF'}
+              p={{ base: '8px', sm: '8px', md: '16px', xl: '16px' }}
             >
               <Box display={'flex'} gap={'8px'} alignItems={'center'} justifyContent={'flex-end'}>
                 <Tooltip label='Изменить' aria-label='A tooltip'>
@@ -156,8 +180,8 @@ const Opportunities: FC = () => {
                   />
                 </Tooltip>
               </Box>
-              {data.mention && <MentionText text={locale == 'ru' ? data.mention_ru :data.mention} />}
-              {data.warning && <WarningText text={locale == 'ru' ? data.warning_ru :data.warning} />}
+              {data.mention && <MentionText text={locale == 'ru' ? data.mention_ru : data.mention} />}
+              {data.warning && <WarningText text={locale == 'ru' ? data.warning_ru : data.warning} />}
               {data.table_arr.table &&
                 data.table_arr?.table.map(table => {
                   return (
@@ -166,22 +190,35 @@ const Opportunities: FC = () => {
                     </Box>
                   )
                 })}
-              {data.content && (
-                <Box my={{ base: '16px', sm: '16px', md: '24px', xl: '24px' }}>
-                  <div
-                    style={
-                      colorMode === 'dark'
-                        ? { background: '#757575', padding: '0.5em 1em', borderRadius: '8px' }
-                        : { background: '#f9f9f6', padding: '0.5em 1em', borderRadius: '8px' }
-                    }
-                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.content || '') }}
-                  />
-                </Box>
-              )}
+              {data.content &&
+                data.content.map(text => {
+                  return (
+                    <Box
+                      key={text.id}
+                      my={{ base: '16px', sm: '16px', md: '24px', xl: '24px' }}
+                      fontSize={scssVariables.fonts.paragraph}
+                    >
+                      <div
+                        style={
+                          colorMode === 'dark'
+                            ? { background: '#757575', padding: '0.5em 1em', borderRadius: '8px' }
+                            : { background: '#f9f9f6', padding: '0.5em 1em', borderRadius: '8px' }
+                        }
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(text.text) }}
+                      />
+                    </Box>
+                  )
+                })}
+              <Text fontSize={{ base: '8px', sm: '8px', md: '11px', xl: '11px' }} color={'grey'}>
+                Обновлено:
+                {new Date(data.update_date).toLocaleDateString('ru-GB', {
+                  hour12: false
+                })}
+              </Text>
             </AccordionPanel>
           </AccordionItem>
-        </Accordion>
-      ))}
+        ))}
+      </Accordion>
       {/* CreateAccordion */}
       {iscreateAccordion && (
         <CreateAccModal open={iscreateAccordion} close={setIsCreateAccordion} setGetAgain={setGetAgain} />

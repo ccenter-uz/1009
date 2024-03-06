@@ -59,6 +59,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
   const [isExcelTableOpen, setIsExcelTableOpen] = useState<boolean>(false)
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false)
   const [defaultTableData, setDefaultTableData] = useState<TableData[] | null>(null)
+  const [defaultEditorValue, setDefaultEditorValue] = useState<{ id: number | string; text: string }[] | null>(null)
 
   // CLOSE
   const handleClose = () => {
@@ -68,11 +69,10 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
 
   // SAVE
   const handleSave = async (values: any) => {
-    console.log(values)
     let body
     lastLink === 'entertainment'
       ? (body = {
-          category_id: JSON.parse(sessionStorage.getItem('catId')),
+          category_id: JSON.parse(sessionStorage.getItem('catId') as string),
           title: values.title,
           title_ru: values.title_ru,
           type: 'text',
@@ -126,7 +126,18 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
   const chooseCat = (content: 'table' | 'editor') => {
     content === 'table'
       ? (setIsExcelTableOpen(prev => !prev), setDefaultTableData(null))
-      : setIsEditorOpen(prev => !prev)
+      : setIsEditorOpen(prev => !prev),
+      setDefaultEditorValue(null)
+  }
+
+  // DELETE
+  const handleDeleteTable = (id: number | string) => {
+    const deletedtable = dataTable.filter((_: any) => _.id !== id)
+    setDataTable(deletedtable)
+  }
+  const handleDeleteEditor = (id: number | string) => {
+    const deletedtable = editorValue.filter((_: any) => _.id !== id)
+    setEditorValue(deletedtable)
   }
 
   return (
@@ -247,7 +258,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
                       alt='delete'
                       role='button'
                       aria-label='delete-button'
-                      //   onClick={() => handleDelete(data.id)}
+                      onClick={() => handleDeleteTable(table.id)}
                     />
                   </Tooltip>
                 </Box>
@@ -269,7 +280,10 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
                       alt='edit'
                       role='button'
                       aria-label='edit-button'
-                      onClick={() => setIsEditorOpen(true)}
+                      onClick={() => {
+                        setDefaultEditorValue(editorValue.filter((_: { id: string | number }) => _.id == value.id)),
+                          setIsEditorOpen(true)
+                      }}
                     />
                   </Tooltip>
                   <Tooltip label='Удалить' aria-label='A tooltip'>
@@ -280,7 +294,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
                       alt='delete'
                       role='button'
                       aria-label='delete-button'
-                      //   onClick={() => handleDelete(data.id)}
+                      onClick={() => handleDeleteEditor(value.id)}
                     />
                   </Tooltip>
                 </Box>
@@ -324,9 +338,9 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
         {/* richEditor */}
         {isEditorOpen && (
           <RichEditor
+            defaultValue={defaultEditorValue}
             value={editorValue}
             setValue={setEditorValue}
-            setGetAgain={setGetAgain}
             isOpen={isEditorOpen}
             onClose={setIsEditorOpen}
           />
