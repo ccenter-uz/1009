@@ -4,12 +4,11 @@ import { Box, Button, Switch, TableContainer, Text, Tooltip, useColorMode } from
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Dispatch, FC, SetStateAction, useEffect, useLayoutEffect, useState } from 'react'
 import DialogEntertainmentLinks from './dialog'
-import { deleteCat } from '@/app/[locale]/opportunities/[id]/action'
+import { deleteCat, getCat, getDataByid } from '@/app/[locale]/opportunities/[id]/action'
 import Loading from '@/app/[locale]/loading'
 import { IdataInfoFromApi } from '@/@core/service/types/types'
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
-import { getCat, getDataByid } from '@/app/[locale]/opportunities/[id]/serverAction'
 import { useLang } from '@/@core/service/hooks/useLang'
 
 type IenterLinks = {
@@ -37,7 +36,8 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
   // getDatabyId
   const getDataById = async (id: number) => {
     if (id !== undefined) {
-      const res = await getDataByid(id)
+      const params = { language: locale }
+      const res = await getDataByid(id, params)
       setData(
         res?.entertainments.map((item: IdataInfoFromApi) => {
           return {
@@ -57,10 +57,12 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
   // getCategories
   const getCategories = async () => {
     const res = await getCat()
-
     if (res) {
-      selectedPage && (await getDataById(res?.filter((link: IenterLinks) => link.title === selectedPage)[0]?.id))
-      setEnterLinks(res.map((link: IenterLinks) => ({ ...link, index: link.title })))
+      const filtered = res?.filter((link: IenterLinks) => {
+        return locale === 'ru' ? link.title_ru === selectedPage : link.title === selectedPage
+      })[0]?.id
+      selectedPage && (await getDataById(filtered))
+      setEnterLinks(res.map((link: IenterLinks) => ({ ...link, index: locale === 'ru' ? link.title_ru : link.title })))
     }
   }
 
@@ -73,7 +75,9 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
   // watch selectedPage change
   useEffect(() => {
     if (selectedPage) {
-      const filter = enterLinks?.filter((link: IenterLinks) => link.title === selectedPage)
+      const filter = enterLinks?.filter((link: IenterLinks) => {
+        return locale === 'ru' ? link.title_ru === selectedPage : link.title === selectedPage
+      })
       filter && getDataById(filter[0]?.id)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -208,7 +212,7 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
                   h={{ base: '30px', sm: '30px', md: '39px', xl: '39px' }}
                   fontSize={scssVariables.fonts.paragraph}
                 >
-                  {locale == 'ru'
+                  {locale === 'ru'
                     ? `${link.title_ru[0].toUpperCase()}${link.title_ru.slice(1)}`
                     : `${link.title[0].toUpperCase()}${link.title.slice(1)}`}
                 </Button>

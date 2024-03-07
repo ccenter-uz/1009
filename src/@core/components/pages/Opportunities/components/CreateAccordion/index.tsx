@@ -2,6 +2,7 @@ import RichEditor from '@/@core/components/RichEditor'
 import EditableTable from '@/@core/components/reusable/ExcelTable'
 import GuestTable from '@/@core/components/reusable/GuestTable'
 import { useOpportunityRecord } from '@/@core/service/context/opportunitiesRecord'
+import { useLang } from '@/@core/service/hooks/useLang'
 import { IcreateAccordionType, TableData } from '@/@core/service/types/types'
 import { getUrl } from '@/@core/utils/fn'
 import { createContent, updateContent } from '@/app/[locale]/opportunities/[id]/action'
@@ -43,14 +44,12 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
   const pathname = usePathname()
   const lastLink = pathname.replaceAll('/', ' ').split(' ').slice(-1).join()
   const { record, setRecord } = useOpportunityRecord()
+  const { locale } = useLang()
   const { register, handleSubmit } = useForm({
     defaultValues: {
       title: record && record[0].title,
-      title_ru: record && record[0].title_ru,
       warning: record && record[0].warning,
-      warning_ru: record && record[0].warning_ru,
-      mention: record && record[0].mention,
-      mention_ru: record && record[0].mention_ru
+      mention: record && record[0].mention
     }
   })
   const { colorMode } = useColorMode()
@@ -74,33 +73,23 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
       ? (body = {
           category_id: JSON.parse(sessionStorage.getItem('catId') as string),
           title: values.title,
-          title_ru: values.title_ru,
           type: 'text',
+          language: locale === 'ru' ? 'ru' : 'uz',
           warning: values.warning,
-          warning_ru: values.warning_ru,
           mention: values.mention,
-          mention_ru: values.mention_ru,
           text: { content: editorValue },
           table_arr: {
-            table: dataTable
-          },
-          table_arr_ru: {
             table: dataTable
           }
         })
       : (body = {
           title: values.title,
-          title_ru: values.title_ru,
           type: 'text',
+          language: locale === 'ru' ? 'ru' : 'uz',
           warning: values.warning,
-          warning_ru: values.warning_ru,
           mention: values.mention,
-          mention_ru: values.mention_ru,
           text: { content: editorValue },
           table_arr: {
-            table: dataTable
-          },
-          table_arr_ru: {
             table: dataTable
           }
         })
@@ -155,12 +144,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
             </FormLabel>
             <Input {...register('title')} {...inputsStyle} id='title' placeholder='title' />
           </FormControl>
-          <FormControl isRequired mb={{ base: '14px', sm: '14px', md: '2em', xl: '2em' }}>
-            <FormLabel htmlFor='title_ru' {...labelStyle}>
-              Title accordion_ru:
-            </FormLabel>
-            <Input {...register('title_ru')} {...inputsStyle} id='title_ru' placeholder='title ru' />
-          </FormControl>
+
           <FormControl mb={{ base: '14px', sm: '14px', md: '14px', xl: '14px' }}>
             <FormLabel htmlFor='warning-text' {...labelStyle}>
               Warning information:
@@ -173,18 +157,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
               resize={'vertical'}
             />
           </FormControl>
-          <FormControl mb={{ base: '14px', sm: '14px', md: '14px', xl: '14px' }}>
-            <FormLabel htmlFor='warning-text_ru' {...labelStyle}>
-              Warning information_ru:
-            </FormLabel>
-            <Textarea
-              {...register('warning_ru')}
-              {...inputsStyle}
-              id='warning-_ru'
-              placeholder='Type for warnings!'
-              resize={'vertical'}
-            />
-          </FormControl>
+
           <FormControl mb={{ base: '14px', sm: '14px', md: '2em', xl: '2em' }}>
             <FormLabel htmlFor='mention-text' {...labelStyle}>
               Mention information:
@@ -193,18 +166,6 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
               {...register('mention')}
               {...inputsStyle}
               id='mention-text'
-              placeholder='Type for mentions!'
-              resize={'vertical'}
-            />
-          </FormControl>
-          <FormControl mb={{ base: '14px', sm: '14px', md: '2em', xl: '2em' }}>
-            <FormLabel htmlFor='mention-text_ru' {...labelStyle}>
-              Mention information_ru:
-            </FormLabel>
-            <Textarea
-              {...register('mention_ru')}
-              {...inputsStyle}
-              id='mention-text_ru'
               placeholder='Type for mentions!'
               resize={'vertical'}
             />

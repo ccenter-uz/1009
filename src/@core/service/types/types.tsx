@@ -57,8 +57,8 @@ export interface TableData {
 export type IRichEditor = {
   isOpen: boolean
   onClose: SetStateAction<any>
-  defaultValue:{id:string|number,text:string}[] | null
-  value:{id:number,text:string}[]
+  defaultValue: { id: string | number; text: string }[] | null
+  value: { id: number; text: string }[]
   setValue: Dispatch<SetStateAction<any>>
 }
 
@@ -71,7 +71,6 @@ export type IOption = {
 export type ISelectAutocomplelte = {
   options: IOption[]
   onSelect: (selectedOption: IOption) => void
-  
 }
 
 // PAGINATION
@@ -98,38 +97,26 @@ export type IFilterTable = {
 export type IdataInfoFromApi = {
   id: string
   mention: string
-  mention_ru: string
   table_arr: {
-    table: TableData
-  }
-  table_arr_ru: {
     table: TableData
   }
   text: { content: { id: string | number; text: string }[] }
   title: string
-  title_ru: string
   warning: string
-  warning_ru: string
   type: 'text' | 'table'
 }
 
 export type IdataInfo = {
   id: string
   mention: string
-  mention_ru: string
   warning: string
-  warning_ru: string
   title: string
-  title_ru: string
   type: 'text' | 'table'
   content?: { id: string | number; text: string }[]
   table_arr: {
     table: TableData[]
   }
-  table_arr_ru: {
-    table: TableData[]
-  },
-  update_date:string
+  update_date: string
 }
 
 export type IcreateAccordionType = {

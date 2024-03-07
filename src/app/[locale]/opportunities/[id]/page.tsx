@@ -25,10 +25,9 @@ import { useLang } from '@/@core/service/hooks/useLang'
 import EntertainmentLinks from '@/@core/components/pages/Opportunities/components/EntertainmentLinks'
 import { IdataInfo, IdataInfoFromApi } from '@/@core/service/types/types'
 import Swal from 'sweetalert2'
-import { deleteContent } from './action'
+import { deleteContent, getData } from './action'
 import { getUrl } from '@/@core/utils/fn'
 import { toast } from 'react-toastify'
-import { getData } from './serverAction'
 import CreateAccModal from '@/@core/components/pages/Opportunities/components/CreateAccordion'
 import { useOpportunityRecord } from '@/@core/service/context/opportunitiesRecord'
 
@@ -72,7 +71,8 @@ const Opportunities: FC = () => {
   // GET
   const getDataAnother = async () => {
     if (lastLink !== 'entertainment') {
-      const res = await getData(`${getUrl(lastLink)}`)
+      const params = { language: locale }
+      const res = await getData(`${getUrl(lastLink)}`, params)
       res &&
         setData(
           res?.map((item: IdataInfoFromApi) => {
@@ -93,7 +93,7 @@ const Opportunities: FC = () => {
   useLayoutEffect(() => {
     getDataAnother()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getAgain])
+  }, [getAgain, locale])
 
   // ACCORDION
   const handleAccordion = () => {
@@ -110,8 +110,8 @@ const Opportunities: FC = () => {
       <SearchPanelOpportunities
         setOpenIndex={setOpenIndex}
         options={dataInfo?.map(option => ({
-          label: locale == 'ru' ? option.title_ru.toLowerCase() : option.title.toLowerCase(),
-          value: locale == 'ru' ? option.title_ru.toLowerCase() : option.title.toLowerCase()
+          label: option.title.toLowerCase(),
+          value: option.title.toLowerCase()
         }))}
       />
       {lastLink === 'entertainment' && <EntertainmentLinks getAgain={getAgain} setData={setData} />}
@@ -143,7 +143,7 @@ const Opportunities: FC = () => {
               p={{ base: '8px', sm: '8px', md: '16px', xl: '16px' }}
             >
               <Box aria-label='title-panel' as='span' flex='1' textAlign='left'>
-                {locale == 'ru' ? data.title_ru : data.title}
+                {data.title}
               </Box>
               <AccordionIcon />
             </AccordionButton>
@@ -180,8 +180,8 @@ const Opportunities: FC = () => {
                   />
                 </Tooltip>
               </Box>
-              {data.mention && <MentionText text={locale == 'ru' ? data.mention_ru : data.mention} />}
-              {data.warning && <WarningText text={locale == 'ru' ? data.warning_ru : data.warning} />}
+              {data.mention && <MentionText text={data.mention} />}
+              {data.warning && <WarningText text={data.warning} />}
               {data.table_arr.table &&
                 data.table_arr?.table.map(table => {
                   return (

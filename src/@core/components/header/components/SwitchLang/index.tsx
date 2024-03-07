@@ -13,7 +13,7 @@ const listItemStyle = {
   role: 'listitem',
   as: Link,
   display: 'flex',
-  fontSize:scssVariables.fonts.paragraph
+  fontSize: scssVariables.fonts.paragraph
 }
 const buttonStyle = {
   fontWeight: 500,
@@ -21,7 +21,7 @@ const buttonStyle = {
   bg: 'transparent',
   color: 'teal',
   cursor: 'pointer',
-  fontSize:scssVariables.fonts.paragraph
+  fontSize: scssVariables.fonts.paragraph
 }
 
 const SwitchLang: FC = () => {

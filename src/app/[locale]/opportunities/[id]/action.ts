@@ -1,6 +1,41 @@
 import { api } from '@/@core/utils/api'
 // ENTERTAINMENT->LINKS
 
+// GET-CAT
+export const getCat = async () => {
+  try {
+    const res = await api.get('EntertainmentCategories/all')
+
+    return res.data
+  } catch (err) {
+    console.log(err, 'err')
+  }
+}
+
+// GET-DATA-BY-ID
+export const getDataByid = async (id: number, params: { language: string }) => {
+  try {
+    const res = await api.get(`EntertainmentCategories/one/${id}`, { params })
+
+    return res.data
+  } catch (err) {
+    console.log(err, 'err')
+  }
+}
+
+// CONTENT
+// GET
+export const getData = async (url: string, params: { language: string }) => {
+  try {
+    const res = await api.get(`${url}/all`, { params })
+    if (!res) return null
+
+    return res.data
+  } catch (err) {
+    console.log(err, 'err')
+  }
+}
+
 // CREATE-CAT
 export const createCat = async (values: string) => {
   try {
@@ -36,8 +71,6 @@ export const updateCat = async (id: number, value: string) => {
     console.log(err, 'err')
   }
 }
-
-
 
 // CREATE
 export const createContent = async (url: string, body: any) => {
