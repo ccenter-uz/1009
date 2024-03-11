@@ -2,6 +2,7 @@ import { FC } from 'react'
 import dynamic from 'next/dynamic'
 import Hero from './components/Hero'
 import SearchPanel from './components/SearchPanel'
+import PopularSearch from '../../PopularSearch'
 
 // dynamic imports
 const OtherOpportunities = dynamic(() => import('./components/OtherOpportunities'))
@@ -16,6 +17,7 @@ const Home: FC = () => {
     <main id='home' className='fade-in'>
       <Hero />
       <SearchPanel />
+      <PopularSearch />
       <OtherOpportunities />
       <VideoInstruction />
       <Tariffs />

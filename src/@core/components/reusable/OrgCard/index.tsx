@@ -20,7 +20,7 @@ const OrgCard: FC<IDataType> = ({ data }) => {
 
   return (
     <>
-      <Card my={'20px'} boxShadow={scssVariables.boxShadow} borderRadius={'16px'}>
+      <Card my={{base:'8px',sm:'8px',md:'16px',xl:'16px'}} boxShadow={scssVariables.boxShadow} borderRadius={'16px'}>
         <CardHeader
           p={{ base: '10px', sm: '10px', md: '20px', xl: '20px' }}
           display={'flex'}
