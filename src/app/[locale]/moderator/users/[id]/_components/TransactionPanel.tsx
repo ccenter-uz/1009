@@ -126,6 +126,7 @@ const TransactionPanelUserForModerator: FC = () => {
       //     )}&page=${page}&pageSize=${pageSize}`
       //   )
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchParams]
   )
   const handlePageSizeChange = useCallback(
@@ -139,6 +140,7 @@ const TransactionPanelUserForModerator: FC = () => {
       //     )}&page=${1}&pageSize=${pageSizeValue}`
       //   )
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchParams]
   )
 
