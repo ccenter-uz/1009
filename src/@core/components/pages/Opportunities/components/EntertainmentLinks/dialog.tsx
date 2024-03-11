@@ -1,5 +1,5 @@
 import InputGen from '@/@core/components/reusable/Input'
-import { DialogEntertainmentLinksAction } from '@/@core/service/helpers/actions'
+import { createCat, updateCat } from '@/app/[locale]/opportunities/[id]/action'
 import {
   Box,
   Button,
@@ -11,43 +11,88 @@ import {
   ModalHeader,
   ModalOverlay
 } from '@chakra-ui/react'
-import { Dispatch, FC, SetStateAction } from 'react'
+import { useRouter } from 'next/navigation'
+import { title } from 'process'
+import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 type IDialogTypes = {
   isOpen: boolean
   onClose: Dispatch<SetStateAction<boolean>>
+  editInfo?: { title: string; title_ru: string; id: number }
+  getCategories: () => void
 }
 
-const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose }) => {
+const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, editInfo, getCategories }) => {
   const { pending } = useFormStatus()
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, reset } = useForm()
+  
+  const router = useRouter()
   //   handleClose
   const handleClose = () => {
     onClose(prevState => (prevState = false))
+    reset({title:null,title_ru:null})
   }
 
   //   actionSubmit
   const actionSubmit = async (e: any) => {
-    const res = await DialogEntertainmentLinksAction(e)
-
-    if (!res) return
-    if (res.status === 200) {
-      console.log(res.message, 'res')
+    if (editInfo) {
+      const res = await updateCat(editInfo.id, e)
+      if (res?.status === 'success') {
+        toast.success(res.message, { position: 'bottom-right' })
+        handleClose()
+        router.replace('/opportunities/entertainment')
+        getCategories()
+      }
+    } else {
+      const res = await createCat(e)
+      if (res?.status === 'success') {
+        toast.success(res.message, { position: 'bottom-right' })
+        handleClose()
+        getCategories()
+      }
     }
   }
+
+  useEffect(() => {
+    editInfo && reset({ title: editInfo.title,title_ru:editInfo.title_ru })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editInfo])
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
       <ModalOverlay />
       <ModalContent p={'1em'}>
-        <ModalHeader p={'0'}>Добавить линк</ModalHeader>
+        <ModalHeader p={'0'} fontSize={{ base: '16px', sm: '16px', md: '18px', xl: '18px' }}>
+          Добавить линк
+        </ModalHeader>
         <ModalCloseButton />
         <form onSubmit={handleSubmit(actionSubmit)} style={{ margin: '1em 0' }} id='link-entertainment-form'>
           <FormControl>
-            <FormLabel htmlFor='add-link'>Добавить:</FormLabel>
-            <InputGen isDisabled={pending} id='add-link' {...register('title')} />
+            <FormLabel htmlFor='add-link' fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
+              Добавить(UZ):
+            </FormLabel>
+            <InputGen
+              isDisabled={pending}
+              id='add-link'
+              {...register('title')}
+              fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}
+              h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
+            />
+          </FormControl>
+          <FormControl mt={'8px'}>
+            <FormLabel htmlFor='add-link' fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
+              Добавить(РУ):
+            </FormLabel>
+            <InputGen
+              isDisabled={pending}
+              id='add-link'
+              {...register('title_ru')}
+              fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}
+              h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
+            />
           </FormControl>
           <Box display={'flex'} justifyContent={'flex-end'}>
             <Button
@@ -57,6 +102,8 @@ const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose })
               w={{ base: '100%', sm: '100%', md: 'fit-content', xl: 'fit-content' }}
               mt={'1em'}
               colorScheme='teal'
+              fontSize={{ base: '12px', sm: '12px', md: '13px', xl: '14px' }}
+              h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
             >
               Сохранить
             </Button>

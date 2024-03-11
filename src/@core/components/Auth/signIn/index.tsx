@@ -3,11 +3,12 @@ import { FC } from 'react'
 import InputGen from '../../reusable/Input'
 import { useLang } from '@/@core/service/hooks/useLang'
 import ButtonGen from '../../reusable/Button'
-import { Login } from '@/@core/service/helpers/actions'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { useFormStatus } from 'react-dom'
+import { toast } from 'react-toastify'
+import { Login } from '@/@core/service/helpers/actions'
 
 const SignIn: FC = () => {
   const { t } = useLang()
@@ -24,7 +25,7 @@ const SignIn: FC = () => {
     const res = await Login(e)
     if (!res) return
     if (res.status === 200) {
-      console.log(res.message, 'res')
+      toast.success(res.message, { position: 'bottom-center' })
       router.replace('/')
     }
   }
@@ -35,15 +36,15 @@ const SignIn: FC = () => {
         <FormLabel fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>{t('auth-phone')}</FormLabel>
         <InputGen
           isDisabled={pending}
-          aria-label='phone'
-          aria-invalid={errors.phone ? 'true' : 'false'}
-          {...register('phone', { required: true, minLength: 12 })}
+          aria-label='number'
+          aria-invalid={errors.number ? 'true' : 'false'}
+          {...register('number', { required: true, minLength: 12 })}
           bg={'#fff'}
           width={'264px'}
           rightWidth={'43px'}
           borderRadius={'2px'}
           button={<Img width={'15px'} src='/phone-fill.svg' alt='phone-icon' />}
-          name='phone'
+          name='number'
           placeholder='+99890 123 45 78'
         />
         {errors.phone && (
@@ -55,6 +56,7 @@ const SignIn: FC = () => {
       <FormControl isRequired>
         <FormLabel fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>{t('auth-password')}</FormLabel>
         <InputGen
+          autoComplete='off'
           isDisabled={pending}
           aria-label='password'
           aria-invalid={errors.password ? 'true' : 'false'}

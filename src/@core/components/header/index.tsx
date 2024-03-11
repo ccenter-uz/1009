@@ -17,10 +17,11 @@ import {
 import { defaultLinks } from '@/@core/service/helpers/links'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import MenuDrawer from './components/Drawer'
-import { useAuth } from '@/@core/service/hooks/useAuth'
 import { useLang } from '@/@core/service/hooks/useLang'
 import { Link } from '@/navigation'
 import { usePathname } from 'next/navigation'
+import SwitchLang from './components/SwitchLang'
+import { useAuth } from '@/@core/service/hooks/useAuth'
 
 const Header: FC = () => {
   const { t, locale } = useLang()
@@ -88,7 +89,7 @@ const Header: FC = () => {
                   <MenuList>
                     {link.subMenu.map(menu => (
                       <Link
-                        role='menuItem'
+                        role='menuItem-inside'
                         aria-current='page'
                         key={menu.id}
                         href={menu.href}
@@ -133,9 +134,19 @@ const Header: FC = () => {
               />
             )}
           </Box>
-          <Divider display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} orientation='vertical' />
-          <Box display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }}>Uz</Box>
-          <Divider display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} orientation='vertical' />
+          <Divider
+            display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }}
+            orientation='vertical'
+            sx={{ color: 'lightgrey' }}
+          />
+          <Box display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }}>
+            <SwitchLang />
+          </Box>
+          <Divider
+            display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }}
+            orientation='vertical'
+            sx={{ color: 'lightgrey' }}
+          />
           {isAuth ? (
             <Box cursor={'pointer'}>
               <Img src='/header/user.svg' alt='user' />

@@ -1,15 +1,15 @@
-import { FC, ReactNode } from "react"
+import { FC, ReactNode } from 'react'
 
-type IOpporType ={
-  children:ReactNode
+type IOpporType = {
+  children: ReactNode
 }
 
-const OpportunitiesLayout:FC<IOpporType>=({children})=>{
-return(
-  <section className="wrapper">
-    {children}
-  </section>
-)
+const OpportunitiesLayout: FC<IOpporType> = ({ children }) => {
+  return (
+    <section className='wrapper'>
+      {children}
+    </section>
+  )
 }
 
 export default OpportunitiesLayout

@@ -2,10 +2,13 @@ import { NextIntlClientProvider, useMessages } from 'next-intl'
 import { Inter } from 'next/font/google'
 import { Metadata } from 'next'
 import { MainContext } from '@/@core/service/context/main'
-import { ToastContainer } from 'react-toastify'
 import { ChakraProviders } from '@/lib/chakraProvider'
-import Footer from '@/@core/components/footer'
 import Header from '@/@core/components/header'
+import dynamic from 'next/dynamic'
+import { ToastContainer } from 'react-toastify'
+import Providers from '@/lib/nProgress'
+
+const Footer = dynamic(() => import('@/@core/components/footer'))
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,17 +26,19 @@ const RootLayout = ({ children, params: { locale } }: { children: React.ReactNod
   return (
     <html lang={locale} className={inter.className}>
       <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <ChakraProviders>
-            <MainContext>
-              <main>
-                <Header />
-                {children}
-                <Footer />
-              </main>
-            </MainContext>
-          </ChakraProviders>
-        </NextIntlClientProvider>
+        <Providers>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <ChakraProviders>
+              <MainContext>
+                <main>
+                  <Header />
+                  {children}
+                  <Footer />
+                </main>
+              </MainContext>
+            </ChakraProviders>
+          </NextIntlClientProvider>
+        </Providers>
         <ToastContainer />
       </body>
     </html>

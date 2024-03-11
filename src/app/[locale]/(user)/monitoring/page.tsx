@@ -3,7 +3,6 @@ import TabPanelMonitoring from '@/@core/components/pages/Monitoring/components/T
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
 import { Box, Tabs } from '@chakra-ui/react'
 import { FC } from 'react'
-import './style.scss'
 
 const Monitoring: FC = () => {
   const breadcrumblinks = [
@@ -19,10 +18,10 @@ const Monitoring: FC = () => {
 
   return (
     <Box
-      minH={{ base: '100%', sm: '100%', md: '768px', xl: '768px' }}
+      minH={'100dvh'}
       aria-label='section'
       id='monitoring'
-      className='wrapper'
+      className='wrapper fade-in'
     >
       <BreadCrumb item={breadcrumblinks} />
       <Tabs>

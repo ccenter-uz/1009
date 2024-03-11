@@ -48,13 +48,6 @@ const OtherOpportunities: FC = () => {
         options: t('opportunity-card-text-5'),
         image: '/opportunities/card-5.svg',
         href: '/opportunities/info-tashkent'
-      },
-      {
-        id: 6,
-        title: t('opportunity-card-title-6'),
-        options: t('opportunity-card-text-6'),
-        image: '/opportunities/card-6.svg',
-        href: '/opportunities/info-tash-village'
       }
     ],
     [t]

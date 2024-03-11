@@ -5,7 +5,6 @@ import { FC } from 'react'
 import BoxGen from '@/@core/components/reusable/Box'
 import SettingChangeData from './_components/changedata'
 import SettingChangePhone from './_components/changephone'
-import './style.scss'
 
 // styles
 const styles = {
@@ -56,9 +55,9 @@ const Settings: FC = () => {
   return (
     <Box
       id='settings'
-      minH={{ base: '100%', sm: '100%', md: '1080px', xl: '1080px' }}
+      minH={'100dvh'}
       aria-label='section'
-      className='wrapper'
+      className='wrapper fade-in'
     >
       <BreadCrumb item={breadcrumblinks} />
       <BoxGen

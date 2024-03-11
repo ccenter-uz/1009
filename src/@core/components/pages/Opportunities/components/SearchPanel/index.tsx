@@ -2,16 +2,16 @@ import SelectAutocomplete from '@/@core/components/reusable/Autocomplete'
 import { IOption, ISelectAutocomplelte } from '@/@core/service/types/types'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Box, FormControl, FormLabel, useColorMode } from '@chakra-ui/react'
-import { FC } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 
-
-
-const SearchPanelOpportunities: FC<Pick<ISelectAutocomplelte, 'options'>> = ({options}) => {
+const SearchPanelOpportunities: FC<
+  { setOpenIndex: Dispatch<SetStateAction<number | null>> } & Pick<ISelectAutocomplelte, 'options'>
+> = ({ options, setOpenIndex }) => {
   const { colorMode } = useColorMode()
- 
 
   const handleSelect = (selectedOption: IOption) => {
-    console.log('Selected:', selectedOption.value)
+    const filter = options.findIndex(item => item.value == selectedOption.value)
+    setOpenIndex(filter)
   }
 
   return (
@@ -28,14 +28,12 @@ const SearchPanelOpportunities: FC<Pick<ISelectAutocomplelte, 'options'>> = ({op
       boxShadow={scssVariables.boxShadowPartnerBox}
     >
       <Box w={{ base: '100%', sm: '100%', md: '625px', xl: '625px' }}>
-        <form id='search-panel-opportunities' aria-label='form-opportunities'>
-          <FormControl>
-            <FormLabel display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} htmlFor='search-opportunities'>
-              Поиск:
-            </FormLabel>
-            <SelectAutocomplete options={options} onSelect={handleSelect} />
-          </FormControl>
-        </form>
+        <FormControl>
+          <FormLabel display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} htmlFor='search-opportunities'>
+            Поиск:
+          </FormLabel>
+          <SelectAutocomplete options={options} onSelect={handleSelect} />
+        </FormControl>
       </Box>
     </Box>
   )

@@ -2,7 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import { toast } from 'react-toastify'
 
-export const api = axios.create({ baseURL: 'example.com' })
+export const api = axios.create({ baseURL: 'https://1009.api.ccenter.uz/api/v1' })
 
 // Interceptor for all api request
 api.interceptors.request.use(

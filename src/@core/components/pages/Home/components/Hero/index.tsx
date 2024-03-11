@@ -1,9 +1,7 @@
 import { Box, Heading, SimpleGrid, Text } from '@chakra-ui/react'
 import { FC } from 'react'
 import { useLang } from '@/@core/service/hooks/useLang'
-import dynamic from 'next/dynamic'
-// dynamic import
-const HeroCard = dynamic(() => import('@/@core/components/reusable/HeroCard'))
+import HeroCard from '@/@core/components/reusable/HeroCard'
 
 const heroCards = [
   {

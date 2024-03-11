@@ -1,34 +1,27 @@
 'use server'
 import { api } from '@/@core/utils/api'
 import { Ilogin, Ipin, Iuser } from '../types/types'
+import { cookies } from 'next/headers'
 
 // Login
-/**
- @params (values) {phone:string,password:string} 
-*/
 export const Login = async (values: Ilogin) => {
   try {
     const body = values
-    const res = await api.post('example/', body)
-    if (res.status === 200)
+    const res = await api.post('/Auth/user/signIn', body)
+    if (res.status === 200) {
+      cookies().set('access_token', res.data.token, { secure: true })
+
       return {
         status: 200,
-        message: 'Success'
+        message: res.data.message
       }
+    }
   } catch (err) {
     console.log(err)
-  } finally {
-    return {
-      status: 200,
-      message: 'Success'
-    }
   }
 }
 
 // Registration
-/**
- @params (values) object {fio:string,phone:string,password:string,confirm_password:string} 
-*/
 export const Regis = async (values: Iuser) => {
   try {
     const body = values
@@ -49,10 +42,6 @@ export const Regis = async (values: Iuser) => {
 }
 
 // checkNumber
-/**
- * @parmas (values) string
- */
-
 export const CheckNumberSend = async (values: Ipin) => {
   try {
     const body = values
@@ -72,36 +61,8 @@ export const CheckNumberSend = async (values: Ipin) => {
   }
 }
 
-
-// DialogEntertainmentLinks
-/**
- * @parmas (values) string
- */
-export const DialogEntertainmentLinksAction =async (values:string)=>{
-  try {
-    const body = values
-    const res = await api.post('example/', body)
-    if (res.status === 200)
-      return {
-        status: 200,
-        message: 'Success'
-      }
-  } catch (err) {
-    console.log(err)
-  } finally {
-    return {
-      status: 200,
-      message: 'Success'
-    }
-  }
-}
-
-
 // User-settings
-/**
- * @parmas (values) string
- */
-export const UserSettingAction =async (values:string)=>{
+export const UserSettingAction = async (values: string) => {
   try {
     const body = values
     const res = await api.post('example/', body)
@@ -120,10 +81,7 @@ export const UserSettingAction =async (values:string)=>{
   }
 }
 
-/**
- * @parmas (values) string
- */
-export const UserSettingPhoneAction =async (values:string)=>{
+export const UserSettingPhoneAction = async (values: string) => {
   try {
     const body = values
     const res = await api.post('example/', body)

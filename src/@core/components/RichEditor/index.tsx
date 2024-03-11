@@ -1,123 +1,52 @@
 'use client'
 import Loading from '@/app/[locale]/loading'
 import dynamic from 'next/dynamic'
-import { FC, FormEvent, memo, startTransition, useState } from 'react'
+import { FC, memo, useState } from 'react'
 import 'react-quill/dist/quill.snow.css'
 import { formats } from './formats'
 import { modules } from './modules'
-import {
-  Box,
-  Button,
-  Divider,
-  FormControl,
-  FormLabel,
-  Input,
-  Modal,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  Textarea
-} from '@chakra-ui/react'
+import { Button, Divider, Modal, ModalCloseButton, ModalContent, ModalHeader } from '@chakra-ui/react'
 import { IRichEditor } from '@/@core/service/types/types'
-import { scssVariables } from '@/@core/utils/scss-variables'
 // dynamic import Quill
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <Loading /> })
 
-const RichEditor: FC<IRichEditor> = ({ isOpen, record, setRecord, onClose }) => {
-  const [value, setValue] = useState<string>(record ? record[0].content : '')
+const RichEditor: FC<IRichEditor> = ({ isOpen, onClose, defaultValue, value, setValue }) => {
+  const [editorValue, setEditorValue] = useState((defaultValue && defaultValue[0].text) || '')
 
-  // handleClose
+  // CLOSE
   const handleClose = () => {
-    startTransition(() => {
-      onClose((prev: boolean) => !prev), setValue('')
-      setRecord(null)
-    })
+    onClose((prev: boolean) => !prev)
   }
 
-  // handleSave
-  const handleSave = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const current = e.currentTarget
-    const formData = new FormData(current)
-    const body = {
-      title: formData.get('title'),
-      type: 'text',
-      warning: formData.get('warning'),
-      mention: formData.get('mention'),
-      content: value
-    }
-    console.log(body, 'data')
+  // SAVE
+  const handleSave = async () => {
+    const filtered = defaultValue ? value.filter(item => item.id !== defaultValue[0].id) : value
+    setValue([...filtered, { id: defaultValue ? defaultValue[0].id : Date.now(), text: editorValue }])
+    handleClose()
   }
 
   return (
     <Modal size={'full'} aria-modal isOpen={isOpen} onClose={handleClose}>
-      <ModalContent padding={'1em'}>
-        <ModalHeader fontSize={{ base: '14px', sm: '14px', md: '20px', xl: '20px' }}>Create text editor</ModalHeader>
+      <ModalContent p={{ base: '8px', sm: '', md: '1em', xl: '1em' }}>
+        <ModalHeader
+          p={{ base: '8px', sm: '', md: '1em', xl: '1em' }}
+          fontSize={{ base: '14px', sm: '14px', md: '20px', xl: '20px' }}
+        >
+          Create text editor
+        </ModalHeader>
         <Divider mb={'1em'} />
         <ModalCloseButton />
-        <form id='editor-modal-form' onSubmit={handleSave}>
-          <FormControl>
-            <FormLabel htmlFor='title' fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}>
-              Title of section:
-            </FormLabel>
-            <Input
-              name='title'
-              id='title'
-              mb={'8px'}
-              defaultValue={record ? record[0].title : null}
-              placeholder='example'
-              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel
-              color='#FF7C7C'
-              htmlFor='warning-text'
-              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
-            >
-              Warning information:
-            </FormLabel>
-            <Textarea
-              defaultValue={record ? record[0].warning : null}
-              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
-              name='warning'
-              id='warning-text'
-              size={'sm'}
-              resize={'vertical'}
-              placeholder='Type for warnings!'
-              mb={'8px'}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel
-              color={'#4493bd'}
-              htmlFor='mention-text'
-              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
-            >
-              Mention information:
-            </FormLabel>
-            <Textarea
-              defaultValue={record ? record[0].mention : null}
-              fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
-              name='mention'
-              id='mention-text'
-              size={'sm'}
-              resize={'vertical'}
-              placeholder='Type for mentions!'
-              mb={'8px'}
-            />
-          </FormControl>
-        </form>
-        <Box boxShadow={scssVariables.boxShadow} borderRadius={'12px'} my={'2em'} p={'1em'}>
-          <ReactQuill theme='snow' value={value} formats={formats} modules={modules} onChange={setValue} />
-        </Box>
+        <ReactQuill theme='snow' value={editorValue} formats={formats} modules={modules} onChange={setEditorValue} />
         <Button
+          onClick={handleSave}
+          aria-disabled={editorValue.length > 3 ? false : true}
+          isDisabled={editorValue.length > 3 ? false : true}
           aria-label='button-save'
           colorScheme='teal'
-          fontSize={{ base: '12px', sm: '12px', md: '16px', xl: '16px' }}
-          h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
+          fontSize={{ base: '12px', sm: '12px', md: '13px', xl: '14px' }}
+          h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
           form='editor-modal-form'
-          mb={'8px'}
+          my={'8px'}
           type='submit'
         >
           Save

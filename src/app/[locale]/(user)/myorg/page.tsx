@@ -1,6 +1,10 @@
+'use client'
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
-import { Box, Heading } from '@chakra-ui/react'
+import OrgCard from '@/@core/components/reusable/OrgCard'
+import { Box } from '@chakra-ui/react'
 import { FC } from 'react'
+import Pagination from '@/@core/components/reusable/Pagination'
+import { usePagination } from '@/@core/service/hooks/usePaginate'
 
 const MyOrganizations: FC = () => {
   const breadcrumblinks = [
@@ -13,11 +17,22 @@ const MyOrganizations: FC = () => {
       title: 'Общие'
     }
   ]
+  const { current, pageSize, total, handlePageChange, handlePageSizeChange } = usePagination()
 
   return (
-    <Box id='myorg' className='wrapper' aria-label='section'>
+    <Box minH={'100dvh'} id='myorg' className='wrapper fade-in' aria-label='section'>
       <BreadCrumb item={breadcrumblinks} />
-      <Heading style={{ textAlign: 'center' }}>MY ORGANIZATION</Heading>
+      <OrgCard />
+      <OrgCard />
+      <OrgCard />
+
+      <Pagination
+        total={total}
+        current={current}
+        pageSize={pageSize}
+        onChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+      />
     </Box>
   )
 }

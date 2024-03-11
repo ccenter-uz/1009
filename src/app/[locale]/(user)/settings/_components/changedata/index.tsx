@@ -50,6 +50,7 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
         <Input
           {...styles.inputStyle}
           {...register('old_password', { minLength: 6 })}
+          autoComplete='off'
           aria-label='old_password'
           aria-invalid={errors.old_password ? 'true' : 'false'}
           id='oldPassword-setting'
@@ -69,6 +70,7 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
         <Input
           {...styles.inputStyle}
           {...register('new_password', { minLength: 6 })}
+          autoComplete='off'
           aria-label='new_password'
           aria-invalid={errors.new_password ? 'true' : 'false'}
           id='newPassword-setting'
