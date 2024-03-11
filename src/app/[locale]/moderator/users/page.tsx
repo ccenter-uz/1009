@@ -34,7 +34,7 @@ const UsersForModerator: FC = () => {
       key: 'action',
       dataIndex: 'action',
       align: 'center',
-      render: (t, record) => {
+      render: (t: any, record: any) => {
         return (
           <Box display={'flex'} alignItems={'center'} justifyContent={'center'}>
             <Tooltip label='Посмотреть' aria-label='tooltip'>
