@@ -28,7 +28,6 @@ const TransactionPanelUserForModerator: FC = () => {
   const params = useParams()
   const searchParams = useSearchParams()
 
-  
   const [open, setOpen] = useState<boolean>(false)
   const { current, pageSize, total } = usePagination()
   const columns = [
@@ -73,7 +72,7 @@ const TransactionPanelUserForModerator: FC = () => {
   ]
 
   // GET
-  const getTransactions = async (currentPage: number, pageSizeValue: number) => {
+  const getTransactions = async (currentPage: number, pageSizeValue: number | any) => {
     const query = {
       current: currentPage,
       pageSize: pageSizeValue,
@@ -108,7 +107,7 @@ const TransactionPanelUserForModerator: FC = () => {
   const handlePageChange = useCallback(
     async (page: number) => {
       const query = {
-        current:page,
+        current: page,
         pageSize,
         status: searchParams.get('status'),
         amount: searchParams.get('amount'),
