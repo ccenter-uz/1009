@@ -46,7 +46,7 @@ const Opportunities: FC = () => {
   const { setRecord } = useOpportunityRecord()
   const [dataInfo, setData] = useState<IdataInfo[]>([])
   const [getAgain, setGetAgain] = useState<boolean>(false)
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   // DELETE
   const handleDelete = (id: string | number) => {
@@ -103,6 +103,9 @@ const Opportunities: FC = () => {
       setIsCreateAccordion(prev => (prev = true))
     }
   }
+  const handleChangeAccordion = (index: number[]) => {
+    setOpenIndex(index[1])
+  }
 
   return (
     <Box id='opportunities' className='fade-in' aria-current='page' minH={'100dvh'}>
@@ -127,10 +130,10 @@ const Opportunities: FC = () => {
         </Button>
       </Box>
       {/* Accordion renders from API data */}
-      <Accordion allowMultiple index={[openIndex as number]}>
+      <Accordion allowMultiple index={[openIndex as number]} onChange={handleChangeAccordion}>
         {dataInfo?.map((data, index) => (
           <AccordionItem
-            id={index.toString()}
+            id={index.toString()+1}
             key={index}
             borderTop={'none'}
             style={{ borderBottom: '0.5px solid #d3d3d373' }}
