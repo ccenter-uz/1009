@@ -100,10 +100,10 @@ const PopularModal: FC<IPopularModalType> = ({ open, close }) => {
         </ModalHeader>
         <Divider />
         <ModalCloseButton />
-        <Box mt={'2em'}>
+        <Box mt={'0.5em'}>
           <FormControl>
             <FormLabel htmlFor='select-podrazdel' fontSize={scssVariables.fonts.paragraph}>
-              Выберите подраздел:
+              Выберите город:
             </FormLabel>
             <Select
               onChange={handleChangeValue}
@@ -126,6 +126,9 @@ const PopularModal: FC<IPopularModalType> = ({ open, close }) => {
           </FormControl>
           {selectVal && (
             <SimpleGrid columns={1} spacing={'8px'} my={'16px'}>
+              <Text color={'grey'} fontSize={scssVariables.fonts.paragraph}>
+                Выберите подраздел:
+              </Text>
               {cards.map(card => {
                 return (
                   <Card

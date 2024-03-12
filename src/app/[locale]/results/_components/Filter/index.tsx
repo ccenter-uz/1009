@@ -1,28 +1,32 @@
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Box, Button, Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, useState } from 'react'
+import MoreFilter from './moreFilter'
 
 const SearchFilter: FC = () => {
+  const [openMoreFilter,setOpenMoreFilter]=useState<boolean>(false);
+
   return (
     <Box
       minH={{ base: '80px', sm: '80px', md: '152px', xl: '152px' }}
       bg={scssVariables.blockBgColor}
       display={'flex'}
       alignItems={'center'}
+      flexDirection={'column'}
       justifyContent={'center'}
       p={'0.5em'}
       borderRadius={'6px'}
     >
-      <InputGroup w={{ base: '100%', sm: '100%', md: '80%', xl: '80%' }}>
+      <InputGroup display={openMoreFilter ? 'none':'block'}  w={{ base: '100%', sm: '100%', md: '80%', xl: '80%' }}>
         <InputLeftElement h={{ base: '30px', sm: '30px', md: '45px', xl: '50px' }}>
           <img src='/search-line.svg' alt='search' width={'18px'} height={'18px'} />
         </InputLeftElement>
         <Input
           h={{ base: '30px', sm: '30px', md: '45px', xl: '50px' }}
-          borderColor={'lightgrey'}
           type='text'
           placeholder='Поиск'
           bg={'#fff'}
+          borderColor={'lightgrey'}
           _focus={{ boxShadow: 'none', border: '1px solid teal' }}
           fontSize={scssVariables.fonts.paragraph}
           borderRadius={'6px'}
@@ -35,7 +39,7 @@ const SearchFilter: FC = () => {
           gap={'16px'}
           h={{ base: '30px', sm: '30px', md: '45px', xl: '50px' }}
         >
-          <img src='/equalizer-fill.svg' alt='equalizer' width={'18px'} height={'18px'} />
+          <img role='button' aria-label='more-filter' onClick={()=>setOpenMoreFilter(prev=>!prev)} src='/equalizer-fill.svg' alt='equalizer' width={'18px'} height={'18px'} />
           <Button
             w={{ base: '60px', sm: '60px', md: '200px', xl: '234px' }}
             h={{ base: '30px', sm: '30px', md: '45px', xl: '50px' }}
@@ -49,6 +53,8 @@ const SearchFilter: FC = () => {
           </Button>
         </InputRightElement>
       </InputGroup>
+
+      <MoreFilter open={openMoreFilter} close={setOpenMoreFilter}/>
     </Box>
   )
 }

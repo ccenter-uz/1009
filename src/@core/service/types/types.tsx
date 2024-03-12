@@ -124,3 +124,21 @@ export type IcreateAccordionType = {
   close: Dispatch<SetStateAction<boolean>>
   setGetAgain: Dispatch<SetStateAction<boolean>>
 }
+
+export type MoreFilterType = {
+  city: string
+  district: string
+  house: string
+  kv: string
+  kvartal: string
+  mainorg: string
+  nameorg: string
+  orientir: string
+  podrazdel: string
+  'podrazdel-tu': string
+  poselok: string
+  razdel: string
+  'razdel-tu': string
+  region: string
+  view: string
+}

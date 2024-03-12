@@ -1,9 +1,9 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Text } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 
 type Iitem = {
   id: number | string
-  title: string
+  title: string | string[] | ReactNode
   href?: string
 }
 
@@ -14,21 +14,25 @@ type Ibreadcrumb = {
 const BreadCrumb: FC<Ibreadcrumb> = ({ item }) => {
   return (
     <Breadcrumb
-      mt={{ base: '22px', sm: '22px', md: '32px', xl: '32px' }}
-      mb={{ base: '20px', sm: '20px', md: '48px', xl: '48px' }}
+      separator={<Text color={'lightgrey'}>/</Text>}
+      mt={{ base: '16px', sm: '16px', md: '32px', xl: '32px' }}
+      mb={{ base: '16px', sm: '16px', md: '48px', xl: '48px' }}
     >
       {item?.map((value: Iitem) => (
         <BreadcrumbItem key={value.id}>
           {value.href ? (
-            <BreadcrumbLink color={'gray'}
+            <BreadcrumbLink
+              color={'gray'}
               aria-current='page'
               href={value.href ? value.href : ''}
-              fontSize={{ base: '11px', sm: '11px', md: '16px', xl: '16px' }}
+              fontSize={{ base: '10px', sm: '10px', md: '14px', xl: '14px' }}
             >
               {value.title}
             </BreadcrumbLink>
           ) : (
-            <Text color={'gray'} fontSize={{ base: '11px', sm: '11px', md: '16px', xl: '16px' }}>{value.title}</Text>
+            <Text color={'gray'} fontSize={{ base: '10px', sm: '10px', md: '14px', xl: '14px' }}>
+              {value.title}
+            </Text>
           )}
         </BreadcrumbItem>
       ))}

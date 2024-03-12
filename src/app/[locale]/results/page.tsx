@@ -7,6 +7,8 @@ import SearchFilter from './_components/Filter'
 import OrgCard from '@/@core/components/reusable/OrgCard'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Link } from '@/navigation'
+import Pagination from '@/@core/components/reusable/Pagination'
+import { usePagination } from '@/@core/service/hooks/usePaginate'
 
 const linkButtons = [
   {
@@ -28,8 +30,24 @@ const linkButtons = [
     found: '25'
   }
 ]
+
+const cards = [
+  {
+    id: 1
+  },
+  {
+    id: 2
+  },
+  {
+    id: 3
+  },
+  {
+    id: 4
+  }
+]
 const Results: FC = () => {
   const searchParams = useSearchParams()
+  const { current, pageSize, total, handlePageChange, handlePageSizeChange } = usePagination()
   const breadcrumblink = [
     {
       id: 1,
@@ -73,6 +91,7 @@ const Results: FC = () => {
                   'podrazdel'
                 )}&region=${searchParams.get('region')}&category=${button.value}`}
                 fontSize={scssVariables.fonts.paragraph}
+                fontWeight={400}
                 h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
               >
                 {button.title}: {button.found}
@@ -87,11 +106,25 @@ const Results: FC = () => {
           columns={{ base: 1, sm: 1, md: 2, xl: 2 }}
           gap={{ base: '0 0', sm: '0 0', md: '0 2em', xl: '0 2em' }}
         >
-          <OrgCard />
-          <OrgCard />
-          <OrgCard />
-          <OrgCard />
+          {cards.map(card => {
+            return (
+              <Box key={card.id}>
+                <OrgCard
+                  href={`/results/${card.id}?razdel=${searchParams.get('razdel')}&podrazdel=${searchParams.get(
+                    'podrazdel'
+                  )}&region=${searchParams.get('region')}`}
+                />
+              </Box>
+            )
+          })}
         </SimpleGrid>
+        <Pagination
+          total={total}
+          current={current}
+          pageSize={pageSize}
+          onChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
       </Box>
     </Box>
   )

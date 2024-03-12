@@ -22,6 +22,7 @@
     "next-intl": "^3.3.2",
     "next13-progressbar": "^1.2.1",
     "react": "^18",
+    "react-alice-carousel": "^2.8.0",
     "react-dom": "^18",
     "react-hook-form": "^7.49.3",
     "react-quill": "^2.0.0",
