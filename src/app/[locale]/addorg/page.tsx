@@ -1,5 +1,7 @@
+import FirstColumn from '@/@core/components/pages/AddOrganization/components/FirstColumn'
+import Form from '@/@core/components/pages/AddOrganization/components/Form'
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
-import { Box, Card, Heading } from '@chakra-ui/react'
+import { Box, FormControl } from '@chakra-ui/react'
 import { FC } from 'react'
 
 const Addorganization: FC = () => {
@@ -13,12 +15,9 @@ const Addorganization: FC = () => {
   return (
     <Box className='wrapper fade-in' id='addorg' minH={'100dvh'} aria-label='section'>
       <BreadCrumb item={breadcrumblink} />
-
-      <Card minH={'fit-content'} h={'500px'} p={{base:'0.5em',sm:'0.5em',md:'1.5em',xl:'1.5em'}}>
-        <Heading textAlign={'center'}>Add organization</Heading>
-      </Card>
+      <Form />
     </Box>
   )
 }
 
-export default Addorganization
+export default Addorganization;
