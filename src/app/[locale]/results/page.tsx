@@ -1,12 +1,11 @@
 'use client'
 import { Box, Button, SimpleGrid, TableContainer, Text } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import SearchFilter from './_components/Filter'
 import OrgCard from '@/@core/components/reusable/OrgCard'
 import { scssVariables } from '@/@core/utils/scss-variables'
-import { Link } from '@/navigation'
 import Pagination from '@/@core/components/reusable/Pagination'
 import { usePagination } from '@/@core/service/hooks/usePaginate'
 
@@ -47,7 +46,8 @@ const cards = [
 ]
 const Results: FC = () => {
   const searchParams = useSearchParams()
-  const { current, pageSize, total, handlePageChange, handlePageSizeChange } = usePagination()
+  const { current, pageSize, total, setTotal } = usePagination()
+  const router = useRouter()
   const breadcrumblink = [
     {
       id: 1,
@@ -67,6 +67,25 @@ const Results: FC = () => {
         : ''
     }
   ]
+  const [activeBtn,setActiveBtn]=useState<string>('')
+
+  // PAGINATION
+  const handlePageChange = (page: number) => {
+    const params = searchParams
+    router.push(
+      `?razdel=${params.get('razdel')}&podrazdel=${params.get('podrazdel')}&region=${params.get(
+        'region'
+      )}&page=${page}&pageSize=${pageSize}`
+    )
+  }
+  const handlePageSizeChange = (pageSize: number) => {
+    const params = searchParams
+    router.push(
+      `?razdel=${params.get('razdel')}&podrazdel=${params.get('podrazdel')}&region=${params.get(
+        'region'
+      )}&page=${1}&pageSize=${pageSize}`
+    )
+  }
 
   return (
     <Box id='results' className='wrapper fade-in' minH={'100dvh'}>
@@ -83,13 +102,9 @@ const Results: FC = () => {
             return (
               <Button
                 key={button.id}
-                role='page'
-                as={Link}
-                isActive={searchParams.get('category') === button.value}
+                isActive={activeBtn === button.value}
                 _active={{ bg: 'teal', color: '#fff' }}
-                href={`?razdel=${searchParams.get('razdel')}&podrazdel=${searchParams.get(
-                  'podrazdel'
-                )}&region=${searchParams.get('region')}&category=${button.value}`}
+                onClick={()=>setActiveBtn(button.value)}
                 fontSize={scssVariables.fonts.paragraph}
                 fontWeight={400}
                 h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}

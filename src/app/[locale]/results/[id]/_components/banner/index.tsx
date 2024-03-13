@@ -1,3 +1,4 @@
+import Rate from '@/@core/components/reusable/Rate'
 import { Box, Heading, Text } from '@chakra-ui/react'
 import { FC } from 'react'
 
@@ -13,7 +14,7 @@ const Banner: FC = () => {
       gap={'10px'}
       flexDirection={{ base: 'column', sm: 'column', md: 'row', xl: 'row' }}
     >
-      <Box flex={1} display={'flex'} flexDirection={'column'} gap={'8px'}>
+      <Box flex={1.5} display={'flex'} flexDirection={'column'} gap={'8px'}>
         <Heading
           wordBreak={'break-word'}
           fontSize={{ base: '20px', sm: '20px', md: '40px', xl: '40px' }}
@@ -31,13 +32,13 @@ const Banner: FC = () => {
       </Box>
       <Box flex={1} display={'flex'} flexDirection={'column'} gap={'8px'}>
         <Text fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '20px' }}>Рейтинг Заведения</Text>
-        <Box display={'flex'} alignItems={'center'} gap={'8px'}>
-          <img width={'20px'} height={'20px'} src='/star-yellow-fill.svg' alt='star' />
-          <img width={'20px'} height={'20px'} src='/star-yellow-fill.svg' alt='star' />
-          <img width={'20px'} height={'20px'} src='/star-yellow-fill.svg' alt='star' />
-          <img width={'20px'} height={'20px'} src='/star-yellow-fill.svg' alt='star' />
-          <img width={'20px'} height={'20px'} src='/star-yellow-empty.svg' alt='star' />
-        </Box>
+        <Rate
+          starColor='yellow'
+          disabled
+          maxStars={5}
+          initialValue={4}
+          onRatingChange={value => console.log(value, 'value')}
+        />
       </Box>
     </Box>
   )

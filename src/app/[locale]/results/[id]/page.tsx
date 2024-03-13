@@ -1,11 +1,13 @@
 'use client'
-import { Box, Heading, Text } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
 import { FC } from 'react'
 import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Banner from './_components/banner'
 import MainDataPart from './_components/mainDataPart'
 import GallaryPart from './_components/galleryPart'
+import Info from './_components/info'
+import Comment from './_components/comment'
 
 const ResultItem: FC = () => {
   const searchParams = useSearchParams()
@@ -49,6 +51,8 @@ const ResultItem: FC = () => {
       <Banner />
       <MainDataPart />
       <GallaryPart />
+      <Info />
+      <Comment />
     </Box>
   )
 }

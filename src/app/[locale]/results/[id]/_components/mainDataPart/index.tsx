@@ -39,6 +39,7 @@ const MainDataPart: FC = () => {
                 {input.label}
               </FormLabel>
               <Box
+                userSelect={'none'}
                 wordBreak={'break-word'}
                 display={'flex'}
                 alignItems={'center'}
@@ -66,13 +67,18 @@ const MainDataPart: FC = () => {
           bg={'lightgrey'}
           borderRadius={'8px'}
         ></Box>
-        <Box display={'flex'} flexDirection={'column'} gap={{base:'1px',sm:'1px',md:'5px',xl:'5px'}} mt={'8px'}>
-          <Box display={'flex'} alignItems={'center'} gap={{base:'8px',sm:'8px',md:'14px',xl:'16px'}}>
+        <Box
+          display={'flex'}
+          flexDirection={'column'}
+          gap={{ base: '1px', sm: '1px', md: '5px', xl: '5px' }}
+          mt={'8px'}
+        >
+          <Box display={'flex'} alignItems={'center'} gap={{ base: '8px', sm: '8px', md: '14px', xl: '16px' }}>
             <img width={'20px'} height={'20px'} src='/phone-fill.svg' alt='phone' />
             <Text fontSize={scssVariables.fonts.paragraph}>+ (998) 99-123-45-67</Text>
             <Text fontSize={scssVariables.fonts.paragraph}>Мобильный номер телефона</Text>
           </Box>
-          <Box display={'flex'} alignItems={'center'} gap={{base:'8px',sm:'8px',md:'14px',xl:'16px'}}>
+          <Box display={'flex'} alignItems={'center'} gap={{ base: '8px', sm: '8px', md: '14px', xl: '16px' }}>
             <img width={'20px'} height={'20px'} src='/phone-fill.svg' alt='phone' />
             <Text fontSize={scssVariables.fonts.paragraph}>+ (998) 99-123-45-67</Text>
             <Text fontSize={scssVariables.fonts.paragraph}>Домашный номер телефона</Text>

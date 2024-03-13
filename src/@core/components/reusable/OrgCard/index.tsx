@@ -4,17 +4,19 @@ import { FC } from 'react'
 import ButtonGen from '../Button'
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Link } from '@/navigation'
+import Rate from '../Rate'
 
 type IDataType = {
   data?: {
     title: string
     img: string
     date: string
-    rate: string | number
+    rate: number
     paragraph: string
     watched: string
+    address: string
   }
-  href?:  string
+  href: string
 }
 
 const OrgCard: FC<IDataType> = ({ data, href }) => {
@@ -25,7 +27,7 @@ const OrgCard: FC<IDataType> = ({ data, href }) => {
       <Card
         my={{ base: '8px', sm: '8px', md: '16px', xl: '16px' }}
         boxShadow={scssVariables.boxShadow}
-        borderRadius={'16px'}
+        borderRadius={{base:'8px',sm:'8px',md:'16px',xl:'16px'}}
       >
         <CardHeader p={0}>
           <Box
@@ -49,9 +51,9 @@ const OrgCard: FC<IDataType> = ({ data, href }) => {
             gap={'8px'}
             p={{ base: '0 8px 8px 8px', sm: '0 8px 8px 8px', md: '0 16px 16px 16px', xl: '0 16px 16px 16px' }}
           >
-            <img src='/location.svg' alt='location' />
+            <img src='/location.svg' alt='location' width={'13px'} height={'13px'}/>
             <Text fontSize={{ base: '10px', sm: '10px', md: '12px', xl: '12px' }} color={'grey'}>
-              Мукумий, Дом-5
+              {data?.address || 'Мукумий, Дом-5'}
             </Text>
           </Box>
         </CardHeader>
@@ -81,13 +83,9 @@ const OrgCard: FC<IDataType> = ({ data, href }) => {
           alignItems={'center'}
           justifyContent={'space-between'}
         >
-          <Box display={'flex'} alignItems={'center'} gap={'8px'}>
-            <img width={'20px'} height={'20px'} src='/star-fill.svg' alt='rating' />
-            <img width={'20px'} height={'20px'} src='/star-fill.svg' alt='rating' />
-            <img width={'20px'} height={'20px'} src='/star-fill.svg' alt='rating' />
-            <img width={'20px'} height={'20px'} src='/star-emty.svg' alt='rating' />
-          </Box>
+          <Rate disabled maxStars={5} initialValue={4} onRatingChange={val => console.log(val, 'value')} />
           <Box display={'flex'} alignItems={'center'} gap={'6px'}>
+            <img src='/bookmark-fill.svg' alt='bookmark-fill' role='button' aria-label='bookmarked' width={'20px'} height={'20px'}/>
             <Link href={href}>
               <ButtonGen
                 width={{ base: '100px', sm: '100px', md: '165px', xl: '165px' }}

@@ -4,7 +4,6 @@ import { Box, Button, Select, Text } from '@chakra-ui/react'
 import { ChangeEvent, FC, memo } from 'react'
 import { scssVariables } from '@/@core/utils/scss-variables'
 
-
 // options
 const options = [
   {
@@ -49,7 +48,7 @@ const selectStyle = {
   fontSize: scssVariables.fonts.paragraph
 }
 
-const Pagination: FC<IPagination> = ({ total, pageSize, current, onChange, onPageSizeChange }) => {
+const Pagination: FC<IPagination> = ({ total=50, pageSize=10, current=1, onChange, onPageSizeChange }) => {
   const totalPages = Math.ceil(total / pageSize)
   const maxButtons = 5
 
