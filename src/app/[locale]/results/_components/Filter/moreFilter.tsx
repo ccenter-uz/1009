@@ -1,6 +1,6 @@
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Box, Button, CloseButton, FormControl, FormLabel, Input, Select, SimpleGrid, Text } from '@chakra-ui/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Dispatch, FC, SetStateAction } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -53,16 +53,13 @@ type IMoreFilterType = {
 
 const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
   const { register, handleSubmit, reset } = useForm()
-  const searchParams = useSearchParams()
   const router = useRouter()
 
   // SAVE
   const handleFinish = (values: any) => {
     console.log(values, 'val')
     router.push(
-      `?razdel=${values.razdel}&podrazdel=${values.podrazdel}&region=${values.region}&page=${searchParams.get(
-        'page'
-      )}&pageSize=${searchParams.get('pageSize')}`
+      `?razdel=${values.razdel}&podrazdel=${values.podrazdel}&region=${values.region}&page=1&pageSize=10`
     )
   }
 
