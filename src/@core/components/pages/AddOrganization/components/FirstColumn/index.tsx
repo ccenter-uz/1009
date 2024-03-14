@@ -5,7 +5,6 @@ import ProductServiceAccordion from '../ProductServiceAccordion'
 import { IErrors, ITouched } from '../../types-interfaces'
 
 type FirstColumnType = {
-  
   errors: IErrors
   touched: ITouched
 }
@@ -16,7 +15,7 @@ const FirstColumn: FC<FirstColumnType> = ({ errors, touched }) => {
       <VStack spacing={4}>
         <FormControl isInvalid={!!errors.section && touched.section}>
           <FormLabel htmlFor='section'>Раздел</FormLabel>
-          <Field as={Input} id='section' name='section' type='section' variant='filled' placeholder='Например: ЯША' />
+          <Field as={Input} id='section' name='section' type='section' variant='filled' placeholder='Например: ЯША' boxShadow='md'/>
           <FormErrorMessage>{errors.section}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={!!errors.subsection && touched.subsection}>

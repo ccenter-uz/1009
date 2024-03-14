@@ -29,14 +29,21 @@ const TransportAccordion: FC = () => {
         <AccordionPanel pb={4}>
           <VStack spacing={4}>
             <FormControl>
-              <Field as={Input} id='bus' name='bus' type='text' variant='filled' placeholder='Автобус №' />
+              <Field
+                as={Input}
+                id='transport.bus'
+                name='transport.bus'
+                type='text'
+                variant='filled'
+                placeholder='Автобус №'
+              />
               <FormErrorMessage></FormErrorMessage>
             </FormControl>
             <FormControl>
               <Field
                 as={Input}
-                id='microbus'
-                name='microbus'
+                id='transport.microbus'
+                name='transport.microbus'
                 type='text'
                 variant='filled'
                 placeholder='Микро автобус №'
@@ -44,11 +51,25 @@ const TransportAccordion: FC = () => {
               <FormErrorMessage></FormErrorMessage>
             </FormControl>
             <FormControl>
-              <Field as={Input} id='minibus' name='minibus' type='text' variant='filled' placeholder='Маршрутка №' />
+              <Field
+                as={Input}
+                id='transport.minibus'
+                name='transport.minibus'
+                type='text'
+                variant='filled'
+                placeholder='Маршрутка №'
+              />
               <FormErrorMessage></FormErrorMessage>
             </FormControl>
             <FormControl>
-              <Field as={Input} id='metro' name='metro' type='text' variant='filled' placeholder='Станция метро' />
+              <Field
+                as={Input}
+                id='transport.metro'
+                name='transport.metro'
+                type='text'
+                variant='filled'
+                placeholder='Станция метро'
+              />
               <FormErrorMessage></FormErrorMessage>
             </FormControl>
           </VStack>

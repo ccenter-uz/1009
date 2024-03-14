@@ -30,7 +30,7 @@ const PhoneNumberAccordion: FC<PhoneNumberAccordionType> = ({ errors, touched })
 
   const handleAddInput = () => {
     const newInput: INumbers = {
-      id: `${getUniqueId()}`
+      id: `number${inputs.length + 1}`
     }
 
     setInputs([...inputs, newInput])
@@ -53,7 +53,7 @@ const PhoneNumberAccordion: FC<PhoneNumberAccordionType> = ({ errors, touched })
         </h2>
         <AccordionPanel pb={4}>
           <VStack spacing={4}>
-            {inputs?.map(item => {
+            {inputs?.map(item => {              
               return (
                 <FormControl key={item?.id} display='flex' justifyContent='space-between' gap={2}>
                   <Field

@@ -14,7 +14,7 @@ const Addorganization: FC = () => {
 
   return (
     <Box className='wrapper fade-in' id='addorg' minH={'100dvh'} aria-label='section'>
-      <BreadCrumb item={breadcrumblink} />
+      {/* <BreadCrumb item={breadcrumblink} /> */}
       <Form />
     </Box>
   )
