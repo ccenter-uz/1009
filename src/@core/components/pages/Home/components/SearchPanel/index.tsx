@@ -9,7 +9,7 @@ import SearchModal from './modal'
 import { api } from '@/@core/utils/api'
 import { debounce } from '@/@core/utils/fn'
 
-const fetchData = debounce((text: string) => {
+const fetchData = debounce(async (text: string) => {
   try {
     console.log(text, 'value')
   } catch (err) {
@@ -33,6 +33,7 @@ const SearchPanel: FC = () => {
   const handleSearchChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value
     setSearchVal(e.target.value as string)
+
     fetchData(text)
   }
 

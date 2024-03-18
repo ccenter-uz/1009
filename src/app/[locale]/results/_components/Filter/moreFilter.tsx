@@ -1,6 +1,6 @@
 import { scssVariables } from '@/@core/utils/scss-variables'
 import { Box, Button, CloseButton, FormControl, FormLabel, Input, Select, SimpleGrid, Text } from '@chakra-ui/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Dispatch, FC, SetStateAction } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -52,14 +52,32 @@ type IMoreFilterType = {
 }
 
 const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
-  const { register, handleSubmit, reset } = useForm()
+  const searchParams = useSearchParams()
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      city: searchParams.get('city'),
+      district: searchParams.get('district'),
+      house: searchParams.get('house'),
+      kv: searchParams.get('kv'),
+      kvartal: searchParams.get('kvartal'),
+      mainorg: searchParams.get('mainorg'),
+      nameorg: searchParams.get('nameorg'),
+      orientir: searchParams.get('orientir'),
+      podrazdel: searchParams.get('podrazdel'),
+      'podrazdel-tu': searchParams.get('podrazdel-tu'),
+      poselok: searchParams.get('poselok'),
+      razdel: searchParams.get('razdel'),
+      'razdel-tu': searchParams.get('razdel-tu'),
+      region: searchParams.get('region'),
+      view: searchParams.get('view')
+    }
+  })
   const router = useRouter()
 
   // SAVE
   const handleFinish = (values: any) => {
-    console.log(values, 'val')
     router.push(
-      `?razdel=${values.razdel}&podrazdel=${values.podrazdel}&region=${values.region}&page=1&pageSize=10`
+      `?razdel=${values.razdel}&podrazdel=${values.podrazdel}&region=${values.region}&razdel-tu=${values['razdel-tu']}&podrazdel-tu=${values['podrazdel-tu']}&poselok=${values.poselok}&view=${values.view}&orientir=${values.orientir}&nameorg=${values.nameorg}&mainorg=${values.mainorg}&kvartal=${values.kvartal}&kv=${values.kv}&house=${values.house}&district=${values.district}&city=${values.city}&page=1&pageSize=10`
     )
   }
 
@@ -86,7 +104,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='razdel'>
                 Раздел
               </FormLabel>
-              <Select {...style.inputStyle} {...register('razdel')} id='razdel' defaultValue={'1'}>
+              <Select {...style.inputStyle} {...register('razdel')} id='razdel'>
                 <option value='1'>Apteka</option>
               </Select>
             </FormControl>
@@ -100,7 +118,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='poselok'>
                 Посёлок
               </FormLabel>
-              <Select {...style.inputStyle} {...register('poselok')} defaultValue={'1'} id='poselok'>
+              <Select {...style.inputStyle} {...register('poselok')} id='poselok'>
                 <option value='1'>-</option>
               </Select>
             </FormControl>
@@ -114,7 +132,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='podrazdel'>
                 Подраздел
               </FormLabel>
-              <Select {...style.inputStyle} {...register('podrazdel')} defaultValue={'1'} id='podrazdel'>
+              <Select {...style.inputStyle} {...register('podrazdel')} id='podrazdel'>
                 <option value='1'>Общие пит</option>
               </Select>
             </FormControl>
@@ -122,7 +140,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='city'>
                 Город
               </FormLabel>
-              <Select {...style.inputStyle} {...register('city')} defaultValue={'1'} id='city'>
+              <Select {...style.inputStyle} {...register('city')} id='city'>
                 <option value='1'>Tashkent</option>
               </Select>
             </FormControl>
@@ -130,7 +148,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='orientir'>
                 Ориентир
               </FormLabel>
-              <Select {...style.inputStyle} {...register('orientir')} defaultValue={'1'} id='orientir'>
+              <Select {...style.inputStyle} {...register('orientir')} id='orientir'>
                 <option value='1'>Novza metro</option>
               </Select>
             </FormControl>
@@ -138,7 +156,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='mainorg'>
                 Гол. Ораниз
               </FormLabel>
-              <Select {...style.inputStyle} {...register('mainorg')} defaultValue={'1'} id='mainorg'>
+              <Select {...style.inputStyle} {...register('mainorg')} id='mainorg'>
                 <option value='1'>Muqimiy</option>
               </Select>
             </FormControl>
@@ -152,7 +170,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='region'>
                 Область
               </FormLabel>
-              <Select {...style.inputStyle} {...register('region')} defaultValue={'1'} id='region'>
+              <Select {...style.inputStyle} {...register('region')} id='region'>
                 <option value='1'>Tashkent</option>
               </Select>
             </FormControl>
@@ -166,7 +184,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='view'>
                 Вид
               </FormLabel>
-              <Select {...style.inputStyle} {...register('view')} defaultValue={'1'} id='view'>
+              <Select {...style.inputStyle} {...register('view')} id='view'>
                 <option value='1'>Kafe</option>
               </Select>
             </FormControl>
@@ -174,7 +192,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='podrazdel-tu'>
                 Подраздел Т/У
               </FormLabel>
-              <Select {...style.inputStyle} {...register('podrazdel-tu')} defaultValue={'1'} id='podrazdel-tu'>
+              <Select {...style.inputStyle} {...register('podrazdel-tu')} id='podrazdel-tu'>
                 <option value='1'>Kafe</option>
               </Select>
             </FormControl>
@@ -182,7 +200,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='district'>
                 Район
               </FormLabel>
-              <Select {...style.inputStyle} {...register('district')} defaultValue={'1'} id='district'>
+              <Select {...style.inputStyle} {...register('district')} id='district'>
                 <option value='1'>Chilonzor</option>
               </Select>
             </FormControl>
@@ -190,7 +208,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='kvartal'>
                 Квартал
               </FormLabel>
-              <Select {...style.inputStyle} {...register('kvartal')} defaultValue={'1'} id='kvartal'>
+              <Select {...style.inputStyle} {...register('kvartal')} id='kvartal'>
                 <option value='1'>12</option>
               </Select>
             </FormControl>

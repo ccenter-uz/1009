@@ -1,3 +1,4 @@
+import { Link } from '@/navigation'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Text } from '@chakra-ui/react'
 import { FC, ReactNode } from 'react'
 
@@ -22,6 +23,7 @@ const BreadCrumb: FC<Ibreadcrumb> = ({ item }) => {
         <BreadcrumbItem key={value.id}>
           {value.href ? (
             <BreadcrumbLink
+              as={Link}
               color={'gray'}
               aria-current='page'
               href={value.href ? value.href : ''}

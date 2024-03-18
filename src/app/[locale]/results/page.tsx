@@ -51,40 +51,58 @@ const Results: FC = () => {
   const breadcrumblink = [
     {
       id: 1,
-      title: searchParams.has('razdel') ? (searchParams.get('razdel') as string) : ''
+      title: '<- Назад ',
+      href: '/'
     },
     {
       id: 2,
-      title: searchParams.has('podrazdel') ? (searchParams.get('podrazdel') as string) : ''
+      title: 'Поиск'
     },
     {
       id: 3,
-      title: searchParams.has('region')
-        ? (`${searchParams.get('region')?.toString()[0].toUpperCase()}${searchParams
-            .get('region')
-            ?.toString()
-            .slice(1)}` as string)
-        : ''
+      title: 'Организации'
     }
   ]
-  const [activeBtn,setActiveBtn]=useState<string>('')
+  const [activeBtn, setActiveBtn] = useState<string>('')
 
   // PAGINATION
   const handlePageChange = (page: number) => {
     const params = searchParams
-    router.push(
-      `?razdel=${params.get('razdel')}&podrazdel=${params.get('podrazdel')}&region=${params.get(
-        'region'
-      )}&page=${page}&pageSize=${pageSize}`
-    )
+    if (params.size > 3) {
+      router.push(
+        `?razdel=${params.get('razdel')}&podrazdel=${params.get('podrazdel')}&region=${params.get(
+          'region'
+        )}&razdel-tu=${params.get('razdel-tu')}&podrazdel-tu=${params.get('podrazdel-tu')}&poselok=${params.get(
+          'poselok'
+        )}&view=${params.get('view')}&orientir=${params.get('orientir')}&nameorg=${params.get(
+          'nameorg'
+        )}&mainorg=${params.get('mainorg')}&kvartal=${params.get('kvartal')}&kv=${params.get('kv')}&house=${params.get(
+          'house'
+        )}&district=${params.get('district')}&city=${params.get('city')}&page=${page}&pageSize=${params.get(
+          'pageSize'
+        )}`
+      )
+    } else {
+      router.push(`?nameorg=${params.get('nameorg')}&page=${page}&pageSize=${params.get('pageSize') || 10}`)
+    }
   }
   const handlePageSizeChange = (pageSize: number) => {
     const params = searchParams
-    router.push(
-      `?razdel=${params.get('razdel')}&podrazdel=${params.get('podrazdel')}&region=${params.get(
-        'region'
-      )}&page=${1}&pageSize=${pageSize}`
-    )
+    if (params.size > 3) {
+      router.push(
+        `?razdel=${params.get('razdel')}&podrazdel=${params.get('podrazdel')}&region=${params.get(
+          'region'
+        )}&razdel-tu=${params.get('razdel-tu')}&podrazdel-tu=${params.get('podrazdel-tu')}&poselok=${params.get(
+          'poselok'
+        )}&view=${params.get('view')}&orientir=${params.get('orientir')}&nameorg=${params.get(
+          'nameorg'
+        )}&mainorg=${params.get('mainorg')}&kvartal=${params.get('kvartal')}&kv=${params.get('kv')}&house=${params.get(
+          'house'
+        )}&district=${params.get('district')}&city=${params.get('city')}&page=${1}&pageSize=${pageSize}`
+      )
+    } else {
+      router.push(`?nameorg=${params.get('nameorg')}&page=1&pageSize=${pageSize}`)
+    }
   }
 
   return (
@@ -98,21 +116,23 @@ const Results: FC = () => {
           alignItems={'center'}
           gap={{ base: '5px', sm: '5px', md: '10px', xl: '10px' }}
         >
-          {linkButtons.map(button => {
-            return (
-              <Button
-                key={button.id}
-                isActive={activeBtn === button.value}
-                _active={{ bg: 'teal', color: '#fff' }}
-                onClick={()=>setActiveBtn(button.value)}
-                fontSize={scssVariables.fonts.paragraph}
-                fontWeight={400}
-                h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
-              >
-                {button.title}: {button.found}
-              </Button>
-            )
-          })}
+          {!searchParams.has('razdel') &&
+            linkButtons.map(button => {
+              return (
+                <Button
+                  className='fade-in'
+                  key={button.id}
+                  isActive={activeBtn === button.value}
+                  _active={{ bg: 'teal', color: '#fff' }}
+                  onClick={() => setActiveBtn(button.value)}
+                  fontSize={scssVariables.fonts.paragraph}
+                  fontWeight={400}
+                  h={{ base: '30px', sm: '30px', md: '40px', xl: '40px' }}
+                >
+                  {button.title}: {button.found}
+                </Button>
+              )
+            })}
         </TableContainer>
         <Text fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }} color={'grey'}>
           Найдено:46

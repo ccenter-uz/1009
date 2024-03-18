@@ -13,12 +13,12 @@ export const usePagination = () => {
   const [total, setTotal] = useState(100)
 
   // pageChange
-  const handlePageChange = page => {
+  const handlePageChange = (page:number) => {
     router.push(`?page=${page}&pageSize=${paginate.pageSize}`)
   }
 
   // pageSizeChange
-  const handlePageSizeChange = pageSize => {
+  const handlePageSizeChange = (pageSize:number) => {
     router.push(`?page=${1}&pageSize=${pageSize}`)
   }
 
