@@ -117,7 +117,7 @@ const Results: FC = () => {
           gap={{ base: '5px', sm: '5px', md: '10px', xl: '10px' }}
         >
           {!searchParams.has('razdel') &&
-            linkButtons.map(button => {
+            linkButtons.map(button => { 
               return (
                 <Button
                   className='fade-in'
@@ -166,3 +166,5 @@ const Results: FC = () => {
 }
 
 export default Results
+
+

@@ -5,4 +5,7 @@
     "files.autoSave": "onWindowChange",
     "editor.tabSize": 4,
     "editor.wordWrap": "on",
+    "i18n-ally.localesPaths": [
+        "locales"
+    ],
 }
