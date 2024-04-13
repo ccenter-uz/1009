@@ -1,10 +1,10 @@
-import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
-import { scssVariables } from '@/@core/utils/scss-variables'
+import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
+import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Box, Text } from '@chakra-ui/react'
 import { FC } from 'react'
-import BoxGen from '@/@core/components/reusable/Box'
-import SettingChangeData from './_components/changedata'
-import SettingChangePhone from './_components/changephone'
+import BoxGen from '@/@core/shared/UI/Box'
+import SettingChangeData from '@/@core/widgets/Setting/UI/ChangeInfo'
+import SettingChangePhone from '@/@core/widgets/Setting/UI/ChangePhone'
 
 // styles
 const styles = {
@@ -53,12 +53,7 @@ const Settings: FC = () => {
   ]
 
   return (
-    <Box
-      id='settings'
-      minH={'100dvh'}
-      aria-label='section'
-      className='wrapper fade-in'
-    >
+    <Box id='settings' minH={'100dvh'} aria-label='section' className='wrapper fade-in'>
       <BreadCrumb item={breadcrumblinks} />
       <BoxGen
         p={{ base: '1em', sm: '1em', md: '2em', xl: '2em' }}

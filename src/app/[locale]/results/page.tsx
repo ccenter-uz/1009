@@ -1,13 +1,13 @@
 'use client'
 import { Box, Button, SimpleGrid, TableContainer, Text } from '@chakra-ui/react'
 import { FC, useState } from 'react'
-import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
+import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
 import { useRouter, useSearchParams } from 'next/navigation'
 import SearchFilter from './_components/Filter'
-import OrgCard from '@/@core/components/reusable/OrgCard'
-import { scssVariables } from '@/@core/utils/scss-variables'
-import Pagination from '@/@core/components/reusable/Pagination'
-import { usePagination } from '@/@core/service/hooks/usePaginate'
+import OrgCard from '@/@core/entities/OrgCard'
+import { scssVariables } from '@/@core/apps/utils/scss-variables'
+import Pagination from '@/@core/shared/UI/Pagination'
+import { usePagination } from '@/@core/shared/hooks/usePaginate'
 
 const linkButtons = [
   {
@@ -117,7 +117,7 @@ const Results: FC = () => {
           gap={{ base: '5px', sm: '5px', md: '10px', xl: '10px' }}
         >
           {!searchParams.has('razdel') &&
-            linkButtons.map(button => { 
+            linkButtons.map(button => {
               return (
                 <Button
                   className='fade-in'
@@ -166,5 +166,3 @@ const Results: FC = () => {
 }
 
 export default Results
-
-

@@ -1,10 +1,10 @@
 'use client'
-import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
-import OrgCard from '@/@core/components/reusable/OrgCard'
+import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
+import OrgCard from '@/@core/entities/OrgCard'
 import { Box, SimpleGrid } from '@chakra-ui/react'
 import { FC } from 'react'
-import Pagination from '@/@core/components/reusable/Pagination'
-import { usePagination } from '@/@core/service/hooks/usePaginate'
+import Pagination from '@/@core/shared/UI/Pagination'
+import { usePagination } from '@/@core/shared/hooks/usePaginate'
 
 const cards = [{ id: 1 }, { id: 2 }, { id: 3 }]
 

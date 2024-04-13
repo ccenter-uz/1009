@@ -1,4 +1,4 @@
-import Rate from '@/@core/components/reusable/Rate'
+import Rate from '@/@core/shared/UI/Rate'
 import Loading from '@/app/[locale]/loading'
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'

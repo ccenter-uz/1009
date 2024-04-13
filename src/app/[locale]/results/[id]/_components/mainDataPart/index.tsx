@@ -1,4 +1,4 @@
-import { scssVariables } from '@/@core/utils/scss-variables'
+import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Box, FormControl, FormLabel, SimpleGrid, Text } from '@chakra-ui/react'
 import { FC } from 'react'
 

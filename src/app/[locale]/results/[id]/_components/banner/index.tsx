@@ -1,4 +1,4 @@
-import Rate from '@/@core/components/reusable/Rate'
+import Rate from '@/@core/shared/UI/Rate'
 import { Box, Heading, Text } from '@chakra-ui/react'
 import { FC } from 'react'
 

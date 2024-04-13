@@ -1,4 +1,4 @@
-import { scssVariables } from '@/@core/utils/scss-variables'
+import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import Loading from '@/app/[locale]/loading'
 import { Box, Button, Text } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
@@ -23,7 +23,13 @@ const responsive = {
 const GallaryPart: FC = () => {
   return (
     <Box mt={{ base: '5em', sm: '5em', md: '10em', xl: '10em' }}>
-      <Text fontSize={{base:'14px',sm:'14px',md:'16px',xl:'20px'}} color={'grey'} mb={{base:'8px',sm:'8px',md:'16px',xl:'16px'}}>Картинки</Text>
+      <Text
+        fontSize={{ base: '14px', sm: '14px', md: '16px', xl: '20px' }}
+        color={'grey'}
+        mb={{ base: '8px', sm: '8px', md: '16px', xl: '16px' }}
+      >
+        Картинки
+      </Text>
       <AliceCarousel
         infinite
         disableDotsControls

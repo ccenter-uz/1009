@@ -1,7 +1,6 @@
-import FirstColumn from '@/@core/components/pages/AddOrganization/components/FirstColumn'
-import Form from '@/@core/components/pages/AddOrganization/components/Form'
-import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
-import { Box, FormControl } from '@chakra-ui/react'
+import Form from '@/@core/pages/AddOrganization/UI/Form'
+import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
+import { Box } from '@chakra-ui/react'
 import { FC } from 'react'
 
 const Addorganization: FC = () => {
@@ -20,4 +19,4 @@ const Addorganization: FC = () => {
   )
 }
 
-export default Addorganization;
+export default Addorganization

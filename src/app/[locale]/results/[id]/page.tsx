@@ -1,7 +1,7 @@
 'use client'
 import { Box, Text } from '@chakra-ui/react'
 import { FC } from 'react'
-import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
+import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Banner from './_components/banner'
 import MainDataPart from './_components/mainDataPart'

@@ -31,13 +31,10 @@
   "opportunity-card-title-3": "Номера и коды",
   "opportunity-card-title-4": "Это надо знать!",
   "opportunity-card-title-5": "Информация о г. Ташкент",
-  "opportunity-card-title-6": "Информация о п. Ташкент",
   "opportunity-card-text-1": "Кино, Театры,Выставки, Парки",
   "opportunity-card-text-2": "Свет, Газ..",
   "opportunity-card-text-3": "Quis vestibulum diam vitae eget dissd.",
   "opportunity-card-text-4": "Quis vestibulum diam vitae eget dissd.",
-  "opportunity-card-text-5": "Районы, областы ... ",
-  "opportunity-card-text-6": "Quis vestibulum diam vitae eget dissd.",
   "auth-regis-title": "Регистрация",
   "auth-sign-title": "Войти в Аккаунт",
   "auth-already-exists": "Уже зарегистрированы?",
@@ -63,6 +60,6 @@
   "need-to-know": "Это надо знать!",
   "info-tashkent": "Информация о г. Ташкент",
   "info-tash-village": "Информация о п. Ташкент ",
-  "opportunities":"Возможности",
-  "all":"Общие"
+  "opportunities": "Возможности",
+  "all": "Общие"
 }

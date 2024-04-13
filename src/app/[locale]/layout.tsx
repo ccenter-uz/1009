@@ -1,14 +1,14 @@
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import { Inter } from 'next/font/google'
 import { Metadata } from 'next'
-import { MainContext } from '@/@core/service/context/main'
 import { ChakraProviders } from '@/lib/chakraProvider'
-import Header from '@/@core/components/header'
+import Header from '@/@core/widgets/Header/UI'
 import dynamic from 'next/dynamic'
 import { ToastContainer } from 'react-toastify'
 import Providers from '@/lib/nProgress'
+import { MainContext } from '@/@core/apps/context/main'
 
-const Footer = dynamic(() => import('@/@core/components/footer'))
+const Footer = dynamic(() => import('@/@core/widgets/Footer/UI'))
 
 const inter = Inter({
   subsets: ['latin'],

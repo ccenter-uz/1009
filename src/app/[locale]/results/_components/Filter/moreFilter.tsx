@@ -1,4 +1,4 @@
-import { scssVariables } from '@/@core/utils/scss-variables'
+import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Box, Button, CloseButton, FormControl, FormLabel, Input, Select, SimpleGrid, Text } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Dispatch, FC, SetStateAction } from 'react'

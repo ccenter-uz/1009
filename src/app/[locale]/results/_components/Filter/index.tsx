@@ -1,4 +1,4 @@
-import { scssVariables } from '@/@core/utils/scss-variables'
+import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Box, Button, Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react'
 import { FC, useState } from 'react'
 import MoreFilter from './moreFilter'
@@ -7,19 +7,19 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 const SearchFilter: FC = () => {
   const searchParams = useSearchParams()
-  const router=useRouter()
+  const router = useRouter()
   const { register, handleSubmit } = useForm({
     defaultValues: {
       nameorg: searchParams.get('nameorg') || ''
     }
   })
-  const [openMoreFilter, setOpenMoreFilter] = useState<boolean>(searchParams.has('razdel') && searchParams.has('podrazdel') && searchParams.has('region') ? true:false)
+  const [openMoreFilter, setOpenMoreFilter] = useState<boolean>(
+    searchParams.has('razdel') && searchParams.has('podrazdel') && searchParams.has('region') ? true : false
+  )
 
   // SAVE
   const handleFinish = (values: any) => {
-    router.push(
-      `?nameorg=${values.nameorg}&page=1&pageSize=10`
-    )
+    router.push(`?nameorg=${values.nameorg}&page=1&pageSize=10`)
   }
 
   return (
