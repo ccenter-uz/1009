@@ -92,7 +92,7 @@ export type IdataInfo = {
 
 export type IcreateAccordionType = {
   open: boolean
-  close: Dispatch<SetStateAction<boolean>>
+  close: () => void
   setGetAgain: Dispatch<SetStateAction<boolean>>
 }
 

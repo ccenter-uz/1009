@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { deleteCat, getCat, getDataByid } from '../../api/actions'
 import { IdataInfoFromApi } from '../../types'
+import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
 
 type IenterLinks = {
   index: string
@@ -28,7 +29,8 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
   const { locale } = useLang()
   const searchParams = useSearchParams()
   const selectedPage = searchParams.get('page')
-  const [linkDialog, setLinkDialog] = useState<boolean>(false)
+  const { isOpen, onClose, onOpen, onToggle } = useDisclosure()
+  // const [linkDialog, setLinkDialog] = useState<boolean>(false)
   const [editLinks, setEditLinks] = useState<boolean>(false)
   const [enterLinks, setEnterLinks] = useState<IenterLinks[]>()
   const [editInfo, setEditInfo] = useState<{ title: string; title_ru: string; id: number }>()
@@ -152,7 +154,7 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
                         onClick={e => {
                           e.preventDefault()
                           setEditInfo({ title: link.title, title_ru: link.title_ru, id: link.id })
-                          setLinkDialog(prevState => !prevState)
+                          onToggle()
                         }}
                         fontSize={scssVariables.fonts.paragraph}
                         style={{
@@ -225,7 +227,7 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
             <img
               role='button'
               aria-label='add-link'
-              onClick={() => setLinkDialog(prevState => (prevState = true))}
+              onClick={onOpen}
               style={{ cursor: 'pointer' }}
               width={'20px'}
               height={'20px'}
@@ -235,12 +237,7 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
           </Tooltip>
         )}
       </TableContainer>
-      <DialogEntertainmentLinks
-        isOpen={linkDialog}
-        onClose={setLinkDialog}
-        editInfo={editInfo}
-        getCategories={getCategories}
-      />
+      <DialogEntertainmentLinks isOpen={isOpen} onClose={onClose} editInfo={editInfo} getCategories={getCategories} />
     </Box>
   )
 }

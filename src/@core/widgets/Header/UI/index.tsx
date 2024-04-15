@@ -1,5 +1,5 @@
 'use client'
-import { FC, startTransition, useState } from 'react'
+import { FC } from 'react'
 import {
   Box,
   Divider,
@@ -21,21 +21,15 @@ import { useLang } from '@/@core/shared/hooks/useLang'
 import { Link } from '@/navigation'
 import { usePathname } from 'next/navigation'
 import SwitchLang from '@/@core/entities/SwitchLang'
-import { useAuth } from '@/@core/shared/service/hooks/useAuth'
+import { useAuth } from '@/@core/shared/hooks/useAuth'
+import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
 
 const Header: FC = () => {
   const { t, locale } = useLang()
   const { colorMode, toggleColorMode } = useColorMode()
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const { isOpen, onClose, onOpen } = useDisclosure()
   const { isAuth } = useAuth()
   const pathname = usePathname()
-
-  // close drawer on mobile size
-  const onClose = (): void => {
-    startTransition(() => {
-      setIsOpen(false)
-    })
-  }
 
   return (
     <nav className='wrapper'>
@@ -52,7 +46,7 @@ const Header: FC = () => {
       >
         {/* hamburger-menu */}
         <Box display={{ base: 'block', sm: 'block', md: 'none', xl: 'none' }} flex={{ base: 1, sm: 1, md: 0, xl: 0 }}>
-          <Img role='button' onClick={() => setIsOpen(true)} src='/header/hamburger-menu.svg' alt='hamburger-manu' />
+          <Img role='button' onClick={onOpen} src='/header/hamburger-menu.svg' alt='hamburger-manu' />
         </Box>
         {/* logo */}
         <Box

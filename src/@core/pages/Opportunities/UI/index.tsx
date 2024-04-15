@@ -29,6 +29,7 @@ import { getDataAnother } from '../model/getAnotherDataFn'
 import EntertainmentLinks from './EntertainmentLinks'
 import SearchPanelOpportunities from './SearchPanel'
 import CreateAccModal from './CreateAccordion'
+import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
 
 const Opportunities: FC = () => {
   const pathname = usePathname()
@@ -41,7 +42,8 @@ const Opportunities: FC = () => {
     { id: 3, title: `${searchParams.has('page') ? searchParams.get('page') : t('all')}` }
   ]
   const { colorMode } = useColorMode()
-  const [iscreateAccordion, setIsCreateAccordion] = useState<boolean>(false)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  // const [iscreateAccordion, setIsCreateAccordion] = useState<boolean>(false)
   const { setRecord } = useOpportunityRecord()
   const [dataInfo, setData] = useState<IdataInfo[]>([])
   const [getAgain, setGetAgain] = useState<boolean>(false)
@@ -58,7 +60,7 @@ const Opportunities: FC = () => {
     if (lastLink === 'entertainment' && searchParams.size === 0) {
       Swal.fire({ text: 'Please, choose category first!', icon: 'warning' })
     } else {
-      setIsCreateAccordion(prev => (prev = true))
+      onOpen()
     }
   }
   const handleChangeAccordion = (index: number[]) => {
@@ -124,9 +126,7 @@ const Opportunities: FC = () => {
                     alt='edit'
                     role='button'
                     aria-label='delete-button'
-                    onClick={() => (
-                      setRecord(dataInfo.filter(item => item.id === data.id)), setIsCreateAccordion(true)
-                    )}
+                    onClick={() => (setRecord(dataInfo.filter(item => item.id === data.id)), onOpen())}
                   />
                 </Tooltip>
                 <Tooltip label='Удалить' aria-label='A tooltip'>
@@ -181,9 +181,7 @@ const Opportunities: FC = () => {
         ))}
       </Accordion>
       {/* CreateAccordion */}
-      {iscreateAccordion && (
-        <CreateAccModal open={iscreateAccordion} close={setIsCreateAccordion} setGetAgain={setGetAgain} />
-      )}
+      {isOpen && <CreateAccModal open={isOpen} close={onClose} setGetAgain={setGetAgain} />}
     </Box>
   )
 }

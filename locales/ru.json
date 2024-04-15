@@ -17,7 +17,7 @@
   "instruction-title": "Видео Инструкция Как Пользоватся Сайтом",
   "tariffs": "Тарифы",
   "tariffs-pre-title": "Оплата за одну информацию",
-  "tariffs-btn": "Купить",
+  "tariffs-btn": "Подробнее",
   "add-organization": "Добавить Организацию",
   "partner-title": "Партнёры",
   "question-title": "Есть Вопросы?",
@@ -61,5 +61,6 @@
   "info-tashkent": "Информация о г. Ташкент",
   "info-tash-village": "Информация о п. Ташкент ",
   "opportunities": "Возможности",
-  "all": "Общие"
+  "all": "Общие",
+  "opportunity-card-text-5": "Quis vestibulum diam vitae eget dissd."
 }

@@ -1,7 +1,7 @@
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Box, Button, Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react'
 import { FC, useState } from 'react'
-import MoreFilter from './moreFilter'
+import MoreFilter from './moreFilterModal/moreFilter'
 import { useForm } from 'react-hook-form'
 import { useRouter, useSearchParams } from 'next/navigation'
 

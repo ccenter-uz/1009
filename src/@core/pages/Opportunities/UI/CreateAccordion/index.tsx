@@ -62,7 +62,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
 
   // CLOSE
   const handleClose = () => {
-    close((prev: boolean) => !prev)
+    close()
     setRecord(null)
   }
 

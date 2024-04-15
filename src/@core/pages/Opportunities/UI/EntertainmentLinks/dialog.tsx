@@ -19,7 +19,7 @@ import { createCat, updateCat } from '../../api/actions'
 
 type IDialogTypes = {
   isOpen: boolean
-  onClose: Dispatch<SetStateAction<boolean>>
+  onClose: () => void
   editInfo?: { title: string; title_ru: string; id: number }
   getCategories: () => void
 }
@@ -31,7 +31,7 @@ const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, e
   const router = useRouter()
   //   handleClose
   const handleClose = () => {
-    onClose(prevState => (prevState = false))
+    onClose()
     reset({ title: null, title_ru: null })
   }
 

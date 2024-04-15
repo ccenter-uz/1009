@@ -1,6 +1,7 @@
 'use client'
 
 import BoxGen from '@/@core/shared/UI/Box'
+import { Text } from '@chakra-ui/react'
 import { useEffect } from 'react'
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
@@ -17,7 +18,9 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
       alignItems={'center'}
       justifyContent={'center'}
     >
-      <h2>Something went wrong!</h2>
+      <Text role='h1' as={'h1'} fontWeight={600} fontSize={{ base: '16px', sm: '16px', md: '22px', xl: '22px' }}>
+        Something went wrong!
+      </Text>
       <button onClick={() => reset()}>Try again</button>
     </BoxGen>
   )

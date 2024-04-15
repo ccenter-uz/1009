@@ -18,6 +18,7 @@ const Cards: FC<ICards> = ({ img, title, text, onclick, href }) => {
   return (
     <Box
       as={Link}
+      scroll={false}
       href={href}
       onClick={onclick}
       display={'flex'}

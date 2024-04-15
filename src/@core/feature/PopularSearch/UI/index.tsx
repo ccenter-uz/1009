@@ -4,6 +4,7 @@ import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
 import { FC, useState } from 'react'
 import Cards from './Cards'
 import Modal from './Modal'
+import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
 
 const defaultData = [
   {
@@ -81,12 +82,8 @@ const defaultData = [
 ]
 
 const PopularSearch: FC = () => {
-  const [open, setOpen] = useState<boolean>(false)
-
-  // MODAL
-  const handleOpenModal = () => {
-    setOpen(prev => !prev)
-  }
+  // const [open, setOpen] = useState<boolean>(false)
+  const { isOpen, onClose, onOpen } = useDisclosure()
 
   return (
     <Box className='wrapper' aria-label='popular-section'>
@@ -108,13 +105,13 @@ const PopularSearch: FC = () => {
               img={item.img}
               title={item.title}
               text={item.text}
-              onclick={handleOpenModal}
+              onclick={onOpen}
             />
           )
         })}
       </SimpleGrid>
 
-      {open && <Modal open={open} close={setOpen} />}
+      {isOpen && <Modal open={isOpen} close={onClose} />}
     </Box>
   )
 }

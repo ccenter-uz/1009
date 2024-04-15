@@ -5,9 +5,10 @@ import { ChangeEvent, FC, useDeferredValue, useState } from 'react'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import ButtonGen from '@/@core/shared/UI/Button'
-import SearchModal from './modal'
 import { api } from '@/@core/apps/utils/api'
 import { debounce } from '@/@core/apps/utils/fn'
+import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
+import { SearchModal } from '@/@core/feature/SearchPanelModal'
 
 const fetchData = debounce(async (text: string) => {
   try {
@@ -20,14 +21,9 @@ const fetchData = debounce(async (text: string) => {
 const SearchPanel: FC = () => {
   const { t } = useLang()
   const { colorMode } = useColorMode()
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const { isOpen, onClose, onOpen } = useDisclosure()
   const [searchVal, setSearchVal] = useState<string>()
   const deferredValue = useDeferredValue(searchVal)
-
-  // search-modal
-  const handleOpenSearch = async () => {
-    setIsOpen(true)
-  }
 
   // handleSearchChange
   const handleSearchChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +52,7 @@ const SearchPanel: FC = () => {
         <InputGen
           isReadOnly
           defaultValue={deferredValue}
-          onClick={handleOpenSearch}
+          onClick={onOpen}
           style={{ border: '0.5px solid lightgrey' }}
           boxShadow={scssVariables.boxShadowPartnerBox}
           fontSize={{ base: '12px', sm: '12px', md: '18px', xl: '24px' }}
@@ -70,7 +66,7 @@ const SearchPanel: FC = () => {
           alignItems={'center'}
           button={
             <ButtonGen
-              onClick={handleOpenSearch}
+              onClick={onOpen}
               display={{ base: 'none', sm: 'none', md: 'flex', xl: 'flex' }}
               width='90%'
               height='80%'
@@ -82,7 +78,7 @@ const SearchPanel: FC = () => {
       </Box>
       <SearchModal
         open={isOpen}
-        close={setIsOpen}
+        close={onClose}
         onChange={handleSearchChange}
         onClick={handleSearchClick}
         value={deferredValue}

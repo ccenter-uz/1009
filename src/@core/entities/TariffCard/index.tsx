@@ -3,6 +3,7 @@ import ButtonGen from '../../shared/UI/Button'
 import { Box, Heading, Img, Text } from '@chakra-ui/react'
 import { scssVariables } from '../../apps/utils/scss-variables'
 import { useLang } from '@/@core/shared/hooks/useLang'
+import { Link } from '@/navigation'
 
 type IOption = {
   id: number
@@ -98,7 +99,7 @@ const TariffCard: FC<ITarrifCard> = ({ title, active, options, price }) => {
           fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '24px' }}
           fontWeight={500}
         >
-          {t('tariffs-btn')}
+          <Link href={'/tariff'}>{t('tariffs-btn')}</Link>
         </ButtonGen>
       </Box>
     </Box>

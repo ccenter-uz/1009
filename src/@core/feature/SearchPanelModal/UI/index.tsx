@@ -11,15 +11,21 @@ import {
   ModalOverlay,
   Text
 } from '@chakra-ui/react'
-import { FC } from 'react'
+import { useRouter } from 'next/navigation'
+import { FC, KeyboardEvent, memo } from 'react'
 
 const SearchModal: FC<any> = ({ open, close, onChange, value = '', onClick }) => {
-  const handleClose = () => {
-    close(false)
+  const router = useRouter()
+
+  // ONPRESSENTER
+  const handleKeyDownSearch = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') return router.push(`/results?nameorg=${value}`)
+
+    return null
   }
 
   return (
-    <Modal isOpen={open} onClose={handleClose}>
+    <Modal isOpen={open} onClose={close}>
       <ModalOverlay />
       <ModalContent w={{ base: '90%', sm: '90%', md: '100%', xl: '100%' }}>
         <InputGroup display={'flex'} alignItems={'center'}>
@@ -27,6 +33,7 @@ const SearchModal: FC<any> = ({ open, close, onChange, value = '', onClick }) =>
             fontSize={scssVariables.fonts.paragraph}
             value={value}
             onChange={onChange}
+            onKeyDown={handleKeyDownSearch}
             placeholder='Введите больше 3 буквы для поиска'
             h={{ base: '32px', sm: '32px', md: '45px', xl: '45px' }}
             type='text'
@@ -90,4 +97,4 @@ const SearchModal: FC<any> = ({ open, close, onChange, value = '', onClick }) =>
   )
 }
 
-export default SearchModal
+export default memo(SearchModal)

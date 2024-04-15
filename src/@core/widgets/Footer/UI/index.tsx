@@ -4,7 +4,7 @@ import { useLang } from '@/@core/shared/hooks/useLang'
 import { Box, Button, Heading, Img, SimpleGrid, Text, useColorMode } from '@chakra-ui/react'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Link } from '@/navigation'
-import InputGen from '../../../shared/UI/Input'
+import InputGen from '@/@core/shared/UI/Input'
 
 const Footer: FC = () => {
   const { t } = useLang()

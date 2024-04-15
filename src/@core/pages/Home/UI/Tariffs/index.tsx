@@ -22,6 +22,29 @@ const optionsCard = [
   }
 ]
 
+// cards
+const CardsList = [
+  {
+    id: 1,
+    title: 'Один Раз',
+    price: '1.02',
+    options: optionsCard
+  },
+  {
+    id: 2,
+    title: 'Подписка на Месяц',
+    price: '1.02',
+    options: optionsCard,
+    active: true
+  },
+  {
+    id: 3,
+    title: 'Подписка за Год',
+    price: '1.02',
+    options: optionsCard
+  }
+]
+
 const Tariffs: FC = () => {
   const { t } = useLang()
 
@@ -43,9 +66,9 @@ const Tariffs: FC = () => {
         mt={{ base: '16px', sm: '16px', md: '72px', xl: '72px' }}
         gap={{ base: '32px', sm: '32px', md: '82px', xl: '82px' }}
       >
-        <TariffCard title='Один Раз' options={optionsCard} price={'1.02'} />
-        <TariffCard title='Подписка на Месяц' active={true} options={optionsCard} price={'1.02'} />
-        <TariffCard title='Подписка за Год' options={optionsCard} price={'1.02'} />
+        {CardsList.map(card => (
+          <TariffCard title={card.title} active={card.active} options={card.options} price={card.price} key={card.id} />
+        ))}
       </SimpleGrid>
     </Box>
   )

@@ -21,7 +21,7 @@ import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from 'react'
 
 type IPopularModalType = {
   open: boolean
-  close: Dispatch<SetStateAction<boolean>>
+  close: () => void
 }
 
 const options = [
@@ -79,17 +79,14 @@ const cards = [
 const PopularModal: FC<IPopularModalType> = ({ open, close }) => {
   const [selectVal, setSelectVal] = useState<string | null>(null)
   const searchParams = useSearchParams()
-  // CLOSE
-  const handleCloseModal = () => {
-    close(prev => (prev = false))
-  }
+
   // CHANGE
   const handleChangeValue = (value: ChangeEvent<HTMLSelectElement>) => {
     setSelectVal(value.target.value)
   }
 
   return (
-    <Modal isOpen={open} onClose={handleCloseModal}>
+    <Modal isOpen={open} onClose={close}>
       <ModalOverlay />
       <ModalContent p={'16px'}>
         <ModalHeader
