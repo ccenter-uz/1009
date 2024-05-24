@@ -17,7 +17,7 @@
   "instruction-title": "Foydalanish bo'yicha video qo'llanma",
   "tariffs": "Tariflar",
   "tariffs-pre-title": "Bir dona ma'lumot uchun",
-  "tariffs-btn": "Sotib olish",
+  "tariffs-btn": "Ba'tafsil",
   "add-organization": "Tashkilot qo'shish",
   "partner-title": "Hamkorlar",
   "question-title": "Savollar bormi?",
@@ -31,13 +31,10 @@
   "opportunity-card-title-3": "Raqamlar va kodlar",
   "opportunity-card-title-4": "Buni bilish kerak!",
   "opportunity-card-title-5": "Tashkent sh. haqida ma'lumot",
-  "opportunity-card-title-6": "Tashkent v. haqida ma'lumot",
   "opportunity-card-text-1": "Kino, Teatlar, Ko'rgazma, Sayilgoh",
   "opportunity-card-text-2": "Svet, Gaz..",
   "opportunity-card-text-3": "Quis vestibulum diam vitae eget dissd.",
   "opportunity-card-text-4": "Quis vestibulum diam vitae eget dissd.",
-  "opportunity-card-text-5": "Hudud, viloyatlar ... ",
-  "opportunity-card-text-6": "Quis vestibulum diam vitae eget dissd.",
   "auth-regis-title": "Ro'yxatdan o'tish",
   "auth-sign-title": "Akkauntga kirish",
   "auth-already-exists": "Ro'yxatdan o'tganmisiz?",
@@ -64,5 +61,6 @@
   "info-tashkent": "Tashkent sh. haqida ma'lumot",
   "info-tash-village": "Tashkent v. haqida ma'lumot",
   "opportunities": "Imkoniyatlar",
-  "all": "Barchasi"
+  "all": "Barchasi",
+  "opportunity-card-text-5": "Quis vestibulum diam vitae eget dissd."
 }

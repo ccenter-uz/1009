@@ -1,21 +1,7 @@
-import { Box, Heading } from '@chakra-ui/react'
+'use client'
 import { FC } from 'react'
-import BreadCrumb from '@/@core/components/reusable/Breadcrumb'
+import { Results } from '@/@core/pages/ResultPage'
 
-const Results: FC = () => {
-  const breadcrumblink = [
-    {
-      id: 1,
-      title: 'Организации'
-    }
-  ]
+const ResultsPage: FC = () => <Results />
 
-  return (
-    <Box id='results' className='wrapper fade-in'>
-      <BreadCrumb item={breadcrumblink} />
-      <Heading>RESULTS</Heading>
-    </Box>
-  )
-}
-
-export default Results
+export default ResultsPage

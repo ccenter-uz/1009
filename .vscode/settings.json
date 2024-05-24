@@ -5,4 +5,9 @@
     "files.autoSave": "onWindowChange",
     "editor.tabSize": 4,
     "editor.wordWrap": "on",
+    "i18n-ally.localesPaths": [
+        "locales"
+    ],
+    "i18n-ally.keystyle": "nested",
+    "i18n-ally.sourceLanguage": "ru",
 }

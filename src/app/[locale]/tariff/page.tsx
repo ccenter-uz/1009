@@ -1,4 +1,4 @@
-import TariffPage from '@/@core/components/pages/Tariff'
+import TariffPage from '@/@core/pages/Tariff'
 import React from 'react'
 
 const Tariff = () => {
