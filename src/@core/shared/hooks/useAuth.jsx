@@ -5,7 +5,7 @@ export const useAuth = () => {
   const [isAuth, setIsAuth] = useState(false)
 
   useLayoutEffect(() => {
-    if (Cookies.get('access_token')) return setIsAuth(true)
+    Cookies.get('access_token') && setIsAuth(true)
   }, [])
 
   return {

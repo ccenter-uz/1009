@@ -26,7 +26,7 @@ const SignIn: FC = () => {
     if (!res) return
     if (res.status === 200) {
       toast.success(res.message, { position: 'bottom-right' })
-      router.push('/')
+      router.push('/', { replace: true })
     }
   }
 
