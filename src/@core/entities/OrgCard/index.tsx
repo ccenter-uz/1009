@@ -1,10 +1,24 @@
 'use client'
-import { Box, Card, CardBody, CardFooter, CardHeader, Divider, Text, useColorMode } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Divider,
+  Img,
+  Text,
+  Tooltip,
+  useColorMode
+} from '@chakra-ui/react'
 import { FC } from 'react'
 import ButtonGen from '../../shared/UI/Button'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Link } from '@/navigation'
 import Rate from '../../shared/UI/Rate'
+import { useLang } from '@/@core/shared/hooks/useLang'
+import { useRouter } from 'next/navigation'
 
 type IDataType = {
   data?: {
@@ -17,14 +31,21 @@ type IDataType = {
     address: string
   }
   href: string
+  mycard?: boolean
 }
 
-const OrgCard: FC<IDataType> = ({ data, href }) => {
+const OrgCard: FC<IDataType> = ({ data, href, mycard }) => {
   const { colorMode } = useColorMode()
+  const router = useRouter()
+  const { t } = useLang()
 
   return (
     <>
       <Card
+        onClick={() => mycard && router.push(href)}
+        cursor={mycard ? 'pointer' : 'inherit'}
+        transition={mycard ? 'all 0.3s linear' : 'none'}
+        _hover={mycard ? { transform: 'scale(1.02)' } : {}}
         my={{ base: '8px', sm: '8px', md: '16px', xl: '16px' }}
         boxShadow={scssVariables.boxShadow}
         borderRadius={{ base: '8px', sm: '8px', md: '16px', xl: '16px' }}
@@ -73,7 +94,7 @@ const OrgCard: FC<IDataType> = ({ data, href }) => {
           <Box display={'flex'} justifyContent={'flex-end'} alignItems={'center'} gap={'2px'}>
             <img width={'15px'} height={'15px'} src='/eye-fill.svg' alt='eye-fill' />
             <Text color={'grey'} fontSize={{ base: '8px', sm: '8px', md: '11px', xl: '11px' }}>
-              Просмотрено - {data?.watched || '2345'}
+              {t('seen')} - {data?.watched || '2345'}
             </Text>
           </Box>
         </CardBody>
@@ -85,24 +106,55 @@ const OrgCard: FC<IDataType> = ({ data, href }) => {
         >
           <Rate disabled maxStars={5} initialValue={4} onRatingChange={val => console.log(val, 'value')} />
           <Box display={'flex'} alignItems={'center'} gap={'6px'}>
-            <img
-              src='/bookmark-fill.svg'
-              alt='bookmark-fill'
-              role='button'
-              aria-label='bookmarked'
-              width={'20px'}
-              height={'20px'}
-            />
+            {mycard ? (
+              <Box display={'flex'} alignItems={'center'} gap={'6px'}>
+                <Tooltip label={t('edit')}>
+                  <Img
+                    cursor={'pointer'}
+                    _hover={{ opacity: '0.8' }}
+                    src='/pencil.svg'
+                    alt='edit'
+                    w={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
+                    h={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
+                  />
+                </Tooltip>
+                <Tooltip label={t('delete')}>
+                  <Img
+                    cursor={'pointer'}
+                    _hover={{ opacity: '0.8' }}
+                    src='/delete.svg'
+                    alt='delete'
+                    w={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
+                    h={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
+                  />
+                </Tooltip>
+              </Box>
+            ) : (
+              <img
+                src='/bookmark-fill.svg'
+                alt='bookmark-fill'
+                role='button'
+                aria-label='bookmarked'
+                width={'20px'}
+                height={'20px'}
+              />
+            )}
             <Link href={href}>
-              <ButtonGen
-                width={{ base: '100px', sm: '100px', md: '165px', xl: '165px' }}
-                height={{ base: '30px', sm: '30px', md: '35px', xl: '37px' }}
-                radius={'8px'}
-                fontWeight={500}
-                fontSize={{ base: '11px', sm: '11px', md: '14px', xl: '14px' }}
-              >
-                Подробнее
-              </ButtonGen>
+              {!mycard && (
+                <Button
+                  variant={'unstyled'}
+                  _hover={{ opacity: '0.8' }}
+                  bg={colorMode === 'dark' ? '#526199' : scssVariables.gradientColor}
+                  width={{ base: '100px', sm: '100px', md: '165px', xl: '165px' }}
+                  height={{ base: '30px', sm: '30px', md: '35px', xl: '37px' }}
+                  borderRadius={'8px'}
+                  fontWeight={500}
+                  color={'#fff'}
+                  fontSize={{ base: '11px', sm: '11px', md: '14px', xl: '14px' }}
+                >
+                  {t('more')}
+                </Button>
+              )}
             </Link>
           </Box>
         </CardFooter>

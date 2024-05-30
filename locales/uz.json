@@ -68,5 +68,21 @@
   "about-tariffs": "Tariflar haqida batafsil",
   "tariff-text": "Shunday qilib, qoʻshimcha ishlanmaydigan kunlar va Yangi yil bayrami vaqtida shanba kuni koʻchirilishi munosabati bilan Oʻzbekiston fuqarolari ketma-ket toʻrt kun (2022-yil 31-dekabrdan 2023-yil 3-yanvargacha) dam oladilar.",
   "tariff-text-description": "O‘zbekiston Prezidenti Shavkat Mirziyoyev 2022-yil 23-dekabrdagi “Qo‘shimcha ma’lumotlarni tashkil etish to‘g‘risida”gi “PF-270” qarorini imzoladi.\n            \n2023-yilda rasmiy sanalarni nishonlash va dam olish kunlarini ko‘chirish davrida ishlanmaydigan kunlar”. \nHujjat\n            \nQuyidagi qo‘shimcha dam olish kunlari (ish haftasi turidan qat’i nazar) belgilanadi: O‘zbekiston Prezidenti\n            \nShavkat Mirziyoyev 2022-yil 23-dekabrdagi “Ushbu ish kunlarida qo‘shimcha ishlanmaydigan kunlarni belgilash to‘g‘risida”gi “PF-270” qarorini imzoladi.\n            \nrasmiy sanalarni nishonlash va bayramlarni 2023-yilga ko‘chirish”. \nHujjat quyidagilarni belgilaydi\n            \nqo'shimcha dam olish kunlari (ish haftasining turidan qat'iy nazar)",
-  "no_active_tariff": "Faol tariflar yo'q"
+  "no_active_tariff": "Faol tariflar yo'q",
+  "deposit": "To'ldirish",
+  "savedorgs": "Sevimlilar",
+  "paidorgs": "Sotib olingan",
+  "monitoring": "Monitoring",
+  "myorgs": "Mening tashkilotlarim",
+  "settings": "Sozlamalar",
+  "logout": "Tashqariga chiqish",
+  "more": "Batafsil ma'lumot",
+  "seen": "Koʻrildi",
+  "edit": "O'zgartirish",
+  "delete": "Oʻchirish",
+  "rate": "Tashkilot reytingi",
+  "mobile-phone": "Mobil telefon raqami",
+  "home-phone": "Uy telefon raqami",
+  "view-all-reviews": "Fikr qoldiring",
+  "main-company-info": "Kompaniya haqida umumiy ma'lumot"
 }

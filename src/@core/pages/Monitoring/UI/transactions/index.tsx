@@ -7,6 +7,7 @@ import { usePagination } from '@/@core/shared/hooks/usePaginate'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Box, Button, Text } from '@chakra-ui/react'
 import { FC, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const styleTabpanel = {
   p: { base: '0.5em', sm: '0.5em', md: '1em', xl: '1em' },
@@ -14,6 +15,7 @@ const styleTabpanel = {
 }
 
 const TransactionsPanel: FC = () => {
+  const router = useRouter()
   const [open, setOpen] = useState<boolean>(false)
   const { current, pageSize, total, handlePageChange, handlePageSizeChange } = usePagination()
   const columns = [
@@ -60,6 +62,7 @@ const TransactionsPanel: FC = () => {
   // handleFilter
   const handleFilter = (values: any) => {
     console.log(values, 'value')
+    router.push(`?page=${1}&pageSize=${10}`)
   }
 
   return (

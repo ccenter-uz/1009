@@ -1,6 +1,8 @@
+import { useLang } from '@/@core/shared/hooks/useLang'
+import BoxGen from '@/@core/shared/UI/Box'
 import Rate from '@/@core/shared/UI/Rate'
 import Loading from '@/app/[locale]/loading'
-import { Avatar, Box, Flex, Text } from '@chakra-ui/react'
+import { Avatar, Box, Button, Flex, Text, useColorMode } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import { FC } from 'react'
 
@@ -52,6 +54,9 @@ const items = [
 ]
 
 const Comment: FC = () => {
+  const { t } = useLang()
+  const { colorMode } = useColorMode()
+
   return (
     <Box aria-label='section'>
       <Text
@@ -72,7 +77,7 @@ const Comment: FC = () => {
         key={'carousel'}
         responsive={responsive}
         items={items.map(item => (
-          <Box
+          <BoxGen
             my={'24px'}
             aria-label='card'
             key={item.id}
@@ -116,13 +121,16 @@ const Comment: FC = () => {
                 {item.date}
               </Text>
             </Flex>
-          </Box>
+          </BoxGen>
         ))}
       />
       <Flex justifyContent={'flex-end'} mb={{ base: '80px', sm: '80px', md: '100px', xl: '167px' }}>
-        <Text fontSize={{ base: '14px', sm: '14px', md: '17px', xl: '18px' }} color={'blue'}>
-          Оставить отзыв
-        </Text>
+        <Button
+          fontSize={{ base: '14px', sm: '14px', md: '17px', xl: '18px' }}
+          color={colorMode === 'dark' ? 'lightblue' : 'steelblue'}
+        >
+          {t('view-all-reviews')}
+        </Button>
       </Flex>
     </Box>
   )
