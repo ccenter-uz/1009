@@ -84,5 +84,10 @@
   "mobile-phone": "Mobil telefon raqami",
   "home-phone": "Uy telefon raqami",
   "view-all-reviews": "Fikr qoldiring",
-  "main-company-info": "Kompaniya haqida umumiy ma'lumot"
+  "main-company-info": "Kompaniya haqida umumiy ma'lumot",
+  "comments": "Sharhlar",
+  "rating": "Umumiy reyting",
+  "leave-comment": "Bu yerda sharh yozing",
+  "cancel": "Bekor qilish",
+  "publish": "Nashr qilish"
 }

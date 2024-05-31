@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Button, Divider, Text, Textarea, VStack } from '@chakra-ui/react'
+import { Box, Button, Divider } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import { FC } from 'react'
 import * as Yup from 'yup'
