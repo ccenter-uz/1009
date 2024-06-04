@@ -18,7 +18,6 @@ export const Badge: FC<Props> = props => {
       borderRadius={'4px'}
       display={'flex'}
       alignItems={'center'}
-      // justifyContent={'center'}
       p={{ base: '0 16px', sm: '0 16px', md: '0 24px', xl: '0 24px' }}
       mb={{ base: '1em', sm: '1em', md: '2em', xl: '2em' }}
     >

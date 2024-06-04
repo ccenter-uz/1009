@@ -30,7 +30,7 @@ const MyOrganizations: FC = () => {
       <Badge title={t('myorgs')} />
       <SimpleGrid columns={{ base: 1, sm: 1, md: 2, xl: 2 }} gap={{ base: '0 0', sm: '0 0', md: '0 2em', xl: '0 2em' }}>
         {cards.map(card => (
-          <OrgCard key={card.id} href={`/results/${card.id}`} mycard />
+          <OrgCard key={card.id} href={`/results/${card.id}`} id={card.id} mycard />
         ))}
       </SimpleGrid>
 

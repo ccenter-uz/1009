@@ -32,9 +32,10 @@ type IDataType = {
   }
   href: string
   mycard?: boolean
+  id?: number | string
 }
 
-const OrgCard: FC<IDataType> = ({ data, href, mycard }) => {
+const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
   const { colorMode } = useColorMode()
   const router = useRouter()
   const { t } = useLang()
@@ -42,10 +43,6 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard }) => {
   return (
     <>
       <Card
-        onClick={() => mycard && router.push(href)}
-        cursor={mycard ? 'pointer' : 'inherit'}
-        transition={mycard ? 'all 0.3s linear' : 'none'}
-        _hover={mycard ? { transform: 'scale(1.02)' } : {}}
         my={{ base: '8px', sm: '8px', md: '16px', xl: '16px' }}
         boxShadow={scssVariables.boxShadow}
         borderRadius={{ base: '8px', sm: '8px', md: '16px', xl: '16px' }}
@@ -109,14 +106,16 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard }) => {
             {mycard ? (
               <Box display={'flex'} alignItems={'center'} gap={'6px'}>
                 <Tooltip label={t('edit')}>
-                  <Img
-                    cursor={'pointer'}
-                    _hover={{ opacity: '0.8' }}
-                    src='/pencil.svg'
-                    alt='edit'
-                    w={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
-                    h={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
-                  />
+                  <Link href={`/addorg?id=${id}`}>
+                    <Img
+                      cursor={'pointer'}
+                      _hover={{ opacity: '0.8' }}
+                      src='/pencil.svg'
+                      alt='edit'
+                      w={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
+                      h={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
+                    />
+                  </Link>
                 </Tooltip>
                 <Tooltip label={t('delete')}>
                   <Img
@@ -127,6 +126,18 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard }) => {
                     w={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
                     h={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
                   />
+                </Tooltip>
+                <Tooltip label={t('show')}>
+                  <Link href={href}>
+                    <Img
+                      cursor={'pointer'}
+                      _hover={{ opacity: '0.8' }}
+                      src='/eye-fill.svg'
+                      alt='edit'
+                      w={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
+                      h={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
+                    />
+                  </Link>
                 </Tooltip>
               </Box>
             ) : (

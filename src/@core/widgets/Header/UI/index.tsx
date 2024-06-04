@@ -145,7 +145,7 @@ const Header: FC = () => {
           {isAuth ? (
             <UserPopOver />
           ) : (
-            <Link href={'/signup'} aria-current='page'>
+            <Link href={'/signin'} aria-current='page'>
               <Box
                 border={colorMode === 'dark' ? '1px solid #fff' : `1px solid ${scssVariables.mainColor}`}
                 borderRadius={'20px'}

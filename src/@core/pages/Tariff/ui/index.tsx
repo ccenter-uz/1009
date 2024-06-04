@@ -13,7 +13,7 @@ export const TariffPage: FC<Props> = () => {
   const hasActive = true
 
   return (
-    <main id='tarif' className='wrapper' aria-current='page'>
+    <main id='tarif' className='wrapper fade-in' aria-current='page'>
       <Box
         minH={'100dvh'}
         display={'flex'}

@@ -1,16 +1,15 @@
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { Box, Button, FormControl, FormLabel, Img, Text } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import InputGen from '@/@core/shared/UI/Input'
 import ButtonGen from '@/@core/shared/UI/Button'
-import { useFormStatus } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { Regis } from '../../api/regis'
 
 const SignUp: FC = () => {
   const { t } = useLang()
-  const { pending } = useFormStatus()
+  const [pending, setPending] = useState<boolean>(false)
   const router = useRouter()
   const {
     register,
@@ -19,14 +18,19 @@ const SignUp: FC = () => {
     watch
   } = useForm()
 
+  // FINISH
   const handleFinish = async (e: any) => {
+    setPending(true)
     sessionStorage.setItem('user', JSON.stringify(e))
     const res = await Regis(e)
-    if (!res) return
+    if (!res) return setPending(false)
     if (res.status === 200) {
+      setPending(false)
       console.log(res.message, 'res')
       router.replace('/checknumber')
     }
+
+    return setPending(false)
   }
 
   return (
@@ -60,7 +64,7 @@ const SignUp: FC = () => {
           />
           {errors.fio && (
             <Text color={'red'} fontSize={'12px'}>
-              This field must be minimum 3 letters
+              {t('auth-regis-fio-error')}
             </Text>
           )}
         </FormControl>
@@ -88,7 +92,7 @@ const SignUp: FC = () => {
           />
           {errors.phone && (
             <Text color={'red'} fontSize={'12px'}>
-              This field must be 12 letters
+              {t('auth-phone-error')}
             </Text>
           )}
         </FormControl>
@@ -102,7 +106,7 @@ const SignUp: FC = () => {
             aria-invalid={errors.password ? 'true' : 'false'}
             {...register('password', {
               required: true,
-              minLength: 6
+              minLength: 3
             })}
             id='password'
             isDisabled={pending}
@@ -118,7 +122,7 @@ const SignUp: FC = () => {
           />
           {errors.password && (
             <Text color={'red'} fontSize={'12px'}>
-              Password must contain minimum 6 letters
+              {t('auth-password-error')}
             </Text>
           )}
         </FormControl>
@@ -159,7 +163,7 @@ const SignUp: FC = () => {
 
         <ButtonGen
           aria-label='submit'
-          isDisabled={pending}
+          isLoading={pending}
           form='form-regis'
           width={'264px'}
           radius={'5px'}

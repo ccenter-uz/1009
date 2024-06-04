@@ -11,11 +11,11 @@ const Footer: FC = () => {
   const { colorMode } = useColorMode()
 
   return (
-    <footer className='wrapper'>
+    <footer className='wrapper' style={{ borderTop: '1px solid rgba(0,0,0,0.10)', marginTop: '2em' }}>
       <SimpleGrid
         columns={{ sm: 1, md: 3, xl: 4 }}
         gap={{ base: '15px', sm: '15px', md: '20px', xl: '24px' }}
-        pt={{ base: '48px', sm: '48px', md: '62px', xl: '62px' }}
+        pt={{ base: '28px', sm: '28px', md: '62px', xl: '62px' }}
         marginBottom={{ base: '40px', sm: '40px', md: '80px', xl: '130px' }}
       >
         <Box
@@ -108,7 +108,7 @@ const Footer: FC = () => {
             width={'248px'}
             bg={'#fff'}
             borderRadius={'6px'}
-            height={'50px'}
+            h={{ base: '35px', sm: '35px', md: '45px', xl: '45px' }}
             rightWidth='50px'
             fontSize={{ base: '14px', sm: '14px', md: '14px', xl: '16px' }}
             button={

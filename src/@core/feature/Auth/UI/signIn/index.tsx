@@ -1,10 +1,9 @@
 import { FormControl, FormLabel, Img, Text } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
-import { useFormStatus } from 'react-dom'
 import { toast } from 'react-toastify'
 import InputGen from '@/@core/shared/UI/Input'
 import ButtonGen from '@/@core/shared/UI/Button'
@@ -12,7 +11,7 @@ import { Login } from '../../api/login'
 
 const SignIn: FC = () => {
   const { t } = useLang()
-  const { pending } = useFormStatus()
+  const [pending, setPending] = useState<boolean>(false)
   const {
     register,
     handleSubmit,
@@ -20,14 +19,18 @@ const SignIn: FC = () => {
   } = useForm()
   const router = useRouter()
 
-  // handleFinish
+  // FINISH
   const handleFinish = async (e: any) => {
+    setPending(true)
     const res = await Login(e)
-    if (!res) return
+    if (!res) return setPending(false)
     if (res.status === 200) {
+      setPending(false)
       toast.success(res.message, { position: 'bottom-right' })
       router.push('/', { replace: true })
     }
+
+    return setPending(false)
   }
 
   return (
@@ -49,7 +52,7 @@ const SignIn: FC = () => {
         />
         {errors.phone && (
           <Text color={'red'} fontSize={'12px'}>
-            Phone must contain minimum 12 letters
+            {t('auth-phone-error')}
           </Text>
         )}
       </FormControl>
@@ -72,7 +75,7 @@ const SignIn: FC = () => {
         />
         {errors.password && (
           <Text color={'red'} fontSize={'12px'}>
-            Password must contain minimum 3 letters
+            {t('auth-password-error')}
           </Text>
         )}
       </FormControl>
