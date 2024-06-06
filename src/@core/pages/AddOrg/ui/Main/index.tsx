@@ -1,30 +1,31 @@
-import { FC, useState } from 'react'
-import { MODEL_FORM_INCOME } from '../../types'
-import { Box, FormLabel, Img, Input, Text, Tooltip } from '@chakra-ui/react'
+import { FC } from 'react'
+import { MODEL_FORM_INCOME } from '../../model/types'
+import { Box, FormControl, FormErrorMessage, FormLabel, Img, Input, Text, Tooltip } from '@chakra-ui/react'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { AddorgFormInput } from '@/@core/entities/AddorgFormInput'
 import { AddorgAccordionInputs } from '@/@core/entities/AddorgAccordionInputs'
 import Swal from 'sweetalert2'
+import { useAddorgSlicer } from '../../model/hook/useAddorgSlicer'
 
 export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
   const { register, errors } = props
+  const { photos, setPhotos } = useAddorgSlicer()
   const { t } = useLang()
-  const [fileList, setFileList] = useState<any>([])
 
   //   UPLOAD
-  const handleUpload = async (e: any) => {
-    const file = { id: Date.now(), file: e.target.files[0] }
-    file && setFileList([...fileList, file])
+  const handleUpload = async ({ target: { files } }: { target: { files: any } }) => {
+    const file = { id: Date.now(), file: files[0] }
+    file && setPhotos([...photos, file])
   }
 
   //   DELETE
   const handleDelete = (id: number) => {
-    setFileList(fileList.filter((file: any) => file.id !== id))
+    setPhotos(photos.filter((file: any) => file.id !== id))
   }
 
   //   OPEN
   const handleOpen = async (id: number) => {
-    const filter = fileList.filter((file: any) => file.id === id)
+    const filter = photos.filter((file: any) => file.id === id)
     if (filter.length === 0) return
 
     Swal.fire({
@@ -122,7 +123,7 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
           {t('add-image')}
         </Text>
         <Box display={'flex'} flexWrap={'wrap'} gap={{ base: '8px', sm: '8px', md: '15px', xl: '20px' }}>
-          {fileList.map((file: any, index: number) => {
+          {photos.map((file: any, index: number) => {
             return (
               <Box key={index} position={'relative'}>
                 <Img
@@ -181,30 +182,35 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
             )
           })}
           <Box>
-            <FormLabel
-              htmlFor='image-1'
-              w={{ base: '80px', sm: '80px', md: '99px', xl: '99px' }}
-              h={{ base: '80px', sm: '80px', md: '99px', xl: '99px' }}
-              boxShadow={'0px 15px 20px 0px rgba(0, 0, 0, 0.05)'}
-              cursor={'pointer'}
-              borderRadius={'8px'}
-              border={'1px solid rgba(0,0,0,0.10)'}
-              display={'flex'}
-              alignItems={'center'}
-              justifyContent={'center'}
-              fontSize={{ base: '22px', sm: '12px', md: '16px', xl: '56px' }}
-              margin={0}
-              fontWeight={400}
-              color={'grey'}
-              _hover={{ bg: 'whitesmoke' }}
-            >
-              <Img
-                src={'/addOrganization/plus.svg'}
-                alt={'plus'}
-                w={{ base: '28px', sm: '28px', md: '38px', xl: '38px' }}
-              />
-            </FormLabel>
-            <Input type='file' id='image-1' display={'none'} onChange={handleUpload} />
+            <FormControl isInvalid={photos.length === 0}>
+              <FormLabel
+                htmlFor='image-1'
+                w={{ base: '80px', sm: '80px', md: '99px', xl: '99px' }}
+                h={{ base: '80px', sm: '80px', md: '99px', xl: '99px' }}
+                boxShadow={'0px 15px 20px 0px rgba(0, 0, 0, 0.05)'}
+                cursor={'pointer'}
+                borderRadius={'8px'}
+                border={'1px solid rgba(0,0,0,0.10)'}
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'center'}
+                fontSize={{ base: '22px', sm: '12px', md: '16px', xl: '56px' }}
+                margin={0}
+                fontWeight={400}
+                color={'grey'}
+                _hover={{ bg: 'whitesmoke' }}
+              >
+                <Img
+                  src={'/addOrganization/plus.svg'}
+                  alt={'plus'}
+                  w={{ base: '28px', sm: '28px', md: '38px', xl: '38px' }}
+                />
+              </FormLabel>
+              <FormErrorMessage fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
+                {t('required-field')}
+              </FormErrorMessage>
+              <Input type='file' id='image-1' display={'none'} onChange={handleUpload} />
+            </FormControl>
           </Box>
         </Box>
       </Box>

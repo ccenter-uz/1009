@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { deleteCat, getCat, getDataByid } from '../../api/actions'
-import { IdataInfoFromApi } from '../../types'
+import { IdataInfoFromApi } from '../../model/types'
 import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
 
 type IenterLinks = {

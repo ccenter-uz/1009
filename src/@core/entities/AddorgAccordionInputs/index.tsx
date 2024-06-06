@@ -8,6 +8,7 @@ import {
   AccordionPanel,
   Box,
   FormControl,
+  FormErrorMessage,
   Text,
   useColorMode
 } from '@chakra-ui/react'
@@ -75,7 +76,11 @@ export const AddorgAccordionInputs = (props: Props) => {
             {children
               ? children
               : inputs?.map((input: any) => (
-                  <FormControl key={input.id} my={{ base: '8px', sm: '8px', md: '10px', xl: '10px' }}>
+                  <FormControl
+                    isInvalid={errors ? !!errors[`${input.value}`] : false}
+                    key={input.id}
+                    my={{ base: '8px', sm: '8px', md: '10px', xl: '10px' }}
+                  >
                     <InputGen
                       p={{ base: '5px 10px', sm: '5px,10px', md: '12px 16px', xl: '12px 16px' }}
                       fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}
@@ -93,11 +98,9 @@ export const AddorgAccordionInputs = (props: Props) => {
                           maxLength: input.maxLength
                         }))}
                     />
-                    {errors && errors[`${input.value}`] && (
-                      <Text color={'red'} fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
-                        {input.errortext}
-                      </Text>
-                    )}
+                    <FormErrorMessage fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
+                      {input.errortext}
+                    </FormErrorMessage>
                   </FormControl>
                 ))}
           </AccordionPanel>

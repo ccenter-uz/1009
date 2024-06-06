@@ -1,35 +1,69 @@
-import { FC, useState } from 'react'
-import { MODEL_FORM_INCOME } from '../../types'
+import { FC } from 'react'
+import { MODEL_FORM_INCOME } from '../../model/types'
 import { Box, Button, IconButton, Img, Input, Select } from '@chakra-ui/react'
 import { AddorgAccordionInputs } from '@/@core/entities/AddorgAccordionInputs'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import XmarkIcon from '@/@core/shared/UI/Xmark'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { AddorgFormInput } from '@/@core/entities/AddorgFormInput'
-import { Maps } from '@/@core/shared/UI/Map'
+import Swal from 'sweetalert2'
+import { filterArrayEqualToID, filterArrayNotEqualToID } from '@/@core/apps/utils/fn'
+import { useAddorgSlicer } from '../../model/hook/useAddorgSlicer'
+import dynamic from 'next/dynamic'
+import LoaderUI from '@/@core/shared/UI/LoadingUI'
+
+const Maps = dynamic(() => import('@/@core/shared/UI/Map/index').then(res => res.Maps), {
+  ssr: false,
+  loading: () => <LoaderUI />
+})
 
 export const AddOrgContacts: FC<MODEL_FORM_INCOME> = props => {
   const { register, errors } = props
+  const { phones, setPhones } = useAddorgSlicer()
   const { t } = useLang()
-  const [numbers, setNumbers] = useState([{ id: 1, value: '' }])
 
   // ADD-NUMBER
   const addNumber = () => {
-    setNumbers([...numbers, { id: Date.now(), value: '' }])
+    setPhones([...phones, { id: Date.now(), value: '', type: '' }])
   }
 
   // DELETE
-  const handleDelete = (id: number) => {
-    setNumbers(numbers.filter((number: any) => number.id !== id))
+  const deleteNumber = (id: number) => {
+    if (phones.length === 1) return Swal.fire({ text: t('warning-need-number'), icon: 'warning' })
+    const lastNumbers = phones.filter((phone: { id: number; value: string; type: string }) => phone.id !== id)
+    setPhones(lastNumbers)
+  }
+
+  // SELECT
+  const selectChange = ({ target: { id, value } }: { target: { id: string; value: string } }) => {
+    const other = filterArrayNotEqualToID(phones, parseInt(id))
+    const filter = filterArrayEqualToID(phones, parseInt(id))
+    if (filter.length === 0) return null
+    const newObj = { ...filter[0], type: value }
+    const newNumbers = [newObj, ...other]
+    setPhones(newNumbers)
+  }
+
+  // INPUT
+  const inputChange = ({ target: { id, value } }: { target: { id: string; value: string } }) => {
+    if (value === '') return null
+    const other = filterArrayNotEqualToID(phones, parseInt(id))
+    const filter = filterArrayEqualToID(phones, parseInt(id))
+    if (filter.length === 0) return null
+    const newObj = { ...filter[0], value }
+    setPhones([newObj, ...other])
   }
 
   return (
     <Box>
       <AddorgAccordionInputs label={t('auth-phone')}>
         <Box mb={{ base: '10px', sm: '10px', md: '16px', xl: '16px' }}>
-          {numbers.map(number => (
-            <Box key={number.id} mb={'8px'} display={'flex'} alignItems={'center'} gap={'8px'}>
+          {phones.map((phone: { id: number; value: string; type: string }) => (
+            <Box key={phone.id} mb={'8px'} display={'flex'} alignItems={'center'} gap={'8px'}>
               <Input
+                required
+                onChange={inputChange}
+                id={String(phone.id)}
                 _focus={{ border: '1px solid teal', boxShadow: `0 0 2px ${scssVariables.blockBgColor}` }}
                 type='text'
                 h={{ base: '30px', sm: '30', md: '40px', xl: '40px' }}
@@ -37,16 +71,21 @@ export const AddOrgContacts: FC<MODEL_FORM_INCOME> = props => {
                 p={{ base: '5px 10px', sm: '5px 10px', md: '10px 16px', xl: '10px 16px' }}
               />
               <Select
+                required
+                defaultValue={''}
+                onChange={selectChange}
+                id={String(phone.id)}
                 _focus={{ border: '1px solid teal', boxShadow: `0 0 2px ${scssVariables.blockBgColor}` }}
                 variant='outline'
                 h={{ base: '30px', sm: '30', md: '40px', xl: '40px' }}
                 fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}
               >
+                <option value=''>{t('none')}</option>
                 <option value='mobile'>{t('mobile-phone')}</option>
                 <option value='home'>{t('home-phone')}</option>
               </Select>
               <IconButton
-                onClick={() => handleDelete(number.id)}
+                onClick={() => deleteNumber(phone.id)}
                 aria-label='delete'
                 icon={<XmarkIcon />}
                 h={{ base: '30px', sm: '30', md: '40px', xl: '40px' }}

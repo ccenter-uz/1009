@@ -6,8 +6,10 @@ import TableGen from '@/@core/shared/UI/Table'
 import { usePagination } from '@/@core/shared/hooks/usePaginate'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Box, Button, Text } from '@chakra-ui/react'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { useRouter } from 'next/navigation'
+import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
+import { useLang } from '@/@core/shared/hooks/useLang'
 
 const styleTabpanel = {
   p: { base: '0.5em', sm: '0.5em', md: '1em', xl: '1em' },
@@ -15,8 +17,9 @@ const styleTabpanel = {
 }
 
 const TransactionsPanel: FC = () => {
+  const { t } = useLang()
   const router = useRouter()
-  const [open, setOpen] = useState<boolean>(false)
+  const { isOpen, onToggle } = useDisclosure()
   const { current, pageSize, total, handlePageChange, handlePageSizeChange } = usePagination()
   const columns = [
     {
@@ -68,7 +71,7 @@ const TransactionsPanel: FC = () => {
   return (
     <BoxGen {...styleTabpanel}>
       <Box mb={'0.5em'} display='flex' alignItems={'center'} justifyContent={'space-between'}>
-        <Text fontSize={scssVariables.fonts.paragraph}>Отчет о транзакции:</Text>
+        <Text fontSize={scssVariables.fonts.paragraph}>{t('transactions-report')}</Text>
         <Box display={'flex'} alignItems={'center'} gap={'10px'}>
           <Box
             w={{ base: '16px', sm: '16px', md: '22px', xl: '22px' }}
@@ -79,7 +82,7 @@ const TransactionsPanel: FC = () => {
             alt='equalizer-fill'
             role='img'
             aria-label='filter-icon'
-            onClick={() => setOpen(prev => !prev)}
+            onClick={onToggle}
           />
           {/* excel */}
           <Button
@@ -92,7 +95,7 @@ const TransactionsPanel: FC = () => {
         </Box>
       </Box>
       {/* filter */}
-      <FilterTable open={open} onChange={handleFilter} />
+      <FilterTable open={isOpen} onChange={handleFilter} />
       <TableGen columns={columns} dataSource={data} />
       <Pagination
         total={total}

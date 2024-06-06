@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { MODEL_FORM_INCOME } from '../../types'
+import { MODEL_FORM_INCOME } from '../../model/types'
 import { Box, Checkbox, Input, Stack, Text } from '@chakra-ui/react'
 import { AddorgAccordionInputs } from '@/@core/entities/AddorgAccordionInputs'
 import { useLang } from '@/@core/shared/hooks/useLang'
@@ -13,6 +13,7 @@ export const AddOrgAdditional: FC<MODEL_FORM_INCOME> = props => {
       <AddorgAccordionInputs label={t('payment-methods')}>
         <Stack>
           <Checkbox
+            defaultChecked={true}
             {...register('cash', { required: true })}
             size={{ base: 'sm', sm: 'sm', md: 'md', xl: 'md' }}
             colorScheme={'teal'}

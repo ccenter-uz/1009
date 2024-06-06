@@ -44,7 +44,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
   const pathname = usePathname()
   const lastLink = pathname.replaceAll('/', ' ').split(' ').slice(-1).join()
   const { record, setRecord } = useOpportunityRecord()
-  const { locale } = useLang()
+  const { locale, t } = useLang()
   const { register, handleSubmit } = useForm({
     defaultValues: {
       title: record && record[0].title,
@@ -133,21 +133,21 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
     <Modal size={'full'} aria-modal isOpen={open} onClose={handleClose}>
       <ModalContent p={{ base: '8px', sm: '', md: '1em', xl: '1em' }}>
         <ModalHeader p={'8px'} fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}>
-          Create Accordion
+          {t('create')}
         </ModalHeader>
         <Divider mb={'1em'} />
         <ModalCloseButton />
         <form id='create-acc-form' onSubmit={handleSubmit(handleSave)}>
           <FormControl isRequired mb={{ base: '14px', sm: '14px', md: '2em', xl: '2em' }}>
             <FormLabel htmlFor='title' {...labelStyle}>
-              Title accordion:
+              {t('title')}
             </FormLabel>
             <Input {...register('title')} {...inputsStyle} id='title' placeholder='title' />
           </FormControl>
 
           <FormControl mb={{ base: '14px', sm: '14px', md: '14px', xl: '14px' }}>
             <FormLabel htmlFor='warning-text' {...labelStyle}>
-              Warning information:
+              {t('warning-info')}
             </FormLabel>
             <Textarea
               {...register('warning')}
@@ -160,7 +160,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
 
           <FormControl mb={{ base: '14px', sm: '14px', md: '2em', xl: '2em' }}>
             <FormLabel htmlFor='mention-text' {...labelStyle}>
-              Mention information:
+              {t('mention-info')}
             </FormLabel>
             <Textarea
               {...register('mention')}
@@ -179,7 +179,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
             h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
             onClick={() => chooseCat('table')}
           >
-            Create table
+            {t('create-table')}
           </Button>
           <Button
             leftIcon={<img src='/add.svg' alt='add-circle-editor' width={'20px'} height={'20px'} />}
@@ -188,7 +188,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
             h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
             onClick={() => chooseCat('editor')}
           >
-            Create Editor
+            {t('create-text')}
           </Button>
         </Box>
         {/* TABLE VIEW */}
@@ -281,7 +281,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
             mb={'8px'}
             type='submit'
           >
-            Save
+            {t('save')}
           </Button>
         </Box>
         {/* editableTable */}

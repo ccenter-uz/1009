@@ -2,14 +2,26 @@
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { Badge } from '@/@core/shared/UI/Badge'
-import { Box, Button, FormControl, FormLabel, SimpleGrid, Text, Textarea, useColorMode } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  SimpleGrid,
+  Text,
+  Textarea,
+  useColorMode
+} from '@chakra-ui/react'
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { AddOrgMainInfo } from '../model/Main'
-import { AddOrgContacts } from '../model/Contacts'
-import { AddOrgAdditional } from '../model/Additional'
+import { AddOrgMainInfo } from './Main'
+import { AddOrgContacts } from './Contacts'
+import { AddOrgAdditional } from './Additional'
 import { useRouter, useSearchParams } from 'next/navigation'
 import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
+import Swal from 'sweetalert2'
+import { useAddorgSlicer } from '../model/hook/useAddorgSlicer'
 
 export const AddOrg: FC = () => {
   const { t } = useLang()
@@ -40,10 +52,18 @@ export const AddOrg: FC = () => {
     register,
     formState: { errors }
   } = useForm()
+  const { phones, photos } = useAddorgSlicer()
 
   // POST
   const POST = async (values: any) => {
-    console.log(values, 'values')
+    if (photos.length === 0) return Swal.fire({ text: t('warning-need-photo'), icon: 'warning' })
+
+    const body = {
+      ...values,
+      phones,
+      photos
+    }
+    console.log(body, 'values')
   }
 
   return (
@@ -67,7 +87,7 @@ export const AddOrg: FC = () => {
           justifyContent={'flex-end'}
           mt={{ base: '16px', sm: '16px', md: '20px', xl: '24px' }}
         >
-          <FormControl w={'967px'}>
+          <FormControl isInvalid={!!errors.comment} w={'967px'}>
             <FormLabel fontWeight={500} mb={'5px'} htmlFor='comment' fontSize={scssVariables.fonts.paragraph}>
               {t('comment-area')}
             </FormLabel>
@@ -84,6 +104,9 @@ export const AddOrg: FC = () => {
               bg={'#fff'}
               boxShadow={scssVariables.boxShadow}
             />
+            <FormErrorMessage fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
+              {t('required-field')}
+            </FormErrorMessage>
           </FormControl>
         </Box>
         <Box
@@ -110,3 +133,5 @@ export const AddOrg: FC = () => {
     </Box>
   )
 }
+
+export default AddOrg

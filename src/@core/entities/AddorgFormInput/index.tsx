@@ -1,5 +1,5 @@
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
-import { FormControl, FormLabel, Input, Text } from '@chakra-ui/react'
+import { FormControl, FormErrorMessage, FormLabel, Input, Text } from '@chakra-ui/react'
 import { FC } from 'react'
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
 
@@ -20,6 +20,7 @@ export const AddorgFormInput: FC<Props> = props => {
 
   return (
     <FormControl
+      isInvalid={!!errors[`${value}`]}
       mt={{ base: '0', sm: '10px', md: '10px', xl: '10px' }}
       mb={{ base: '1em', sm: '1em', md: '1em', xl: '1em' }}
     >
@@ -43,11 +44,7 @@ export const AddorgFormInput: FC<Props> = props => {
         padding={{ base: '5px 10px', sm: '5px 10px', md: '12px 16px', xl: '12px 16px' }}
         h={{ base: '30px', sm: '30px', md: '45px', xl: '45px' }}
       />
-      {errors[`${value}`] && (
-        <Text color='red' fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
-          {errortext}
-        </Text>
-      )}
+      <FormErrorMessage fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>{errortext}</FormErrorMessage>
     </FormControl>
   )
 }

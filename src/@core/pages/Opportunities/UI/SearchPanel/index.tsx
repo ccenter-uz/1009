@@ -3,11 +3,13 @@ import { IOption, ISelectAutocomplelte } from '@/@core/shared/types/types'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Box, FormControl, FormLabel, useColorMode } from '@chakra-ui/react'
 import { Dispatch, FC, SetStateAction } from 'react'
+import { useLang } from '@/@core/shared/hooks/useLang'
 
 const SearchPanelOpportunities: FC<
   { setOpenIndex: Dispatch<SetStateAction<number | null>> } & Pick<ISelectAutocomplelte, 'options'>
 > = ({ options, setOpenIndex }) => {
   const { colorMode } = useColorMode()
+  const { t } = useLang()
 
   const handleSelect = (selectedOption: IOption) => {
     const filter = options.findIndex(item => item.value == selectedOption.value)
@@ -30,7 +32,7 @@ const SearchPanelOpportunities: FC<
       <Box w={{ base: '100%', sm: '100%', md: '625px', xl: '625px' }}>
         <FormControl>
           <FormLabel display={{ base: 'none', sm: 'none', md: 'block', xl: 'block' }} htmlFor='search-opportunities'>
-            Поиск:
+            {t('search')}
           </FormLabel>
           <SelectAutocomplete options={options} onSelect={handleSelect} />
         </FormControl>

@@ -11,11 +11,12 @@ import {
   ModalOverlay
 } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
-import { Dispatch, FC, SetStateAction, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { createCat, updateCat } from '../../api/actions'
+import { useLang } from '@/@core/shared/hooks/useLang'
 
 type IDialogTypes = {
   isOpen: boolean
@@ -27,6 +28,7 @@ type IDialogTypes = {
 const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, editInfo, getCategories }) => {
   const { pending } = useFormStatus()
   const { register, handleSubmit, reset } = useForm()
+  const { t } = useLang()
 
   const router = useRouter()
   //   handleClose
@@ -65,13 +67,13 @@ const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, e
       <ModalOverlay />
       <ModalContent p={'1em'}>
         <ModalHeader p={'0'} fontSize={{ base: '16px', sm: '16px', md: '18px', xl: '18px' }}>
-          Добавить линк
+          {t('add-link')}
         </ModalHeader>
         <ModalCloseButton />
         <form onSubmit={handleSubmit(actionSubmit)} style={{ margin: '1em 0' }} id='link-entertainment-form'>
           <FormControl>
             <FormLabel htmlFor='add-link' fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
-              Добавить(UZ):
+              {t('add-uz')}
             </FormLabel>
             <InputGen
               isDisabled={pending}
@@ -83,7 +85,7 @@ const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, e
           </FormControl>
           <FormControl mt={'8px'}>
             <FormLabel htmlFor='add-link' fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
-              Добавить(РУ):
+              {t('add-ru')}
             </FormLabel>
             <InputGen
               isDisabled={pending}
@@ -104,7 +106,7 @@ const DialogEntertainmentLinks: FC<IDialogTypes> = ({ isOpen = false, onClose, e
               fontSize={{ base: '12px', sm: '12px', md: '13px', xl: '14px' }}
               h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
             >
-              Сохранить
+              {t('save')}
             </Button>
           </Box>
         </form>

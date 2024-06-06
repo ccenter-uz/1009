@@ -43,7 +43,6 @@ const Opportunities: FC = () => {
   ]
   const { colorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  // const [iscreateAccordion, setIsCreateAccordion] = useState<boolean>(false)
   const { setRecord } = useOpportunityRecord()
   const [dataInfo, setData] = useState<IdataInfo[]>([])
   const [getAgain, setGetAgain] = useState<boolean>(false)
@@ -86,7 +85,7 @@ const Opportunities: FC = () => {
           h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
           onClick={handleAccordion}
         >
-          Create Accordion
+          {t('create')}
         </Button>
       </Box>
       {/* Accordion renders from API data */}
@@ -171,7 +170,7 @@ const Opportunities: FC = () => {
                   )
                 })}
               <Text fontSize={{ base: '8px', sm: '8px', md: '11px', xl: '11px' }} color={'grey'}>
-                Обновлено:
+                {t('updated')}
                 {new Date(data.update_date).toLocaleDateString('ru-GB', {
                   hour12: false
                 })}
