@@ -165,5 +165,6 @@
   "create-table": "Создать таблицу",
   "create-text": "Создать описание",
   "add-location": "Добавить локацию",
-  "change": "Изменить"
+  "change": "Изменить",
+  "choose-location": "Укажите локацию"
 }

@@ -165,5 +165,6 @@
   "create-table": "Jadval yaratish",
   "create-text": "Tavsif yarating",
   "add-location": "Joylashuvni qo'shing",
-  "change": "O'zgartirish"
+  "change": "O'zgartirish",
+  "choose-location": "Joylashuvni belgilang"
 }

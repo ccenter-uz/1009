@@ -13,7 +13,7 @@ import {
   Textarea,
   useColorMode
 } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { AddOrgMainInfo } from './Main'
 import { AddOrgContacts } from './Contacts'
@@ -52,19 +52,68 @@ export const AddOrg: FC = () => {
     register,
     formState: { errors }
   } = useForm()
-  const { phones, photos } = useAddorgSlicer()
+  const { phones, photos, coordinates, setPhotos, setPhones, setCoordinates } = useAddorgSlicer()
 
   // POST
   const POST = async (values: any) => {
     if (photos.length === 0) return Swal.fire({ text: t('warning-need-photo'), icon: 'warning' })
-
+    const formData = new FormData()
     const body = {
-      ...values,
-      phones,
-      photos
+      comment: values.comment,
+      razdel: values.razdel,
+      podrazdel: values.podrazdel,
+      razdel_tovar_and_service: values.razdel_tovar_and_service,
+      podrazdel_tovar_and_service: values.podrazdel_tovar_and_service,
+      payment_methods: {
+        cash: values.cash,
+        terminal: values.terminal,
+        transfer: values.transfer
+      },
+      photos,
+      contacts: {
+        phones,
+        email: values.email,
+        organization_name: values.organization_name,
+        main_organization: values['main-organization'],
+        manager: values.manager
+      },
+      scheduler: {
+        worktime_from: values.worktime_from,
+        worktime_to: values.worktime_to,
+        breakfast_from: values.breakfast_from,
+        breakfast_to: values.breakfast_to,
+        dayoffs: values.dayoffs
+      },
+      transport: {
+        bus: values.autobus,
+        gazelle: values.marshrut,
+        metro_station: values.metro_station,
+        micro_bus: values['micro-autobus']
+      },
+      address: {
+        city: values.city,
+        area: values.area,
+        apartment: values.apartment,
+        block: values.block,
+        coordinates,
+        house: values.house,
+        index: values.index,
+        region: values.region
+      }
     }
-    console.log(body, 'values')
+    formData.append('data', JSON.stringify(body))
+    console.log(JSON.parse(formData.get('data') as string), 'values')
   }
+
+  // RESET VALUES WHEN UNMOUNT
+  useEffect(() => {
+    return () => {
+      setPhones([])
+      setPhotos([])
+      reset()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Box>
