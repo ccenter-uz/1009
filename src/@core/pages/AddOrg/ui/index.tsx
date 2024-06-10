@@ -32,7 +32,7 @@ export const AddOrg: FC = () => {
       id: 1,
       title: searchParams.get('id') ? (
         <Text as={'span'} cursor={'pointer'} _hover={{ opacity: '0.8' }} onClick={() => router.back()}>
-          {'<- ' + t('back')}
+          {'< ' + t('back')}
         </Text>
       ) : null
     },
@@ -52,7 +52,7 @@ export const AddOrg: FC = () => {
     register,
     formState: { errors }
   } = useForm()
-  const { phones, photos, coordinates, setPhotos, setPhones, setCoordinates } = useAddorgSlicer()
+  const { phones, photos, coordinates, setPhotos, setPhones } = useAddorgSlicer()
 
   // POST
   const POST = async (values: any) => {
@@ -104,6 +104,11 @@ export const AddOrg: FC = () => {
     formData.append('data', JSON.stringify(body))
     console.log(JSON.parse(formData.get('data') as string), 'values')
   }
+
+  // GET VALUES FOR EDIT
+  useEffect(() => {
+    searchParams.get('id') && console.log('edit', searchParams.get('id'))
+  }, [searchParams])
 
   // RESET VALUES WHEN UNMOUNT
   useEffect(() => {
