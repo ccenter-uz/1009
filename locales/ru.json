@@ -166,5 +166,10 @@
   "create-text": "Создать описание",
   "add-location": "Добавить локацию",
   "change": "Изменить",
-  "choose-location": "Укажите локацию"
+  "choose-location": "Укажите локацию",
+  "create-or-edit-table": "Создать или Изменить таблицу",
+  "action": "Действия",
+  "add-row": "Добавить ряд",
+  "add-column": "Добавить столбец",
+  "create-editor": "Создать описания"
 }

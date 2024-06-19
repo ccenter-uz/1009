@@ -166,5 +166,10 @@
   "create-text": "Tavsif yarating",
   "add-location": "Joylashuvni qo'shing",
   "change": "O'zgartirish",
-  "choose-location": "Joylashuvni belgilang"
+  "choose-location": "Joylashuvni belgilang",
+  "create-or-edit-table": "Jadvalni yaratish yoki o'zgartirish",
+  "action": "Harakatlar",
+  "add-row": "Bir qator qo'shing",
+  "add-column": "Ustun qo'shish",
+  "create-editor": "Tavsiflarni yarating"
 }
