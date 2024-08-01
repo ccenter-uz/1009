@@ -1,7 +1,7 @@
 'use client'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import Cards from './Cards'
 import Modal from './Modal'
 import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'

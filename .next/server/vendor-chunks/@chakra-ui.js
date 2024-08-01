@@ -4571,6 +4571,44 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "(rsc)/./node_modules/@chakra-ui/breadcrumb/dist/index.mjs":
+/*!***********************************************************!*\
+  !*** ./node_modules/@chakra-ui/breadcrumb/dist/index.mjs ***!
+  \***********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Breadcrumb: () => (/* binding */ e0),
+/* harmony export */   BreadcrumbItem: () => (/* binding */ e1),
+/* harmony export */   BreadcrumbLink: () => (/* binding */ e2),
+/* harmony export */   BreadcrumbSeparator: () => (/* binding */ e3),
+/* harmony export */   useBreadcrumbStyles: () => (/* binding */ e4)
+/* harmony export */ });
+/* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/build/webpack/loaders/next-flight-loader/module-proxy */ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js");
+
+const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\breadcrumb\dist\index.mjs`)
+
+// Accessing the __esModule property and exporting $$typeof are required here.
+// The __esModule getter forces the proxy target to create the default export
+// and the $$typeof value is for rendering logic to determine if the module
+// is a client boundary.
+const { __esModule, $$typeof } = proxy;
+const __default__ = proxy.default;
+
+const e0 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\breadcrumb\dist\index.mjs#Breadcrumb`);
+
+const e1 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\breadcrumb\dist\index.mjs#BreadcrumbItem`);
+
+const e2 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\breadcrumb\dist\index.mjs#BreadcrumbLink`);
+
+const e3 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\breadcrumb\dist\index.mjs#BreadcrumbSeparator`);
+
+const e4 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\breadcrumb\dist\index.mjs#useBreadcrumbStyles`);
+
+
+/***/ }),
+
 /***/ "(rsc)/./node_modules/@chakra-ui/button/dist/index.mjs":
 /*!*******************************************************!*\
   !*** ./node_modules/@chakra-ui/button/dist/index.mjs ***!
@@ -4774,6 +4812,86 @@ const e35 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__
 const e36 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\layout\dist\index.mjs#useHighlight`);
 
 const e37 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\layout\dist\index.mjs#useListStyles`);
+
+
+/***/ }),
+
+/***/ "(rsc)/./node_modules/@chakra-ui/tabs/dist/index.mjs":
+/*!*****************************************************!*\
+  !*** ./node_modules/@chakra-ui/tabs/dist/index.mjs ***!
+  \*****************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Tab: () => (/* binding */ e0),
+/* harmony export */   TabIndicator: () => (/* binding */ e1),
+/* harmony export */   TabList: () => (/* binding */ e2),
+/* harmony export */   TabPanel: () => (/* binding */ e3),
+/* harmony export */   TabPanels: () => (/* binding */ e4),
+/* harmony export */   Tabs: () => (/* binding */ e5),
+/* harmony export */   TabsDescendantsProvider: () => (/* binding */ e6),
+/* harmony export */   TabsProvider: () => (/* binding */ e7),
+/* harmony export */   useTab: () => (/* binding */ e8),
+/* harmony export */   useTabIndicator: () => (/* binding */ e9),
+/* harmony export */   useTabList: () => (/* binding */ e10),
+/* harmony export */   useTabPanel: () => (/* binding */ e11),
+/* harmony export */   useTabPanels: () => (/* binding */ e12),
+/* harmony export */   useTabs: () => (/* binding */ e13),
+/* harmony export */   useTabsContext: () => (/* binding */ e14),
+/* harmony export */   useTabsDescendant: () => (/* binding */ e15),
+/* harmony export */   useTabsDescendants: () => (/* binding */ e16),
+/* harmony export */   useTabsDescendantsContext: () => (/* binding */ e17),
+/* harmony export */   useTabsStyles: () => (/* binding */ e18)
+/* harmony export */ });
+/* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/build/webpack/loaders/next-flight-loader/module-proxy */ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js");
+
+const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs`)
+
+// Accessing the __esModule property and exporting $$typeof are required here.
+// The __esModule getter forces the proxy target to create the default export
+// and the $$typeof value is for rendering logic to determine if the module
+// is a client boundary.
+const { __esModule, $$typeof } = proxy;
+const __default__ = proxy.default;
+
+const e0 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#Tab`);
+
+const e1 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#TabIndicator`);
+
+const e2 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#TabList`);
+
+const e3 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#TabPanel`);
+
+const e4 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#TabPanels`);
+
+const e5 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#Tabs`);
+
+const e6 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#TabsDescendantsProvider`);
+
+const e7 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#TabsProvider`);
+
+const e8 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#useTab`);
+
+const e9 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#useTabIndicator`);
+
+const e10 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#useTabList`);
+
+const e11 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#useTabPanel`);
+
+const e12 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#useTabPanels`);
+
+const e13 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#useTabs`);
+
+const e14 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#useTabsContext`);
+
+const e15 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#useTabsDescendant`);
+
+const e16 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#useTabsDescendants`);
+
+const e17 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#useTabsDescendantsContext`);
+
+const e18 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\user\Desktop\Dev-yuldashev\1009\node_modules\@chakra-ui\tabs\dist\index.mjs#useTabsStyles`);
 
 
 /***/ })

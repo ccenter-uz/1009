@@ -1,8 +1,7 @@
 {
   "/[locale]/page": "app/[locale]/page.js",
-  "/[locale]/tariff/page": "app/[locale]/tariff/page.js",
-  "/[locale]/addorg/page": "app/[locale]/addorg/page.js",
-  "/[locale]/(auth)/signin/page": "app/[locale]/(auth)/signin/page.js",
+  "/[locale]/(user)/settings/page": "app/[locale]/(user)/settings/page.js",
+  "/[locale]/(user)/monitoring/page": "app/[locale]/(user)/monitoring/page.js",
   "/[locale]/results/page": "app/[locale]/results/page.js",
-  "/[locale]/opportunities/[id]/page": "app/[locale]/opportunities/[id]/page.js"
+  "/[locale]/results/[id]/page": "app/[locale]/results/[id]/page.js"
 }
