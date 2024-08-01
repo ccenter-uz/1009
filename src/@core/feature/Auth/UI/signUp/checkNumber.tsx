@@ -9,25 +9,32 @@ import { toast } from 'react-toastify'
 import { CheckNumberSend } from '../../api/checknum'
 import { Iuser } from '../../types'
 import { Regis } from '../../api/regis'
+import { useRouter } from 'next/navigation'
 
 const CheckNumber: FC = () => {
   const { t } = useLang()
   const [pin, setPin] = useState<string>('')
+  const [pending, setPending] = useState<boolean>(false)
   const [resendDisable, setResendDisable] = useState<boolean>(true)
   const [initialSecond, setInitialSecond] = useState<number[]>([60])
   const user: Iuser = JSON.parse(sessionStorage.getItem('user') || '')
+  const router = useRouter()
 
   // send Pin to api
   const handleComplete = async () => {
     if (pin === 'undefined' || (pin === '' && pin.length < 5))
       return toast.warn('Pin must not be empty and must containt minimum 6 letters', { position: 'bottom-right' })
-
+    setPending(true)
     const res = await CheckNumberSend({ pin })
-
-    if (!res) return
+    if (!res) return setPending(false)
     if (res.status === 200) {
+      setPending(false)
       console.log(res.message, 'res')
+      router.push('/signin', { replace: true })
     }
+    if (res.status === 400) return toast.error('Something went wrong', { position: 'bottom-right' }), setPending(false)
+
+    return setPending(false)
   }
 
   // handleReSend
@@ -64,7 +71,7 @@ const CheckNumber: FC = () => {
       <FormControl>
         <FormLabel fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>{t('auth-check-number')}</FormLabel>
         <HStack>
-          <PinInput aria-label='pin' size='md' onComplete={value => setPin(value)}>
+          <PinInput isDisabled={pending} aria-label='pin' size='md' onComplete={value => setPin(value)}>
             <PinInputField />
             <PinInputField />
             <PinInputField />
@@ -89,6 +96,7 @@ const CheckNumber: FC = () => {
         <CountdownTimer initialTime={initialSecond} onFinish={handleFinishTime} />
       </Box>
       <ButtonGen
+        isLoading={pending}
         aria-label={t('auth-submit')}
         onClick={handleComplete}
         form='form-regis'

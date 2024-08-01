@@ -1,4 +1,4 @@
-// debounce
+// DEBOUNCE
 export function debounce(cb, delay = 1000) {
   let timeout
 
@@ -10,7 +10,7 @@ export function debounce(cb, delay = 1000) {
   }
 }
 
-// geturl
+// GET-URL
 export function getUrl(lastlink) {
   switch (lastlink) {
     case 'entertainment':
@@ -24,4 +24,14 @@ export function getUrl(lastlink) {
     case 'info-tashkent':
       return 'InformationTashkent'
   }
+}
+
+// FILTER-ARRAY-EQUAL-TO-ID
+export function filterArrayEqualToID(array, id) {
+  return array.filter(arr => arr.id === id)
+}
+
+// FILTER-ARRAY-NOT-EQUAL-TO-ID
+export function filterArrayNotEqualToID(array, id) {
+  return array.filter(arr => arr.id !== id)
 }

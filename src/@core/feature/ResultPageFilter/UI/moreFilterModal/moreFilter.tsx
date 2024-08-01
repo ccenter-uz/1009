@@ -65,7 +65,6 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
       orientir: searchParams.get('orientir'),
       podrazdel: searchParams.get('podrazdel'),
       'podrazdel-tu': searchParams.get('podrazdel-tu'),
-      poselok: searchParams.get('poselok'),
       razdel: searchParams.get('razdel'),
       'razdel-tu': searchParams.get('razdel-tu'),
       region: searchParams.get('region'),
@@ -77,7 +76,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
   // SAVE
   const handleFinish = (values: any) => {
     router.push(
-      `?razdel=${values.razdel}&podrazdel=${values.podrazdel}&region=${values.region}&razdel-tu=${values['razdel-tu']}&podrazdel-tu=${values['podrazdel-tu']}&poselok=${values.poselok}&view=${values.view}&orientir=${values.orientir}&nameorg=${values.nameorg}&mainorg=${values.mainorg}&kvartal=${values.kvartal}&kv=${values.kv}&house=${values.house}&district=${values.district}&city=${values.city}&page=1&pageSize=10`
+      `?razdel=${values.razdel}&podrazdel=${values.podrazdel}&region=${values.region}&razdel-tu=${values['razdel-tu']}&podrazdel-tu=${values['podrazdel-tu']}&view=${values.view}&orientir=${values.orientir}&nameorg=${values.nameorg}&mainorg=${values.mainorg}&kvartal=${values.kvartal}&kv=${values.kv}&house=${values.house}&district=${values.district}&city=${values.city}&page=1&pageSize=10`
     )
   }
 
@@ -114,14 +113,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               </FormLabel>
               <Input {...style.inputStyle} {...register('nameorg')} placeholder='Кафе' id='nameorg' />
             </FormControl>
-            <FormControl>
-              <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='poselok'>
-                Посёлок
-              </FormLabel>
-              <Select {...style.inputStyle} {...register('poselok')} id='poselok'>
-                <option value='1'>-</option>
-              </Select>
-            </FormControl>
+
             <FormControl>
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='kv'>
                 Квартира

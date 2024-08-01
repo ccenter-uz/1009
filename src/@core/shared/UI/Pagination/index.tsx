@@ -3,6 +3,7 @@ import { IPagination } from '@/@core/shared/types/types'
 import { Box, Button, Select, Text } from '@chakra-ui/react'
 import { ChangeEvent, FC, memo } from 'react'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
+import { useLang } from '../../hooks/useLang'
 
 // options
 const options = [
@@ -51,6 +52,7 @@ const selectStyle = {
 const Pagination: FC<IPagination> = ({ total = 50, pageSize = 10, current = 1, onChange, onPageSizeChange }) => {
   const totalPages = Math.ceil(total / pageSize)
   const maxButtons = 5
+  const { t } = useLang()
 
   // page-changer
   const handlePageChange = (newPage: number) => {
@@ -119,7 +121,7 @@ const Pagination: FC<IPagination> = ({ total = 50, pageSize = 10, current = 1, o
       my={{ base: '12px', sm: '12px', md: '24px', xl: '24px' }}
     >
       <Text aria-readonly={true} fontSize={scssVariables.fonts.paragraph}>
-        {current} из {total} штук
+        {current} {t('from')} {total} {t('th')}
       </Text>
       <Button
         {...buttonStyle}
@@ -141,7 +143,7 @@ const Pagination: FC<IPagination> = ({ total = 50, pageSize = 10, current = 1, o
       <Select {...selectStyle} aria-label='pageSize-changer' value={pageSize} onChange={handlePageSizeChange}>
         {options.map(opt => (
           <option value={opt.value} key={opt.id}>
-            {opt.label} / page
+            {opt.label} / {t('page')}
           </option>
         ))}
       </Select>

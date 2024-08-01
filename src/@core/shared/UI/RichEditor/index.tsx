@@ -7,12 +7,13 @@ import { formats } from './formats'
 import { modules } from './modules'
 import { Button, Divider, Modal, ModalCloseButton, ModalContent, ModalHeader } from '@chakra-ui/react'
 import { IRichEditor } from '@/@core/shared/types/types'
+import { useLang } from '../../hooks/useLang'
 // dynamic import Quill
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <Loading /> })
 
 const RichEditor: FC<IRichEditor> = ({ isOpen, onClose, defaultValue, value, setValue }) => {
   const [editorValue, setEditorValue] = useState((defaultValue && defaultValue[0].text) || '')
-
+  const { t } = useLang()
   // CLOSE
   const handleClose = () => {
     onClose((prev: boolean) => !prev)
@@ -32,7 +33,7 @@ const RichEditor: FC<IRichEditor> = ({ isOpen, onClose, defaultValue, value, set
           p={{ base: '8px', sm: '', md: '1em', xl: '1em' }}
           fontSize={{ base: '14px', sm: '14px', md: '20px', xl: '20px' }}
         >
-          Create text editor
+          {t('create-editor')}
         </ModalHeader>
         <Divider mb={'1em'} />
         <ModalCloseButton />
@@ -49,7 +50,7 @@ const RichEditor: FC<IRichEditor> = ({ isOpen, onClose, defaultValue, value, set
           my={'8px'}
           type='submit'
         >
-          Save
+          {t('save')}
         </Button>
       </ModalContent>
     </Modal>

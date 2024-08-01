@@ -2,15 +2,16 @@
 import { Box, Text } from '@chakra-ui/react'
 import { FC } from 'react'
 import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import Banner from './banner'
 import MainDataPart from './mainDataPart'
 import GallaryPart from './galleryPart'
 import Info from './info'
 import Comment from './comment'
+import { useLang } from '@/@core/shared/hooks/useLang'
 
 const ResultItem: FC = () => {
-  const searchParams = useSearchParams()
+  const { t } = useLang()
   const router = useRouter()
   const params = useParams()
   const breadcrumblink = [
@@ -18,29 +19,12 @@ const ResultItem: FC = () => {
       id: 1,
       title: (
         <Text as={'span'} cursor={'pointer'} _hover={{ opacity: '0.8' }} onClick={() => router.back()}>
-          {'<- Назад'}
+          {'<- ' + t('back')}
         </Text>
       )
     },
     {
       id: 2,
-      title: searchParams.has('razdel') ? (searchParams.get('razdel') as string) : ''
-    },
-    {
-      id: 3,
-      title: searchParams.has('podrazdel') ? (searchParams.get('podrazdel') as string) : ''
-    },
-    {
-      id: 4,
-      title: searchParams.has('region')
-        ? (`${searchParams.get('region')?.toString()[0].toUpperCase()}${searchParams
-            .get('region')
-            ?.toString()
-            .slice(1)}` as string)
-        : ''
-    },
-    {
-      id: 5,
       title: params.id
     }
   ]

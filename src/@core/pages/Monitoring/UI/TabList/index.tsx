@@ -1,4 +1,5 @@
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
+import { useLang } from '@/@core/shared/hooks/useLang'
 import { Tab, TabList } from '@chakra-ui/react'
 import { FC } from 'react'
 
@@ -21,10 +22,12 @@ const styles = {
 }
 
 const TabListMonitoring: FC = () => {
+  const { t } = useLang()
+
   return (
     <TabList {...styles.tablistStyle}>
       <Tab {...styles.tab} fontSize={scssVariables.fonts.paragraph}>
-        Транзакция
+        {t('transactions')}
       </Tab>
     </TabList>
   )

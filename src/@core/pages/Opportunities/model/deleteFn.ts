@@ -2,7 +2,6 @@ import Swal from 'sweetalert2'
 import { deleteContent } from '../api/actions'
 import { getUrl } from '@/@core/apps/utils/fn'
 import { toast } from 'react-toastify'
-import { revalidatePath } from 'next/cache'
 
 // DELETE
 export const handleDelete = async (id: string | number, lastLink: string): Promise<string | any> => {

@@ -1,6 +1,6 @@
 'use client'
 import { createContext } from 'react'
-import {Opportunity} from './opportunitiesRecord'
+import { Opportunity } from './opportunitiesRecord'
 
 export const Main = createContext()
 

@@ -12,7 +12,8 @@ const Footer = dynamic(() => import('@/@core/widgets/Footer/UI'))
 
 const inter = Inter({
   subsets: ['latin'],
-  display: 'swap'
+  display: 'swap',
+  preload: false
 })
 
 export const metadata: Metadata = {

@@ -19,6 +19,7 @@ import {
   Image
 } from '@chakra-ui/react'
 import DOMPurify from 'dompurify'
+import { useLang } from '../../hooks/useLang'
 
 interface TableColumn {
   key: string
@@ -60,7 +61,7 @@ const EditableTable: FC<TableProps> = ({
   const [rows, setRows] = useState<Row[]>(initialRows.map((data, index) => ({ ...data, id: index + 1 })))
   const [cols, setCols] = useState<TableColumn[]>(initialColumns)
   const [editingRowId, setEditingRowId] = useState<number | null>(null)
-
+  const { t } = useLang()
   // DELETE
   // ROW
   const handleDeleteRow = (id: number | undefined) => {
@@ -154,7 +155,7 @@ const EditableTable: FC<TableProps> = ({
           p={{ base: '8px', sm: '', md: '1em', xl: '1em' }}
           fontSize={{ base: '14px', sm: '14px', md: '20px', xl: '20px' }}
         >
-          Create or Edit Table
+          {t('create-or-edit-table')}
         </ModalHeader>
         <Divider mb={'1em'} />
         <ModalCloseButton />
@@ -165,7 +166,7 @@ const EditableTable: FC<TableProps> = ({
               fontSize={{ base: '12px', sm: '12px', md: '13px', xl: '14px' }}
               h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
             >
-              Add Column
+              {t('add-column')}
             </Button>
             {cols.length > 0 && (
               <Button
@@ -173,7 +174,7 @@ const EditableTable: FC<TableProps> = ({
                 fontSize={{ base: '12px', sm: '12px', md: '13px', xl: '14px' }}
                 h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
               >
-                Add Row
+                {t('add-row')}
               </Button>
             )}
           </Box>
@@ -206,7 +207,7 @@ const EditableTable: FC<TableProps> = ({
                     ))}
 
                     <Th display={'flex'} justifyContent={'center'}>
-                      Action
+                      {t('action')}
                     </Th>
                   </Tr>
                 </Thead>
@@ -231,7 +232,7 @@ const EditableTable: FC<TableProps> = ({
                       <Td display={'flex'} alignItems={'center'} justifyContent={'center'} gap={'8px'}>
                         {editingRowId === row.id ? (
                           <>
-                            <Button onClick={() => handleSaveRow(row.id)}>Save</Button>
+                            <Button onClick={() => handleSaveRow(row.id)}> {t('save')}</Button>
                           </>
                         ) : (
                           <Image {...iconStyle} src='/pencil.svg' alt='edit' onClick={() => handleEditRow(row.id)} />
@@ -251,7 +252,7 @@ const EditableTable: FC<TableProps> = ({
                 h={{ base: '30px', sm: '30px', md: '35px', xl: '35px' }}
                 onClick={handleSave}
               >
-                Save
+                {t('save')}
               </Button>
             </Box>
           )}

@@ -4,6 +4,7 @@ import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { IFilterTable } from '@/@core/shared/types/types'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'next/navigation'
+import { useLang } from '@/@core/shared/hooks/useLang'
 
 // select-style
 const styleSelect = {
@@ -25,6 +26,7 @@ const buttonStyle = {
 }
 
 const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
+  const { t } = useLang()
   const searchParams = useSearchParams()
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -48,18 +50,18 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
         <SimpleGrid columns={{ base: 2, sm: 2, md: 3, xl: 3 }} borderRadius={'8px'} gap={'8px 14px'}>
           <FormControl>
             <FormLabel fontWeight={400} m={0} htmlFor='status' fontSize={scssVariables.fonts.paragraph}>
-              Статус:
+              {t('status')}
             </FormLabel>
             <Select {...styleSelect} {...register('status')} id='status' defaultValue={'all'}>
-              <option value={'all'}>Все</option>
-              <option value={'success'}>Успешно</option>
-              <option value={'failed'}>Неуспешный</option>
-              <option value={'pending'}>В процессе</option>
+              <option value={'all'}>{t('alls')}</option>
+              <option value={'success'}>{t('success')}</option>
+              <option value={'failed'}>{t('failed')}</option>
+              <option value={'pending'}>{t('proccess')}</option>
             </Select>
           </FormControl>
           <FormControl>
             <FormLabel fontWeight={400} m={0} htmlFor='amount' fontSize={scssVariables.fonts.paragraph}>
-              cумма:
+              {t('summa')}
             </FormLabel>
             <Input
               {...styleSelect}
@@ -71,7 +73,7 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
           </FormControl>
           <FormControl>
             <FormLabel fontWeight={400} m={0} htmlFor='date-from' fontSize={scssVariables.fonts.paragraph}>
-              c:
+              {t('from')}
             </FormLabel>
             <Input
               {...styleSelect}
@@ -83,7 +85,7 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
           </FormControl>
           <FormControl>
             <FormLabel fontWeight={400} m={0} htmlFor='date-to' fontSize={scssVariables.fonts.paragraph}>
-              до:
+              {t('till')}
             </FormLabel>
             <Input
               {...styleSelect}
@@ -95,7 +97,7 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
           </FormControl>
           <FormControl>
             <FormLabel fontWeight={400} m={0} htmlFor='time_from' fontSize={scssVariables.fonts.paragraph}>
-              c:
+              {t('from')}
             </FormLabel>
             <Input
               {...styleSelect}
@@ -107,7 +109,7 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
           </FormControl>
           <FormControl>
             <FormLabel fontWeight={400} m={0} htmlFor='time_to' fontSize={scssVariables.fonts.paragraph}>
-              до:
+              {t('till')}
             </FormLabel>
             <Input
               {...styleSelect}
@@ -120,10 +122,10 @@ const FilterTable: FC<IFilterTable> = ({ open, onChange }) => {
         </SimpleGrid>
         <Box display={'flex'} alignItems={'center'} gap={'8px'} justifyContent={'flex-end'}>
           <Button {...buttonStyle} type='submit' form='filter-form' variant='primary' bg={'teal'} color={'#fff'}>
-            Пременить
+            {t('confirm')}
           </Button>
           <Button {...buttonStyle} onClick={handleReset} color={'#252525'}>
-            Отменить
+            {t('cancel')}
           </Button>
         </Box>
       </form>

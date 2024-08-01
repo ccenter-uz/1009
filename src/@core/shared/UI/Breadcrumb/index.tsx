@@ -17,7 +17,7 @@ const BreadCrumb: FC<Ibreadcrumb> = ({ item }) => {
     <Breadcrumb
       separator={<Text color={'lightgrey'}>/</Text>}
       mt={{ base: '16px', sm: '16px', md: '32px', xl: '32px' }}
-      mb={{ base: '16px', sm: '16px', md: '48px', xl: '48px' }}
+      mb={{ base: '16px', sm: '16px', md: '32px', xl: '32px' }}
     >
       {item?.map((value: Iitem) => (
         <BreadcrumbItem key={value.id}>

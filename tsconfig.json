@@ -31,6 +31,6 @@
     "src/@core/apps/context/main.jsx",
     "src/@core/shared/hooks/useAuthContext.jsx",
     "src/@core/shared/hooks/useAuth.jsx"
-, "src/@core/shared/UI/ExcelTable/index.tsx", "src/@core/apps/utils/fn.js"  ],
+, "src/@core/shared/UI/ExcelTable/index.tsx", "src/@core/apps/utils/fn.js", "src/@core/shared/UI/Map/index.jsx"  ],
   "exclude": ["node_modules"]
 }

@@ -23,6 +23,7 @@ import { usePathname } from 'next/navigation'
 import SwitchLang from '@/@core/entities/SwitchLang'
 import { useAuth } from '@/@core/shared/hooks/useAuth'
 import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
+import { UserPopOver } from './UserPopover'
 
 const Header: FC = () => {
   const { t, locale } = useLang()
@@ -142,11 +143,9 @@ const Header: FC = () => {
             sx={{ color: 'lightgrey' }}
           />
           {isAuth ? (
-            <Box cursor={'pointer'}>
-              <Img src='/header/user.svg' alt='user' />
-            </Box>
+            <UserPopOver />
           ) : (
-            <Link href={'/signup'} aria-current='page'>
+            <Link href={'/signin'} aria-current='page'>
               <Box
                 border={colorMode === 'dark' ? '1px solid #fff' : `1px solid ${scssVariables.mainColor}`}
                 borderRadius={'20px'}

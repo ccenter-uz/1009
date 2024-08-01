@@ -1,5 +1,6 @@
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
-import { Box, FormControl, FormLabel, SimpleGrid, Text } from '@chakra-ui/react'
+import { useLang } from '@/@core/shared/hooks/useLang'
+import { Box, FormControl, FormLabel, SimpleGrid, Text, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
 
 const inputs = [
@@ -18,6 +19,9 @@ const inputs = [
 ]
 
 const MainDataPart: FC = () => {
+  const { colorMode } = useColorMode()
+  const { t } = useLang()
+
   return (
     <Box
       display={'flex'}
@@ -47,9 +51,9 @@ const MainDataPart: FC = () => {
                 p={'0 16px'}
                 borderRadius={'6px'}
                 boxShadow={'0px 15px 20px 0px rgba(0, 0, 0, 0.05)'}
-                border={' 1px solid rgba(233, 233, 233, 1)'}
+                border={`1px solid ${colorMode === 'dark' ? '#454545' : 'rgba(217, 217, 217, 1)'}`}
                 fontSize={{ base: '12px', sm: '12px', md: '13px', xl: '14px' }}
-                color={'rgba(100, 116, 139, 1)'}
+                color={colorMode === 'dark' ? 'whitesmoke' : 'rgba(100, 116, 139, 1)'}
               >
                 {input.value}
               </Box>
@@ -76,12 +80,12 @@ const MainDataPart: FC = () => {
           <Box display={'flex'} alignItems={'center'} gap={{ base: '8px', sm: '8px', md: '14px', xl: '16px' }}>
             <img width={'20px'} height={'20px'} src='/phone-fill.svg' alt='phone' />
             <Text fontSize={scssVariables.fonts.paragraph}>+ (998) 99-123-45-67</Text>
-            <Text fontSize={scssVariables.fonts.paragraph}>Мобильный номер телефона</Text>
+            <Text fontSize={scssVariables.fonts.paragraph}>{t('mobile-phone')}</Text>
           </Box>
           <Box display={'flex'} alignItems={'center'} gap={{ base: '8px', sm: '8px', md: '14px', xl: '16px' }}>
             <img width={'20px'} height={'20px'} src='/phone-fill.svg' alt='phone' />
             <Text fontSize={scssVariables.fonts.paragraph}>+ (998) 99-123-45-67</Text>
-            <Text fontSize={scssVariables.fonts.paragraph}>Домашный номер телефона</Text>
+            <Text fontSize={scssVariables.fonts.paragraph}>{t('home-phone')}</Text>
           </Box>
         </Box>
       </Box>

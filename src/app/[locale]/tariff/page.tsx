@@ -1,5 +1,4 @@
-import TariffPage from '@/@core/pages/Tariff'
-import React from 'react'
+import { TariffPage } from '@/@core/pages/Tariff'
 
 const Tariff = () => {
   return <TariffPage />

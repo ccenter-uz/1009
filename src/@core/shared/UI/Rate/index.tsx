@@ -1,4 +1,4 @@
-import { Box, Image } from '@chakra-ui/react'
+import { Box, Img } from '@chakra-ui/react'
 import { FC, useState } from 'react'
 
 type IRate = {
@@ -39,7 +39,7 @@ const Rate: FC<IRate> = ({
 
         if (starValue <= rating)
           return (
-            <Image
+            <Img
               src={starColor === 'yellow' ? '/star-yellow-fill.svg' : '/star-fill.svg'}
               alt='star'
               key={index}
@@ -51,7 +51,7 @@ const Rate: FC<IRate> = ({
           )
 
         return (
-          <Image
+          <Img
             src={starColor === 'yellow' ? '/star-yellow-empty.svg' : '/star-emty.svg'}
             alt='star'
             key={index}

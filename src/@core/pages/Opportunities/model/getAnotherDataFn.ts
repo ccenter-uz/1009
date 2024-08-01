@@ -1,7 +1,7 @@
 import { getUrl } from '@/@core/apps/utils/fn'
 import { getData } from '../api/actions'
 import { Dispatch, SetStateAction } from 'react'
-import { IdataInfoFromApi } from '../types'
+import { IdataInfoFromApi } from './types'
 
 // GET
 export const getDataAnother = async (lastLink: string, locale: string, setData: Dispatch<SetStateAction<any>>) => {

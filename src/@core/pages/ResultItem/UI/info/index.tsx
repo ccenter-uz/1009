@@ -1,4 +1,5 @@
-import { Box, SimpleGrid, Text } from '@chakra-ui/react'
+import { useLang } from '@/@core/shared/hooks/useLang'
+import { Box, SimpleGrid, Text, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
 
 const text = [
@@ -13,6 +14,9 @@ const text = [
 ]
 
 const Info: FC = () => {
+  const { t } = useLang()
+  const { colorMode } = useColorMode()
+
   return (
     <Box my={{ base: '1em', sm: '1em', md: '64px', xl: '64px' }}>
       <Text
@@ -20,7 +24,7 @@ const Info: FC = () => {
         color={'grey'}
         mb={{ base: '8px', sm: '8px', md: '16px', xl: '16px' }}
       >
-        Общее сведение о компании
+        {t('main-company-info')}
       </Text>
       <SimpleGrid
         columns={{ base: 1, sm: 1, md: 2, xl: 2 }}
@@ -36,7 +40,7 @@ const Info: FC = () => {
               bg={'rgb(95 117 149 / 15%)'}
               p={{ base: '1em', sm: '1em', md: '16px', xl: '16px' }}
               borderRadius={'8px'}
-              color={'rgba(100, 116, 139, 1)'}
+              color={colorMode === 'dark' ? 'lightgrey' : 'rgba(100, 116, 139, 1)'}
             >
               {p.text}
             </Box>
