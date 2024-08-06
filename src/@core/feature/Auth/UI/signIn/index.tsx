@@ -26,8 +26,7 @@ const SignIn: FC = () => {
     if (!res) return setPending(false)
     if (res.status === 200) {
       setPending(false)
-      toast.success(res.message, { position: 'bottom-right' })
-      router.push('/', { replace: true })
+      toast.success(res.message, { position: 'bottom-right' }), router.push('/', { replace: true })
     }
 
     return setPending(false)
