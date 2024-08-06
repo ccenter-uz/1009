@@ -1,4 +1,3 @@
-'use server'
 import { api } from '@/@core/apps/utils/api'
 import { Ipin } from '../types'
 
