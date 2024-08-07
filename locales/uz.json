@@ -171,5 +171,12 @@
   "action": "Harakatlar",
   "add-row": "Bir qator qo'shing",
   "add-column": "Ustun qo'shish",
-  "create-editor": "Tavsiflarni yarating"
+  "create-editor": "Tavsiflarni yarating",
+  "section": "Xizmat turi",
+  "detail": "Tafsilotlar",
+  "segment": "Segment",
+  "account": "Hisob",
+  "inn": "TIN",
+  "bank_account": "Hisob raqami",
+  "success-create-organization": "Muvaffaqiyatli yaratildi"
 }

@@ -8,9 +8,9 @@ import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { AddorgFormInput } from '@/@core/entities/AddorgFormInput'
 import Swal from 'sweetalert2'
 import { filterArrayEqualToID, filterArrayNotEqualToID } from '@/@core/apps/utils/fn'
-import { useAddorgSlicer } from '../../model/hook/useAddorgSlicer'
 import dynamic from 'next/dynamic'
 import LoaderUI from '@/@core/shared/UI/LoadingUI'
+import { useAddorgSlicer } from '../../model/Slicer'
 
 const Maps = dynamic(() => import('@/@core/shared/UI/Map/index').then(res => res.Maps), {
   ssr: false,

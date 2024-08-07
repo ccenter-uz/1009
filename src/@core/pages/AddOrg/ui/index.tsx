@@ -21,7 +21,8 @@ import { AddOrgAdditional } from './Additional'
 import { useRouter, useSearchParams } from 'next/navigation'
 import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
 import Swal from 'sweetalert2'
-import { useAddorgSlicer } from '../model/hook/useAddorgSlicer'
+import { useAddorgSlicer } from '../model/Slicer'
+import { getRazdel, postCreateOrg } from '@/@core/shared/api'
 
 export const AddOrg: FC = () => {
   const { t } = useLang()
@@ -52,30 +53,32 @@ export const AddOrg: FC = () => {
     register,
     formState: { errors }
   } = useForm()
-  const { phones, photos, coordinates, setPhotos, setPhones } = useAddorgSlicer()
+  const { phones, photos, coordinates, setPhotos, setPhones, razdel, setRazdel, podrazdel, setPodrazdel } =
+    useAddorgSlicer()
 
   // POST
   const POST = async (values: any) => {
     if (photos.length === 0) return Swal.fire({ text: t('warning-need-photo'), icon: 'warning' })
     const formData = new FormData()
     const body = {
+      sub_category_id: values.sub_category_id,
+      main_organization: values.main_organization,
+      manager: values.manager,
+      section: values.section,
+      organization_name: values.organization_name,
+      email: values.email,
+      address: `${
+        (values.index, values.region, values.city, values.area, values.house, values.block, values.apartment)
+      }`,
+      segment: values.segment,
+      account: values.account,
+      inn: values.inn,
+      bank_account: values.bank_account,
       comment: values.comment,
-      razdel: values.razdel,
-      podrazdel: values.podrazdel,
-      razdel_tovar_and_service: values.razdel_tovar_and_service,
-      podrazdel_tovar_and_service: values.podrazdel_tovar_and_service,
-      payment_methods: {
+      payment_types: {
         cash: values.cash,
         terminal: values.terminal,
         transfer: values.transfer
-      },
-      photos,
-      contacts: {
-        phones,
-        email: values.email,
-        organization_name: values.organization_name,
-        main_organization: values['main-organization'],
-        manager: values.manager
       },
       scheduler: {
         worktime_from: values.worktime_from,
@@ -90,28 +93,33 @@ export const AddOrg: FC = () => {
         metro_station: values.metro_station,
         micro_bus: values['micro-autobus']
       },
-      address: {
-        city: values.city,
-        area: values.area,
-        apartment: values.apartment,
-        block: values.block,
-        coordinates,
-        house: values.house,
-        index: values.index,
-        region: values.region
-      }
+      location: { coordinates: { lon: coordinates[0], lat: coordinates[1] } },
+      added_by: 'admin',
+      phones: {
+        numbers: phones.map((phone: { id: number; value: string; type: string }) => ({
+          number: phone.value,
+          type_number: phone.type
+        }))
+      },
+      pictures: photos
     }
     formData.append('data', JSON.stringify(body))
     console.log(JSON.parse(formData.get('data') as string), 'values')
+    const res = await postCreateOrg(JSON.parse(formData.get('data') as string))
+
+    if (res?.status === 200) {
+      Swal.fire({ text: t('success-create-organization'), icon: 'success' })
+      router.push('/')
+    }
   }
 
   // GET VALUES FOR EDIT
   useEffect(() => {
+    // razdel.length === 0 && getRazdel().then(res => setRazdel(res))
     searchParams.get('id') && console.log('edit', searchParams.get('id'))
   }, [searchParams])
 
   // RESET VALUES WHEN UNMOUNT
-
   useEffect(() => {
     return () => {
       setPhones([])

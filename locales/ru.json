@@ -171,5 +171,12 @@
   "action": "Действия",
   "add-row": "Добавить ряд",
   "add-column": "Добавить столбец",
-  "create-editor": "Создать описания"
+  "create-editor": "Создать описания",
+  "section": "Вид услуги",
+  "detail": "Детально",
+  "segment": "Сигмент",
+  "account": "Аккаунт",
+  "inn": "ИНН",
+  "bank_account": "Расчётный счёт",
+  "success-create-organization": "Успешно создано"
 }

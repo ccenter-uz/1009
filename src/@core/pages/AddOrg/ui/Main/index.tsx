@@ -1,11 +1,11 @@
 import { FC } from 'react'
 import { MODEL_FORM_INCOME } from '../../model/types'
-import { Box, FormControl, FormErrorMessage, FormLabel, Img, Input, Text, Tooltip } from '@chakra-ui/react'
+import { Box, FormControl, FormErrorMessage, FormLabel, Img, Input, Select, Text, Tooltip } from '@chakra-ui/react'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { AddorgFormInput } from '@/@core/entities/AddorgFormInput'
 import { AddorgAccordionInputs } from '@/@core/entities/AddorgAccordionInputs'
 import Swal from 'sweetalert2'
-import { useAddorgSlicer } from '../../model/hook/useAddorgSlicer'
+import { useAddorgSlicer } from '../../model/Slicer'
 
 export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
   const { register, errors } = props
@@ -39,7 +39,7 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
 
   return (
     <Box>
-      <AddorgFormInput
+      {/* <AddorgFormInput
         register={register}
         errors={errors}
         value='razdel'
@@ -49,8 +49,20 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
         required
         label={t('razdel')}
         errortext={t('required-field')}
-      />
-      <AddorgFormInput
+      /> */}
+      <FormControl isInvalid={!!errors.razdel}>
+        <FormLabel>{t('razdel')}</FormLabel>
+        <Select {...register('category_id', { required: true, minLength: 3, maxLength: 100 })}>
+          <option value='null'>yo'q</option>
+          <option value='00c73b89-1499-42df-9ab9-1048762ab540'>apteka</option>
+          <option value='159f5867-26eb-40ba-a608-08b3204f52ea'>iib</option>
+          <option value='2282d789-398a-4745-a926-9c8773caea13'>fuqarolik sudi</option>
+        </Select>
+        <FormErrorMessage color={'red.300'} fontSize={'12px'}>
+          {t('required-field')}
+        </FormErrorMessage>
+      </FormControl>
+      {/* <AddorgFormInput
         register={register}
         errors={errors}
         value='podrazdel'
@@ -60,30 +72,64 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
         required
         label={t('podrazdel')}
         errortext={t('required-field')}
-      />
-
+      /> */}
+      <FormControl>
+        <FormLabel>{t('podrazdel')}</FormLabel>
+        <Select {...register('sub_category_id', { required: true, minLength: 3, maxLength: 100 })}>
+          <option value='null'>yo'q</option>
+          <option value='74ed1bc3-9672-4f05-8576-2dbac72d8d09'>777 apteka</option>
+          <option value='311f9dc3-bde6-4d72-90e8-3cd3c5ac5484'>Arzon apteka</option>
+        </Select>
+        <FormErrorMessage color={'red.300'} fontSize={'12px'}>
+          {t('required-field')}
+        </FormErrorMessage>
+      </FormControl>
+      {/* <AddorgFormInput
+        register={register}
+        errors={errors}
+        value='section'
+        placeholder={t('section')}
+        minLength={3}
+        maxLength={100}
+        required
+        label={t('section')}
+        errortext={t('required-field')}
+      /> */}
+      <FormControl>
+        <FormLabel>{t('section')}</FormLabel>
+        <Select {...register('section', { required: true, minLength: 3, maxLength: 100 })}>
+          <option value='null'>yo'q</option>
+          <option value='d48cbae9-9820-443a-b349-8e7fa4bce572'>ishlab chiqarish</option>
+          <option value='dd14d79e-0020-4c85-b3a7-19b1a023899b'>xizmat ko'rsatish</option>
+        </Select>
+        <FormErrorMessage color={'red.300'} fontSize={'12px'}>
+          {t('required-field')}
+        </FormErrorMessage>
+      </FormControl>
       <AddorgAccordionInputs
         register={register}
         errors={errors}
-        label={t('razdel-tovar-and-service')}
+        label={t('detail')}
         inputs={[
           {
             id: 1,
-            value: 'razdel_tovar_and_service',
-            placeholder: t('razdel-tovar-and-service'),
-            required: true,
-            minLength: 3,
-            maxLength: 100,
-            errortext: t('required-field')
+            value: 'segment',
+            placeholder: t('segment')
           },
           {
             id: 2,
-            value: 'podrazdel_tovar_and_service',
-            placeholder: t('podrazdel-tovar-and-service'),
-            required: true,
-            minLength: 3,
-            maxLength: 100,
-            errortext: t('required-field')
+            value: 'account',
+            placeholder: t('account')
+          },
+          {
+            id: 3,
+            value: 'inn',
+            placeholder: t('inn')
+          },
+          {
+            id: 4,
+            value: 'bank_account',
+            placeholder: t('bank_account')
           }
         ]}
       />
@@ -102,7 +148,7 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
       <AddorgFormInput
         register={register}
         errors={errors}
-        value='main-organization'
+        value='main_organization'
         placeholder={'Ички ишлар вазирлиги'}
         label={t('main_organization')}
       />
