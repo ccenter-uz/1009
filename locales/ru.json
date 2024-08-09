@@ -178,5 +178,6 @@
   "account": "Аккаунт",
   "inn": "ИНН",
   "bank_account": "Расчётный счёт",
-  "success-create-organization": "Успешно создано"
+  "success-create-organization": "Успешно создано",
+  "choose": "Выбрать"
 }

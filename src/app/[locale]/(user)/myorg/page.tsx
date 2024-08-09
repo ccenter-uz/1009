@@ -8,7 +8,11 @@ import { usePagination } from '@/@core/shared/hooks/usePaginate'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { Badge } from '@/@core/shared/UI/Badge'
 
-const cards = [{ id: 1 }, { id: 2 }, { id: 3 }]
+const cards = [
+  { id: '45438b87-40e1-40e0-b8bb-004c17c3765d' },
+  { id: 'c69e78ae-e9f0-4caf-b28b-78cc92058e3d' },
+  { id: '24cb5e1a-0e45-438a-9517-c20aa61c08c4' }
+]
 
 const MyOrganizations: FC = () => {
   const { t } = useLang()

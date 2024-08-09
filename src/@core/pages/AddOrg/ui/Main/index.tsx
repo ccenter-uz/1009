@@ -6,10 +6,36 @@ import { AddorgFormInput } from '@/@core/entities/AddorgFormInput'
 import { AddorgAccordionInputs } from '@/@core/entities/AddorgAccordionInputs'
 import Swal from 'sweetalert2'
 import { useAddorgSlicer } from '../../model/Slicer'
+import { scssVariables } from '@/@core/apps/utils/scss-variables'
+import { getPodrazdelByRazdel } from '@/@core/shared/api/getters'
+// STYLE
+const style = {
+  formControl: {
+    mt: { base: '0', sm: '10px', md: '10px', xl: '10px' },
+    mb: { base: '1em', sm: '1em', md: '1em', xl: '1em' }
+  },
+  formLabel: {
+    fontSize: { base: '13px', sm: '13px', md: '16px', xl: '16px' },
+    mb: { base: '2px', sm: '2px', md: '8px', xl: '8px' },
+    fontWeight: 500
+  },
+  input: {
+    fontSize: { base: '13px', sm: '13px', md: '14px', xl: '14px' },
+    bg: 'white',
+    border: '1px solid rgba(0, 0, 0, 0.10)',
+    _focus: { boxShadow: `0 0 2px ${scssVariables.blockBgColor}`, border: '1px solid teal' },
+    boxShadow: scssVariables.boxShadow,
+    h: { base: '30px', sm: '30px', md: '45px', xl: '45px' }
+  },
+  errorMessage: {
+    fontSize: { base: '12px', sm: '12px', md: '14px', xl: '14px' },
+    color: 'red.300'
+  }
+}
 
 export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
   const { register, errors } = props
-  const { photos, setPhotos } = useAddorgSlicer()
+  const { photos, setPhotos, podrazdel, serviceType, razdel, setPodrazdel } = useAddorgSlicer()
   const { t } = useLang()
 
   //   UPLOAD
@@ -37,74 +63,68 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
     })
   }
 
+  const handleChangeRazdel = async ({ target: { value } }: { target: { value: string } }) => {
+    if (value === '') return null
+    const res = await getPodrazdelByRazdel(value)
+    res?.status === 200 && setPodrazdel(res?.data?.sub_category_orgs)
+  }
+
   return (
     <Box>
-      {/* <AddorgFormInput
-        register={register}
-        errors={errors}
-        value='razdel'
-        placeholder={t('razdel')}
-        minLength={3}
-        maxLength={100}
-        required
-        label={t('razdel')}
-        errortext={t('required-field')}
-      /> */}
-      <FormControl isInvalid={!!errors.razdel}>
-        <FormLabel>{t('razdel')}</FormLabel>
-        <Select {...register('category_id', { required: true, minLength: 3, maxLength: 100 })}>
-          <option value='null'>yo'q</option>
-          <option value='00c73b89-1499-42df-9ab9-1048762ab540'>apteka</option>
-          <option value='159f5867-26eb-40ba-a608-08b3204f52ea'>iib</option>
-          <option value='2282d789-398a-4745-a926-9c8773caea13'>fuqarolik sudi</option>
+      <FormControl isInvalid={!!errors.razdel} sx={style.formControl}>
+        <FormLabel sx={style.formLabel}>{t('razdel')}</FormLabel>
+        <Select
+          {...register('category_id', { required: true, minLength: 3, maxLength: 100 })}
+          sx={style.input}
+          defaultValue={''}
+          onChange={handleChangeRazdel}
+        >
+          <option value='' disabled>
+            {t('choose')}
+          </option>
+          {razdel?.map((item: any) => (
+            <option key={item?.id} value={item?.id}>
+              {item?.title}
+            </option>
+          ))}
         </Select>
-        <FormErrorMessage color={'red.300'} fontSize={'12px'}>
-          {t('required-field')}
-        </FormErrorMessage>
+        <FormErrorMessage sx={style.errorMessage}>{t('required-field')}</FormErrorMessage>
       </FormControl>
-      {/* <AddorgFormInput
-        register={register}
-        errors={errors}
-        value='podrazdel'
-        placeholder={t('podrazdel')}
-        minLength={3}
-        maxLength={100}
-        required
-        label={t('podrazdel')}
-        errortext={t('required-field')}
-      /> */}
-      <FormControl>
-        <FormLabel>{t('podrazdel')}</FormLabel>
-        <Select {...register('sub_category_id', { required: true, minLength: 3, maxLength: 100 })}>
-          <option value='null'>yo'q</option>
-          <option value='74ed1bc3-9672-4f05-8576-2dbac72d8d09'>777 apteka</option>
-          <option value='311f9dc3-bde6-4d72-90e8-3cd3c5ac5484'>Arzon apteka</option>
+      <FormControl isInvalid={!!errors.podrazdel} sx={style.formControl}>
+        <FormLabel sx={style.formLabel}>{t('podrazdel')}</FormLabel>
+        <Select
+          {...register('sub_category_id', { required: true, minLength: 3, maxLength: 100 })}
+          sx={style.input}
+          defaultValue={''}
+        >
+          <option value='' disabled>
+            {t('choose')}
+          </option>
+          {podrazdel?.map((item: any) => (
+            <option key={item?.id} value={item?.id}>
+              {item?.title}
+            </option>
+          ))}
         </Select>
-        <FormErrorMessage color={'red.300'} fontSize={'12px'}>
-          {t('required-field')}
-        </FormErrorMessage>
+        <FormErrorMessage sx={style.errorMessage}>{t('required-field')}</FormErrorMessage>
       </FormControl>
-      {/* <AddorgFormInput
-        register={register}
-        errors={errors}
-        value='section'
-        placeholder={t('section')}
-        minLength={3}
-        maxLength={100}
-        required
-        label={t('section')}
-        errortext={t('required-field')}
-      /> */}
-      <FormControl>
-        <FormLabel>{t('section')}</FormLabel>
-        <Select {...register('section', { required: true, minLength: 3, maxLength: 100 })}>
-          <option value='null'>yo'q</option>
-          <option value='d48cbae9-9820-443a-b349-8e7fa4bce572'>ishlab chiqarish</option>
-          <option value='dd14d79e-0020-4c85-b3a7-19b1a023899b'>xizmat ko'rsatish</option>
+      <FormControl isInvalid={!!errors.section} sx={style.formControl}>
+        <FormLabel sx={style.formLabel}>{t('section')}</FormLabel>
+        <Select
+          {...register('section', { required: true, minLength: 3, maxLength: 100 })}
+          sx={style.input}
+          defaultValue={''}
+        >
+          <option value='' disabled>
+            {t('choose')}
+          </option>
+          {serviceType?.map((item: any) => (
+            <option key={item?.id} value={item?.id}>
+              {item?.title}
+            </option>
+          ))}
         </Select>
-        <FormErrorMessage color={'red.300'} fontSize={'12px'}>
-          {t('required-field')}
-        </FormErrorMessage>
+        <FormErrorMessage sx={style.errorMessage}>{t('required-field')}</FormErrorMessage>
       </FormControl>
       <AddorgAccordionInputs
         register={register}

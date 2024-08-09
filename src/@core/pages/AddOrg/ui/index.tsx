@@ -23,6 +23,7 @@ import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
 import Swal from 'sweetalert2'
 import { useAddorgSlicer } from '../model/Slicer'
 import { getRazdel, postCreateOrg } from '@/@core/shared/api'
+import { getOneOrganization, getPodrazdel, getServiceType } from '@/@core/shared/api/getters'
 
 export const AddOrg: FC = () => {
   const { t } = useLang()
@@ -53,8 +54,19 @@ export const AddOrg: FC = () => {
     register,
     formState: { errors }
   } = useForm()
-  const { phones, photos, coordinates, setPhotos, setPhones, razdel, setRazdel, podrazdel, setPodrazdel } =
-    useAddorgSlicer()
+  const {
+    phones,
+    photos,
+    coordinates,
+    setPhotos,
+    setPhones,
+    razdel,
+    setRazdel,
+    podrazdel,
+    setPodrazdel,
+    serviceType,
+    setServiceType
+  } = useAddorgSlicer()
 
   // POST
   const POST = async (values: any) => {
@@ -107,16 +119,40 @@ export const AddOrg: FC = () => {
     console.log(JSON.parse(formData.get('data') as string), 'values')
     const res = await postCreateOrg(JSON.parse(formData.get('data') as string))
 
-    if (res?.status === 200) {
+    if (res?.status === 201) {
       Swal.fire({ text: t('success-create-organization'), icon: 'success' })
       router.push('/')
     }
   }
 
+  // GET
+  const GET = async () => {
+    const res = await Promise.all([getRazdel(), getPodrazdel(), getServiceType()])
+    const razdel = res[0]?.data
+    const podrazdelData = res[1]?.data
+    const serviceTypeData = res[2]?.data
+
+    if (podrazdelData) setPodrazdel(podrazdelData)
+    if (serviceTypeData) setServiceType(serviceTypeData)
+    if (razdel) setRazdel(razdel)
+  }
+
+  // GET-FOR-EDIT
+  const GET_FOR_EDIT = async () => {
+    if (searchParams.get('id')) {
+      console.log('edit', searchParams.get('id'))
+      const res = await getOneOrganization(searchParams.get('id') as string)
+
+      console.log(res?.data, 'res')
+    }
+  }
+
   // GET VALUES FOR EDIT
   useEffect(() => {
-    // razdel.length === 0 && getRazdel().then(res => setRazdel(res))
-    searchParams.get('id') && console.log('edit', searchParams.get('id'))
+    GET()
+    GET_FOR_EDIT()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 
   // RESET VALUES WHEN UNMOUNT

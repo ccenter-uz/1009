@@ -1,7 +1,9 @@
 import { create } from 'zustand'
 
-export const AddOrgSlicer = create(set => ({
+const AddOrgSlicer = create(set => ({
   razdel: [],
+  serviceType: [],
+  setServiceType: (serviceType: any) => set({ serviceType }),
   setRazdel: (razdel: any) => set({ razdel }),
   podrazdel: [],
   setPodrazdel: (podrazdel: any) => set({ podrazdel }),
@@ -24,6 +26,8 @@ export const useAddorgSlicer = () => {
   const setRazdel = AddOrgSlicer((state: any) => state.setRazdel)
   const podrazdel = AddOrgSlicer((state: any) => state.podrazdel)
   const setPodrazdel = AddOrgSlicer((state: any) => state.setPodrazdel)
+  const serviceType = AddOrgSlicer((state: any) => state.serviceType)
+  const setServiceType = AddOrgSlicer((state: any) => state.setServiceType)
 
   return {
     razdel,
@@ -35,6 +39,8 @@ export const useAddorgSlicer = () => {
     setPhones,
     setPhotos,
     coordinates,
-    setCoordinates
+    setCoordinates,
+    serviceType,
+    setServiceType
   }
 }

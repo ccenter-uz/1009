@@ -178,5 +178,6 @@
   "account": "Hisob",
   "inn": "TIN",
   "bank_account": "Hisob raqami",
-  "success-create-organization": "Muvaffaqiyatli yaratildi"
+  "success-create-organization": "Muvaffaqiyatli yaratildi",
+  "choose": "Tanlang"
 }
