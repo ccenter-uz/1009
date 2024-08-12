@@ -1,6 +1,6 @@
 'use client'
-import { Box, Text } from '@chakra-ui/react'
-import { FC } from 'react'
+import { Box, Divider, List, ListItem, Text } from '@chakra-ui/react'
+import { FC, useEffect } from 'react'
 import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
 import { useParams, useRouter } from 'next/navigation'
 import Banner from './banner'
@@ -9,11 +9,15 @@ import GallaryPart from './galleryPart'
 import Info from './info'
 import Comment from './comment'
 import { useLang } from '@/@core/shared/hooks/useLang'
+import { getOneOrganization } from '@/@core/shared/api'
+import { useResultItemSlicer } from '../model/Slicer'
+import { Details } from './details'
 
 const ResultItem: FC = () => {
   const { t } = useLang()
   const router = useRouter()
   const params = useParams()
+  const { resultItemData, setResultItemData } = useResultItemSlicer()
   const breadcrumblink = [
     {
       id: 1,
@@ -25,15 +29,31 @@ const ResultItem: FC = () => {
     },
     {
       id: 2,
-      title: params.id
+      title: resultItemData[0]?.organization_name
     }
   ]
+
+  // GET
+  const get = async () => {
+    const res = await getOneOrganization(params?.id as string)
+    if (!res) return null
+
+    res?.status === 200 && setResultItemData(res.data)
+  }
+
+  // EFFECT
+  useEffect(() => {
+    get()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params?.id])
 
   return (
     <Box id='result-item' className='wrapper fade-in' minH={'100dvh'}>
       <BreadCrumb item={breadcrumblink} />
       <Banner />
       <MainDataPart />
+      <Details />
       <GallaryPart />
       <Info />
       <Comment />

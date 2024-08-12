@@ -1,5 +1,5 @@
 {
-  "NOT_FOUND": "Страница не найдено !",
+  "NOT_FOUND": "Страница не найдено!",
   "hero-left-title": "Информационный центр Республики Узбекистан",
   "hero-left-p": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. ",
   "search-btn": "Поиск",
@@ -82,7 +82,6 @@
   "edit": "Изменить",
   "delete": "Удалить",
   "rate": "Рейтинг Заведения",
-  "mobile-phone": "Мобильный номер телефона",
   "home-phone": "Домашный номер телефона",
   "view-all-reviews": "Оставить отзыв",
   "main-company-info": "Общее сведение о компании",
@@ -177,7 +176,19 @@
   "segment": "Сигмент",
   "account": "Аккаунт",
   "inn": "ИНН",
-  "bank_account": "Расчётный счёт",
+  "bank_account": "Расчетный счёт",
   "success-create-organization": "Успешно создано",
-  "choose": "Выбрать"
+  "choose": "Выбрать",
+  "mobile": "Мобильный номер телефона",
+  "home": "Домашный номер телефона",
+  "show-on-map": "Посмотреть на карте",
+  "org_name": "Название организации",
+  "main_org": "Гол. Организ",
+  "true": "Есть",
+  "false": "Нет",
+  "how-to-get": "Как можно добратся",
+  "workly-time": "Рабочие время",
+  "contacts": "Контакты",
+  "gallery": "Картинки",
+  "mark": "В избранный"
 }

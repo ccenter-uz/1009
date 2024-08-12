@@ -1,5 +1,5 @@
 import { Box, Img } from '@chakra-ui/react'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 type IRate = {
   initialValue: number
@@ -22,7 +22,7 @@ const Rate: FC<IRate> = ({
   height = '20px',
   disabled = false
 }) => {
-  const [rating, setRating] = useState(initialValue || 0)
+  const [rating, setRating] = useState(initialValue)
 
   const handleClick = (value: number) => {
     if (disabled) return null
@@ -31,6 +31,10 @@ const Rate: FC<IRate> = ({
       onRatingChange(value)
     }
   }
+
+  useEffect(() => {
+    setRating(initialValue)
+  }, [initialValue])
 
   return (
     <Box display={'flex'} alignItems={'center'} gap={gap}>

@@ -7,6 +7,7 @@ enum ENDPOINTS {
   podrazdelOneByRazdel = '/OrganizationCategories/one',
   serviceType ="/Section/all",
   organizationById = '/organization/one',
+  savedOrgAll = '/SavedOrganization/all',
   POST = 'POST',
   PUT = 'PUT',
   DELETE = 'DELETE',
@@ -61,6 +62,17 @@ export const getServiceType = async () => {
 export const getOneOrganization = async (id: string) => {
   try {
     const response = await api.get(`${ENDPOINTS.organizationById}/${id}`)
+
+    return response
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+// GET-SAVED-ORGANIZATIONS
+export const getSavedOrganizations = async () => {
+  try {
+    const response = await api.get(`${ENDPOINTS.savedOrgAll}`)
 
     return response
   } catch (err) {

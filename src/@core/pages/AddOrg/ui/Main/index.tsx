@@ -7,7 +7,8 @@ import { AddorgAccordionInputs } from '@/@core/entities/AddorgAccordionInputs'
 import Swal from 'sweetalert2'
 import { useAddorgSlicer } from '../../model/Slicer'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
-import { getPodrazdelByRazdel } from '@/@core/shared/api/getters'
+import { getPodrazdelByRazdel } from '@/@core/shared/api'
+import { api } from '@/@core/apps/utils/api'
 // STYLE
 const style = {
   formControl: {
@@ -189,11 +190,13 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
           {t('add-image')}
         </Text>
         <Box display={'flex'} flexWrap={'wrap'} gap={{ base: '8px', sm: '8px', md: '15px', xl: '20px' }}>
-          {photos.map((file: any, index: number) => {
+          {photos?.map((file: any, index: number) => {
             return (
               <Box key={index} position={'relative'}>
                 <Img
-                  src={URL.createObjectURL(file.file)}
+                  src={
+                    file.image_link ? `${api?.defaults?.baseURL}/${file?.image_link}` : URL?.createObjectURL(file?.file)
+                  }
                   w={{ base: '80px', sm: '80px', md: '99px', xl: '99px' }}
                   h={{ base: '80px', sm: '80px', md: '99px', xl: '99px' }}
                   alt={'image'}

@@ -2,25 +2,26 @@ import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { Box, FormControl, FormLabel, SimpleGrid, Text, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
-
-const inputs = [
-  { id: 1, label: 'Раздел', value: 'Рестораны- Кафе' },
-  { id: 2, label: 'Подраздел', value: 'Обще пит.' },
-  { id: 3, label: 'Название', value: 'Сайрам' },
-  { id: 4, label: 'Раздел Т/У', value: 'Рестораны- Кафе' },
-  { id: 5, label: 'Подраздел Т/У', value: 'Кафе' },
-  { id: 6, label: 'Гол. Ораниз', value: 'Не имеется' },
-  { id: 7, label: 'Адрес', value: 'г.Ташкент, Чиланзар -7, ул. Мукумий, Дом-5' },
-  { id: 8, label: 'Электронная почта/ E-mail', value: 'bahor234@gmail.com' },
-  { id: 9, label: 'Индекс', value: '12345' },
-  { id: 10, label: 'Вид оплаты', value: 'Нал. Перечесление, Терминал' },
-  { id: 11, label: 'Режим работы', value: '09:00-18:00/ Выходные-Субота и Воскресение' },
-  { id: 12, label: 'Как можно добратся', value: 'Автобус № 12, 56, Станция метро-Новза' }
-]
+import { useResultItemSlicer } from '../../model/Slicer'
 
 const MainDataPart: FC = () => {
   const { colorMode } = useColorMode()
   const { t } = useLang()
+  const { resultItemData } = useResultItemSlicer()
+  const inputs = [
+    { id: 1, label: t('razdel'), value: resultItemData[0]?.category_org?.title },
+    { id: 2, label: t('podrazdel'), value: resultItemData[0]?.sub_category?.title },
+    { id: 3, label: t('org_name'), value: resultItemData[0]?.organization_name },
+    { id: 4, label: t('section'), value: resultItemData[0]?.section?.title },
+    { id: 6, label: t('main_org'), value: resultItemData[0]?.main_organization },
+    { id: 7, label: t('address'), value: resultItemData[0]?.address },
+    { id: 8, label: t('email'), value: resultItemData[0]?.email },
+    { id: 9, label: t('segment'), value: resultItemData[0]?.segment },
+    { id: 10, label: t('account'), value: resultItemData[0]?.account },
+    { id: 11, label: t('inn'), value: resultItemData[0]?.inn },
+    { id: 12, label: t('bank_account'), value: resultItemData[0]?.bank_account },
+    { id: 13, label: t('manager'), value: resultItemData[0]?.manager }
+  ]
 
   return (
     <Box
@@ -36,7 +37,7 @@ const MainDataPart: FC = () => {
         mt={{ base: '16px', sm: '16px', md: '20px', xl: '24px' }}
         gap={{ base: '8px 0px', sm: '8px 0px', md: '15px 34px', xl: '20px 44px' }}
       >
-        {inputs.map(input => {
+        {inputs?.map(input => {
           return (
             <FormControl key={input.id}>
               <FormLabel mb={'5px'} fontSize={scssVariables.fonts.paragraph}>
@@ -63,7 +64,7 @@ const MainDataPart: FC = () => {
       </SimpleGrid>
       <Box flex={1} mt={'24px'} w={'100%'}>
         <Text fontSize={scssVariables.fonts.paragraph} color={'grey'} mb={'16px'}>
-          Посмотреть на карте
+          {t('show-on-map')}
         </Text>
         <Box
           w={'100%'}
@@ -77,16 +78,18 @@ const MainDataPart: FC = () => {
           gap={{ base: '1px', sm: '1px', md: '5px', xl: '5px' }}
           mt={'8px'}
         >
-          <Box display={'flex'} alignItems={'center'} gap={{ base: '8px', sm: '8px', md: '14px', xl: '16px' }}>
-            <img width={'20px'} height={'20px'} src='/phone-fill.svg' alt='phone' />
-            <Text fontSize={scssVariables.fonts.paragraph}>+ (998) 99-123-45-67</Text>
-            <Text fontSize={scssVariables.fonts.paragraph}>{t('mobile-phone')}</Text>
-          </Box>
-          <Box display={'flex'} alignItems={'center'} gap={{ base: '8px', sm: '8px', md: '14px', xl: '16px' }}>
-            <img width={'20px'} height={'20px'} src='/phone-fill.svg' alt='phone' />
-            <Text fontSize={scssVariables.fonts.paragraph}>+ (998) 99-123-45-67</Text>
-            <Text fontSize={scssVariables.fonts.paragraph}>{t('home-phone')}</Text>
-          </Box>
+          {resultItemData[0]?.phones?.map((item: { number: string; type_number: string; id: string | number }) => (
+            <Box
+              key={item.id}
+              display={'flex'}
+              alignItems={'center'}
+              gap={{ base: '8px', sm: '8px', md: '14px', xl: '16px' }}
+            >
+              <img width={'20px'} height={'20px'} src='/phone-fill.svg' alt='phone' />
+              <Text fontSize={scssVariables.fonts.paragraph}>{item?.number}</Text>-
+              <Text fontSize={scssVariables.fonts.paragraph}>{t(`${item?.type_number}`)}</Text>
+            </Box>
+          ))}
         </Box>
       </Box>
     </Box>

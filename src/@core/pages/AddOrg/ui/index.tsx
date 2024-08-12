@@ -23,7 +23,7 @@ import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
 import Swal from 'sweetalert2'
 import { useAddorgSlicer } from '../model/Slicer'
 import { getRazdel, postCreateOrg } from '@/@core/shared/api'
-import { getOneOrganization, getPodrazdel, getServiceType } from '@/@core/shared/api/getters'
+import { getOneOrganization, getPodrazdel, getServiceType } from '@/@core/shared/api'
 
 export const AddOrg: FC = () => {
   const { t } = useLang()
@@ -65,7 +65,8 @@ export const AddOrg: FC = () => {
     podrazdel,
     setPodrazdel,
     serviceType,
-    setServiceType
+    setServiceType,
+    setCoordinates
   } = useAddorgSlicer()
 
   // POST
@@ -140,10 +141,51 @@ export const AddOrg: FC = () => {
   // GET-FOR-EDIT
   const GET_FOR_EDIT = async () => {
     if (searchParams.get('id')) {
-      console.log('edit', searchParams.get('id'))
       const res = await getOneOrganization(searchParams.get('id') as string)
 
-      console.log(res?.data, 'res')
+      if (res?.status === 200) {
+        console.log(res?.data, 'res')
+        setPhones(
+          res?.data[0]?.phones?.map((item: any) => ({
+            id: item?.id,
+            value: item?.number,
+            type: item?.type_number
+          }))
+        )
+        setPhotos(res?.data[0]?.pictures)
+        setCoordinates([
+          parseFloat(res?.data[0]?.location?.coordinates[0]?.lat),
+          parseFloat(res?.data[0]?.location?.coordinates[0]?.lon)
+        ])
+        res?.data?.map((item: any) => {
+          reset({
+            worktime_from: item?.scheduler?.worktime_from,
+            worktime_to: item?.scheduler?.worktime_to,
+            breakfast_from: item?.scheduler?.breakfast_from,
+            breakfast_to: item?.scheduler?.breakfast_to,
+            dayoffs: item?.scheduler?.dayoffs,
+            sub_category_id: item?.sub_category?.id,
+            main_organization: item?.main_organization,
+            manager: item?.manager,
+            section: item?.section?.id,
+            organization_name: item?.organization_name,
+            email: item?.email,
+            address: item?.address,
+            segment: item?.segment,
+            account: item?.account,
+            inn: item?.inn,
+            bank_account: item?.bank_account,
+            comment: item?.comment,
+            cash: item?.payment_types?.cash,
+            terminal: item?.payment_types?.terminal,
+            transfer: item?.payment_types?.transfer,
+            autobus: item?.transport?.bus,
+            marshrut: item?.transport?.gazelle,
+            metro_station: item?.transport?.metro_station,
+            'micro-autobus': item?.transport?.micro_bus
+          })
+        })
+      }
     }
   }
 

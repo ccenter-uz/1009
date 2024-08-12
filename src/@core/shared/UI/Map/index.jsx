@@ -39,7 +39,6 @@ const LocationFinderDummy = props => {
 export const Maps = () => {
   const { t } = useLang()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  // position[0]=latitude, position[1]=longitude
   const { coordinates, setCoordinates } = useAddorgSlicer()
   const [position, setPosition] = useState(coordinates)
 

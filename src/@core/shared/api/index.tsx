@@ -1,5 +1,12 @@
 // export getters
-export { getRazdel } from './getters'
+export {
+  getRazdel,
+  getPodrazdel,
+  getServiceType,
+  getPodrazdelByRazdel,
+  getOneOrganization,
+  getSavedOrganizations
+} from './getters'
 
 // export posts
-export { postCreateOrg } from './posts'
+export { postCreateOrg, postComment, postSavedOrg } from './posts'

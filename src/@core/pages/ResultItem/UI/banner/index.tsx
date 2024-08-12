@@ -3,10 +3,12 @@ import BoxGen from '@/@core/shared/UI/Box'
 import Rate from '@/@core/shared/UI/Rate'
 import { Box, Heading, Img, Text, useColorMode } from '@chakra-ui/react'
 import { FC } from 'react'
+import { useResultItemSlicer } from '../../model/Slicer'
 
 const Banner: FC = () => {
   const { colorMode } = useColorMode()
   const { t } = useLang()
+  const { resultItemData } = useResultItemSlicer()
 
   return (
     <BoxGen
@@ -26,7 +28,7 @@ const Banner: FC = () => {
           fontWeight={400}
           color={colorMode === 'dark' ? 'white' : 'rgba(100, 116, 139, 1)'}
         >
-          Кафе - Сайрам
+          {resultItemData[0]?.organization_name}
         </Heading>
         <Box display={'flex'} alignItems={'center'} gap={'8px'}>
           <Img src='/location.svg' alt='location' />
@@ -34,7 +36,7 @@ const Banner: FC = () => {
             fontSize={{ base: '10px', sm: '10px', md: '13px', xl: '14px' }}
             color={colorMode === 'dark' ? 'whitesmoke' : 'rgba(100, 116, 139, 1)'}
           >
-            Мукумий, Дом-5
+            {resultItemData[0]?.address}
           </Text>
         </Box>
       </Box>
@@ -44,7 +46,7 @@ const Banner: FC = () => {
           starColor='yellow'
           disabled
           maxStars={5}
-          initialValue={4}
+          initialValue={resultItemData[0]?.common_rate}
           onRatingChange={value => console.log(value, 'value')}
         />
       </Box>

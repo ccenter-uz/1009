@@ -13,15 +13,17 @@ import {
   useColorMode
 } from '@chakra-ui/react'
 import { FC } from 'react'
-import ButtonGen from '../../shared/UI/Button'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Link } from '@/navigation'
 import Rate from '../../shared/UI/Rate'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { useRouter } from 'next/navigation'
+import { postSavedOrg } from '@/@core/shared/api'
+import { toast } from 'react-toastify'
 
 type IDataType = {
   data?: {
+    id: string | number
     title: string
     img: string
     date: string
@@ -39,6 +41,21 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
   const { colorMode } = useColorMode()
   const router = useRouter()
   const { t } = useLang()
+
+  // CREATE-SAVED
+  const handleSavedorg = async () => {
+    console.log(id, 'id')
+    const body = {
+      organization_id: id as string
+    }
+    const res = await postSavedOrg(body)
+
+    if (!res) return null
+
+    if (res.status === 201) {
+      toast.success(t(`success`), { position: 'bottom-right' })
+    }
+  }
 
   return (
     <>
@@ -105,6 +122,17 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
           <Box display={'flex'} alignItems={'center'} gap={'6px'}>
             {mycard ? (
               <Box display={'flex'} alignItems={'center'} gap={'6px'}>
+                <Tooltip label={t('mark')}>
+                  <img
+                    src='/bookmark-fill.svg'
+                    alt='bookmark-fill'
+                    role='button'
+                    aria-label='bookmarked'
+                    onClick={handleSavedorg}
+                    width={'20px'}
+                    height={'20px'}
+                  />
+                </Tooltip>
                 <Tooltip label={t('edit')}>
                   <Link href={`/addorg?id=${id}`}>
                     <Img
@@ -146,6 +174,7 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
                 alt='bookmark-fill'
                 role='button'
                 aria-label='bookmarked'
+                onClick={handleSavedorg}
                 width={'20px'}
                 height={'20px'}
               />

@@ -81,7 +81,6 @@
   "edit": "O'zgartirish",
   "delete": "Oʻchirish",
   "rate": "Tashkilot reytingi",
-  "mobile-phone": "Mobil telefon raqami",
   "home-phone": "Uy telefon raqami",
   "view-all-reviews": "Fikr qoldiring",
   "main-company-info": "Kompaniya haqida umumiy ma'lumot",
@@ -179,5 +178,17 @@
   "inn": "TIN",
   "bank_account": "Hisob raqami",
   "success-create-organization": "Muvaffaqiyatli yaratildi",
-  "choose": "Tanlang"
+  "choose": "Tanlang",
+  "mobile": "Mobil telefon raqami",
+  "home": "Uy telefon raqami",
+  "show-on-map": "Xaritada ko'rish",
+  "org_name": "Tashkilot nomi",
+  "main_org": "Bosh. \nTashkilot",
+  "true": "Бор",
+  "false": "Yo'q",
+  "how-to-get": "Qanday qilib u erga borishim mumkin?",
+  "workly-time": "Ish vaqti",
+  "contacts": "Kontaktlar",
+  "gallery": "Rasmlar",
+  "mark": "Sevimlilarga qo'shing"
 }
