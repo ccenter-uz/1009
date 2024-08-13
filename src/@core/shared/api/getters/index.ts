@@ -8,6 +8,7 @@ enum ENDPOINTS {
   serviceType ="/Section/all",
   organizationById = '/organization/one',
   savedOrgAll = '/SavedOrganization/all',
+  myorgsAll = '/organization/my-organization',
   POST = 'POST',
   PUT = 'PUT',
   DELETE = 'DELETE',
@@ -73,6 +74,17 @@ export const getOneOrganization = async (id: string) => {
 export const getSavedOrganizations = async () => {
   try {
     const response = await api.get(`${ENDPOINTS.savedOrgAll}`)
+
+    return response
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+// GET-MY-ORGANIZATIONS
+export const getMyOrganizations = async () => {
+  try {
+    const response = await api.get(`${ENDPOINTS.myorgsAll}`)
 
     return response
   } catch (err) {

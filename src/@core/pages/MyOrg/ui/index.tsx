@@ -1,22 +1,22 @@
 import OrgCard from '@/@core/entities/OrgCard'
-import { getSavedOrganizations } from '@/@core/shared/api'
+import { getMyOrganizations } from '@/@core/shared/api'
 import { usePagination } from '@/@core/shared/hooks/usePaginate'
 import Pagination from '@/@core/shared/UI/Pagination'
-import { SimpleGrid } from '@chakra-ui/react'
+import { Box, SimpleGrid } from '@chakra-ui/react'
 import { FC, useEffect } from 'react'
-import { useSavedOrgSlicer } from '../model/Slicer'
+import { useMyorgSlicer } from '../model/Slicer'
 
-export const SavedOrgs: FC = () => {
+export const MyOrg: FC = () => {
   const { current, pageSize, total, handlePageChange, handlePageSizeChange } = usePagination()
-  const { savedOrgData, setSavedOrgData } = useSavedOrgSlicer()
+  const { myOrgData, setMyOrgData } = useMyorgSlicer()
 
   //   GET
   const get = async () => {
-    const res = await getSavedOrganizations()
+    const res = await getMyOrganizations()
 
     if (!res) return null
     if (res?.status === 200) {
-      setSavedOrgData(res?.data)
+      setMyOrgData(res?.data?.my_organization)
     }
   }
 
@@ -27,12 +27,13 @@ export const SavedOrgs: FC = () => {
   }, [])
 
   return (
-    <>
+    <Box>
       <SimpleGrid columns={{ base: 1, sm: 1, md: 2, xl: 2 }} gap={{ base: '0 0', sm: '0 0', md: '0 2em', xl: '0 2em' }}>
-        {savedOrgData?.map((card: { organization_id: { id: number | string } }, index: number) => (
-          <OrgCard key={index} href={`/results/${card?.organization_id?.id}`} data={card?.organization_id} />
+        {myOrgData?.map((card: any) => (
+          <OrgCard key={card.id} href={`/results/${card.id}`} id={card.id} mycard data={card} />
         ))}
       </SimpleGrid>
+
       <Pagination
         total={total}
         current={current}
@@ -40,6 +41,6 @@ export const SavedOrgs: FC = () => {
         onChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
       />
-    </>
+    </Box>
   )
 }

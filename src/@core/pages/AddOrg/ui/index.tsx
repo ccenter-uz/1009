@@ -80,9 +80,7 @@ export const AddOrg: FC = () => {
       section: values.section,
       organization_name: values.organization_name,
       email: values.email,
-      address: `${
-        (values.index, values.region, values.city, values.area, values.house, values.block, values.apartment)
-      }`,
+      address: `${values.index}, ${values.region}, ${values.city}, ${values.area}, ${values.house}, ${values.block}, ${values.apartment}`,
       segment: values.segment,
       account: values.account,
       inn: values.inn,
@@ -113,12 +111,15 @@ export const AddOrg: FC = () => {
           number: phone.value,
           type_number: phone.type
         }))
-      },
-      pictures: photos
+      }
     }
     formData.append('data', JSON.stringify(body))
-    console.log(JSON.parse(formData.get('data') as string), 'values')
-    const res = await postCreateOrg(JSON.parse(formData.get('data') as string))
+
+    for (let i = 0; i < photos.length; i++) {
+      formData.append(`pictures${[i]}`, photos[i]?.file)
+    }
+
+    const res = await postCreateOrg(formData)
 
     if (res?.status === 201) {
       Swal.fire({ text: t('success-create-organization'), icon: 'success' })
@@ -142,9 +143,7 @@ export const AddOrg: FC = () => {
   const GET_FOR_EDIT = async () => {
     if (searchParams.get('id')) {
       const res = await getOneOrganization(searchParams.get('id') as string)
-
       if (res?.status === 200) {
-        console.log(res?.data, 'res')
         setPhones(
           res?.data[0]?.phones?.map((item: any) => ({
             id: item?.id,
@@ -154,20 +153,21 @@ export const AddOrg: FC = () => {
         )
         setPhotos(res?.data[0]?.pictures)
         setCoordinates([
-          parseFloat(res?.data[0]?.location?.coordinates[0]?.lat),
-          parseFloat(res?.data[0]?.location?.coordinates[0]?.lon)
+          parseFloat(JSON.parse(res?.data[0]?.location).coordinates?.lat),
+          parseFloat(JSON.parse(res?.data[0]?.location).coordinates?.lon)
         ])
         res?.data?.map((item: any) => {
           reset({
-            worktime_from: item?.scheduler?.worktime_from,
-            worktime_to: item?.scheduler?.worktime_to,
-            breakfast_from: item?.scheduler?.breakfast_from,
-            breakfast_to: item?.scheduler?.breakfast_to,
-            dayoffs: item?.scheduler?.dayoffs,
-            sub_category_id: item?.sub_category?.id,
+            worktime_from: JSON.parse(item?.scheduler)?.worktime_from,
+            worktime_to: JSON.parse(item?.scheduler)?.worktime_to,
+            breakfast_from: JSON.parse(item?.scheduler)?.breakfast_from,
+            breakfast_to: JSON.parse(item?.scheduler)?.breakfast_to,
+            dayoffs: JSON.parse(item?.scheduler)?.dayoffs,
+            sub_category_id: item?.sub_category_org?.id,
+            category_id: item?.sub_category_org?.category_org?.id,
             main_organization: item?.main_organization,
             manager: item?.manager,
-            section: item?.section?.id,
+            section: item?.sectionId?.id,
             organization_name: item?.organization_name,
             email: item?.email,
             address: item?.address,
@@ -179,10 +179,10 @@ export const AddOrg: FC = () => {
             cash: item?.payment_types?.cash,
             terminal: item?.payment_types?.terminal,
             transfer: item?.payment_types?.transfer,
-            autobus: item?.transport?.bus,
-            marshrut: item?.transport?.gazelle,
-            metro_station: item?.transport?.metro_station,
-            'micro-autobus': item?.transport?.micro_bus
+            autobus: JSON.parse(item?.transport)?.bus,
+            marshrut: JSON.parse(item?.transport)?.gazelle,
+            metro_station: JSON.parse(item?.transport)?.metro_station,
+            'micro-autobus': JSON.parse(item?.transport)?.micro_bus
           })
         })
       }

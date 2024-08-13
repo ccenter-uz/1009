@@ -7,6 +7,7 @@ import {
   CardFooter,
   CardHeader,
   Divider,
+  Icon,
   Img,
   Text,
   Tooltip,
@@ -18,20 +19,11 @@ import { Link } from '@/navigation'
 import Rate from '../../shared/UI/Rate'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { useRouter } from 'next/navigation'
-import { postSavedOrg } from '@/@core/shared/api'
-import { toast } from 'react-toastify'
+import { BookmarkOrgsAsync } from '@/@core/feature'
+import { Eye } from 'react-feather'
 
 type IDataType = {
-  data?: {
-    id: string | number
-    title: string
-    img: string
-    date: string
-    rate: number
-    paragraph: string
-    watched: string
-    address: string
-  }
+  data?: any
   href: string
   mycard?: boolean
   id?: number | string
@@ -41,21 +33,6 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
   const { colorMode } = useColorMode()
   const router = useRouter()
   const { t } = useLang()
-
-  // CREATE-SAVED
-  const handleSavedorg = async () => {
-    console.log(id, 'id')
-    const body = {
-      organization_id: id as string
-    }
-    const res = await postSavedOrg(body)
-
-    if (!res) return null
-
-    if (res.status === 201) {
-      toast.success(t(`success`), { position: 'bottom-right' })
-    }
-  }
 
   return (
     <>
@@ -74,10 +51,12 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
             <Box display={'flex'} alignItems={'center'} gap={'8px'}>
               <Box w={'29px'} h={'29px'} bg={'lightgray'} borderRadius={'50%'}></Box>
               <Text fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}>
-                {data?.title || 'Театр в Ташкенте'}{' '}
+                {data?.organization_name || 'Театр в Ташкенте'}{' '}
               </Text>
             </Box>
-            <Text fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>{data?.date || '02.02.2024'}</Text>
+            <Text fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
+              {(data?.create_data && new Intl.DateTimeFormat('ru').format(new Date(data?.create_data))) || '02.02.2024'}
+            </Text>
           </Box>
           <Divider m={'4px 0 8px 0'} color={'whitesmoke'} />
           <Box
@@ -100,7 +79,7 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
             fontSize={{ base: '11px', sm: '11px', md: '14px', xl: '14px' }}
             color={colorMode !== 'dark' ? 'rgba(100, 116, 139, 1)' : 'whitesmoke'}
           >
-            {data?.paragraph ||
+            {data?.comment ||
               `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
           Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis
           tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu.`}
@@ -108,7 +87,7 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
           <Box display={'flex'} justifyContent={'flex-end'} alignItems={'center'} gap={'2px'}>
             <img width={'15px'} height={'15px'} src='/eye-fill.svg' alt='eye-fill' />
             <Text color={'grey'} fontSize={{ base: '8px', sm: '8px', md: '11px', xl: '11px' }}>
-              {t('seen')} - {data?.watched || '2345'}
+              {t('seen')} - {String(data?.number_of_raters) || '2345'}
             </Text>
           </Box>
         </CardBody>
@@ -118,21 +97,15 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
           alignItems={'center'}
           justifyContent={'space-between'}
         >
-          <Rate disabled maxStars={5} initialValue={4} onRatingChange={val => console.log(val, 'value')} />
+          <Rate
+            disabled
+            maxStars={5}
+            initialValue={data?.common_rate}
+            onRatingChange={val => console.log(val, 'value')}
+          />
           <Box display={'flex'} alignItems={'center'} gap={'6px'}>
             {mycard ? (
-              <Box display={'flex'} alignItems={'center'} gap={'6px'}>
-                <Tooltip label={t('mark')}>
-                  <img
-                    src='/bookmark-fill.svg'
-                    alt='bookmark-fill'
-                    role='button'
-                    aria-label='bookmarked'
-                    onClick={handleSavedorg}
-                    width={'20px'}
-                    height={'20px'}
-                  />
-                </Tooltip>
+              <Box display={'flex'} alignItems={'flex-start'} gap={'6px'}>
                 <Tooltip label={t('edit')}>
                   <Link href={`/addorg?id=${id}`}>
                     <Img
@@ -157,11 +130,11 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
                 </Tooltip>
                 <Tooltip label={t('show')}>
                   <Link href={href}>
-                    <Img
+                    <Icon
+                      as={Eye}
                       cursor={'pointer'}
+                      color={'#64748B'}
                       _hover={{ opacity: '0.8' }}
-                      src='/eye-fill.svg'
-                      alt='edit'
                       w={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
                       h={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
                     />
@@ -169,15 +142,7 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
                 </Tooltip>
               </Box>
             ) : (
-              <img
-                src='/bookmark-fill.svg'
-                alt='bookmark-fill'
-                role='button'
-                aria-label='bookmarked'
-                onClick={handleSavedorg}
-                width={'20px'}
-                height={'20px'}
-              />
+              <BookmarkOrgsAsync data={data} />
             )}
             <Link href={href}>
               {!mycard && (

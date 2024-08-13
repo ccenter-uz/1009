@@ -1,5 +1,5 @@
 'use client'
-import { Box, Divider, List, ListItem, Text } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
 import { FC, useEffect } from 'react'
 import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
 import { useParams, useRouter } from 'next/navigation'

@@ -9,10 +9,10 @@ const MainDataPart: FC = () => {
   const { t } = useLang()
   const { resultItemData } = useResultItemSlicer()
   const inputs = [
-    { id: 1, label: t('razdel'), value: resultItemData[0]?.category_org?.title },
-    { id: 2, label: t('podrazdel'), value: resultItemData[0]?.sub_category?.title },
+    { id: 1, label: t('razdel'), value: resultItemData[0]?.sub_category_org?.category_org?.title },
+    { id: 2, label: t('podrazdel'), value: resultItemData[0]?.sub_category_org?.title },
     { id: 3, label: t('org_name'), value: resultItemData[0]?.organization_name },
-    { id: 4, label: t('section'), value: resultItemData[0]?.section?.title },
+    { id: 4, label: t('section'), value: resultItemData[0]?.sectionId?.title },
     { id: 6, label: t('main_org'), value: resultItemData[0]?.main_organization },
     { id: 7, label: t('address'), value: resultItemData[0]?.address },
     { id: 8, label: t('email'), value: resultItemData[0]?.email },

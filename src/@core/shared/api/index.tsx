@@ -5,7 +5,8 @@ export {
   getServiceType,
   getPodrazdelByRazdel,
   getOneOrganization,
-  getSavedOrganizations
+  getSavedOrganizations,
+  getMyOrganizations
 } from './getters'
 
 // export posts
