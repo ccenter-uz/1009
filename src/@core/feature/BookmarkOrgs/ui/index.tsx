@@ -1,4 +1,4 @@
-import { postSavedOrg } from '@/@core/shared/api'
+import { deleteSavedOrg, postSavedOrg } from '@/@core/shared/api'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { Icon } from '@chakra-ui/react'
 import { FC } from 'react'
@@ -13,9 +13,17 @@ export const BookmarkOrgs: FC<Props> = props => {
   const { data } = props
   const { t } = useLang()
 
-  // CREATE-SAVED
+  // CREATE-OR-DELETE-SAVED
   const handleSavedorg = async () => {
-    console.log(data.id, 'id')
+    if (!!data?.saved_organization?.length) {
+      const res = await deleteSavedOrg(data?.id)
+
+      if (!res) return null
+
+      if (res.status === 204) {
+        toast.success(t(`deleted`), { position: 'bottom-right' })
+      }
+    }
     const body = {
       organization_id: data.id as string
     }
@@ -31,10 +39,10 @@ export const BookmarkOrgs: FC<Props> = props => {
   return (
     <Icon
       as={Bookmark}
-      color={'grey'}
-      fill={'#6B7280'}
+      color={'#6B7280'}
+      fill={!!data?.saved_organization?.length ? '#6B7280' : 'white'}
       role='button'
-      _hover={{ fill: data.saved_organization?.length === 0 ? '#6B7280' : '#fff' }}
+      _hover={{ fill: !!data?.saved_organization?.length ? 'white' : '#6B7280' }}
       aria-label='bookmarked'
       onClick={handleSavedorg}
       width={'20px'}

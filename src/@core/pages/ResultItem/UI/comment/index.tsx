@@ -6,6 +6,9 @@ import Loading from '@/app/[locale]/loading'
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import { FC } from 'react'
+import { useResultItemSlicer } from '../../model/Slicer'
+import { api } from '@/@core/apps/utils/api'
+import { IResultItem } from '../../model/type'
 
 const AliceCarousel = dynamic(() => import('react-alice-carousel'), { ssr: false, loading: () => <Loading /> })
 
@@ -16,46 +19,11 @@ const responsive = {
   1024: { items: 4 }
 }
 
-const items = [
-  {
-    id: 1,
-    full_name: 'Азизов Азиз',
-    rate: 4,
-    comment: 'Вчера со мной случился самый вкусный бургер. Именно в Punkraft. Бургер от Бати — это ну очень вкусно .',
-    date: '02.02.2024'
-  },
-  {
-    id: 2,
-    full_name: 'Азизов Азиз',
-    rate: 4,
-    comment: 'Вчера со мной случился самый вкусный бургер. Именно в Punkraft. Бургер от Бати — это ну очень вкусно .',
-    date: '02.02.2024'
-  },
-  {
-    id: 3,
-    full_name: 'Азизов Азиз',
-    rate: 4,
-    comment: 'Вчера со мной случился самый вкусный бургер. Именно в Punkraft. Бургер от Бати — это ну очень вкусно .',
-    date: '02.02.2024'
-  },
-  {
-    id: 4,
-    full_name: 'Азизов Азиз',
-    rate: 4,
-    comment: 'Вчера со мной случился самый вкусный бургер. Именно в Punkraft. Бургер от Бати — это ну очень вкусно .',
-    date: '02.02.2024'
-  },
-  {
-    id: 5,
-    full_name: 'Азизов Азиз',
-    rate: 4,
-    comment: 'Вчера со мной случился самый вкусный бургер. Именно в Punkraft. Бургер от Бати — это ну очень вкусно .',
-    date: '02.02.2024'
-  }
-]
-
 const Comment: FC = () => {
   const { t } = useLang()
+  const { resultItemData } = useResultItemSlicer()
+
+  console.log(resultItemData, 'resultItemData')
 
   return (
     <Box aria-label='section'>
@@ -76,11 +44,11 @@ const Comment: FC = () => {
         animationDuration={2500}
         key={'carousel'}
         responsive={responsive}
-        items={items.map(item => (
+        items={resultItemData?.map((item: IResultItem) => (
           <BoxGen
             my={'24px'}
             aria-label='card'
-            key={item.id}
+            key={item?.id}
             w={'98%'}
             h={{ base: '200px', sm: '200px', md: '247px', xl: '247px' }}
             p={'13px'}
@@ -88,14 +56,19 @@ const Comment: FC = () => {
             borderRadius={'8px'}
           >
             <Flex aria-label='card-header' gap={'16px'} alignItems={'center'} fontWeight={500}>
-              <Avatar name='Azizov Aziz' src='/Avatar.svg' w={'70px'} h={'70px'} />
+              <Avatar
+                name={item?.user_id?.full_name}
+                src={api.defaults.baseURL + item.user_id?.image_link}
+                w={'70px'}
+                h={'70px'}
+              />
               <Flex flexDirection={'column'} gap={'5px'} justifyContent={'center'}>
-                <Text fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}>{item.full_name}</Text>
+                <Text fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}>{item?.user_id?.full_name}</Text>
                 <Rate
                   starColor='yellow'
                   disabled
                   maxStars={5}
-                  initialValue={4}
+                  initialValue={item?.rate}
                   onRatingChange={value => console.log(value, 'value')}
                   gap={'5px'}
                   width={'15px'}
@@ -118,7 +91,7 @@ const Comment: FC = () => {
               pt={{ base: '5px', sm: '5px', md: '32px', xl: '32px' }}
             >
               <Text color={'grey'} fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
-                {item?.date}
+                {item?.create_data && new Intl.DateTimeFormat('ru-RU').format(new Date(item?.create_data))}
               </Text>
             </Flex>
           </BoxGen>

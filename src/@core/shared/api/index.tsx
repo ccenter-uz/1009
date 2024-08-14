@@ -1,4 +1,4 @@
-// export getters
+// export GETTERS
 export {
   getRazdel,
   getPodrazdel,
@@ -9,5 +9,8 @@ export {
   getMyOrganizations
 } from './getters'
 
-// export posts
+// export POSTS
 export { postCreateOrg, postComment, postSavedOrg } from './posts'
+
+// export DELETES
+export { deleteSavedOrg, deleteOrganization } from './deletes'

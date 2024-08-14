@@ -73,57 +73,84 @@ export const AddOrg: FC = () => {
   const POST = async (values: any) => {
     if (photos.length === 0) return Swal.fire({ text: t('warning-need-photo'), icon: 'warning' })
     const formData = new FormData()
-    const body = {
-      sub_category_id: values.sub_category_id,
-      main_organization: values.main_organization,
-      manager: values.manager,
-      section: values.section,
-      organization_name: values.organization_name,
-      email: values.email,
-      address: `${values.index}, ${values.region}, ${values.city}, ${values.area}, ${values.house}, ${values.block}, ${values.apartment}`,
-      segment: values.segment,
-      account: values.account,
-      inn: values.inn,
-      bank_account: values.bank_account,
-      comment: values.comment,
-      payment_types: {
-        cash: values.cash,
-        terminal: values.terminal,
-        transfer: values.transfer
-      },
-      scheduler: {
+    // PAYMENT TYPES
+    formData.append(
+      'payment_types',
+      JSON.stringify({ cash: values.cash, terminal: values.terminal, transfer: values.transfer })
+    )
+    // PHONES
+    formData.append(
+      'phones',
+      JSON.stringify({
+        numbers: phones.map((phone: { id: number; value: string; type: string }) => ({
+          number: phone.value,
+          type_number: phone.type
+        }))
+      })
+    )
+    // TRANSPORT
+    formData.append(
+      'transport',
+      JSON.stringify({
+        bus: values.autobus,
+        gazelle: values.marshrut,
+        metro_station: values.metro_station,
+        micro_bus: values['micro-autobus']
+      })
+    )
+    // LOCATION
+    formData.append('location', JSON.stringify({ coordinates: { lon: coordinates[0], lat: coordinates[1] } }))
+    // SCHEDULER
+    formData.append(
+      'scheduler',
+      JSON.stringify({
         worktime_from: values.worktime_from,
         worktime_to: values.worktime_to,
         breakfast_from: values.breakfast_from,
         breakfast_to: values.breakfast_to,
         dayoffs: values.dayoffs
-      },
-      transport: {
-        bus: values.autobus,
-        gazelle: values.marshrut,
-        metro_station: values.metro_station,
-        micro_bus: values['micro-autobus']
-      },
-      location: { coordinates: { lon: coordinates[0], lat: coordinates[1] } },
-      added_by: 'admin',
-      phones: {
-        numbers: phones.map((phone: { id: number; value: string; type: string }) => ({
-          number: phone.value,
-          type_number: phone.type
-        }))
-      }
-    }
-    formData.append('data', JSON.stringify(body))
-
+      })
+    )
+    // SEGMENT
+    formData.append('segment', values.segment)
+    // ADDRESS
+    formData.append(
+      'address',
+      `${values.index}, ${values.region}, ${values.city}, ${values.area}, ${values.house}, ${values.block}, ${values.apartment}`
+    )
+    // ORGANIZATION_NAME
+    formData.append('organization_name', values.organization_name)
+    // EMAIL
+    formData.append('email', values.email)
+    // INN
+    formData.append('inn', values.inn)
+    // BANK_ACCOUNT
+    formData.append('bank_account', values.bank_account)
+    // COMMENT
+    formData.append('comment', values.comment)
+    // MAIN_ORGANIZATION
+    formData.append('main_organization', values.main_organization)
+    // MANAGER
+    formData.append('manager', values.manager)
+    // SECTION
+    formData.append('section', values.section)
+    // SUB_CATEGORY
+    formData.append('sub_category_id', values.sub_category_id)
+    // ACCOUNT
+    formData.append('account', values.account)
+    // ADDED_BY
+    formData.append('added_by', 'admin')
+    // PICTURES
     for (let i = 0; i < photos.length; i++) {
       formData.append(`pictures${[i]}`, photos[i]?.file)
     }
 
+    // POST
     const res = await postCreateOrg(formData)
 
     if (res?.status === 201) {
       Swal.fire({ text: t('success-create-organization'), icon: 'success' })
-      router.push('/')
+      router.push('/myorg')
     }
   }
 

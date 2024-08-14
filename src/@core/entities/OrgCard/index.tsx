@@ -19,7 +19,7 @@ import { Link } from '@/navigation'
 import Rate from '../../shared/UI/Rate'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { useRouter } from 'next/navigation'
-import { BookmarkOrgsAsync } from '@/@core/feature'
+import { BookmarkOrgsAsync, DeleteOrgAsync } from '@/@core/feature'
 import { Eye } from 'react-feather'
 
 type IDataType = {
@@ -107,7 +107,7 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
             {mycard ? (
               <Box display={'flex'} alignItems={'flex-start'} gap={'6px'}>
                 <Tooltip label={t('edit')}>
-                  <Link href={`/addorg?id=${id}`}>
+                  <Link href={`/addorg?id=${data?.id}`}>
                     <Img
                       cursor={'pointer'}
                       _hover={{ opacity: '0.8' }}
@@ -118,16 +118,7 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
                     />
                   </Link>
                 </Tooltip>
-                <Tooltip label={t('delete')}>
-                  <Img
-                    cursor={'pointer'}
-                    _hover={{ opacity: '0.8' }}
-                    src='/delete.svg'
-                    alt='delete'
-                    w={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
-                    h={{ base: '20px', sm: '20px', md: '22px', xl: '22px' }}
-                  />
-                </Tooltip>
+                <DeleteOrgAsync id={data?.id} />
                 <Tooltip label={t('show')}>
                   <Link href={href}>
                     <Icon
