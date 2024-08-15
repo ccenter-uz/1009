@@ -22,8 +22,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
 import Swal from 'sweetalert2'
 import { useAddorgSlicer } from '../model/Slicer'
-import { getRazdel, postCreateOrg } from '@/@core/shared/api'
-import { getOneOrganization, getPodrazdel, getServiceType } from '@/@core/shared/api'
+import { postCreateOrg } from '@/@core/shared/api'
 
 export const AddOrg: FC = () => {
   const { t } = useLang()
@@ -54,20 +53,7 @@ export const AddOrg: FC = () => {
     register,
     formState: { errors }
   } = useForm()
-  const {
-    phones,
-    photos,
-    coordinates,
-    setPhotos,
-    setPhones,
-    razdel,
-    setRazdel,
-    podrazdel,
-    setPodrazdel,
-    serviceType,
-    setServiceType,
-    setCoordinates
-  } = useAddorgSlicer()
+  const { phones, photos, coordinates, setPhotos, setPhones, GET, GET_FOR_EDIT } = useAddorgSlicer()
 
   // POST
   const POST = async (values: any) => {
@@ -154,74 +140,47 @@ export const AddOrg: FC = () => {
     }
   }
 
-  // GET
-  const GET = async () => {
-    const res = await Promise.all([getRazdel(), getPodrazdel(), getServiceType()])
-    const razdel = res[0]?.data
-    const podrazdelData = res[1]?.data
-    const serviceTypeData = res[2]?.data
-
-    if (podrazdelData) setPodrazdel(podrazdelData)
-    if (serviceTypeData) setServiceType(serviceTypeData)
-    if (razdel) setRazdel(razdel)
-  }
-
   // GET-FOR-EDIT
-  const GET_FOR_EDIT = async () => {
-    if (searchParams.get('id')) {
-      const res = await getOneOrganization(searchParams.get('id') as string)
-      if (res?.status === 200) {
-        setPhones(
-          res?.data[0]?.phones?.map((item: any) => ({
-            id: item?.id,
-            value: item?.number,
-            type: item?.type_number
-          }))
-        )
-        setPhotos(res?.data[0]?.pictures)
-        setCoordinates([
-          parseFloat(JSON.parse(res?.data[0]?.location).coordinates?.lat),
-          parseFloat(JSON.parse(res?.data[0]?.location).coordinates?.lon)
-        ])
-        res?.data?.map((item: any) => {
-          reset({
-            worktime_from: JSON.parse(item?.scheduler)?.worktime_from,
-            worktime_to: JSON.parse(item?.scheduler)?.worktime_to,
-            breakfast_from: JSON.parse(item?.scheduler)?.breakfast_from,
-            breakfast_to: JSON.parse(item?.scheduler)?.breakfast_to,
-            dayoffs: JSON.parse(item?.scheduler)?.dayoffs,
-            sub_category_id: item?.sub_category_org?.id,
-            category_id: item?.sub_category_org?.category_org?.id,
-            main_organization: item?.main_organization,
-            manager: item?.manager,
-            section: item?.sectionId?.id,
-            organization_name: item?.organization_name,
-            email: item?.email,
-            address: item?.address,
-            segment: item?.segment,
-            account: item?.account,
-            inn: item?.inn,
-            bank_account: item?.bank_account,
-            comment: item?.comment,
-            cash: item?.payment_types?.cash,
-            terminal: item?.payment_types?.terminal,
-            transfer: item?.payment_types?.transfer,
-            autobus: JSON.parse(item?.transport)?.bus,
-            marshrut: JSON.parse(item?.transport)?.gazelle,
-            metro_station: JSON.parse(item?.transport)?.metro_station,
-            'micro-autobus': JSON.parse(item?.transport)?.micro_bus
-          })
+  const GET_EDIT = async () => {
+    const editId = searchParams.get('id')
+    if (editId) {
+      const res = await GET_FOR_EDIT(editId)
+
+      res?.map((item: any) => {
+        reset({
+          worktime_from: item?.scheduler?.worktime_from,
+          worktime_to: item?.scheduler?.worktime_to,
+          breakfast_from: item?.scheduler?.breakfast_from,
+          breakfast_to: item?.scheduler?.breakfast_to,
+          dayoffs: item?.scheduler?.dayoffs,
+          sub_category_id: item?.sub_category_org?.id,
+          category_id: item?.sub_category_org?.category_org?.id,
+          main_organization: item?.main_organization,
+          manager: item?.manager,
+          section: item?.sectionId?.id,
+          organization_name: item?.organization_name,
+          email: item?.email,
+          address: item?.address,
+          segment: item?.segment,
+          account: item?.account,
+          inn: item?.inn,
+          bank_account: item?.bank_account,
+          comment: item?.comment,
+          cash: item?.payment_types?.cash,
+          terminal: item?.payment_types?.terminal,
+          transfer: item?.payment_types?.transfer,
+          autobus: item?.transport?.bus,
+          marshrut: item?.transport?.gazelle,
+          metro_station: item?.transport?.metro_station,
+          'micro-autobus': item?.transport?.micro_bus
         })
-      }
+      })
     }
   }
 
-  // GET VALUES FOR EDIT
+  // GET
   useEffect(() => {
-    GET()
-    GET_FOR_EDIT()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    Promise.all([GET(), GET_EDIT()])
   }, [searchParams])
 
   // RESET VALUES WHEN UNMOUNT
@@ -231,7 +190,6 @@ export const AddOrg: FC = () => {
       setPhotos([])
       reset()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

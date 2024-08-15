@@ -18,7 +18,6 @@ import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Link } from '@/navigation'
 import Rate from '../../shared/UI/Rate'
 import { useLang } from '@/@core/shared/hooks/useLang'
-import { useRouter } from 'next/navigation'
 import { BookmarkOrgsAsync, DeleteOrgAsync } from '@/@core/feature'
 import { Eye } from 'react-feather'
 
@@ -31,7 +30,6 @@ type IDataType = {
 
 const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
   const { colorMode } = useColorMode()
-  const router = useRouter()
   const { t } = useLang()
 
   return (

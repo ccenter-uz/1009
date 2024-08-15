@@ -23,8 +23,6 @@ const Comment: FC = () => {
   const { t } = useLang()
   const { resultItemData } = useResultItemSlicer()
 
-  console.log(resultItemData, 'resultItemData')
-
   return (
     <Box aria-label='section'>
       <Text
@@ -44,7 +42,7 @@ const Comment: FC = () => {
         animationDuration={2500}
         key={'carousel'}
         responsive={responsive}
-        items={resultItemData?.map((item: IResultItem) => (
+        items={resultItemData[0]?.comments?.map((item: IResultItem) => (
           <BoxGen
             my={'24px'}
             aria-label='card'

@@ -16,23 +16,24 @@ export const BookmarkOrgs: FC<Props> = props => {
   // CREATE-OR-DELETE-SAVED
   const handleSavedorg = async () => {
     if (!!data?.saved_organization?.length) {
-      const res = await deleteSavedOrg(data?.id)
+      const res = await deleteSavedOrg(data?.saved_organization[0]?.id)
 
       if (!res) return null
 
       if (res.status === 204) {
         toast.success(t(`deleted`), { position: 'bottom-right' })
       }
-    }
-    const body = {
-      organization_id: data.id as string
-    }
-    const res = await postSavedOrg(body)
+    } else {
+      const body = {
+        organization_id: data.id as string
+      }
+      const res = await postSavedOrg(body)
 
-    if (!res) return null
+      if (!res) return null
 
-    if (res.status === 201) {
-      toast.success(t(`success`), { position: 'bottom-right' })
+      if (res.status === 201) {
+        toast.success(t(`success`), { position: 'bottom-right' })
+      }
     }
   }
 

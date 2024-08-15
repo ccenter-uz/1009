@@ -13,7 +13,6 @@ export const AddOrgAdditional: FC<MODEL_FORM_INCOME> = props => {
       <AddorgAccordionInputs label={t('payment-methods')}>
         <Stack>
           <Checkbox
-            defaultChecked={true}
             {...register('cash', { required: true })}
             size={{ base: 'sm', sm: 'sm', md: 'md', xl: 'md' }}
             colorScheme={'teal'}

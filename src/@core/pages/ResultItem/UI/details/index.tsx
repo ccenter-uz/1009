@@ -16,7 +16,7 @@ export const Details: FC = () => {
       direction={{ base: 'column', sm: 'column', md: 'row', xl: 'row' }}
       gap={{ base: 5, sm: 5, md: 5, xl: 5 }}
     >
-      <Box className='payment_type' w={'100%'} p={5} boxShadow={'0px 15px 20px 0px rgba(0, 0, 0, 0.05)'}>
+      <Box className='payment_types' w={'100%'} p={5} boxShadow={'0px 15px 20px 0px rgba(0, 0, 0, 0.05)'}>
         <Text fontSize={{ base: '14px', sm: '14px', md: '16px', xl: '20px' }} color={'grey'} mb={2}>
           {t('payment-methods')}
         </Text>
@@ -24,15 +24,15 @@ export const Details: FC = () => {
         <List>
           <ListItem gap={2} display={'flex'} alignItems={'center'} fontSize={scssVariables.fonts.span}>
             <Text>{t('cash')}:</Text>
-            <Text>{t(`${resultItemData[0]?.payment_type?.cash || 'false'}`)}</Text>
+            <Text>{t(`${resultItemData[0]?.payment_types?.cash || 'false'}`)}</Text>
           </ListItem>
           <ListItem gap={2} display={'flex'} alignItems={'center'} fontSize={scssVariables.fonts.span}>
             <Text>{t('terminal')}:</Text>
-            <Text>{t(`${resultItemData[0]?.payment_type?.terminal || 'false'}`)}</Text>
+            <Text>{t(`${resultItemData[0]?.payment_types?.terminal || 'false'}`)}</Text>
           </ListItem>
           <ListItem gap={2} display={'flex'} alignItems={'center'} fontSize={scssVariables.fonts.span}>
             <Text>{t('transfer')}:</Text>
-            <Text>{t(`${resultItemData[0]?.payment_type?.transfer || 'false'}`)}</Text>
+            <Text>{t(`${resultItemData[0]?.payment_types?.transfer || 'false'}`)}</Text>
           </ListItem>
         </List>
       </Box>

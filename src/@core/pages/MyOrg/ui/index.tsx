@@ -5,26 +5,21 @@ import Pagination from '@/@core/shared/UI/Pagination'
 import { Box, SimpleGrid } from '@chakra-ui/react'
 import { FC, useEffect } from 'react'
 import { useMyorgSlicer } from '../model/Slicer'
+import { useSearchParams } from 'next/navigation'
 
 export const MyOrg: FC = () => {
-  const { current, pageSize, total, handlePageChange, handlePageSizeChange } = usePagination()
-  const { myOrgData, setMyOrgData } = useMyorgSlicer()
+  const { current, pageSize, total, setTotal, handlePageChange, handlePageSizeChange } = usePagination()
+  const { myOrgData, getMyOrgData } = useMyorgSlicer()
+  const searchParams = useSearchParams()
 
-  //   GET
-  const get = async () => {
-    const res = await getMyOrganizations()
-
-    if (!res) return null
-    if (res?.status === 200) {
-      setMyOrgData(res?.data?.my_organization)
-    }
-  }
-
+  //  GET
   useEffect(() => {
-    get()
+    getMyOrgData(current, pageSize).then((res: { totalItems: number }) => {
+      setTotal(res?.totalItems)
+    })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [searchParams])
 
   return (
     <Box>

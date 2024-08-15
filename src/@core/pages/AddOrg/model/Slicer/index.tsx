@@ -1,33 +1,79 @@
+import { getOneOrganization, getPodrazdel, getRazdel, getServiceType } from '@/@core/shared/api'
 import { create } from 'zustand'
 
 const AddOrgSlicer = create(set => ({
+  // VARS
   razdel: [],
   serviceType: [],
+  podrazdel: [],
+  photos: [],
+  phones: [{ id: 1, value: '', type: '' }],
+  coordinates: [41.311151, 69.279737],
+  // SETTERS
   setServiceType: (serviceType: any) => set({ serviceType }),
   setRazdel: (razdel: any) => set({ razdel }),
-  podrazdel: [],
   setPodrazdel: (podrazdel: any) => set({ podrazdel }),
-  photos: [],
   setPhotos: (photos: any) => set({ photos }),
-  phones: [{ id: 1, value: '', type: '' }],
   setPhones: (phones: { id: number; value: string; type: string }[]) => set({ phones }),
-  coordinates: [41.311151, 69.279737],
-  setCoordinates: (coordinates: number[]) => set({ coordinates })
+  setCoordinates: (coordinates: number[]) => set({ coordinates }),
+  // GETTERS
+  GET: async () => {
+    const res = await Promise.all([getRazdel(), getPodrazdel(), getServiceType()])
+
+    if (res[0]?.status !== 200 || res[1]?.status !== 200 || res[2]?.status !== 200) return
+
+    const razdel = res[0]?.data
+    const podrazdel = res[1]?.data
+    const serviceType = res[2]?.data
+
+    if (podrazdel) set({ podrazdel })
+    if (serviceType) set({ serviceType })
+    if (razdel) set({ razdel })
+  },
+
+  GET_FOR_EDIT: async (id: string) => {
+    const res = await getOneOrganization(id)
+
+    if (!res) return
+
+    if (res?.status === 200) {
+      set({
+        phones: res?.data[0]?.phones?.map((item: any) => ({
+          id: item?.id,
+          value: item?.number,
+          type: item?.type_number
+        }))
+      })
+      set({ photos: res?.data[0]?.pictures })
+      set({
+        coordinates: [
+          parseFloat(res?.data[0]?.location.coordinates?.lat),
+          parseFloat(res?.data[0]?.location.coordinates?.lon)
+        ]
+      })
+
+      return res?.data
+    }
+  }
 }))
 
 export const useAddorgSlicer = () => {
-  const phones = AddOrgSlicer((state: any) => state.phones)
-  const photos = AddOrgSlicer((state: any) => state.photos)
-  const setPhones = AddOrgSlicer((state: any) => state.setPhones)
-  const setPhotos = AddOrgSlicer((state: any) => state.setPhotos)
-  const coordinates = AddOrgSlicer((state: any) => state.coordinates)
-  const setCoordinates = AddOrgSlicer((state: any) => state.setCoordinates)
-  const razdel = AddOrgSlicer((state: any) => state.razdel)
-  const setRazdel = AddOrgSlicer((state: any) => state.setRazdel)
-  const podrazdel = AddOrgSlicer((state: any) => state.podrazdel)
-  const setPodrazdel = AddOrgSlicer((state: any) => state.setPodrazdel)
-  const serviceType = AddOrgSlicer((state: any) => state.serviceType)
-  const setServiceType = AddOrgSlicer((state: any) => state.setServiceType)
+  const {
+    razdel,
+    setRazdel,
+    podrazdel,
+    setPodrazdel,
+    phones,
+    photos,
+    setPhones,
+    setPhotos,
+    coordinates,
+    setCoordinates,
+    serviceType,
+    setServiceType,
+    GET,
+    GET_FOR_EDIT
+  } = AddOrgSlicer((state: any) => state)
 
   return {
     razdel,
@@ -41,6 +87,8 @@ export const useAddorgSlicer = () => {
     coordinates,
     setCoordinates,
     serviceType,
-    setServiceType
+    setServiceType,
+    GET,
+    GET_FOR_EDIT
   }
 }

@@ -71,9 +71,14 @@ export const getOneOrganization = async (id: string) => {
 }
 
 // GET-SAVED-ORGANIZATIONS
-export const getSavedOrganizations = async () => {
+export const getSavedOrganizations = async (page:number,pageSize:number) => {
   try {
-    const response = await api.get(`${ENDPOINTS.savedOrgAll}`)
+    const response = await api.get(`${ENDPOINTS.savedOrgAll}`, {
+      params: {
+        page,
+        pageSize
+      }
+    })
 
     return response
   } catch (err) {
@@ -82,9 +87,14 @@ export const getSavedOrganizations = async () => {
 }
 
 // GET-MY-ORGANIZATIONS
-export const getMyOrganizations = async () => {
+export const getMyOrganizations = async (page:number,pageSize:number) => {
   try {
-    const response = await api.get(`${ENDPOINTS.myorgsAll}`)
+    const response = await api.get(`${ENDPOINTS.myorgsAll}`,{
+      params: {
+        page,
+        pageSize
+      }
+    })
 
     return response
   } catch (err) {
