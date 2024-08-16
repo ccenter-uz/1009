@@ -180,17 +180,15 @@ export const AddOrg: FC = () => {
 
   // GET
   useEffect(() => {
-    Promise.all([GET(), GET_EDIT()])
-  }, [searchParams])
+    Promise.allSettled([GET(), GET_EDIT()])
 
-  // RESET VALUES WHEN UNMOUNT
-  useEffect(() => {
+    // CLEAN UP
     return () => {
       setPhones([])
       setPhotos([])
       reset()
     }
-  }, [])
+  }, [searchParams])
 
   return (
     <Box>

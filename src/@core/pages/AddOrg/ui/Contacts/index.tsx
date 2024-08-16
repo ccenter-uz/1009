@@ -12,6 +12,7 @@ import dynamic from 'next/dynamic'
 import LoaderUI from '@/@core/shared/UI/LoadingUI'
 import { useAddorgSlicer } from '../../model/Slicer'
 import { useSearchParams } from 'next/navigation'
+import InputMask from 'react-input-mask'
 
 const Maps = dynamic(() => import('@/@core/shared/UI/Map/index').then(res => res.Maps), {
   ssr: false,
@@ -64,6 +65,8 @@ export const AddOrgContacts: FC<MODEL_FORM_INCOME> = props => {
             <Box key={phone.id} mb={'8px'} display={'flex'} alignItems={'center'} gap={'8px'}>
               <Input
                 required
+                as={InputMask}
+                mask='+(999)99 999-99-99'
                 defaultValue={phone.value}
                 onChange={inputChange}
                 id={String(phone.id)}

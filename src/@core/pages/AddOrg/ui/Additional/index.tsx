@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { MODEL_FORM_INCOME } from '../../model/types'
-import { Box, Checkbox, Input, Stack, Text } from '@chakra-ui/react'
+import { Box, Flex, Input, Stack, Text } from '@chakra-ui/react'
 import { AddorgAccordionInputs } from '@/@core/entities/AddorgAccordionInputs'
 import { useLang } from '@/@core/shared/hooks/useLang'
 
@@ -12,19 +12,24 @@ export const AddOrgAdditional: FC<MODEL_FORM_INCOME> = props => {
     <Box>
       <AddorgAccordionInputs label={t('payment-methods')}>
         <Stack>
-          <Checkbox
-            {...register('cash', { required: true })}
-            size={{ base: 'sm', sm: 'sm', md: 'md', xl: 'md' }}
-            colorScheme={'teal'}
-          >
-            {t('cash')}
-          </Checkbox>
-          <Checkbox {...register('terminal')} size={{ base: 'sm', sm: 'sm', md: 'md', xl: 'md' }} colorScheme={'teal'}>
-            {t('terminal')}
-          </Checkbox>
-          <Checkbox {...register('transfer')} size={{ base: 'sm', sm: 'sm', md: 'md', xl: 'md' }} colorScheme={'teal'}>
-            {t('transfer')}
-          </Checkbox>
+          <Flex align={'center'} gap={'10px'}>
+            <input type='checkbox' id='cash' {...register('cash', { required: true })} />
+            <label style={{ userSelect: 'none' }} htmlFor='cash'>
+              {t('cash')}
+            </label>
+          </Flex>
+          <Flex align={'center'} gap={'10px'}>
+            <input type='checkbox' id='terminal' {...register('terminal')} />
+            <label style={{ userSelect: 'none' }} htmlFor='terminal'>
+              {t('terminal')}
+            </label>
+          </Flex>
+          <Flex align={'center'} gap={'10px'}>
+            <input type='checkbox' id='transfer' {...register('transfer')} />
+            <label style={{ userSelect: 'none' }} htmlFor='transfer'>
+              {t('transfer')}
+            </label>
+          </Flex>
         </Stack>
         {errors.cash && (
           <Text fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }} color={'red'}>
