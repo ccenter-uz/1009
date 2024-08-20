@@ -6,23 +6,27 @@ type Iinput = {
   width: string | InputProps
   button: ReactNode | null
   rightWidth: string | '100px' | any
+  mask?: string
 }
 
-const InputGen: FC<Partial<Iinput & InputProps>> = forwardRef(({ button = null, rightWidth, width, ...props }, ref) => {
-  return (
-    <InputGroup width={width}>
-      <Input
-        {...props}
-        ref={ref}
-        focusBorderColor='teal.400'
-        _focus={{ boxShadow: `0 0 2px ${scssVariables.blockBgColor}`, border: '1px solid teal' }}
-        sx={{ border: '1px solid lightgrey' }}
-      />
-      <InputRightElement width={rightWidth} h={'100%'}>
-        {button}
-      </InputRightElement>
-    </InputGroup>
-  )
-})
+const InputGen: FC<Partial<Iinput & InputProps>> = forwardRef(
+  ({ button = null, rightWidth, width, mask, ...props }, ref) => {
+    return (
+      <InputGroup width={width}>
+        <Input
+          {...props}
+          ref={ref}
+          mask={mask}
+          focusBorderColor='teal.400'
+          _focus={{ boxShadow: `0 0 2px ${scssVariables.blockBgColor}`, border: '1px solid teal' }}
+          sx={{ border: '1px solid lightgrey' }}
+        />
+        <InputRightElement width={rightWidth} h={'100%'}>
+          {button}
+        </InputRightElement>
+      </InputGroup>
+    )
+  }
+)
 
 export default InputGen

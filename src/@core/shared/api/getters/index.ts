@@ -2,6 +2,7 @@ import { api } from '@/@core/apps/utils/api'
 
 
 enum ENDPOINTS {
+  me = '/Users/get-my-data',
   razdelAll = '/OrganizationCategories/all',
   podrazdelAll='/SubCategoryOrganization/all',
   podrazdelOneByRazdel = '/OrganizationCategories/one',
@@ -13,6 +14,17 @@ enum ENDPOINTS {
   PUT = 'PUT',
   DELETE = 'DELETE',
   PATCH = 'PATCH'
+}
+
+// USER-INFO
+export const getUserInfo = async () => {
+  try {
+    const response = await api.get(`${ENDPOINTS.me}`)
+
+    return response
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 // RAZDEL

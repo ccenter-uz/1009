@@ -6,13 +6,15 @@ export type Ilogin = {
 
 // signUp user type
 export type Iuser = {
-  fio: string
-  phone: string
+  full_name: string
+  number: string
   password: string
-  confirm_password: string
+  confirm_password: string,
+  userId?: string
 }
 
 // AUTH
 export type Ipin = {
-  pin: string
+  pin: string,
+  userId: string
 }

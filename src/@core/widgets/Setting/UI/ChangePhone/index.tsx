@@ -21,7 +21,7 @@ import { useFormStatus } from 'react-dom'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { toast } from 'react-toastify'
 import { api } from '@/@core/apps/utils/api'
-import { UserSettingPhoneAction } from '../../api/changePhone'
+import { postChangeSettingPhone } from '@/@core/shared/api'
 
 const SettingChangePhone: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
   const {
@@ -37,10 +37,10 @@ const SettingChangePhone: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
   const [initialTime, setInitialTime] = useState<number[]>([60])
   const [pin, setPin] = useState<string>('')
 
-  // handlePhoneFinish
+  // FINISH
   const handlePhoneFinish = async (values: any) => {
     if (values !== 'undefined' || values !== '') {
-      const res = await UserSettingPhoneAction(values)
+      const res = await postChangeSettingPhone(values)
       if (!res) return
       if (res.status === 200) {
         console.log(res.message, 'res')
@@ -58,16 +58,16 @@ const SettingChangePhone: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
     })
   }, [])
 
-  // handleResendCode
-  const handleResendCode = async () => {
-    const res = await UserSettingPhoneAction(getValues('phone_number'))
-    if (!res) return
-    if (res.status === 200) {
-      console.log(res.message, 'res')
-      setResendButton(true)
-      setInitialTime(prevState => [...prevState])
-    }
-  }
+  // // handleResendCode
+  // const handleResendCode = async () => {
+  //   const res = await UserSettingPhoneAction(getValues('phone_number'))
+  //   if (!res) return
+  //   if (res.status === 200) {
+  //     console.log(res.message, 'res')
+  //     setResendButton(true)
+  //     setInitialTime(prevState => [...prevState])
+  //   }
+  // }
 
   // handleSendCode
   const handleSendCode = async () => {
@@ -136,7 +136,7 @@ const SettingChangePhone: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
               isDisabled={resendButton}
               cursor={'pointer'}
               color={scssVariables.primary}
-              onClick={handleResendCode}
+              // onClick={handleResendCode}
               fontSize={'14px'}
               fontWeight={400}
             >

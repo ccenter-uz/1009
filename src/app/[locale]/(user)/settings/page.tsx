@@ -12,7 +12,8 @@ const styles = {
     h: { base: '30px', sm: '30px', md: '40px', xl: '40px' },
     borderRadius: '4px',
     _focus: { boxShadow: '0 0 0.5px 0.5px teal' },
-    style: { borderColor: 'lightgrey' }
+    style: { borderColor: 'lightgrey' },
+    fontSize: { base: '13px', sm: '13px', md: '16px', xl: '16px' }
   },
   formControlStyle: {
     mb: { base: '0.5em', sm: '0.5em', md: '1em', xl: '1em' }

@@ -191,5 +191,6 @@
   "contacts": "Контакты",
   "gallery": "Картинки",
   "mark": "В избранный",
-  "deleted": "Удалено"
+  "deleted": "Удалено",
+  "auth-password-confirm-error": "Пароль не совпадает"
 }

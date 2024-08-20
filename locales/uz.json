@@ -191,5 +191,6 @@
   "contacts": "Kontaktlar",
   "gallery": "Rasmlar",
   "mark": "Sevimlilarga qo'shing",
-  "deleted": "Oʻchirildi"
+  "deleted": "Oʻchirildi",
+  "auth-password-confirm-error": "Parol mos emas"
 }

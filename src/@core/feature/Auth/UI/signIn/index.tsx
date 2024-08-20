@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Img, Text } from '@chakra-ui/react'
+import { FormControl, FormErrorMessage, FormLabel, Img } from '@chakra-ui/react'
 import { FC, useState } from 'react'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
@@ -7,7 +7,9 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 import InputGen from '@/@core/shared/UI/Input'
 import ButtonGen from '@/@core/shared/UI/Button'
-import { Login } from '../../api/login'
+import { Login } from '../../api'
+import ReactInputMask from 'react-input-mask'
+import { useGlobalStore } from '@/@core/apps/store/global'
 
 const SignIn: FC = () => {
   const { t } = useLang()
@@ -18,6 +20,7 @@ const SignIn: FC = () => {
     formState: { errors }
   } = useForm()
   const router = useRouter()
+  const { getUser } = useGlobalStore()
 
   // FINISH
   const handleFinish = async (e: any) => {
@@ -26,6 +29,7 @@ const SignIn: FC = () => {
     if (!res) return setPending(false)
     if (res.status === 200) {
       setPending(false)
+      await getUser()
       toast.success(res.message, { position: 'bottom-right' }), router.push('/', { replace: true })
     }
 
@@ -34,9 +38,11 @@ const SignIn: FC = () => {
 
   return (
     <form onSubmit={handleSubmit(handleFinish)} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <FormControl isRequired>
+      <FormControl isRequired isInvalid={!!errors.number}>
         <FormLabel fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>{t('auth-phone')}</FormLabel>
         <InputGen
+          as={ReactInputMask}
+          mask='+(998)99 999-99-99'
           isDisabled={pending}
           aria-label='number'
           aria-invalid={errors.number ? 'true' : 'false'}
@@ -47,15 +53,12 @@ const SignIn: FC = () => {
           borderRadius={'2px'}
           button={<Img width={'15px'} src='/phone-fill.svg' alt='phone-icon' />}
           name='number'
-          placeholder='+99890 123 45 78'
         />
-        {errors.phone && (
-          <Text color={'red'} fontSize={'12px'}>
-            {t('auth-phone-error')}
-          </Text>
-        )}
+        <FormErrorMessage fontSize={'12px'} color={'red'}>
+          {t('auth-phone-error')}
+        </FormErrorMessage>
       </FormControl>
-      <FormControl isRequired>
+      <FormControl isRequired isInvalid={!!errors.password}>
         <FormLabel fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>{t('auth-password')}</FormLabel>
         <InputGen
           autoComplete='off'
@@ -72,11 +75,9 @@ const SignIn: FC = () => {
           name='password'
           placeholder='***'
         />
-        {errors.password && (
-          <Text color={'red'} fontSize={'12px'}>
-            {t('auth-password-error')}
-          </Text>
-        )}
+        <FormErrorMessage fontSize={'12px'} color={'red'}>
+          {t('auth-password-error')}
+        </FormErrorMessage>
       </FormControl>
       <ButtonGen
         isLoading={pending}

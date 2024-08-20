@@ -1,11 +1,12 @@
 import { useLang } from '@/@core/shared/hooks/useLang'
-import { Box, Button, FormControl, FormLabel, Img, Text } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormErrorMessage, FormLabel, Img, Text } from '@chakra-ui/react'
 import { FC, useState } from 'react'
 import InputGen from '@/@core/shared/UI/Input'
 import ButtonGen from '@/@core/shared/UI/Button'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { Regis } from '../../api/regis'
+import ReactInputMask from 'react-input-mask'
+import { Regis } from '../../api'
 
 const SignUp: FC = () => {
   const { t } = useLang()
@@ -21,14 +22,13 @@ const SignUp: FC = () => {
   // FINISH
   const handleFinish = async (e: any) => {
     setPending(true)
-    sessionStorage.setItem('user', JSON.stringify(e))
     const res = await Regis(e)
     if (!res) return setPending(false)
-    if (res.status === 200) {
-      setPending(false)
-      console.log(res.message, 'res')
-      router.replace('/checknumber')
-    }
+
+    res?.status === 201 &&
+      (setPending(false),
+      sessionStorage.setItem('checkNumber', JSON.stringify(res?.data)),
+      router.replace('/checknumber'))
 
     return setPending(false)
   }
@@ -40,18 +40,18 @@ const SignUp: FC = () => {
         onSubmit={handleSubmit(handleFinish)}
         style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}
       >
-        <FormControl isRequired>
-          <FormLabel htmlFor='fio' fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>
+        <FormControl isRequired isInvalid={!!errors.full_name}>
+          <FormLabel htmlFor='full_name' fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>
             {t('auth-regis-fio')}
           </FormLabel>
           <InputGen
-            aria-label='fio'
-            aria-invalid={errors.fio ? 'true' : 'false'}
-            {...register('fio', {
+            aria-label='full_name'
+            aria-invalid={errors.full_name ? 'true' : 'false'}
+            {...register('full_name', {
               required: true,
               minLength: 3
             })}
-            id='fio'
+            id='full_name'
             isDisabled={pending}
             height={'35px'}
             bg={'#fff'}
@@ -59,27 +59,29 @@ const SignUp: FC = () => {
             rightWidth={'43px'}
             borderRadius={'2px'}
             button={<Img width={'15px'} src='/user-fill.svg' alt='user-icon' />}
-            name='fio'
+            name='full_name'
             placeholder='Eshmatov Toshmat'
           />
-          {errors.fio && (
-            <Text color={'red'} fontSize={'12px'}>
-              {t('auth-regis-fio-error')}
-            </Text>
-          )}
+          <FormErrorMessage color={'red'} fontSize={'12px'}>
+            {t('auth-regis-fio-error')}
+          </FormErrorMessage>
         </FormControl>
-        <FormControl isRequired>
-          <FormLabel htmlFor='phone' fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>
+        <FormControl isRequired isInvalid={!!errors.number}>
+          <FormLabel htmlFor='number' fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>
             {t('auth-phone')}
           </FormLabel>
+
           <InputGen
-            aria-label='phone'
-            aria-invalid={errors.phone ? 'true' : 'false'}
-            {...register('phone', {
+            as={ReactInputMask}
+            mask='+(998)99 999-99-99'
+            autoComplete='off'
+            aria-label='number'
+            aria-invalid={errors.number ? 'true' : 'false'}
+            {...register('number', {
               required: true,
               minLength: 12
             })}
-            id='phone'
+            id='number'
             isDisabled={pending}
             height={'35px'}
             bg={'#fff'}
@@ -87,16 +89,13 @@ const SignUp: FC = () => {
             rightWidth={'43px'}
             borderRadius={'2px'}
             button={<Img width={'15px'} src='/phone-fill.svg' alt='phone-icon' />}
-            name='phone'
-            placeholder='+998901234578'
+            name='number'
           />
-          {errors.phone && (
-            <Text color={'red'} fontSize={'12px'}>
-              {t('auth-phone-error')}
-            </Text>
-          )}
+          <FormErrorMessage color={'red'} fontSize={'12px'}>
+            {t('auth-phone-error')}
+          </FormErrorMessage>
         </FormControl>
-        <FormControl isRequired>
+        <FormControl isRequired isInvalid={!!errors.password}>
           <FormLabel htmlFor='password' fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>
             {t('auth-create-password')}
           </FormLabel>
@@ -120,13 +119,11 @@ const SignUp: FC = () => {
             name='password'
             placeholder='******'
           />
-          {errors.password && (
-            <Text color={'red'} fontSize={'12px'}>
-              {t('auth-password-error')}
-            </Text>
-          )}
+          <FormErrorMessage color={'red'} fontSize={'12px'}>
+            {t('auth-password-error')}
+          </FormErrorMessage>
         </FormControl>
-        <FormControl isRequired>
+        <FormControl isRequired isInvalid={!!errors.confirm_password}>
           <FormLabel htmlFor='confirm_password' fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>
             {t('auth-password-confirm')}
           </FormLabel>
@@ -154,11 +151,9 @@ const SignUp: FC = () => {
             name='confirm_password'
             placeholder='******'
           />
-          {errors.confirm_password && (
-            <Text color={'red'} fontSize={'12px'}>
-              {errors.confirm_password.message?.toString()}
-            </Text>
-          )}
+          <FormErrorMessage color={'red'} fontSize={'12px'}>
+            {t('auth-password-confirm-error')}
+          </FormErrorMessage>
         </FormControl>
 
         <ButtonGen
