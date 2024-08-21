@@ -20,12 +20,14 @@ import {
 } from '@chakra-ui/react'
 import { FC } from 'react'
 import { logOut } from '../../api'
+import { useGlobalStore } from '@/@core/apps/store/global'
 
 type Props = {}
 
 export const UserPopOver: FC<Props> = props => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   const { t } = useLang()
+  const { userInfo } = useGlobalStore()
 
   return (
     <Popover placement='bottom-end' isOpen={isOpen} onOpen={onOpen} onClose={onClose} closeOnBlur={false}>
@@ -51,10 +53,10 @@ export const UserPopOver: FC<Props> = props => {
               />
               <Box>
                 <Text fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }} fontWeight={500}>
-                  John Doe
+                  {userInfo?.full_name}
                 </Text>
                 <Text fontSize={'12px'} color={'grey'}>
-                  Admin
+                  {userInfo?.role}
                 </Text>
               </Box>
             </Box>
@@ -79,7 +81,7 @@ export const UserPopOver: FC<Props> = props => {
                 fontWeight={500}
                 fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
               >
-                30.000 UZS
+                {userInfo?.balance || 0} UZS
               </Text>
             </Box>
           </PopoverHeader>

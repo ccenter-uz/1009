@@ -16,11 +16,7 @@
       }
     ]
   },
-  "plugins": ["import"],
   "settings": {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx", "js"]
-    },
     "import/resolver": {
       "typescript": {
         "alwaysTryTypes": true,

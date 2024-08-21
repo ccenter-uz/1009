@@ -5,6 +5,7 @@ import { FC } from 'react'
 import BoxGen from '@/@core/shared/UI/Box'
 import SettingChangeData from '@/@core/widgets/Setting/UI/ChangeInfo'
 import SettingChangePhone from '@/@core/widgets/Setting/UI/ChangePhone'
+import { useLang } from '@/@core/shared/hooks/useLang'
 
 // styles
 const styles = {
@@ -42,6 +43,7 @@ const styles = {
 }
 
 const Settings: FC = () => {
+  const { t } = useLang()
   const breadcrumblinks = [
     {
       id: 1,
@@ -62,7 +64,7 @@ const Settings: FC = () => {
         boxShadow={scssVariables.boxShadow}
       >
         {/* data */}
-        <Text {...styles.textStyle}>Изменить данные о пользователя</Text>
+        <Text {...styles.textStyle}>{t('change-setting-info')}</Text>
         <SettingChangeData styles={styles} />
         {/* phone */}
         <SettingChangePhone styles={styles} />

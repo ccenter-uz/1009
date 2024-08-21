@@ -81,7 +81,7 @@ const lists = [
 export const FilterList: FC<Props> = props => {
   return (
     <Box
-      w={{ base: '100%', sm: '100%', md: '540px', xl: '540px' }}
+      w={{ base: '100%', sm: '100%', md: '240px', xl: '240px' }}
       h={{ base: '100%', sm: '100%', md: '400px', xl: '400px' }}
       bg={scssVariables.blockBgColor}
       borderRadius={'4px'}

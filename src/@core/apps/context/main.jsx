@@ -2,7 +2,7 @@
 import { createContext } from 'react'
 import { Opportunity } from './opportunitiesRecord'
 
-export const Main = createContext()
+const Main = createContext()
 
 const MainContext = ({ children }) => {
   return (

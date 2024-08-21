@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 import InputGen from '@/@core/shared/UI/Input'
 import ButtonGen from '@/@core/shared/UI/Button'
-import { Login } from '../../api'
 import ReactInputMask from 'react-input-mask'
 import { useGlobalStore } from '@/@core/apps/store/global'
+import { postLogin } from '@/@core/shared/api'
 
 const SignIn: FC = () => {
   const { t } = useLang()
@@ -25,12 +25,11 @@ const SignIn: FC = () => {
   // FINISH
   const handleFinish = async (e: any) => {
     setPending(true)
-    const res = await Login(e)
+    const res = await postLogin(e)
     if (!res) return setPending(false)
     if (res.status === 200) {
       setPending(false)
-      await getUser()
-      toast.success(res.message, { position: 'bottom-right' }), router.push('/', { replace: true })
+      await getUser(), toast.success(res.message, { position: 'bottom-right' }), router.push('/', { replace: true })
     }
 
     return setPending(false)

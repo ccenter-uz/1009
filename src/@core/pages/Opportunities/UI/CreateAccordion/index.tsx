@@ -20,7 +20,7 @@ import {
   Tooltip,
   useColorMode
 } from '@chakra-ui/react'
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 import { usePathname } from 'next/navigation'
 import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'

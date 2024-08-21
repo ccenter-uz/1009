@@ -2,12 +2,14 @@ import { api } from "@/@core/apps/utils/api"
 
 enum ENDPOINTS {
   changeData = '/Users/update-user',
-  changePhone = '/Auth/update-number'
+  changePhone = '/Auth/update-number',
+  verifyPin='/Auth/update-number/verify-sms-code',
+  resendCode ='/Auth/resend-sms-code'
 }
 
 
 // SETTING-CHANGE-DATA
-export const postChangeSettingData = async (id: number | string, body: FormData) => {
+export const patchChangeSettingData = async (id: number | string, body: FormData) => {
   try {
     const res = await api.patch(`${ENDPOINTS.changeData}/${id}`, body)
     
@@ -15,26 +17,43 @@ export const postChangeSettingData = async (id: number | string, body: FormData)
 
     return res
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
 // SETTING-CHANGE-PHONE
-export const postChangeSettingPhone = async (values: string) => {
+export const patchChangeSettingPhone = async (body: string) => {
   try {
-    const body = values
     const res = await api.patch(`${ENDPOINTS.changePhone}`, body)
-    if (res.status === 200)
-      return {
-        status: 200,
-        message: 'Success'
-      }
+  
+    if(!res) return null;
+
+    return res
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+// SETTING-CHANGE-PHONE-VERIFY
+export const patchPhoneChangeVerify =async(body:{number:string,smsCode:string})=>{
+  try{
+    const res = await api.patch(`${ENDPOINTS.verifyPin}`, body)
+    if(!res) return null;
+    
+    return res
+  }catch(err){
+    console.error(err)
+  }
+}
+
+// RESEND-CODE
+export const patchResendCode = async (id: number | string) => {
+  try {
+    const res = await api.patch(`${ENDPOINTS.resendCode}/${id}`)
+    if (!res) return null
+ 
+    return res
   } catch (err) {
     console.log(err)
-  } finally {
-    return {
-      status: 200,
-      message: 'Success'
-    }
   }
 }

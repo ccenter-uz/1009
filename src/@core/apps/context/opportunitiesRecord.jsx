@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 
-export const OpportunitiesContext = createContext()
+const OpportunitiesContext = createContext()
 
 export const Opportunity = ({ children }) => {
   const [record, setRecord] = useState(null)

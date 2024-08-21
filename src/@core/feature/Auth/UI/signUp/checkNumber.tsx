@@ -8,7 +8,7 @@ import TextGen from '@/@core/shared/UI/Text'
 import { toast } from 'react-toastify'
 import { Iuser } from '../../types'
 import { useRouter } from 'next/navigation'
-import { CheckNumberSend, ResendChecknumber } from '../../api'
+import { patchResendCode, postVerifyUserCode } from '@/@core/shared/api'
 
 const CheckNumber: FC = () => {
   const { t } = useLang()
@@ -24,7 +24,7 @@ const CheckNumber: FC = () => {
     if (pin === 'undefined' || (pin === '' && pin.length < 3))
       return toast.warn('Pin must not be empty and must containt minimum 6 letters', { position: 'bottom-right' })
     setPending(true)
-    const res = await CheckNumberSend({
+    const res = await postVerifyUserCode({
       pin,
       userId: user?.userId as string
     })
@@ -37,7 +37,7 @@ const CheckNumber: FC = () => {
 
   // handleReSend
   const handleReSend = async () => {
-    const res = await ResendChecknumber(user?.userId as string)
+    const res = await patchResendCode(user?.userId as string)
 
     if (!res) return null
     res?.status === 200 &&

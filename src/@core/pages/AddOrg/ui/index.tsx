@@ -24,7 +24,7 @@ import Swal from 'sweetalert2'
 import { useAddorgSlicer } from '../model/Slicer'
 import { postCreateOrg } from '@/@core/shared/api'
 
-export const AddOrg: FC = () => {
+const AddOrg: FC = () => {
   const { t } = useLang()
   const searchParams = useSearchParams()
   const router = useRouter()

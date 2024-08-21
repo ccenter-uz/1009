@@ -7,16 +7,15 @@ import {
   FormLabel,
   Image,
   Input,
-  StyleFunctionProps,
-  Text
+  StyleFunctionProps
 } from '@chakra-ui/react'
 import { ChangeEvent, FC, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { FieldValues, useForm } from 'react-hook-form'
 import { useFormStatus } from 'react-dom'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { User } from 'react-feather'
-import { postChangeSettingData } from '@/@core/shared/api/patches'
+import { patchChangeSettingData } from '@/@core/shared/api/patches'
 import { useGlobalStore } from '@/@core/apps/store/global'
 import { toast } from 'react-toastify'
 import { api } from '@/@core/apps/utils/api'
@@ -34,13 +33,13 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
   const { userInfo, getUser } = useGlobalStore()
 
   // FINISH
-  const handleFinish = async ({ full_name, old_password, new_password }: any) => {
+  const handleFinish = async ({ full_name, old_password, new_password }: FieldValues) => {
     const body = new FormData()
     body.append('image', image ? image[0] : '')
     body.append('full_name', full_name)
     body.append('password', old_password)
     body.append('newpassword', new_password)
-    const res = await postChangeSettingData(userInfo?.id, body)
+    const res = await patchChangeSettingData(userInfo?.id, body)
 
     res?.status === 200 && (toast.success(t(`success`), { position: 'bottom-right' }), getUser())
   }

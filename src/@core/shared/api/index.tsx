@@ -7,14 +7,15 @@ export {
   getOneOrganization,
   getSavedOrganizations,
   getMyOrganizations,
-  getUserInfo
+  getUserInfo,
+  getAllOrganizations
 } from './getters'
 
 // export POSTS
-export { postCreateOrg, postComment, postSavedOrg } from './posts'
+export { postLogin, postRegis, postVerifyUserCode, postCreateOrg, postComment, postSavedOrg } from './posts'
 
 // export DELETES
 export { deleteSavedOrg, deleteOrganization } from './deletes'
 
 // export PATCHES
-export { postChangeSettingData, postChangeSettingPhone } from './patches'
+export { patchChangeSettingData, patchChangeSettingPhone, patchPhoneChangeVerify, patchResendCode } from './patches'

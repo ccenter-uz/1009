@@ -6,7 +6,7 @@ import ButtonGen from '@/@core/shared/UI/Button'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import ReactInputMask from 'react-input-mask'
-import { Regis } from '../../api'
+import { postRegis } from '@/@core/shared/api'
 
 const SignUp: FC = () => {
   const { t } = useLang()
@@ -22,7 +22,7 @@ const SignUp: FC = () => {
   // FINISH
   const handleFinish = async (e: any) => {
     setPending(true)
-    const res = await Regis(e)
+    const res = await postRegis(e)
     if (!res) return setPending(false)
 
     res?.status === 201 &&

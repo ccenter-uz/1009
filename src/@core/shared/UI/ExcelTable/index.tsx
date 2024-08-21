@@ -18,7 +18,7 @@ import {
   Input,
   Image
 } from '@chakra-ui/react'
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 import { useLang } from '../../hooks/useLang'
 
 interface TableColumn {

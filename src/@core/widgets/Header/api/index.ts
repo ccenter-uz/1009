@@ -2,5 +2,6 @@ import Cookies from 'js-cookie'
 
 export const logOut = async () => {
   Cookies.remove('access_token')
-  window.document.location.href = '/'
+  window.document.location.href = '/',
+  sessionStorage.clear()
 }

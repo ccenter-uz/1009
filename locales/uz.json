@@ -192,5 +192,14 @@
   "gallery": "Rasmlar",
   "mark": "Sevimlilarga qo'shing",
   "deleted": "Oʻchirildi",
-  "auth-password-confirm-error": "Parol mos emas"
+  "auth-password-confirm-error": "Parol mos emas",
+  "change-setting-info": "Foydalanuvchi ma'lumotlarini o'zgartirish",
+  "change-setting-phone": "Foydalanuvchining telefon raqamini o'zgartiring",
+  "phone": "Telefon raqami",
+  "code": "SMS kodini kiriting",
+  "change-phone": "Raqamni o'zgartirish",
+  "send-code": "Kodni yuboring",
+  "error-number": "Bu maydonda kamida 12 ta raqam boʻlishi kerak",
+  "error-code": "Bu maydon kamida 6 ta raqamdan iborat boʻlishi kerak",
+  "found": "Topildi"
 }

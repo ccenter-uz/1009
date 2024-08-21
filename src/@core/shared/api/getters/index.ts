@@ -10,10 +10,22 @@ enum ENDPOINTS {
   organizationById = '/organization/one',
   savedOrgAll = '/SavedOrganization/all',
   myorgsAll = '/organization/my-organization',
+  allOrgs ='/organization/all',
   POST = 'POST',
   PUT = 'PUT',
   DELETE = 'DELETE',
   PATCH = 'PATCH'
+}
+
+export const getAllOrganizations=async(params:any)=>{
+  try {
+    const response = await api.get(`${ENDPOINTS.allOrgs}`,{params})
+    if(!response) return null;
+
+    return response
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 // USER-INFO

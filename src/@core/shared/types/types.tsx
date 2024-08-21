@@ -1,7 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react'
 
 // TABLE
-export type IcolumnTable = {
+type IcolumnTable = {
   title: string
   dataIndex?: string
   key: string
@@ -10,7 +10,7 @@ export type IcolumnTable = {
   height?: string
   render?: any
 }
-export type IrowTable = {
+type IrowTable = {
   [key: string]: React.ReactNode
 }
 export type ItableType = {
@@ -26,7 +26,7 @@ interface Column {
   key: string
 }
 
-export interface Row {
+interface Row {
   [key: string]: string
 }
 
@@ -65,12 +65,6 @@ export type IPagination = {
   onPageSizeChange: (arg0: number) => void
 }
 
-export type IPaginationItems = {
-  total: number
-  pageSize: number
-  current: number
-}
-
 export type IFilterTable = {
   open: boolean
   onChange: (values: any) => void
@@ -94,22 +88,4 @@ export type IcreateAccordionType = {
   open: boolean
   close: () => void
   setGetAgain: Dispatch<SetStateAction<boolean>>
-}
-
-export type MoreFilterType = {
-  city: string
-  district: string
-  house: string
-  kv: string
-  kvartal: string
-  mainorg: string
-  nameorg: string
-  orientir: string
-  podrazdel: string
-  'podrazdel-tu': string
-  poselok: string
-  razdel: string
-  'razdel-tu': string
-  region: string
-  view: string
 }
