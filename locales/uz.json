@@ -201,5 +201,10 @@
   "send-code": "Kodni yuboring",
   "error-number": "Bu maydonda kamida 12 ta raqam boʻlishi kerak",
   "error-code": "Bu maydon kamida 6 ta raqamdan iborat boʻlishi kerak",
-  "found": "Topildi"
+  "found": "Topildi",
+  "fill_the_field": "Maydonlarni to'ldiring",
+  "kv": "Xonadon",
+  "district": "Tuman",
+  "more_filter": "Kengaytirilgan qidiruv",
+  "reset": "Tozalash"
 }

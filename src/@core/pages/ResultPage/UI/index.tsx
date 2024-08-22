@@ -11,6 +11,7 @@ import { FilterList } from './FilterList'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { getAllOrganizations } from '@/@core/shared/api'
 import { useResultSlicer } from '../model/Slicer'
+import { buildNewUrlParams, buildUrlParams } from '@/@core/apps/utils/fn'
 
 const Results: FC = () => {
   const searchParams = useSearchParams()
@@ -34,41 +35,26 @@ const Results: FC = () => {
   ]
   const { allorgs, setAllorgs } = useResultSlicer()
 
-  // PAGINATION
+  // PAGE-CHANGE
   const handlePageChange = (page: number) => {
     const params = searchParams
     if (params.size > 3) {
-      router.push(
-        `?razdel=${params.get('razdel')}&podrazdel=${params.get('podrazdel')}&region=${params.get(
-          'region'
-        )}&razdel-tu=${params.get('razdel-tu')}&podrazdel-tu=${params.get('podrazdel-tu')}&view=${params.get(
-          'view'
-        )}&orientir=${params.get('orientir')}&nameorg=${params.get('nameorg')}&mainorg=${params.get(
-          'mainorg'
-        )}&kvartal=${params.get('kvartal')}&kv=${params.get('kv')}&house=${params.get('house')}&district=${params.get(
-          'district'
-        )}&city=${params.get('city')}&page=${page}&pageSize=${params.get('pageSize')}`
-      )
+      const query = buildUrlParams(searchParams, { page: page })
+      router.push(query)
     } else {
-      router.push(`?nameorg=${params.get('nameorg')}&page=${page}&pageSize=${params.get('pageSize') || 10}`)
+      const query = buildNewUrlParams({ nameorg: params.get('nameorg'), page, pageSize: params.get('pageSize') || 10 })
+      router.push(query)
     }
   }
+  // PAGESIZE-CHANGE
   const handlePageSizeChange = (pageSize: number) => {
     const params = searchParams
     if (params.size > 3) {
-      router.push(
-        `?razdel=${params.get('razdel')}&podrazdel=${params.get('podrazdel')}&region=${params.get(
-          'region'
-        )}&razdel-tu=${params.get('razdel-tu')}&podrazdel-tu=${params.get('podrazdel-tu')}&view=${params.get(
-          'view'
-        )}&orientir=${params.get('orientir')}&nameorg=${params.get('nameorg')}&mainorg=${params.get(
-          'mainorg'
-        )}&kvartal=${params.get('kvartal')}&kv=${params.get('kv')}&house=${params.get('house')}&district=${params.get(
-          'district'
-        )}&city=${params.get('city')}&page=${1}&pageSize=${pageSize}`
-      )
+      const query = buildUrlParams(searchParams, { pageSize: pageSize })
+      router.push(query)
     } else {
-      router.push(`?nameorg=${params.get('nameorg')}&page=1&pageSize=${pageSize}`)
+      const query = buildNewUrlParams({ nameorg: params.get('nameorg'), page: 1, pageSize })
+      router.push(query)
     }
   }
 
@@ -85,7 +71,7 @@ const Results: FC = () => {
       <BreadCrumb item={breadcrumblink} />
       {/* FILTER */}
       <SearchFilter />
-      <Box mt={{ base: '1em', sm: '1em', md: '3em', xl: '4em' }}>
+      <Box mt={{ base: '1em', sm: '1em', md: '3em', xl: '3em' }}>
         <Flex
           direction={{ base: 'column', sm: 'column', md: 'row', xl: 'row' }}
           gap={{ base: '8px', sm: '8px', md: '1em', xl: '2em' }}
@@ -93,7 +79,7 @@ const Results: FC = () => {
         >
           {/* SORT-FILTER */}
           <FilterList />
-          <Box flex={1}>
+          <Box flex={1} w={'100%'}>
             <Text fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }} color={'grey'}>
               {t('found')}: {total}
             </Text>

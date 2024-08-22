@@ -35,3 +35,32 @@ export function filterArrayEqualToID(array, id) {
 export function filterArrayNotEqualToID(array, id) {
   return array.filter(arr => arr.id !== id)
 }
+
+
+// BUILD-URL-FOR-SEARCHPAGE
+export function buildUrlParams(params, override = {}) {
+  const urlParams = new URLSearchParams({
+    nameorg: params.get('nameorg'),
+    razdel: params.get('razdel'),
+    podrazdel: params.get('podrazdel'),
+    section: params.get('section'),
+    mainorg: params.get('mainorg'),
+    segment: params.get('segment'),
+    region: params.get('region'),
+    city: params.get('city'),
+    district: params.get('district'),
+    house: params.get('house'),
+    home: params.get('home'),
+    page: params.get('page'),
+    pageSize: params.get('pageSize'),
+    ...override,  // Override any specific params
+  });
+
+  return `?${urlParams.toString()}`;
+}
+
+export function buildNewUrlParams(params) {
+  const urlParams = new URLSearchParams(params);
+
+  return `?${urlParams.toString()}`;
+}

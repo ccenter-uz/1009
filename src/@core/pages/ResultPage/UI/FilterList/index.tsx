@@ -90,9 +90,11 @@ export const FilterList: FC<Props> = props => {
       mt={'1em'}
       overflowY={'scroll'}
       sx={{ '&::-webkit-scrollbar': { display: 'none' } }}
+      position={'sticky'}
+      top={0}
     >
       <Accordion allowToggle>
-        {lists.map(list => (
+        {lists?.map(list => (
           <AccordionItem key={list.id} border={'none'}>
             <AccordionButton
               _hover={{ bg: 'none', color: scssVariables.mainColor }}

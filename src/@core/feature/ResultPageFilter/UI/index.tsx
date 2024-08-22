@@ -4,10 +4,13 @@ import { FC, useState } from 'react'
 import MoreFilter from './moreFilterModal/moreFilter'
 import { useForm } from 'react-hook-form'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useLang } from '@/@core/shared/hooks/useLang'
+import { buildNewUrlParams } from '@/@core/apps/utils/fn'
 
 const SearchFilter: FC = () => {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const { t } = useLang()
   const { register, handleSubmit } = useForm({
     defaultValues: {
       nameorg: searchParams.get('nameorg') || ''
@@ -19,7 +22,8 @@ const SearchFilter: FC = () => {
 
   // SAVE
   const handleFinish = (values: any) => {
-    router.push(`?nameorg=${values.nameorg}&page=1&pageSize=10`)
+    const query = buildNewUrlParams({ nameorg: values.nameorg, page: 1, pageSize: 10 })
+    router.push(query)
   }
 
   return (
@@ -78,7 +82,7 @@ const SearchFilter: FC = () => {
                 fontSize={scssVariables.fonts.paragraph}
                 _hover={{ bg: scssVariables.gradientColor, opacity: '0.8', transition: 'all 0.5s ease' }}
               >
-                Поиск
+                {t('search')}
               </Button>
             </InputRightElement>
           </InputGroup>
