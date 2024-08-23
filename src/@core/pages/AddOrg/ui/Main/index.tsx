@@ -9,6 +9,7 @@ import { useAddorgSlicer } from '../../model/Slicer'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { getPodrazdelByRazdel } from '@/@core/shared/api'
 import { api } from '@/@core/apps/utils/api'
+import { useSearchParams } from 'next/navigation'
 // STYLE
 const style = {
   formControl: {
@@ -35,19 +36,40 @@ const style = {
 }
 
 export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
+  const searchParams = useSearchParams()
   const { register, errors } = props
-  const { photos, setPhotos, podrazdel, serviceType, razdel, setPodrazdel } = useAddorgSlicer()
+  const {
+    photos,
+    setPhotos,
+    pictures_create,
+    pictures_delete,
+    setPictures_delete,
+    setPictures_create,
+    podrazdel,
+    serviceType,
+    razdel,
+    setPodrazdel
+  } = useAddorgSlicer()
   const { t } = useLang()
 
   //   UPLOAD
   const handleUpload = async ({ target: { files } }: { target: { files: any } }) => {
-    const file = { id: Date.now(), file: files[0] }
-    file && setPhotos([...photos, file])
+    const editId = searchParams.get('id')
+    if (editId) {
+      setPictures_create([...pictures_create, ...files])
+      const file = { id: Date.now(), file: files[0] }
+      file && setPhotos([...photos, file])
+    } else {
+      const file = { id: Date.now(), file: files[0] }
+      file && setPhotos([...photos, file])
+    }
   }
 
   //   DELETE
   const handleDelete = (id: number) => {
     setPhotos(photos.filter((file: any) => file.id !== id))
+    setPictures_delete(photos.filter((file: any) => file.id === id)[0])
+    console.log(pictures_delete, 'pictures_delete')
   }
 
   //   OPEN

@@ -206,5 +206,6 @@
   "kv": "Xonadon",
   "district": "Tuman",
   "more_filter": "Kengaytirilgan qidiruv",
-  "reset": "Tozalash"
+  "reset": "Tozalash",
+  "success-edit-organization": "Muvaffaqiyatli o'zgartirildi"
 }

@@ -22,7 +22,8 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import BreadCrumb from '@/@core/shared/UI/Breadcrumb'
 import Swal from 'sweetalert2'
 import { useAddorgSlicer } from '../model/Slicer'
-import { postCreateOrg } from '@/@core/shared/api'
+import { patchEditOrg, postCreateOrg } from '@/@core/shared/api'
+import { createOrgValues, editOrgValues } from '../model/helper'
 
 const AddOrg: FC = () => {
   const { t } = useLang()
@@ -53,90 +54,27 @@ const AddOrg: FC = () => {
     register,
     formState: { errors }
   } = useForm()
-  const { phones, photos, coordinates, setPhotos, setPhones, GET, GET_FOR_EDIT } = useAddorgSlicer()
+  const { phones, photos, coordinates, setPhotos, pictures_create, pictures_delete, setPhones, GET, GET_FOR_EDIT } =
+    useAddorgSlicer()
 
   // POST
   const POST = async (values: any) => {
     if (photos.length === 0) return Swal.fire({ text: t('warning-need-photo'), icon: 'warning' })
-    const formData = new FormData()
-    // PAYMENT TYPES
-    formData.append(
-      'payment_types',
-      JSON.stringify({ cash: values.cash, terminal: values.terminal, transfer: values.transfer })
-    )
-    // PHONES
-    formData.append(
-      'phones',
-      JSON.stringify({
-        numbers: phones.map((phone: { id: number; value: string; type: string }) => ({
-          number: phone.value,
-          type_number: phone.type
-        }))
-      })
-    )
-    // TRANSPORT
-    formData.append(
-      'transport',
-      JSON.stringify({
-        bus: values.autobus,
-        gazelle: values.marshrut,
-        metro_station: values.metro_station,
-        micro_bus: values['micro-autobus']
-      })
-    )
-    // LOCATION
-    formData.append('location', JSON.stringify({ coordinates: { lon: coordinates[0], lat: coordinates[1] } }))
-    // SCHEDULER
-    formData.append(
-      'scheduler',
-      JSON.stringify({
-        worktime_from: values.worktime_from,
-        worktime_to: values.worktime_to,
-        breakfast_from: values.breakfast_from,
-        breakfast_to: values.breakfast_to,
-        dayoffs: values.dayoffs
-      })
-    )
-    // SEGMENT
-    formData.append('segment', values.segment)
-    // ADDRESS
-    formData.append(
-      'address',
-      `${values.index}, ${values.region}, ${values.city}, ${values.area}, ${values.house}, ${values.block}, ${values.apartment}`
-    )
-    // ORGANIZATION_NAME
-    formData.append('organization_name', values.organization_name)
-    // EMAIL
-    formData.append('email', values.email)
-    // INN
-    formData.append('inn', values.inn)
-    // BANK_ACCOUNT
-    formData.append('bank_account', values.bank_account)
-    // COMMENT
-    formData.append('comment', values.comment)
-    // MAIN_ORGANIZATION
-    formData.append('main_organization', values.main_organization)
-    // MANAGER
-    formData.append('manager', values.manager)
-    // SECTION
-    formData.append('section', values.section)
-    // SUB_CATEGORY
-    formData.append('sub_category_id', values.sub_category_id)
-    // ACCOUNT
-    formData.append('account', values.account)
-    // ADDED_BY
-    formData.append('added_by', 'admin')
-    // PICTURES
-    for (let i = 0; i < photos.length; i++) {
-      formData.append(`pictures${[i]}`, photos[i]?.file)
-    }
+    const editId = searchParams.get('id')
+    if (editId) {
+      const formData = editOrgValues(values, phones, coordinates, pictures_delete, pictures_create)
+      // EDIT
+      const res = await patchEditOrg(editId, formData)
 
-    // POST
-    const res = await postCreateOrg(formData)
+      res?.status === 201 &&
+        (Swal.fire({ text: t('success-edit-organization'), icon: 'success' }), router.push('/myorg'))
+    } else {
+      const formData = createOrgValues(values, phones, coordinates, photos)
+      // CREATE
+      const res = await postCreateOrg(formData)
 
-    if (res?.status === 201) {
-      Swal.fire({ text: t('success-create-organization'), icon: 'success' })
-      router.push('/myorg')
+      res?.status === 201 &&
+        (Swal.fire({ text: t('success-create-organization'), icon: 'success' }), router.push('/myorg'))
     }
   }
 

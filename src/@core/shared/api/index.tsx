@@ -18,4 +18,10 @@ export { postLogin, postRegis, postVerifyUserCode, postCreateOrg, postComment, p
 export { deleteSavedOrg, deleteOrganization } from './deletes'
 
 // export PATCHES
-export { patchChangeSettingData, patchChangeSettingPhone, patchPhoneChangeVerify, patchResendCode } from './patches'
+export {
+  patchChangeSettingData,
+  patchChangeSettingPhone,
+  patchPhoneChangeVerify,
+  patchResendCode,
+  patchEditOrg
+} from './patches'

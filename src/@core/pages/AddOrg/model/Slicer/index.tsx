@@ -7,9 +7,13 @@ const AddOrgSlicer = create(set => ({
   serviceType: [],
   podrazdel: [],
   photos: [],
+  pictures_delete: [],
+  pictures_create: [],
   phones: [{ id: 1, value: '', type: '' }],
   coordinates: [41.311151, 69.279737],
   // SETTERS
+  setPictures_delete: (pictures_delete: any) => set({ pictures_delete }),
+  setPictures_create: (pictures_create: any) => set({ pictures_create }),
   setServiceType: (serviceType: any) => set({ serviceType }),
   setRazdel: (razdel: any) => set({ razdel }),
   setPodrazdel: (podrazdel: any) => set({ podrazdel }),
@@ -72,7 +76,11 @@ export const useAddorgSlicer = () => {
     serviceType,
     setServiceType,
     GET,
-    GET_FOR_EDIT
+    GET_FOR_EDIT,
+    pictures_delete,
+    setPictures_delete,
+    setPictures_create,
+    pictures_create
   } = AddOrgSlicer((state: any) => state)
 
   return {
@@ -89,6 +97,10 @@ export const useAddorgSlicer = () => {
     serviceType,
     setServiceType,
     GET,
-    GET_FOR_EDIT
+    GET_FOR_EDIT,
+    pictures_delete,
+    setPictures_delete,
+    setPictures_create,
+    pictures_create
   }
 }

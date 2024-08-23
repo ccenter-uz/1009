@@ -206,5 +206,6 @@
   "kv": "Квартира",
   "district": "Район",
   "more_filter": "Расширенный поиск",
-  "reset": "Очистить"
+  "reset": "Очистить",
+  "success-edit-organization": "Успешно изменино"
 }

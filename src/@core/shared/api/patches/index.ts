@@ -4,7 +4,8 @@ enum ENDPOINTS {
   changeData = '/Users/update-user',
   changePhone = '/Auth/update-number',
   verifyPin='/Auth/update-number/verify-sms-code',
-  resendCode ='/Auth/resend-sms-code'
+  resendCode ='/Auth/resend-sms-code',
+  patchEditOrg = '/organization/update'
 }
 
 
@@ -53,6 +54,18 @@ export const patchResendCode = async (id: number | string) => {
     if (!res) return null
  
     return res
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
+// EDIT-ORG
+export const patchEditOrg = async (id:string,data: any) => {
+  try {
+    const response = await api.patch(`${ENDPOINTS.patchEditOrg}/${id}`, data)
+
+    return response
   } catch (err) {
     console.log(err)
   }
