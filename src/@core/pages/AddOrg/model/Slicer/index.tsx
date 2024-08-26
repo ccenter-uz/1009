@@ -7,7 +7,7 @@ const AddOrgSlicer = create(set => ({
   serviceType: [],
   podrazdel: [],
   photos: [],
-  pictures_delete: [],
+  pictures_delete: { delete: [] },
   pictures_create: [],
   phones: [{ id: 1, value: '', type: '' }],
   coordinates: [41.311151, 69.279737],

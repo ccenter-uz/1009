@@ -1,9 +1,10 @@
 import { buildUrlParams } from '@/@core/apps/utils/fn'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
+import { useAddorgSlicer } from '@/@core/pages/AddOrg'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { Box, Button, CloseButton, FormControl, FormLabel, Input, Select, SimpleGrid, Text } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Dispatch, FC, SetStateAction } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 const style = {
@@ -56,6 +57,7 @@ type IMoreFilterType = {
 const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const { GET, razdel, podrazdel, serviceType } = useAddorgSlicer()
   const { t } = useLang()
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -66,7 +68,6 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
       segment: searchParams.get('segment'),
       mainorg: searchParams.get('mainorg'),
       region: searchParams.get('region'),
-      city: searchParams.get('city'),
       district: searchParams.get('district'),
       house: searchParams.get('house'),
       home: searchParams.get('home')
@@ -89,13 +90,17 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
       segment: '',
       mainorg: '',
       region: '',
-      city: '',
       district: '',
       house: '',
       home: ''
     })
     router.push(`?page=1&pageSize=10`)
   }
+
+  // GET
+  useEffect(() => {
+    GET()
+  }, [])
 
   return (
     <Box {...style.main} h={open ? '480px' : '0'}>
@@ -126,16 +131,30 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='razdel'>
                 {t('razdel')}
               </FormLabel>
-              <Select {...style.inputStyle} {...register('razdel')} id='razdel'>
-                <option value='1'>Apteka</option>
+              <Select {...style.inputStyle} {...register('razdel')} id='razdel' defaultValue={''}>
+                <option value='' disabled>
+                  {t('choose')}
+                </option>
+                {razdel?.map((item: any) => (
+                  <option key={item.id} value={item.id}>
+                    {item.title}
+                  </option>
+                ))}
               </Select>
             </FormControl>
             <FormControl>
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='podrazdel'>
                 {t('podrazdel')}
               </FormLabel>
-              <Select {...style.inputStyle} {...register('podrazdel')} id='podrazdel'>
-                <option value='1'>Общие пит</option>
+              <Select {...style.inputStyle} {...register('podrazdel')} id='podrazdel' defaultValue={''}>
+                <option value='' disabled>
+                  {t('choose')}
+                </option>
+                {podrazdel?.map((item: any) => (
+                  <option key={item.id} value={item.id}>
+                    {item.title}
+                  </option>
+                ))}
               </Select>
             </FormControl>
             <FormControl>
@@ -143,8 +162,14 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
                 {t('section')}
               </FormLabel>
               <Select {...style.inputStyle} {...register('section')} id='section'>
-                <option value='1'>ishlab chiqarish</option>
-                <option value='1'>xizmat ko'rsatish</option>
+                <option value='' disabled>
+                  {t('choose')}
+                </option>
+                {serviceType?.map((item: any) => (
+                  <option key={item.id} value={item.id}>
+                    {item.title}
+                  </option>
+                ))}
               </Select>
             </FormControl>
             <FormControl>
@@ -169,14 +194,6 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
                 <option value='1'>Tashkent shahar</option>
                 <option value='2'>Tashkent viloyat</option>
                 <option value='3'>Samarqand viloyati</option>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='city'>
-                {t('city')}
-              </FormLabel>
-              <Select {...style.inputStyle} {...register('city')} id='city'>
-                <option value='1'>Tashkent</option>
               </Select>
             </FormControl>
             <FormControl>

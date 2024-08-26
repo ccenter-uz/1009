@@ -56,9 +56,8 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
   const handleUpload = async ({ target: { files } }: { target: { files: any } }) => {
     const editId = searchParams.get('id')
     if (editId) {
-      setPictures_create([...pictures_create, ...files])
       const file = { id: Date.now(), file: files[0] }
-      file && setPhotos([...photos, file])
+      file && (setPhotos([...photos, file]), setPictures_create([...pictures_create, file]))
     } else {
       const file = { id: Date.now(), file: files[0] }
       file && setPhotos([...photos, file])
@@ -68,8 +67,7 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
   //   DELETE
   const handleDelete = (id: number) => {
     setPhotos(photos.filter((file: any) => file.id !== id))
-    setPictures_delete(photos.filter((file: any) => file.id === id)[0])
-    console.log(pictures_delete, 'pictures_delete')
+    setPictures_delete({ delete: [...pictures_delete?.delete, photos.filter((file: any) => file.id === id)[0]?.id] })
   }
 
   //   OPEN
