@@ -40,18 +40,17 @@ const SignIn: FC = () => {
       <FormControl isRequired isInvalid={!!errors.number}>
         <FormLabel fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}>{t('auth-phone')}</FormLabel>
         <InputGen
+          {...register('number', { required: true, minLength: 12 })}
           as={ReactInputMask}
           mask='+(998)99 999-99-99'
           isDisabled={pending}
           aria-label='number'
-          aria-invalid={errors.number ? 'true' : 'false'}
-          {...register('number', { required: true, minLength: 12 })}
+          aria-invalid={!!errors.number ? 'true' : 'false'}
           bg={'#fff'}
           width={'264px'}
           rightWidth={'43px'}
           borderRadius={'2px'}
           button={<Img width={'15px'} src='/phone-fill.svg' alt='phone-icon' />}
-          name='number'
         />
         <FormErrorMessage fontSize={'12px'} color={'red'}>
           {t('auth-phone-error')}

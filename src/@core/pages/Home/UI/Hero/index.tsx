@@ -38,6 +38,7 @@ const Hero: FC = () => {
       >
         <Box w={'100%'} maxW={{ base: '318px', sm: '318px', md: '100%', xl: '100%' }}>
           <Heading
+            as={'h1'}
             fontWeight={'600'}
             fontSize={{ base: '24px', sm: '24px', md: '38px', xl: '48px' }}
             color={'#009393'}
