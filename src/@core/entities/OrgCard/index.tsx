@@ -7,19 +7,22 @@ import {
   CardFooter,
   CardHeader,
   Divider,
+  Flex,
   Icon,
+  Image,
   Img,
   Text,
   Tooltip,
   useColorMode
 } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Link } from '@/navigation'
 import Rate from '../../shared/UI/Rate'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { BookmarkOrgsAsync, DeleteOrgAsync } from '@/@core/feature'
-import { Eye } from 'react-feather'
+import { Circle, Eye } from 'react-feather'
+import { api } from '@/@core/apps/utils/api'
 
 type IDataType = {
   data?: any
@@ -28,9 +31,27 @@ type IDataType = {
   id?: number | string
 }
 
+const setColorbyStatus = (status: string) => {
+  switch (status) {
+    case '0':
+      return '#f3c97a'
+    case '1':
+      return '#68D391'
+    case '2':
+      return '#fb8c8c'
+    default:
+      return '#a1a1a1'
+  }
+}
+
 const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
   const { colorMode } = useColorMode()
   const { t } = useLang()
+
+  // CHECK STATUS
+  const checkStatusOrgs: { [key: string]: string } = useMemo(() => {
+    return { '-1': t('deleted'), '0': t('waiting_for_approval'), '1': t('accepted'), '2': t('rejected') }
+  }, [])
 
   return (
     <>
@@ -47,14 +68,40 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
             justifyContent={'space-between'}
           >
             <Box display={'flex'} alignItems={'center'} gap={'8px'}>
-              <Box w={'29px'} h={'29px'} bg={'lightgray'} borderRadius={'50%'}></Box>
+              <Image
+                src={api.defaults.baseURL + data?.pictures[0]?.image_link}
+                w={'29px'}
+                h={'29px'}
+                bg={'lightgray'}
+                borderRadius={'50%'}
+                alt='avatar'
+              />
               <Text fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}>
                 {data?.organization_name || 'Театр в Ташкенте'}{' '}
               </Text>
             </Box>
-            <Text fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
-              {(data?.create_data && new Intl.DateTimeFormat('ru').format(new Date(data?.create_data))) || '02.02.2024'}
-            </Text>
+            <Flex align={'center'} gap={'8px'}>
+              {mycard && (
+                <Flex align={'center'} gap={'4px'}>
+                  <Circle
+                    color={setColorbyStatus(data?.status)}
+                    fill={setColorbyStatus(data?.status)}
+                    width={'8px'}
+                    height={'8px'}
+                  />
+                  <Text
+                    color={setColorbyStatus(data?.status)}
+                    fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}
+                  >
+                    {checkStatusOrgs[data?.status]}
+                  </Text>
+                </Flex>
+              )}
+              <Text color={'grey'} fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }}>
+                {(data?.create_data && new Intl.DateTimeFormat('ru').format(new Date(data?.create_data))) ||
+                  '02.02.2024'}
+              </Text>
+            </Flex>
           </Box>
           <Divider m={'4px 0 8px 0'} color={'whitesmoke'} />
           <Box

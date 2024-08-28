@@ -5,6 +5,7 @@ import { FC } from 'react'
 import Cards from './Cards'
 import Modal from './Modal'
 import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
+import { useLang } from '@/@core/shared/hooks/useLang'
 
 const defaultData = [
   {
@@ -82,8 +83,8 @@ const defaultData = [
 ]
 
 const PopularSearch: FC = () => {
-  // const [open, setOpen] = useState<boolean>(false)
   const { isOpen, onClose, onOpen } = useDisclosure()
+  const { t } = useLang()
 
   return (
     <Box className='wrapper' aria-label='popular-section'>
@@ -94,7 +95,7 @@ const PopularSearch: FC = () => {
         color={scssVariables.mainColor}
         fontWeight={500}
       >
-        Пользователи сейчас ищут
+        {t('popular-title')}
       </Heading>
       <SimpleGrid columns={{ base: 1, sm: 1, md: 2, xl: 3 }} gap={{ base: '16px', sm: '16px', md: '20px', xl: '24px' }}>
         {defaultData.map(item => {

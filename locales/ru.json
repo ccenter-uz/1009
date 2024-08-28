@@ -207,5 +207,9 @@
   "district": "Район",
   "more_filter": "Расширенный поиск",
   "reset": "Очистить",
-  "success-edit-organization": "Успешно изменино"
+  "success-edit-organization": "Успешно изменино",
+  "waiting_for_approval": "В ожидании подтверждения",
+  "accepted": "Подтвержден",
+  "rejected": "Отклонен",
+  "popular-title": "Пользователи сейчас ищут"
 }

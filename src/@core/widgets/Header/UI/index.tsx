@@ -1,5 +1,5 @@
 'use client'
-import { FC } from 'react'
+import { FC, Suspense } from 'react'
 import {
   Box,
   Divider,
@@ -21,15 +21,14 @@ import { useLang } from '@/@core/shared/hooks/useLang'
 import { Link } from '@/navigation'
 import { usePathname } from 'next/navigation'
 import SwitchLang from '@/@core/entities/SwitchLang'
-import { useAuth } from '@/@core/shared/hooks/useAuth'
 import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
 import { UserPopOver } from './UserPopover'
+import { AuthWrapper } from '@/@core/shared/UI/AuthWrapper'
 
 const Header: FC = () => {
   const { t, locale } = useLang()
   const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onClose, onOpen } = useDisclosure()
-  const { isAuth } = useAuth()
   const pathname = usePathname()
 
   return (
@@ -142,7 +141,25 @@ const Header: FC = () => {
             orientation='vertical'
             sx={{ color: 'lightgrey' }}
           />
-          {isAuth ? (
+          <AuthWrapper
+            trulyComp={<UserPopOver />}
+            falsyComp={
+              <Link href={'/signin'} aria-current='page'>
+                <Box
+                  border={colorMode === 'dark' ? '1px solid #fff' : `1px solid ${scssVariables.mainColor}`}
+                  borderRadius={'20px'}
+                  cursor={'pointer'}
+                  p={'5px 15px'}
+                  color={colorMode === 'dark' ? '#fff' : scssVariables.mainColor}
+                  transition={'all 0.3s ease'}
+                  _hover={{ bg: scssVariables.mainColor, color: '#fff' }}
+                >
+                  <Text>{t('auth-login')}</Text>
+                </Box>
+              </Link>
+            }
+          />
+          {/* {isAuth ? (
             <UserPopOver />
           ) : (
             <Link href={'/signin'} aria-current='page'>
@@ -158,7 +175,7 @@ const Header: FC = () => {
                 <Text>{t('auth-login')}</Text>
               </Box>
             </Link>
-          )}
+          )} */}
         </Box>
       </Flex>
       {/* Menu Drawer */}

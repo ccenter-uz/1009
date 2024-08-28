@@ -25,7 +25,7 @@ const Cards: FC<ICards> = ({ img, title, text, onclick, href }) => {
       alignItems={'center'}
       bg={colorMode === 'dark' ? scssVariables.darkBg : '#fff'}
       aria-label='card'
-      w={{ base: '100%', sm: '100%', md: '440px', xl: '472px' }}
+      w={{ base: '100%', sm: '100%', md: '100%', xl: '472px' }}
       minH={{ base: 'fit-content', sm: 'fit-content', md: '128px', xl: '128px' }}
       p={'16px'}
       boxShadow={'0px 15px 20px 0px rgba(0, 0, 0, 0.05)'}
@@ -46,11 +46,12 @@ const Cards: FC<ICards> = ({ img, title, text, onclick, href }) => {
           <img src={img} alt='logo' width={'40px'} height={'40px'} />
         </Box>
         <Box
-          w={{ base: '200px', sm: '', md: '280px', xl: '280px' }}
+          w={{ base: '100%', sm: '100%', md: '280px', xl: '280px' }}
           aria-label='content-side'
           display={'flex'}
           flexDirection={'column'}
           gap={{ base: '0', sm: '0', md: '8px', xl: '8px' }}
+          whiteSpace={'pre-line'}
         >
           <Text userSelect={'none'} fontSize={{ base: '15px', sm: '15px', md: '20px', xl: '20px' }}>
             {title}

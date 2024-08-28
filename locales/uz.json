@@ -207,5 +207,9 @@
   "district": "Tuman",
   "more_filter": "Kengaytirilgan qidiruv",
   "reset": "Tozalash",
-  "success-edit-organization": "Muvaffaqiyatli o'zgartirildi"
+  "success-edit-organization": "Muvaffaqiyatli o'zgartirildi",
+  "waiting_for_approval": "Tasdiqlash kutilmoqda",
+  "accepted": "Tasdiqlangan",
+  "rejected": "Rad etilgan",
+  "popular-title": "Foydalanuvchilar hozirda qidirmoqda"
 }
