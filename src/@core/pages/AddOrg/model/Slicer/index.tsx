@@ -10,7 +10,7 @@ const AddOrgSlicer = create(set => ({
   pictures_delete: { delete: [] },
   pictures_create: [],
   phones: [{ id: 1, value: '', type: '' }],
-  coordinates: [41.311151, 69.279737],
+  coordinates: [],
   // SETTERS
   setPictures_delete: (pictures_delete: any) => set({ pictures_delete }),
   setPictures_create: (pictures_create: any) => set({ pictures_create }),

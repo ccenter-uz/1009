@@ -54,8 +54,18 @@ const AddOrg: FC = () => {
     register,
     formState: { errors }
   } = useForm()
-  const { phones, photos, coordinates, setPhotos, pictures_create, pictures_delete, setPhones, GET, GET_FOR_EDIT } =
-    useAddorgSlicer()
+  const {
+    phones,
+    photos,
+    coordinates,
+    setPhotos,
+    pictures_create,
+    setCoordinates,
+    pictures_delete,
+    setPhones,
+    GET,
+    GET_FOR_EDIT
+  } = useAddorgSlicer()
 
   // POST
   const POST = async (values: any) => {
@@ -84,6 +94,7 @@ const AddOrg: FC = () => {
     if (editId) {
       const res = await GET_FOR_EDIT(editId)
 
+      setCoordinates([parseFloat(res[0]?.location?.coordinates?.lat), parseFloat(res[0]?.location?.coordinates?.lon)])
       res?.map((item: any) => {
         reset({
           worktime_from: item?.scheduler?.worktime_from,

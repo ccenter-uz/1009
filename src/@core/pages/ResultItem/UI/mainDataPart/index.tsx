@@ -71,7 +71,14 @@ const MainDataPart: FC = () => {
           h={{ base: '300px', sm: '300px', md: '400px', xl: '459px' }}
           bg={'lightgrey'}
           borderRadius={'8px'}
-        ></Box>
+        >
+          <iframe
+            style={{ height: '100%', width: '100%' }}
+            src={`https://www.openstreetmap.org/export/embed.html?bbox=${resultItemData[0]?.location?.coordinates?.lat},${resultItemData[0]?.location?.coordinates?.lon},&layer=mapnik&marker=${resultItemData[0]?.location?.coordinates?.lon},${resultItemData[0]?.location?.coordinates?.lat}`}
+            loading='lazy'
+            sandbox='allow-scripts allow-same-origin'
+          />
+        </Box>
         <Box
           display={'flex'}
           flexDirection={'column'}

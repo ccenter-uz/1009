@@ -15,10 +15,9 @@ import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import { useLang } from '../../hooks/useLang'
 import { useDisclosure } from '../../hooks/useDisclosure'
-import { useState } from 'react'
 import { useAddorgSlicer } from '@/@core/pages/AddOrg'
 
-const defaultMarker = new L.icon({
+export const defaultMarker = new L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png',
   iconSize: [25, 41],
   iconAnchor: [13, 0]
@@ -40,16 +39,13 @@ export const Maps = () => {
   const { t } = useLang()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { coordinates, setCoordinates } = useAddorgSlicer()
-  const [position, setPosition] = useState(coordinates)
 
   // CHOOSE-COORDS
   const chooseCoords = () => {
-    setCoordinates(position)
     onClose()
   }
 
   const handleClose = () => {
-    setPosition(coordinates)
     onClose()
   }
 
@@ -60,9 +56,7 @@ export const Maps = () => {
       </Text>
       <iframe
         style={{ height: '200px', maxWidth: '400px', width: '100%' }}
-        src={`https://www.openstreetmap.org/export/embed.html?bbox=${position[1] - 0.01},${position[0] - 0.01},${
-          position[1] + 0.01
-        },${position[0] + 0.01}&layer=mapnik&marker=${position[0]},${position[1]}`}
+        src={`https://www.openstreetmap.org/export/embed.html?bbox=${coordinates[0]},${coordinates[1]},&layer=mapnik&marker=${coordinates[1]},${coordinates[0]}`}
         loading='lazy'
         sandbox='allow-scripts allow-same-origin'
       />
@@ -91,10 +85,15 @@ export const Maps = () => {
             <ModalCloseButton />
           </ModalHeader>
           <ModalBody p={0} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-            <MapContainer scrollWheelZoom={true} zoom={13} center={position} style={{ height: '80dvh', width: '95%' }}>
-              <LocationFinderDummy setPosition={setPosition} />
+            <MapContainer
+              scrollWheelZoom={true}
+              zoom={13}
+              center={coordinates}
+              style={{ height: '80dvh', width: '95%' }}
+            >
+              <LocationFinderDummy setPosition={setCoordinates} />
               <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-              <Marker position={position} icon={defaultMarker}></Marker>
+              <Marker position={coordinates} zIndexOffset={100} icon={defaultMarker}></Marker>
             </MapContainer>
           </ModalBody>
           <ModalFooter>
