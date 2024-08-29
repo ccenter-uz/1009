@@ -3,14 +3,15 @@ import { create } from 'zustand'
 
 const AddOrgSlicer = create(set => ({
   // VARS
+  loading: false,
   razdel: [],
   serviceType: [],
   podrazdel: [],
   photos: [],
   pictures_delete: { delete: [] },
   pictures_create: [],
-  phones: [{ id: 1, value: '', type: '' }],
-  coordinates: [],
+  phones: [{ id: 1, value: '', type: '', action: '' }],
+  coordinates: ['41.311081', '69.240562'],
   // SETTERS
   setPictures_delete: (pictures_delete: any) => set({ pictures_delete }),
   setPictures_create: (pictures_create: any) => set({ pictures_create }),
@@ -22,13 +23,16 @@ const AddOrgSlicer = create(set => ({
   setCoordinates: (coordinates: number[]) => set({ coordinates }),
   // GETTERS
   GET: async () => {
+    set({ loading: true })
     const res = await Promise.all([getRazdel(), getPodrazdel(), getServiceType()])
 
-    if (res[0]?.status !== 200 || res[1]?.status !== 200 || res[2]?.status !== 200) return
+    if (res[0]?.status !== 200 || res[1]?.status !== 200 || res[2]?.status !== 200) return set({ loading: false })
 
     const razdel = res[0]?.data
     const podrazdel = res[1]?.data
     const serviceType = res[2]?.data
+
+    set({ loading: false })
 
     if (podrazdel) set({ podrazdel })
     if (serviceType) set({ serviceType })
@@ -36,32 +40,38 @@ const AddOrgSlicer = create(set => ({
   },
 
   GET_FOR_EDIT: async (id: string) => {
+    set({ loading: true })
     const res = await getOneOrganization(id)
 
-    if (!res) return
+    if (!res) return set({ loading: false })
 
     if (res?.status === 200) {
       set({
         phones: res?.data[0]?.phones?.map((item: any) => ({
           id: item?.id,
           value: item?.number,
-          type: item?.type_number
+          type: item?.type_number,
+          action: 'update'
         }))
       })
       set({ photos: res?.data[0]?.pictures })
-      set({
-        coordinates: [
-          parseFloat(res?.data[0]?.location.coordinates?.lat),
-          parseFloat(res?.data[0]?.location.coordinates?.lon)
-        ]
-      })
+      if (res?.data[0]?.location?.coordinates?.lat && res?.data[0]?.location?.coordinates?.lon) {
+        set({
+          coordinates: [
+            parseFloat(res?.data[0]?.location.coordinates?.lat),
+            parseFloat(res?.data[0]?.location.coordinates?.lon)
+          ]
+        })
+      }
+
+      set({ loading: false })
 
       return res?.data
     }
   }
 }))
 
-export const useAddorgSlicer = () => {
+export const useAddorgSlicer: any = () => {
   const {
     razdel,
     setRazdel,
@@ -80,10 +90,12 @@ export const useAddorgSlicer = () => {
     pictures_delete,
     setPictures_delete,
     setPictures_create,
-    pictures_create
+    pictures_create,
+    loading
   } = AddOrgSlicer((state: any) => state)
 
   return {
+    loading,
     razdel,
     setRazdel,
     podrazdel,

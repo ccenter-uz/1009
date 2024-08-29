@@ -27,14 +27,23 @@ export const AddOrgContacts: FC<MODEL_FORM_INCOME> = props => {
 
   // ADD-NUMBER
   const addNumber = () => {
-    setPhones([...phones, { id: Date.now(), value: '', type: '' }])
+    setPhones([...phones, { id: +Date.now(), value: '', type: '', action: 'create' }])
   }
 
   // DELETE
   const deleteNumber = (id: number) => {
     if (phones.length === 1) return Swal.fire({ text: t('warning-need-number'), icon: 'warning' })
-    const lastNumbers = phones.filter((phone: { id: number; value: string; type: string }) => phone.id !== id)
-    setPhones(lastNumbers)
+    const lastNumbers = phones.filter(
+      (phone: { id: number; value: string; type: string; action: string }) => phone.id === id
+    )
+    const updatedPhones = phones.map((phone: { id: number }) => {
+      if (phone.id === id) {
+        return { ...lastNumbers[0], action: 'delete' }
+      }
+
+      return phone
+    })
+    setPhones(updatedPhones)
   }
 
   // SELECT
@@ -49,55 +58,65 @@ export const AddOrgContacts: FC<MODEL_FORM_INCOME> = props => {
 
   // INPUT
   const inputChange = ({ target: { id, value } }: { target: { id: string; value: string } }) => {
-    if (value === '') return null
-    const other = filterArrayNotEqualToID(phones, parseInt(id))
-    const filter = filterArrayEqualToID(phones, parseInt(id))
-    if (filter.length === 0) return null
-    const newObj = { ...filter[0], value }
-    setPhones([newObj, ...other])
+    if (isNaN(Number(id))) {
+      const other = filterArrayNotEqualToID(phones, parseInt(id)).map((item: any) => ({ ...item, value }))
+      const filter = filterArrayEqualToID(phones, parseInt(id))
+
+      setPhones([...filter, ...other])
+    } else {
+      if (value === '') return null
+      const other = filterArrayNotEqualToID(phones, parseInt(id))
+      const filter = filterArrayEqualToID(phones, parseInt(id))
+      if (filter.length === 0) return null
+      const newObj = { ...filter[0], value }
+
+      setPhones([newObj, ...other])
+    }
   }
 
   return (
     <Box>
       <AddorgAccordionInputs label={t('auth-phone')}>
         <Box mb={{ base: '10px', sm: '10px', md: '16px', xl: '16px' }}>
-          {phones?.map((phone: { id: number; value: string; type: string }) => (
-            <Box key={phone.id} mb={'8px'} display={'flex'} alignItems={'center'} gap={'8px'}>
-              <Input
-                required
-                as={InputMask}
-                mask='+(999)99 999-99-99'
-                defaultValue={phone.value}
-                onChange={inputChange}
-                id={String(phone.id)}
-                _focus={{ border: '1px solid teal', boxShadow: `0 0 2px ${scssVariables.blockBgColor}` }}
-                type='text'
-                h={{ base: '30px', sm: '30', md: '40px', xl: '40px' }}
-                fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}
-                p={{ base: '5px 10px', sm: '5px 10px', md: '10px 16px', xl: '10px 16px' }}
-              />
-              <Select
-                required
-                defaultValue={phone.type}
-                onChange={selectChange}
-                id={String(phone.id)}
-                _focus={{ border: '1px solid teal', boxShadow: `0 0 2px ${scssVariables.blockBgColor}` }}
-                variant='outline'
-                h={{ base: '30px', sm: '30', md: '40px', xl: '40px' }}
-                fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}
-              >
-                <option value=''>{t('none')}</option>
-                <option value='mobile'>{t('mobile')}</option>
-                <option value='home'>{t('home-phone')}</option>
-              </Select>
-              <IconButton
-                onClick={() => deleteNumber(phone.id)}
-                aria-label='delete'
-                icon={<XmarkIcon />}
-                h={{ base: '30px', sm: '30', md: '40px', xl: '40px' }}
-              />
-            </Box>
-          ))}
+          {phones
+            ?.filter((item: { action: string }) => item.action !== 'delete')
+            ?.map((phone: { id: number; value: string; type: string }) => (
+              <Box key={phone.id} mb={'8px'} display={'flex'} alignItems={'center'} gap={'8px'}>
+                <Input
+                  required
+                  as={InputMask}
+                  mask='+(999)99 999-99-99'
+                  defaultValue={phone.value}
+                  onChange={inputChange}
+                  id={String(phone.id)}
+                  _focus={{ border: '1px solid teal', boxShadow: `0 0 2px ${scssVariables.blockBgColor}` }}
+                  type='text'
+                  h={{ base: '30px', sm: '30', md: '40px', xl: '40px' }}
+                  fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}
+                  p={{ base: '5px 10px', sm: '5px 10px', md: '10px 16px', xl: '10px 16px' }}
+                />
+                <Select
+                  required
+                  defaultValue={phone.type}
+                  onChange={selectChange}
+                  id={String(phone.id)}
+                  _focus={{ border: '1px solid teal', boxShadow: `0 0 2px ${scssVariables.blockBgColor}` }}
+                  variant='outline'
+                  h={{ base: '30px', sm: '30', md: '40px', xl: '40px' }}
+                  fontSize={{ base: '13px', sm: '13px', md: '14px', xl: '14px' }}
+                >
+                  <option value=''>{t('none')}</option>
+                  <option value='mobile'>{t('mobile')}</option>
+                  <option value='home'>{t('home-phone')}</option>
+                </Select>
+                <IconButton
+                  onClick={() => deleteNumber(phone.id)}
+                  aria-label='delete'
+                  icon={<XmarkIcon />}
+                  h={{ base: '30px', sm: '30', md: '40px', xl: '40px' }}
+                />
+              </Box>
+            ))}
         </Box>
         <Button
           onClick={addNumber}

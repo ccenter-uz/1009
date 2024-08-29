@@ -211,5 +211,8 @@
   "waiting_for_approval": "Tasdiqlash kutilmoqda",
   "accepted": "Tasdiqlangan",
   "rejected": "Rad etilgan",
-  "popular-title": "Foydalanuvchilar hozirda qidirmoqda"
+  "popular-title": "Foydalanuvchilar hozirda qidirmoqda",
+  "choose_podrazdel": "Bo'limni tanlang:",
+  "yes": "Ha",
+  "no": "Yo'q"
 }

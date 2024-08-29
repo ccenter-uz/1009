@@ -72,12 +72,15 @@ const MainDataPart: FC = () => {
           bg={'lightgrey'}
           borderRadius={'8px'}
         >
-          <iframe
-            style={{ height: '100%', width: '100%' }}
-            src={`https://www.openstreetmap.org/export/embed.html?bbox=${resultItemData[0]?.location?.coordinates?.lat},${resultItemData[0]?.location?.coordinates?.lon},&layer=mapnik&marker=${resultItemData[0]?.location?.coordinates?.lon},${resultItemData[0]?.location?.coordinates?.lat}`}
-            loading='lazy'
-            sandbox='allow-scripts allow-same-origin'
-          />
+          {resultItemData[0]?.location?.coordinates?.lon && resultItemData[0]?.location?.coordinates?.lat ? (
+            <iframe
+              src={`https://www.openstreetmap.org/export/embed.html?bbox=${resultItemData[0]?.location?.coordinates?.lon},${resultItemData[0]?.location?.coordinates?.lat}&layer=mapnik&marker=${resultItemData[0]?.location?.coordinates?.lat},${resultItemData[0]?.location?.coordinates?.lon}`}
+              style={{ height: '100%', width: '100%' }}
+              loading='lazy'
+              sandbox='allow-scripts'
+              referrerPolicy='no-referrer'
+            />
+          ) : null}
         </Box>
         <Box
           display={'flex'}

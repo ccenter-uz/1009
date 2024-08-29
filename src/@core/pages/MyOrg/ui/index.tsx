@@ -1,5 +1,4 @@
 import OrgCard from '@/@core/entities/OrgCard'
-import { getMyOrganizations } from '@/@core/shared/api'
 import { usePagination } from '@/@core/shared/hooks/usePaginate'
 import Pagination from '@/@core/shared/UI/Pagination'
 import { Box, SimpleGrid } from '@chakra-ui/react'
@@ -17,12 +16,10 @@ export const MyOrg: FC = () => {
     getMyOrgData(current, pageSize).then((res: { totalItems: number }) => {
       setTotal(res?.totalItems)
     })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 
   return (
-    <Box>
+    <Box className='fade-in'>
       <SimpleGrid columns={{ base: 1, sm: 1, md: 2, xl: 2 }} gap={{ base: '0 0', sm: '0 0', md: '0 2em', xl: '0 2em' }}>
         {myOrgData?.map((card: any) => (
           <OrgCard key={card.id} href={`/results/${card.id}`} id={card.id} mycard data={card} />

@@ -1,90 +1,30 @@
 'use client'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import Cards from './Cards'
 import Modal from './Modal'
 import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
 import { useLang } from '@/@core/shared/hooks/useLang'
-
-const defaultData = [
-  {
-    id: 1,
-    title: 'Банк',
-    text: 'Микрокредитная организация представительство',
-    img: '/school-fill.svg'
-  },
-  {
-    id: 2,
-    title: 'Аптека',
-    text: 'Номера и адреса',
-    img: '/school-fill.svg'
-  },
-  {
-    id: 3,
-    title: 'АТС',
-    text: 'УЗЕЛ  расчетная группа по организациям ,диспетчер,ремонт телефонных аппаратов',
-    img: '/school-fill.svg'
-  },
-  {
-    id: 4,
-    title: 'ГАИ',
-    text: 'Городское, Управление безопасности дорожного движения,  штрафы с видеорегестраторов',
-    img: '/school-fill.svg'
-  },
-  {
-    id: 5,
-    title: 'Банк',
-    text: 'Микрокредитная организация представительство',
-    img: '/school-fill.svg'
-  },
-  {
-    id: 6,
-    title: 'Банк',
-    text: 'Микрокредитная организация представительство',
-    img: '/school-fill.svg'
-  },
-  {
-    id: 7,
-    title: 'Автопарк',
-    text: 'Махсустранс, автодормехбаза управление',
-    img: '/school-fill.svg'
-  },
-  {
-    id: 8,
-    title: 'БИРЖА ТРУДА',
-    text: 'Микрокредитная организация представительство',
-    img: '/school-fill.svg'
-  },
-  {
-    id: 9,
-    title: 'Банк',
-    text: 'Микрокредитная организация представительство',
-    img: '/school-fill.svg'
-  },
-  {
-    id: 10,
-    title: 'Банк',
-    text: 'Микрокредитная организация представительство',
-    img: '/school-fill.svg'
-  },
-  {
-    id: 11,
-    title: 'Банк',
-    text: 'Микрокредитная организация представительство',
-    img: '/school-fill.svg'
-  },
-  {
-    id: 12,
-    title: 'Банк',
-    text: 'Микрокредитная организация представительство',
-    img: '/school-fill.svg'
-  }
-]
+import { useAddorgSlicer } from '@/@core/pages/AddOrg'
+import { getPodrazdelByRazdel } from '@/@core/shared/api'
 
 const PopularSearch: FC = () => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   const { t } = useLang()
+  const { razdel, setPodrazdel, GET } = useAddorgSlicer()
+
+  // CHANGE-RAZDEL
+  const handleChangeRazdel = async (id: string) => {
+    if (id === '') return
+    const res = await getPodrazdelByRazdel(id)
+    res?.status === 200 && (setPodrazdel(res?.data?.sub_category_orgs), onOpen())
+  }
+
+  // LOAD
+  useEffect(() => {
+    razdel.length === 0 && GET()
+  }, [])
 
   return (
     <Box className='wrapper' aria-label='popular-section'>
@@ -97,16 +37,22 @@ const PopularSearch: FC = () => {
       >
         {t('popular-title')}
       </Heading>
-      <SimpleGrid columns={{ base: 1, sm: 1, md: 2, xl: 3 }} gap={{ base: '16px', sm: '16px', md: '20px', xl: '24px' }}>
-        {defaultData.map(item => {
+      <SimpleGrid
+        minH={{ base: 'auto', sm: 'auto', xl: '300px' }}
+        alignItems={'center'}
+        justifyContent={'center'}
+        columns={{ base: 1, sm: 1, md: 2, xl: 3 }}
+        gap={{ base: '16px', sm: '16px', md: '20px', xl: '24px' }}
+      >
+        {razdel?.map((item: { id: string; title: string; img: string; text: string }) => {
           return (
             <Cards
-              href={`?razdel=${item.title}`}
+              href={`?razdel=${item.id}`}
               key={item.id}
-              img={item.img}
-              title={item.title}
+              img={item.img || '/school-fill.svg'}
+              title={String(item.title).toUpperCase()}
               text={item.text}
-              onclick={onOpen}
+              onclick={() => handleChangeRazdel(item.id)}
             />
           )
         })}

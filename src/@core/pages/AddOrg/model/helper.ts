@@ -85,6 +85,8 @@ export const editOrgValues = (
   pictures_create: any
 ) => {
   const formData = new FormData()
+  const filteredPhone =phones.filter((item:{value:string | number})=>(item.value !== ""))
+  
   // PAYMENT TYPES
   formData.append(
     'payment_types',
@@ -94,9 +96,11 @@ export const editOrgValues = (
   formData.append(
     'phones',
     JSON.stringify({
-      numbers: phones.map((phone: { id: number; value: string; type: string }) => ({
+      numbers: filteredPhone.map((phone: { id: number; value: string; type: string, action: string }) => ({
+        id: phone.id ,
         number: phone.value,
-        type_number: phone.type
+        type_number: phone.type,
+        action: phone.action
       }))
     })
   )

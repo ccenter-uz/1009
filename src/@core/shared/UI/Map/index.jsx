@@ -54,18 +54,23 @@ export const Maps = () => {
       <Text fontWeight={500} mb={{ base: '8px', sm: '8px', md: '10px', xl: '10px' }}>
         {t('add-location')}
       </Text>
-      <iframe
+      {/* <iframe
         style={{ height: '200px', maxWidth: '400px', width: '100%' }}
         src={`https://www.openstreetmap.org/export/embed.html?bbox=${coordinates[0]},${coordinates[1]},&layer=mapnik&marker=${coordinates[1]},${coordinates[0]}`}
         loading='lazy'
         sandbox='allow-scripts allow-same-origin'
-      />
+      /> */}
+
+      <MapContainer scrollWheelZoom={true} zoom={13} center={coordinates} style={{ height: '220px', width: '100%' }}>
+        <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+        <Marker position={coordinates} icon={defaultMarker}></Marker>
+      </MapContainer>
       <Box
         _hover={{ cursor: 'pointer', bg: 'rgba(0, 0, 0, 0.5)', color: '#fff' }}
         transition={'0.3s ease'}
         color={'transparent'}
-        w={{ base: '100%', sm: '100%', md: '400px', xl: '400px' }}
-        h={'200px'}
+        w={{ base: '100%', sm: '100%', md: '100%', xl: '100%' }}
+        h={'220px'}
         zIndex={99999}
         position={'absolute'}
         top={8}
@@ -93,7 +98,7 @@ export const Maps = () => {
             >
               <LocationFinderDummy setPosition={setCoordinates} />
               <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-              <Marker position={coordinates} zIndexOffset={100} icon={defaultMarker}></Marker>
+              <Marker position={coordinates} icon={defaultMarker}></Marker>
             </MapContainer>
           </ModalBody>
           <ModalFooter>

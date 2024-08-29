@@ -32,7 +32,7 @@ const Cards: FC<ICards> = ({ img, title, text, onclick, href }) => {
       borderRadius={'8px'}
       _hover={{ cursor: 'pointer', bg: scssVariables.blockBgColor, transition: 'all 0.5s ease' }}
     >
-      <Box display={'flex'} alignItems={'center'} gap={'16px'}>
+      <Box w={'100%'} display={'flex'} alignItems={'center'} gap={'16px'}>
         <Box
           aria-label='logo'
           display={'flex'}
@@ -53,7 +53,7 @@ const Cards: FC<ICards> = ({ img, title, text, onclick, href }) => {
           gap={{ base: '0', sm: '0', md: '8px', xl: '8px' }}
           whiteSpace={'pre-line'}
         >
-          <Text userSelect={'none'} fontSize={{ base: '15px', sm: '15px', md: '20px', xl: '20px' }}>
+          <Text userSelect={'none'} fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}>
             {title}
           </Text>
           <Text userSelect={'none'} fontSize={scssVariables.fonts.paragraph} color={'gray'}>

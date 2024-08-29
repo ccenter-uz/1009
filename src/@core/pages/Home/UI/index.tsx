@@ -2,7 +2,7 @@ import { FC } from 'react'
 import dynamic from 'next/dynamic'
 import Hero from './Hero'
 import SearchPanel from './SearchPanel'
-import PopularSearch from '@/@core/feature/PopularSearch/UI'
+import { PopularSearchAsync } from '@/@core/feature'
 
 // dynamic imports
 const OtherOpportunities = dynamic(() => import('./OtherOpportunities'))
@@ -17,7 +17,7 @@ const Home: FC = () => {
     <main id='home' className='fade-in'>
       <Hero />
       <SearchPanel />
-      <PopularSearch />
+      <PopularSearchAsync />
       <OtherOpportunities />
       <VideoInstruction />
       <Tariffs />
