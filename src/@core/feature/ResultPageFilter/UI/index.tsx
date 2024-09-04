@@ -1,30 +1,32 @@
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { Box, Button, Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import MoreFilter from './moreFilterModal/moreFilter'
 import { useForm } from 'react-hook-form'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useLang } from '@/@core/shared/hooks/useLang'
-import { buildNewUrlParams } from '@/@core/apps/utils/fn'
+import { buildNewUrlParams, checkAndSetValues } from '@/@core/apps/utils/fn'
 
 const SearchFilter: FC = () => {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { t } = useLang()
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      nameorg: searchParams.get('nameorg') || ''
-    }
-  })
+  const { register, handleSubmit, reset } = useForm()
   const [openMoreFilter, setOpenMoreFilter] = useState<boolean>(
     searchParams.has('razdel') && searchParams.has('podrazdel') && searchParams.has('region') ? true : false
   )
 
   // SAVE
   const handleFinish = (values: any) => {
-    const query = buildNewUrlParams({ nameorg: values.nameorg, page: 1, pageSize: 10 })
+    const query = buildNewUrlParams({ name: values.name, page: 1, pageSize: 10 })
     router.push(query)
   }
+
+  useEffect(() => {
+    reset({
+      name: checkAndSetValues(searchParams, 'name')
+    })
+  }, [searchParams])
 
   return (
     <Box
@@ -44,7 +46,7 @@ const SearchFilter: FC = () => {
               <img src='/search-line.svg' alt='search' width={'18px'} height={'18px'} />
             </InputLeftElement>
             <Input
-              {...register('nameorg')}
+              {...register('name')}
               h={{ base: '30px', sm: '30px', md: '45px', xl: '50px' }}
               type='text'
               placeholder='Поиск'

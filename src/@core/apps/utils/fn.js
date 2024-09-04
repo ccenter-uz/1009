@@ -1,3 +1,4 @@
+
 // DEBOUNCE
 export function debounce(cb, delay = 1000) {
   let timeout
@@ -36,11 +37,10 @@ export function filterArrayNotEqualToID(array, id) {
   return array.filter(arr => arr.id !== id)
 }
 
-
 // BUILD-URL-FOR-SEARCHPAGE
 export function buildUrlParams(params, override = {}) {
   const urlParams = new URLSearchParams({
-    nameorg: params.get('nameorg'),
+    name: params.get('name'),
     razdel: params.get('razdel'),
     podrazdel: params.get('podrazdel'),
     section: params.get('section'),
@@ -53,14 +53,24 @@ export function buildUrlParams(params, override = {}) {
     home: params.get('home'),
     page: params.get('page'),
     pageSize: params.get('pageSize'),
-    ...override,  // Override any specific params
-  });
+    ...override // Override any specific params
+  })
 
-  return `?${urlParams.toString()}`;
+  return `?${urlParams.toString()}`
 }
 
 export function buildNewUrlParams(params) {
-  const urlParams = new URLSearchParams(params);
+  const urlParams = new URLSearchParams(params)
 
-  return `?${urlParams.toString()}`;
+  return `?${urlParams.toString()}`
+}
+
+// CHECK-AND-SET-VALUES (IF IT IS NULL)
+export const checkAndSetValues = (params, value) => {
+  if (!params) return null
+  if (params.get(value) === 'null') {
+    return ''
+  } else {
+    return params.get(value)
+  }
 }

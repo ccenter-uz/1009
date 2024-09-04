@@ -1,4 +1,4 @@
-import { buildUrlParams } from '@/@core/apps/utils/fn'
+import { buildUrlParams, checkAndSetValues } from '@/@core/apps/utils/fn'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { useAddorgSlicer } from '@/@core/pages/AddOrg'
 import { useLang } from '@/@core/shared/hooks/useLang'
@@ -59,20 +59,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
   const router = useRouter()
   const { GET, razdel, podrazdel, serviceType } = useAddorgSlicer()
   const { t } = useLang()
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues: {
-      nameorg: searchParams.get('nameorg'),
-      razdel: searchParams.get('razdel'),
-      podrazdel: searchParams.get('podrazdel'),
-      section: searchParams.get('section'),
-      segment: searchParams.get('segment'),
-      mainorg: searchParams.get('mainorg'),
-      region: searchParams.get('region'),
-      district: searchParams.get('district'),
-      house: searchParams.get('house'),
-      home: searchParams.get('home')
-    }
-  })
+  const { register, handleSubmit, reset } = useForm()
 
   // SAVE
   const handleFinish = (values: any) => {
@@ -81,26 +68,34 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
   }
 
   // CLEAR
-  const clear = () => {
-    reset({
-      nameorg: '',
-      razdel: '',
-      podrazdel: '',
-      section: '',
-      segment: '',
-      mainorg: '',
-      region: '',
-      district: '',
-      house: '',
-      home: ''
-    })
-    router.push(`?page=1&pageSize=10`)
-  }
+  const clear = () => router.push(`?page=1&pageSize=10`)
 
   // GET
   useEffect(() => {
     GET()
   }, [])
+
+  // SET-VALUES
+  useEffect(() => {
+    const setValues = setTimeout(
+      () =>
+        reset({
+          name: checkAndSetValues(searchParams, 'name'),
+          razdel: checkAndSetValues(searchParams, 'razdel'),
+          podrazdel: checkAndSetValues(searchParams, 'podrazdel'),
+          section: checkAndSetValues(searchParams, 'section'),
+          segment: checkAndSetValues(searchParams, 'segment'),
+          mainorg: checkAndSetValues(searchParams, 'mainorg'),
+          region: checkAndSetValues(searchParams, 'region'),
+          district: checkAndSetValues(searchParams, 'district'),
+          house: checkAndSetValues(searchParams, 'house'),
+          home: checkAndSetValues(searchParams, 'home')
+        }),
+      500
+    )
+
+    return () => clearTimeout(setValues)
+  }, [searchParams])
 
   return (
     <Box {...style.main} h={open ? '480px' : '0'}>
@@ -122,10 +117,10 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
             gap={{ base: '10px', sm: '10px', md: '15px 23px', xl: '16px 24px' }}
           >
             <FormControl>
-              <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='nameorg'>
+              <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='name'>
                 {t('org_name')}
               </FormLabel>
-              <Input {...style.inputStyle} {...register('nameorg')} placeholder='Кафе' id='nameorg' />
+              <Input {...style.inputStyle} {...register('name')} placeholder='Кафе' id='name' />
             </FormControl>
             <FormControl>
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='razdel'>
@@ -135,7 +130,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
                 <option value='' disabled>
                   {t('choose')}
                 </option>
-                {razdel?.map((item: any) => (
+                {razdel?.map((item: { id: string; title: string }) => (
                   <option key={item.id} value={item.id}>
                     {item.title}
                   </option>
@@ -150,7 +145,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
                 <option value='' disabled>
                   {t('choose')}
                 </option>
-                {podrazdel?.map((item: any) => (
+                {podrazdel?.map((item: { id: string; title: string }) => (
                   <option key={item.id} value={item.id}>
                     {item.title}
                   </option>
@@ -165,7 +160,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
                 <option value='' disabled>
                   {t('choose')}
                 </option>
-                {serviceType?.map((item: any) => (
+                {serviceType?.map((item: { id: string; title: string }) => (
                   <option key={item.id} value={item.id}>
                     {item.title}
                   </option>
@@ -176,9 +171,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='mainorg'>
                 {t('main_org')}
               </FormLabel>
-              <Select {...style.inputStyle} {...register('mainorg')} id='mainorg'>
-                <option value='1'>Muqimiy</option>
-              </Select>
+              <Input {...style.inputStyle} {...register('mainorg')} placeholder={t('main_org')} id='mainorg' />
             </FormControl>
             <FormControl>
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='segment'>
@@ -191,6 +184,9 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
                 {t('region')}
               </FormLabel>
               <Select {...style.inputStyle} {...register('region')} id='region'>
+                <option value='' disabled>
+                  {t('choose')}
+                </option>
                 <option value='1'>Tashkent shahar</option>
                 <option value='2'>Tashkent viloyat</option>
                 <option value='3'>Samarqand viloyati</option>
@@ -201,6 +197,9 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
                 {t('district')}
               </FormLabel>
               <Select {...style.inputStyle} {...register('district')} id='district'>
+                <option value='' disabled>
+                  {t('choose')}
+                </option>
                 <option value='1'>Uchtepa tumani</option>
                 <option value='2'>Chilonzor tumani</option>
               </Select>

@@ -12,3 +12,6 @@ export const PopularSearchAsync = dynamic(() => import('./PopularSearch/UI'), {
   ssr: false,
   loading: () => <LoaderUI />
 })
+
+// ASIDEFILTERPAGE
+export const AsideResultPageAsync = dynamic(() => import('./AsideResultPage/ui').then(res => res.AsideResultPage))

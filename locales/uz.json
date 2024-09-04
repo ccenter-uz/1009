@@ -214,5 +214,6 @@
   "popular-title": "Foydalanuvchilar hozirda qidirmoqda",
   "choose_podrazdel": "Bo'limni tanlang:",
   "yes": "Ha",
-  "no": "Yo'q"
+  "no": "Yo'q",
+  "no-results": "Topilmadi"
 }
