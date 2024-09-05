@@ -23,25 +23,13 @@ import { useLang } from '@/@core/shared/hooks/useLang'
 import { BookmarkOrgsAsync, DeleteOrgAsync } from '@/@core/feature'
 import { Circle, Eye } from 'react-feather'
 import { api } from '@/@core/apps/utils/api'
+import { setColorbyStatus } from '@/@core/apps/utils/fn'
 
 type IDataType = {
   data?: any
   href: string
   mycard?: boolean
   id?: number | string
-}
-
-const setColorbyStatus = (status: string) => {
-  switch (status) {
-    case '0':
-      return '#f3c97a'
-    case '1':
-      return '#68D391'
-    case '2':
-      return '#fb8c8c'
-    default:
-      return '#a1a1a1'
-  }
 }
 
 const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {

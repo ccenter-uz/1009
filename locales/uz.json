@@ -215,5 +215,9 @@
   "choose_podrazdel": "Bo'limni tanlang:",
   "yes": "Ha",
   "no": "Yo'q",
-  "no-results": "Topilmadi"
+  "no-results": "Topilmadi",
+  "description_myOrg": "Har qanday muhim yangilik yoki ma'lumot bu erda etkaziladi, diqqat bilan o'qing!",
+  "description_savedOrgs": "Bu siz saqlagan tashkilotlar ro'yxati",
+  "description_monitoring": "Barcha operatsiyalar va pul o'tkazmalari haqida ma'lumot",
+  "in-process": "Kutilmoqda"
 }

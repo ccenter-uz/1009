@@ -74,3 +74,17 @@ export const checkAndSetValues = (params, value) => {
     return params.get(value)
   }
 }
+
+// STATUS-ORG-CARDS
+export const setColorbyStatus = status => {
+  switch (status) {
+    case '0':
+      return '#f3c97a'
+    case '1':
+      return '#68D391'
+    case '2':
+      return '#fb8c8c'
+    default:
+      return '#a1a1a1'
+  }
+}

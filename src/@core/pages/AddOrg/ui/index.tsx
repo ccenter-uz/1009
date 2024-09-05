@@ -66,7 +66,7 @@ const AddOrg: FC = () => {
       // EDIT
       const res = await patchEditOrg(editId, formData)
 
-      res?.status === 201 &&
+      res?.status === 204 &&
         (Swal.fire({ text: t('success-edit-organization'), icon: 'success' }), router.push('/myorg'))
     } else {
       const formData = createOrgValues(values, phones, coordinates, photos)

@@ -63,7 +63,7 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
 
   // SAVE
   const handleFinish = (values: any) => {
-    const query = buildUrlParams(searchParams, values)
+    const query = buildUrlParams(searchParams, { ...values, page: 1, pageSize: 10 })
     router.push(query)
   }
 

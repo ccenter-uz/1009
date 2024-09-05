@@ -271,7 +271,7 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
             )
           })}
           <Box>
-            <FormControl isInvalid={photos.length === 0}>
+            <FormControl isInvalid={photos?.length === 0}>
               <FormLabel
                 htmlFor='image-1'
                 w={{ base: '80px', sm: '80px', md: '99px', xl: '99px' }}

@@ -41,7 +41,7 @@ const EntertainmentLinks: FC<IEnterLinksType> = ({ setData, getAgain }) => {
       const params = { language: locale }
       const res = await getDataByid(id, params)
       setData(
-        res?.entertainments.map((item: IdataInfoFromApi) => {
+        res?.entertainments?.map((item: IdataInfoFromApi) => {
           return {
             ...item,
             id: item.id,
