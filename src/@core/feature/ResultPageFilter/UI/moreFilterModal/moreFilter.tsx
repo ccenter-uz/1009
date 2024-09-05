@@ -1,6 +1,7 @@
 import { buildUrlParams, checkAndSetValues } from '@/@core/apps/utils/fn'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { useAddorgSlicer } from '@/@core/pages/AddOrg'
+import { getPodrazdelByRazdel } from '@/@core/shared/api'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { Box, Button, CloseButton, FormControl, FormLabel, Input, Select, SimpleGrid, Text } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -57,7 +58,7 @@ type IMoreFilterType = {
 const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const { GET, razdel, podrazdel, serviceType } = useAddorgSlicer()
+  const { GET, razdel, podrazdel, serviceType, setPodrazdel } = useAddorgSlicer()
   const { t } = useLang()
   const { register, handleSubmit, reset } = useForm()
 
@@ -69,6 +70,13 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
 
   // CLEAR
   const clear = () => router.push(`?page=1&pageSize=10`)
+
+  // GET-PODRAZDEL-BY-RAZDEL
+  const handleChangeRazdel = async ({ target: { value } }: { target: { value: string } }) => {
+    if (value === '') return null
+    const res = await getPodrazdelByRazdel(value)
+    res?.status === 200 && setPodrazdel(res?.data?.sub_category_orgs)
+  }
 
   // GET
   useEffect(() => {
@@ -126,7 +134,13 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='razdel'>
                 {t('razdel')}
               </FormLabel>
-              <Select {...style.inputStyle} {...register('razdel')} id='razdel' defaultValue={''}>
+              <Select
+                {...style.inputStyle}
+                {...register('razdel')}
+                id='razdel'
+                defaultValue={''}
+                onChange={handleChangeRazdel}
+              >
                 <option value='' disabled>
                   {t('choose')}
                 </option>
