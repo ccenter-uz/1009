@@ -7,11 +7,11 @@ import { SearchFilter } from '@/@core/feature/ResultPageFilter'
 import OrgCard from '@/@core/entities/OrgCard'
 import Pagination from '@/@core/shared/UI/Pagination'
 import { usePagination } from '@/@core/shared/hooks/usePaginate'
-import { FilterList } from './FilterList'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { getAllOrganizations } from '@/@core/shared/api'
 import { useResultSlicer } from '../model/Slicer'
 import { buildNewUrlParams, buildUrlParams } from '@/@core/apps/utils/fn'
+import { AsideResultPageAsync } from '@/@core/feature'
 
 const Results: FC = () => {
   const searchParams = useSearchParams()
@@ -33,7 +33,7 @@ const Results: FC = () => {
       title: 'Организации'
     }
   ]
-  const { allorgs, setAllorgs } = useResultSlicer()
+  const { allorgs, setAllorgs, setAllData, allData } = useResultSlicer()
 
   // PAGE-CHANGE
   const handlePageChange = (page: number) => {
@@ -42,7 +42,7 @@ const Results: FC = () => {
       const query = buildUrlParams(searchParams, { page: page })
       router.push(query)
     } else {
-      const query = buildNewUrlParams({ nameorg: params.get('nameorg'), page, pageSize: params.get('pageSize') || 10 })
+      const query = buildNewUrlParams({ name: params.get('name'), page, pageSize: params.get('pageSize') || 10 })
       router.push(query)
     }
   }
@@ -53,18 +53,34 @@ const Results: FC = () => {
       const query = buildUrlParams(searchParams, { pageSize: pageSize })
       router.push(query)
     } else {
-      const query = buildNewUrlParams({ nameorg: params.get('nameorg'), page: 1, pageSize })
+      const query = buildNewUrlParams({ name: params.get('name'), page: 1, pageSize })
       router.push(query)
     }
   }
 
   // LOAD
   useEffect(() => {
-    getAllOrganizations({ page: current, pageSize }).then(res => {
+    const params = Object.fromEntries(
+      Array.from(searchParams).filter(([key, value]) => value !== '' && value !== 'null')
+    )
+    const correctNamingParams = {
+      name: params.name,
+      category: params.razdel,
+      subCategory: params.podrazdel,
+      section: params.section,
+      mainOrganization: params.mainorg,
+      segment: params.segment,
+      region: params.region,
+      district: params.district,
+      house: params.house,
+      home: params.home
+    }
+
+    getAllOrganizations({ ...correctNamingParams, page: current, pageSize }).then(res => {
       setTotal(res?.data?.pagination?.totalItems)
-      setAllorgs(res?.data?.result)
+      setAllorgs(res?.data?.result?.organizations), setAllData(res?.data?.result)
     })
-  }, [searchParams])
+  }, [searchParams, current, pageSize])
 
   return (
     <Box id='results' className='wrapper fade-in' minH={'100dvh'}>
@@ -78,7 +94,7 @@ const Results: FC = () => {
           alignItems={'flex-start'}
         >
           {/* SORT-FILTER */}
-          <FilterList />
+          <AsideResultPageAsync data={allData} />
           <Box flex={1} w={'100%'}>
             <Text fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }} color={'grey'}>
               {t('found')}: {total}

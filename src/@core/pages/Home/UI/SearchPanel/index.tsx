@@ -1,18 +1,22 @@
 'use client'
 import InputGen from '@/@core/shared/UI/Input'
 import { Box, useColorMode } from '@chakra-ui/react'
-import { ChangeEvent, FC, useDeferredValue, useState } from 'react'
+import { ChangeEvent, Dispatch, FC, SetStateAction, useDeferredValue, useState } from 'react'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import ButtonGen from '@/@core/shared/UI/Button'
-import { api } from '@/@core/apps/utils/api'
 import { debounce } from '@/@core/apps/utils/fn'
 import { useDisclosure } from '@/@core/shared/hooks/useDisclosure'
 import { SearchModal } from '@/@core/feature/SearchPanelModal'
+import { getAllOrganizations } from '@/@core/shared/api'
+import { useSearchPanelSlicer } from './model/Slicer'
 
-const fetchData = debounce(async (text: string) => {
+const fetchData = debounce(async (text: string, setSearchedData: Dispatch<SetStateAction<any>>) => {
   try {
-    console.log(text, 'value')
+    const res = await getAllOrganizations({ search: text, isTopTenList: 1, page: 1, pageSize: 10 })
+    const data = res?.data?.result?.top_tent_list
+
+    setSearchedData(data)
   } catch (err) {
     console.log(err, 'err')
   }
@@ -22,20 +26,17 @@ const SearchPanel: FC = () => {
   const { t } = useLang()
   const { colorMode } = useColorMode()
   const { isOpen, onClose, onOpen } = useDisclosure()
-  const [searchVal, setSearchVal] = useState<string>()
+  const [searchVal, setSearchVal] = useState<string>('')
   const deferredValue = useDeferredValue(searchVal)
+  const { searchedData, setSearchedData } = useSearchPanelSlicer()
 
   // handleSearchChange
   const handleSearchChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value
     setSearchVal(e.target.value as string)
-
-    fetchData(text)
-  }
-
-  // handleSearchClick
-  const handleSearchClick = async () => {
-    console.log(searchVal, 'searchValue')
+    if (text.length > 2) {
+      fetchData(text, setSearchedData)
+    }
   }
 
   return (
@@ -76,13 +77,7 @@ const SearchPanel: FC = () => {
           }
         />
       </Box>
-      <SearchModal
-        open={isOpen}
-        close={onClose}
-        onChange={handleSearchChange}
-        onClick={handleSearchClick}
-        value={deferredValue}
-      />
+      <SearchModal open={isOpen} close={onClose} onChange={handleSearchChange} value={searchVal} data={searchedData} />
     </Box>
   )
 }

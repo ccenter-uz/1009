@@ -17,7 +17,7 @@ import { useLang } from '../../hooks/useLang'
 import { useDisclosure } from '../../hooks/useDisclosure'
 import { useAddorgSlicer } from '@/@core/pages/AddOrg'
 
-export const defaultMarker = new L.icon({
+const defaultMarker = new L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png',
   iconSize: [25, 41],
   iconAnchor: [13, 0]
@@ -54,12 +54,6 @@ export const Maps = () => {
       <Text fontWeight={500} mb={{ base: '8px', sm: '8px', md: '10px', xl: '10px' }}>
         {t('add-location')}
       </Text>
-      {/* <iframe
-        style={{ height: '200px', maxWidth: '400px', width: '100%' }}
-        src={`https://www.openstreetmap.org/export/embed.html?bbox=${coordinates[0]},${coordinates[1]},&layer=mapnik&marker=${coordinates[1]},${coordinates[0]}`}
-        loading='lazy'
-        sandbox='allow-scripts allow-same-origin'
-      /> */}
 
       <MapContainer scrollWheelZoom={true} zoom={13} center={coordinates} style={{ height: '220px', width: '100%' }}>
         <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
