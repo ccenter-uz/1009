@@ -23,8 +23,8 @@ export const AsideResultPage: FC<Props> = props => {
   const searchParams = useSearchParams()
   const router = useRouter()
 
-  const handleSortByPodrazdel = async (catId: string | number, subcatId: string | number) => {
-    const query = buildUrlParams(searchParams, { razdel: catId, podrazdel: subcatId })
+  const handleSortByPodrazdel = (catId: string | number, subcatId: string | number) => {
+    const query = buildUrlParams(searchParams, { razdel: catId, podrazdel: subcatId, page: 1, pageSize: 10 })
 
     router.push(query)
   }

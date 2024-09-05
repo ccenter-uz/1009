@@ -9,7 +9,7 @@ type IMentionText = {
 const MentionText: FC<IMentionText> = ({ text }) => {
   return (
     <Box
-      my={{ base: '16px', sm: '16px', md: '24px', xl: '24px' }}
+      my={{ base: '10px', sm: '10px', md: '24px', xl: '24px' }}
       position={'relative'}
       _before={{
         content: `""`,

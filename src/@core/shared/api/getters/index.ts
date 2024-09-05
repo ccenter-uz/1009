@@ -10,6 +10,7 @@ enum ENDPOINTS {
   organizationById = '/organization/one',
   savedOrgAll = '/SavedOrganization/all',
   myorgsAll = '/organization/my-organization',
+  myorgsInprocess='/organization/my-organization/delete-or-update',
   allOrgs ='/organization/all',
   POST = 'POST',
   PUT = 'PUT',
@@ -119,6 +120,17 @@ export const getMyOrganizations = async (page:number,pageSize:number) => {
         pageSize
       }
     })
+
+    return response
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+// GET-MY-ORGS-IN-PROCESS
+export const getMyOrgsInProcess = async () => {
+  try {
+    const response = await api.get(`${ENDPOINTS.myorgsInprocess}`)
 
     return response
   } catch (err) {

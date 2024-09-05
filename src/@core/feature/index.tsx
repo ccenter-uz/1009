@@ -15,3 +15,6 @@ export const PopularSearchAsync = dynamic(() => import('./PopularSearch/UI'), {
 
 // ASIDEFILTERPAGE
 export const AsideResultPageAsync = dynamic(() => import('./AsideResultPage/ui').then(res => res.AsideResultPage))
+
+// INPROCESS-MYORGS
+export const InProcessMyorgsAsync = dynamic(() => import('./InprocessMyorgs/ui').then(res => res.InProcessMyorgs))
