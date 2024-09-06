@@ -51,7 +51,6 @@ const Opportunities: FC = () => {
   // REFETCH-DATA
   useLayoutEffect(() => {
     getDataAnother(lastLink, locale, setData)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAgain, locale])
 
   // ACCORDION
@@ -179,6 +178,7 @@ const Opportunities: FC = () => {
           </AccordionItem>
         ))}
       </Accordion>
+
       {/* CreateAccordion */}
       {isOpen && <CreateAccModal open={isOpen} close={onClose} setGetAgain={setGetAgain} />}
     </Box>

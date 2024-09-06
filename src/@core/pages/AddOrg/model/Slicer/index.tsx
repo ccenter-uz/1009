@@ -21,6 +21,7 @@ const AddOrgSlicer = create(set => ({
   setPhotos: (photos: any) => set({ photos }),
   setPhones: (phones: { id: number; value: string; type: string }[]) => set({ phones }),
   setCoordinates: (coordinates: number[]) => set({ coordinates }),
+  setLoading: (loading: boolean) => set({ loading }),
   // GETTERS
   GET: async () => {
     set({ loading: true })
@@ -91,7 +92,8 @@ export const useAddorgSlicer: any = () => {
     setPictures_delete,
     setPictures_create,
     pictures_create,
-    loading
+    loading,
+    setLoading
   } = AddOrgSlicer((state: any) => state)
 
   return {
@@ -113,6 +115,7 @@ export const useAddorgSlicer: any = () => {
     pictures_delete,
     setPictures_delete,
     setPictures_create,
-    pictures_create
+    pictures_create,
+    setLoading
   }
 }

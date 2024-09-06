@@ -1,6 +1,6 @@
 import { buildUrlParams, checkAndSetValues } from '@/@core/apps/utils/fn'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
-import { Link } from '@/navigation'
+import { useLang } from '@/@core/shared/hooks/useLang'
 import {
   Accordion,
   AccordionButton,
@@ -9,6 +9,7 @@ import {
   AccordionPanel,
   Box,
   Flex,
+  Grid,
   Text
 } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -22,6 +23,7 @@ export const AsideResultPage: FC<Props> = props => {
   const { data } = props
   const searchParams = useSearchParams()
   const router = useRouter()
+  const { t } = useLang()
 
   const handleSortByPodrazdel = (catId: string | number, subcatId: string | number) => {
     const query = buildUrlParams(searchParams, { razdel: catId, podrazdel: subcatId, page: 1, pageSize: 10 })
@@ -37,12 +39,16 @@ export const AsideResultPage: FC<Props> = props => {
       borderRadius={'4px'}
       p={{ base: '5px', sm: '5px', md: '8px 10px', xl: '8px 10px' }}
       boxShadow={'0px 15px 20px 0px rgba(0, 0, 0, 0.05)'}
-      mt={'1em'}
       overflowY={'scroll'}
       sx={{ '&::-webkit-scrollbar': { display: 'none' } }}
       position={{ base: 'relative', sm: 'relative', md: 'sticky', xl: 'sticky' }}
       top={0}
     >
+      {data?.categories?.length === 0 && (
+        <Grid placeItems={'center'} h={'100%'}>
+          <Text fontSize={scssVariables.fonts.paragraph}>{t('no-results-razdels')}</Text>
+        </Grid>
+      )}
       <Accordion allowToggle>
         {data?.categories?.map(
           (
@@ -66,9 +72,9 @@ export const AsideResultPage: FC<Props> = props => {
                 <AccordionIcon color={'#454545'} />
               </AccordionButton>
               <AccordionPanel p={{ base: '5px 16px', sm: '5px 16px', md: '8px 16px', xl: '5px 16px' }}>
-                {list?.sub_categories.map((subMenu: { id: number; name: string; count: number }) => (
+                {list?.sub_categories?.map((subMenu: { id: number; name: string; count: number }) => (
                   <Flex
-                    key={subMenu.id}
+                    key={subMenu?.id}
                     alignItems={'center'}
                     gap={'8px'}
                     my={'8px'}

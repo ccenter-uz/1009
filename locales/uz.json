@@ -219,5 +219,8 @@
   "description_myOrg": "Har qanday muhim yangilik yoki ma'lumot bu erda etkaziladi, diqqat bilan o'qing!",
   "description_savedOrgs": "Bu siz saqlagan tashkilotlar ro'yxati",
   "description_monitoring": "Barcha operatsiyalar va pul o'tkazmalari haqida ma'lumot",
-  "in-process": "Kutilmoqda"
+  "in-process": "Kutilmoqda",
+  "setting-info": "Bu yerda siz shaxsiy ma'lumotlaringizni va telefon raqamingizni o'zgartirishingiz mumkin.",
+  "razdels_and_podrazdels": "Bo'limlar va ichki bo'limlar",
+  "no-results-razdels": "Hech qanday bo'lim topilmadi"
 }

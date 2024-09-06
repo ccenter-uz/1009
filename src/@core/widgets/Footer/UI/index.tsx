@@ -15,7 +15,7 @@ const Footer: FC = () => {
       <SimpleGrid
         columns={{ sm: 1, md: 3, xl: 4 }}
         gap={{ base: '15px', sm: '15px', md: '20px', xl: '24px' }}
-        pt={{ base: '28px', sm: '28px', md: '62px', xl: '62px' }}
+        pt={{ base: '20px', sm: '20px', md: '62px', xl: '62px' }}
         marginBottom={{ base: '40px', sm: '40px', md: '80px', xl: '130px' }}
       >
         <Box
@@ -25,11 +25,11 @@ const Footer: FC = () => {
           gap={{ base: '15px', sm: '15px', md: '20px', xl: '24px' }}
         >
           <Link href={'#'}>
-            <Heading>Logo</Heading>
+            <Heading fontWeight={500}>Logo</Heading>
           </Link>
           <Link href={'#'}>
             <Text
-              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
+              fontSize={scssVariables.fonts.paragraph}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-phone')}
@@ -37,7 +37,7 @@ const Footer: FC = () => {
           </Link>
           <Link href={'#'}>
             <Text
-              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
+              fontSize={scssVariables.fonts.paragraph}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-email')}
@@ -52,7 +52,7 @@ const Footer: FC = () => {
         >
           <Link href={'#opportunities'}>
             <Text
-              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
+              fontSize={scssVariables.fonts.paragraph}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-opportunity')}
@@ -60,7 +60,7 @@ const Footer: FC = () => {
           </Link>
           <Link href={'#tariffs'}>
             <Text
-              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
+              fontSize={scssVariables.fonts.paragraph}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-tarif')}
@@ -75,7 +75,7 @@ const Footer: FC = () => {
         >
           <Link href={'#addOrganization'}>
             <Text
-              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
+              fontSize={scssVariables.fonts.paragraph}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-add-organization')}
@@ -83,7 +83,7 @@ const Footer: FC = () => {
           </Link>
           <Link href={'#help'}>
             <Text
-              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
+              fontSize={scssVariables.fonts.paragraph}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-help')}
@@ -98,7 +98,7 @@ const Footer: FC = () => {
         >
           <Link href={'#'}>
             <Text
-              fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}
+              fontSize={scssVariables.fonts.paragraph}
               color={colorMode === 'dark' ? 'white' : scssVariables.textGreyColor}
             >
               {t('footer-follow')}
@@ -110,7 +110,7 @@ const Footer: FC = () => {
             borderRadius={'6px'}
             h={{ base: '35px', sm: '35px', md: '45px', xl: '45px' }}
             rightWidth='50px'
-            fontSize={{ base: '14px', sm: '14px', md: '14px', xl: '16px' }}
+            fontSize={scssVariables.fonts.paragraph}
             button={
               <Button
                 _hover={{ opacity: '0.8' }}
@@ -131,7 +131,7 @@ const Footer: FC = () => {
       <SimpleGrid
         columns={{ sm: 1, md: 3, xl: 3 }}
         alignItems={'center'}
-        mb={{ base: '39px', sm: '', md: '', xl: '' }}
+        mb={{ base: '20px', sm: '', md: '', xl: '' }}
         gap={'24px 0'}
       >
         <Box
@@ -163,7 +163,7 @@ const Footer: FC = () => {
           </Link>
         </Box>
         <Box display={'flex'} justifyContent={'center'}>
-          <Text fontSize={'14px'} fontWeight={400}>
+          <Text fontSize={scssVariables.fonts.paragraph} fontWeight={400}>
             {t('footer-license')}
           </Text>
         </Box>
