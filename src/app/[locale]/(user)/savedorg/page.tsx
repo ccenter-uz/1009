@@ -20,7 +20,7 @@ const SavedOrganizations: FC = () => {
   ]
 
   return (
-    <Box minH={'100dvh'} aria-label='section' id='savedorg' className='wrapper fade-in'>
+    <Box aria-label='section' id='savedorg' className='wrapper fade-in'>
       <BreadCrumb item={breadcrumblinks} />
       <Badge title={t('savedorgs')} />
       <SavedOrgsAsync />

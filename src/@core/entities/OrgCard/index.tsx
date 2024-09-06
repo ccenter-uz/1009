@@ -55,7 +55,7 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
             alignItems={'center'}
             justifyContent={'space-between'}
           >
-            <Box display={'flex'} alignItems={'center'} gap={'8px'}>
+            <Box display={'flex'} alignItems={'center'} w={'100%'} gap={'8px'}>
               <Image
                 src={api.defaults.baseURL + data?.pictures[0]?.image_link}
                 w={'29px'}
@@ -68,7 +68,7 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
                 {data?.organization_name || 'Театр в Ташкенте'}{' '}
               </Text>
             </Box>
-            <Flex align={'center'} gap={'8px'}>
+            <Flex align={'center'} flexWrap={'wrap-reverse'} justify={'flex-end'} gap={'8px'}>
               {mycard && (
                 <Flex align={'center'} gap={'4px'}>
                   <Circle

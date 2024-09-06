@@ -20,7 +20,7 @@ const MyOrganizations: FC = () => {
   ]
 
   return (
-    <Box minH={'100dvh'} id='myorg' className='wrapper fade-in' aria-label='section'>
+    <Box id='myorg' className='wrapper fade-in' aria-label='section'>
       <BreadCrumb item={breadcrumblinks} />
       <Badge title={t('myorgs')} />
       <MyOrgsAsync />

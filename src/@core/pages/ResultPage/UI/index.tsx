@@ -12,6 +12,8 @@ import { getAllOrganizations } from '@/@core/shared/api'
 import { useResultSlicer } from '../model/Slicer'
 import { buildNewUrlParams, buildUrlParams } from '@/@core/apps/utils/fn'
 import { AsideResultPageAsync } from '@/@core/feature'
+import { LayoutLoading } from '@/@core/shared/UI/LayoutLoding'
+import { scssVariables } from '@/@core/apps/utils/scss-variables'
 
 const Results: FC = () => {
   const searchParams = useSearchParams()
@@ -33,7 +35,7 @@ const Results: FC = () => {
       title: 'Организации'
     }
   ]
-  const { allorgs, setAllorgs, setAllData, allData } = useResultSlicer()
+  const { allorgs, setAllorgs, setAllData, allData, loading, setLoading } = useResultSlicer()
 
   // PAGE-CHANGE
   const handlePageChange = (page: number) => {
@@ -76,9 +78,10 @@ const Results: FC = () => {
       home: params.home
     }
 
+    setLoading(true)
     getAllOrganizations({ ...correctNamingParams, page: current, pageSize }).then(res => {
       setTotal(res?.data?.pagination?.totalItems)
-      setAllorgs(res?.data?.result?.organizations), setAllData(res?.data?.result)
+      setAllorgs(res?.data?.result?.organizations), setAllData(res?.data?.result), setLoading(false)
     })
   }, [searchParams, current, pageSize])
 
@@ -96,26 +99,28 @@ const Results: FC = () => {
           {/* SORT-FILTER */}
           <AsideResultPageAsync data={allData} />
           <Box flex={1} w={'100%'}>
-            <Text fontSize={{ base: '12px', sm: '12px', md: '14px', xl: '14px' }} color={'grey'}>
+            <Text fontSize={scssVariables.fonts.span} color={'grey'}>
               {t('found')}: {total}
             </Text>
-            <SimpleGrid
-              columns={{ base: 1, sm: 1, md: 1, xl: 2 }}
-              gap={{ base: '0 0', sm: '0 0', md: '0 2em', xl: '0 2em' }}
-            >
-              {allorgs?.map((card: any) => {
-                return (
-                  <Box key={card.id}>
-                    <OrgCard
-                      data={card}
-                      href={`/results/${card.id}?razdel=${searchParams.get('razdel')}&podrazdel=${searchParams.get(
-                        'podrazdel'
-                      )}&region=${searchParams.get('region')}`}
-                    />
-                  </Box>
-                )
-              })}
-            </SimpleGrid>
+            <LayoutLoading loading={loading} data={allorgs}>
+              <SimpleGrid
+                columns={{ base: 1, sm: 1, md: 1, xl: 2 }}
+                gap={{ base: '0 0', sm: '0 0', md: '0 2em', xl: '0 2em' }}
+              >
+                {allorgs?.map((card: any) => {
+                  return (
+                    <Box key={card.id}>
+                      <OrgCard
+                        data={card}
+                        href={`/results/${card.id}?razdel=${searchParams.get('razdel')}&podrazdel=${searchParams.get(
+                          'podrazdel'
+                        )}&region=${searchParams.get('region')}`}
+                      />
+                    </Box>
+                  )
+                })}
+              </SimpleGrid>
+            </LayoutLoading>
           </Box>
         </Flex>
         <Pagination

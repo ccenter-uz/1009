@@ -8,6 +8,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  ModalOverlay,
   SimpleGrid,
   Text,
   Textarea,
@@ -24,6 +25,8 @@ import Swal from 'sweetalert2'
 import { useAddorgSlicer } from '../model/Slicer'
 import { patchEditOrg, postCreateOrg } from '@/@core/shared/api'
 import { createOrgValues, editOrgValues } from '../model/helper'
+import LoaderUI from '@/@core/shared/UI/LoadingUI'
+import { GlassLoading } from '@/@core/feature'
 
 const AddOrg: FC = () => {
   const { t } = useLang()
@@ -54,8 +57,19 @@ const AddOrg: FC = () => {
     register,
     formState: { errors }
   } = useForm()
-  const { phones, photos, coordinates, setPhotos, pictures_create, pictures_delete, setPhones, GET, GET_FOR_EDIT } =
-    useAddorgSlicer()
+  const {
+    phones,
+    photos,
+    coordinates,
+    setPhotos,
+    setLoading,
+    loading,
+    pictures_create,
+    pictures_delete,
+    setPhones,
+    GET,
+    GET_FOR_EDIT
+  } = useAddorgSlicer()
 
   // POST
   const POST = async (values: any) => {
@@ -64,6 +78,7 @@ const AddOrg: FC = () => {
     if (editId) {
       const formData = editOrgValues(values, phones, coordinates, pictures_delete, pictures_create)
       // EDIT
+      setLoading(true)
       const res = await patchEditOrg(editId, formData)
 
       res?.status === 204 &&
@@ -71,6 +86,7 @@ const AddOrg: FC = () => {
     } else {
       const formData = createOrgValues(values, phones, coordinates, photos)
       // CREATE
+      setLoading(true)
       const res = await postCreateOrg(formData)
 
       res?.status === 201 &&
@@ -131,7 +147,8 @@ const AddOrg: FC = () => {
     <Box>
       <BreadCrumb item={breadcrumbs} />
       <Badge title={searchParams.get('id') ? t('edit-organization') : t('add-organization')} />
-
+      {/* LOADING */}
+      <GlassLoading loading={loading} />
       <form onSubmit={handleSubmit(POST)} id='add-org'>
         <SimpleGrid
           columns={{ base: 1, sm: 1, md: 2, xl: 3 }}

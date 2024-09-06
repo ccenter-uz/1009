@@ -4,12 +4,16 @@ import { Dispatch, SetStateAction } from 'react'
 import { IdataInfoFromApi } from './types'
 
 // GET
-export const getDataAnother = async (lastLink: string, locale: string, setData: Dispatch<SetStateAction<any>>) => {
+export const getDataAnother = async (
+  lastLink: string,
+  locale: string,
+  setData: Dispatch<SetStateAction<any>>,
+) => {
   if (lastLink !== 'entertainment') {
     const params = { language: locale }
     const res = await getData(`${getUrl(lastLink)}`, params)
     res &&
-      setData(
+      (setData(
         res?.map((item: IdataInfoFromApi) => {
           return {
             ...item,
@@ -21,6 +25,7 @@ export const getDataAnother = async (lastLink: string, locale: string, setData: 
             table_arr: item.table_arr
           }
         })
-      )
+      ))
+    
   }
 }

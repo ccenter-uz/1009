@@ -6,6 +6,7 @@ import BoxGen from '@/@core/shared/UI/Box'
 import SettingChangeData from '@/@core/widgets/Setting/UI/ChangeInfo'
 import SettingChangePhone from '@/@core/widgets/Setting/UI/ChangePhone'
 import { useLang } from '@/@core/shared/hooks/useLang'
+import MentionText from '@/@core/shared/UI/MentionText'
 
 // styles
 const styles = {
@@ -47,26 +48,27 @@ const Settings: FC = () => {
   const breadcrumblinks = [
     {
       id: 1,
-      title: 'Настройки'
+      title: t('settings')
     },
     {
       id: 2,
-      title: 'Общие'
+      title: t('all')
     }
   ]
 
   return (
-    <Box id='settings' minH={'100dvh'} aria-label='section' className='wrapper fade-in'>
+    <Box id='settings' aria-label='section' className='wrapper fade-in'>
       <BreadCrumb item={breadcrumblinks} />
+      <MentionText text={t('setting-info')} />
       <BoxGen
         p={{ base: '1em', sm: '1em', md: '2em', xl: '2em' }}
         borderRadius={'8px'}
         boxShadow={scssVariables.boxShadow}
       >
-        {/* data */}
+        {/* INFO */}
         <Text {...styles.textStyle}>{t('change-setting-info')}</Text>
         <SettingChangeData styles={styles} />
-        {/* phone */}
+        {/* PHONE */}
         <SettingChangePhone styles={styles} />
       </BoxGen>
     </Box>

@@ -18,3 +18,6 @@ export const AsideResultPageAsync = dynamic(() => import('./AsideResultPage/ui')
 
 // INPROCESS-MYORGS
 export const InProcessMyorgsAsync = dynamic(() => import('./InprocessMyorgs/ui').then(res => res.InProcessMyorgs))
+
+// GLASSLOADING
+export { GlassLoading } from './GlassLoading/ui'

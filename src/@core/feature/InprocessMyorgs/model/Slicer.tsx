@@ -4,6 +4,7 @@ import { create } from 'zustand'
 const InProcessMyorgsSlicer = create(set => ({
   // VARS
   inprocessMyorgsData: [],
+  loading: true,
   // SETTERS
   setInprocessMyorgsData: (inprocessMyorgsData: any) => set({ inprocessMyorgsData }),
   // GETTERS
@@ -11,12 +12,13 @@ const InProcessMyorgsSlicer = create(set => ({
     const res = await getMyOrgsInProcess()
     if (res?.status === 200) {
       set({ inprocessMyorgsData: res?.data?.result })
+      set({ loading: false })
     }
   }
 }))
 
 export const useInProcessMyorgs = () => {
-  const { inprocessMyorgsData, setInprocessMyorgsData, GET } = InProcessMyorgsSlicer((state: any) => state)
+  const { inprocessMyorgsData, setInprocessMyorgsData, GET, loading } = InProcessMyorgsSlicer((state: any) => state)
 
-  return { inprocessMyorgsData, setInprocessMyorgsData, GET }
+  return { inprocessMyorgsData, setInprocessMyorgsData, GET, loading }
 }
