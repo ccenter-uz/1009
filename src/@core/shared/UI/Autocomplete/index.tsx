@@ -69,7 +69,7 @@ const SelectAutocomplete: FC<ISelectAutocomplelte> = ({ options, onSelect }) => 
           fontSize={scssVariables.fonts.paragraph}
           border={`2px solid ${scssVariables.blockBgColor}`}
         >
-          {optionFilter.length > 0 ? (
+          {optionFilter?.length > 0 ? (
             optionFilter.map((option, index) => (
               <ListItem
                 w={'100%'}

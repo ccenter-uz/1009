@@ -150,7 +150,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
               {t('warning-info')}
             </FormLabel>
             <Textarea
-              {...register('warning')}
+              {...register('warning', { required: true })}
               {...inputsStyle}
               id='warning-text'
               placeholder='Type for warnings!'
@@ -163,7 +163,7 @@ const CreateAccModal: FC<IcreateAccordionType> = ({ open, close, setGetAgain }) 
               {t('mention-info')}
             </FormLabel>
             <Textarea
-              {...register('mention')}
+              {...register('mention', { required: true })}
               {...inputsStyle}
               id='mention-text'
               placeholder='Type for mentions!'

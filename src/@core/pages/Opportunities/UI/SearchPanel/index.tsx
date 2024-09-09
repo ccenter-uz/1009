@@ -12,7 +12,7 @@ const SearchPanelOpportunities: FC<
   const { t } = useLang()
 
   const handleSelect = (selectedOption: IOption) => {
-    const filter = options.findIndex(item => item.value == selectedOption.value)
+    const filter = options?.findIndex(item => item.value == selectedOption.value)
     setOpenIndex(filter)
   }
 
