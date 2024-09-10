@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 import { useAddorgSlicer } from '../../model/Slicer'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { getPodrazdelByRazdel } from '@/@core/shared/api'
-import { api } from '@/@core/apps/utils/api'
+import { api, IMG_URL } from '@/@core/apps/utils/api'
 import { useSearchParams } from 'next/navigation'
 // STYLE
 const style = {
@@ -76,7 +76,7 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
     if (filter.length === 0) return
 
     Swal.fire({
-      imageUrl: URL.createObjectURL(filter[0].file),
+      imageUrl: filter[0].image_link ? `${IMG_URL}/${filter[0]?.image_link}` : URL?.createObjectURL(filter[0].file),
       imageHeight: 'auto',
       imageWidth: 'auto',
       imageAlt: 'Custom image',
@@ -214,9 +214,7 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
             return (
               <Box key={index} position={'relative'}>
                 <Img
-                  src={
-                    file.image_link ? `${api?.defaults?.baseURL}/${file?.image_link}` : URL?.createObjectURL(file?.file)
-                  }
+                  src={file.image_link ? `${IMG_URL}/${file?.image_link}` : URL?.createObjectURL(file?.file)}
                   w={{ base: '80px', sm: '80px', md: '99px', xl: '99px' }}
                   h={{ base: '80px', sm: '80px', md: '99px', xl: '99px' }}
                   alt={'image'}

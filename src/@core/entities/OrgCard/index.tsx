@@ -22,7 +22,7 @@ import Rate from '../../shared/UI/Rate'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { BookmarkOrgsAsync, DeleteOrgAsync } from '@/@core/feature'
 import { Circle, Eye } from 'react-feather'
-import { api } from '@/@core/apps/utils/api'
+import { api, IMG_URL } from '@/@core/apps/utils/api'
 import { setColorbyStatus } from '@/@core/apps/utils/fn'
 
 type IDataType = {
@@ -57,12 +57,14 @@ const OrgCard: FC<IDataType> = ({ data, href, mycard, id }) => {
           >
             <Box display={'flex'} alignItems={'center'} w={'100%'} gap={'8px'}>
               <Image
-                src={api.defaults.baseURL + data?.pictures[0]?.image_link}
+                src={`${IMG_URL}/${data?.pictures[0]?.image_link}`}
                 w={'29px'}
                 h={'29px'}
                 bg={'lightgray'}
                 borderRadius={'50%'}
                 alt='avatar'
+                objectFit={'cover'}
+                loading='lazy'
               />
               <Text fontSize={{ base: '14px', sm: '14px', md: '18px', xl: '18px' }}>
                 {data?.organization_name || 'Театр в Ташкенте'}{' '}
