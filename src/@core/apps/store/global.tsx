@@ -2,6 +2,7 @@
 import { getUserInfo } from '@/@core/shared/api'
 import { useEffect } from 'react'
 import { create } from 'zustand'
+import Cookies from 'js-cookie'
 
 const GlobalStore = create(set => ({
   userInfo: null,
@@ -13,7 +14,7 @@ const GlobalStore = create(set => ({
 
     if (!res) return null
 
-    if (res?.status === 200) set({ userInfo: res?.data }), sessionStorage.setItem('userInfo', JSON.stringify(res?.data))
+    if (res?.status === 200) set({ userInfo: res?.data }), Cookies.set('userInfo', JSON.stringify(res?.data))
   }
 }))
 
@@ -23,7 +24,11 @@ export const useGlobalStore = () => {
   // SET-INITIAL-VALUES
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setUserInfo(sessionStorage.getItem('userInfo') ? JSON.parse(sessionStorage.getItem('userInfo') as string) : null)
+      if (Cookies.get('userInfo')) {
+        setUserInfo(JSON.parse(Cookies.get('userInfo') as string))
+      } else {
+        Cookies.remove('userInfo'), setUserInfo(null), Cookies.remove('access_token')
+      }
     }
   }, [])
 

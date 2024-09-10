@@ -69,6 +69,13 @@ api.interceptors.response.use(
         hideProgressBar: false
       })
     }
+    if(error.response.status === 403) {
+      return (toast.error(error.response.data.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        hideProgressBar: false
+      }),Cookies.remove('userInfo'),Cookies.remove('access_token'),window.document.location.href = '/')
+    }
+
 
     return toast.error(error.response.data.message, {
       position: toast.POSITION.BOTTOM_RIGHT,
