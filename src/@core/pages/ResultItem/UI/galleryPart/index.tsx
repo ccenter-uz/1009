@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import { FC } from 'react'
 import 'react-alice-carousel/lib/alice-carousel.css'
 import { useResultItemSlicer } from '../../model/Slicer'
-import { api } from '@/@core/apps/utils/api'
+import { IMG_URL } from '@/@core/apps/utils/api'
 
 const AliceCarousel = dynamic(() => import('react-alice-carousel'), { ssr: false, loading: () => <Loading /> })
 
@@ -39,9 +39,10 @@ const GallaryPart: FC = () => {
               key={id}
               width={'97%'}
               height={'393px'}
-              src={api.defaults.baseURL + image_link}
+              src={`${IMG_URL}/${image_link}`}
               role='presentation'
               alt={id}
+              loading='lazy'
             />
           )
         })}

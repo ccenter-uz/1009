@@ -4,8 +4,10 @@ import { toast } from 'react-toastify'
 
 const URLS ={
   local:'http://192.168.0.232:4060/api/v1',
-    production:'https://1009.api.ccenter.uz/api/v1'
+  production:'https://1009.api.ccenter.uz/api/v1'
 }
+
+export const IMG_URL ='https://storage.googleapis.com/telecom2003'
 
 export const api = axios.create({ baseURL: URLS.production})
 
