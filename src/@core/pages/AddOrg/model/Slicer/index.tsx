@@ -1,4 +1,4 @@
-import { getOneOrganization, getPodrazdel, getRazdel, getServiceType } from '@/@core/shared/api'
+import { getOneOrganization, getPodrazdel, getRazdel, getSegments, getServiceType } from '@/@core/shared/api'
 import { create } from 'zustand'
 
 const AddOrgSlicer = create(set => ({
@@ -10,6 +10,7 @@ const AddOrgSlicer = create(set => ({
   photos: [],
   pictures_delete: { delete: [] },
   pictures_create: [],
+  segments: [],
   phones: [{ id: 1, value: '', type: '', action: '' }],
   coordinates: ['41.311081', '69.240562'],
   // SETTERS
@@ -25,19 +26,26 @@ const AddOrgSlicer = create(set => ({
   // GETTERS
   GET: async () => {
     set({ loading: true })
-    const res = await Promise.all([getRazdel(), getPodrazdel(), getServiceType()])
+    const res = await Promise.all([
+      getRazdel({ all: true }),
+      getPodrazdel({ all: true }),
+      getServiceType({ all: true }),
+      getSegments({ all: true })
+    ])
 
     if (res[0]?.status !== 200 || res[1]?.status !== 200 || res[2]?.status !== 200) return set({ loading: false })
 
-    const razdel = res[0]?.data
-    const podrazdel = res[1]?.data
-    const serviceType = res[2]?.data
+    const razdel = res[0]?.data?.result
+    const podrazdel = res[1]?.data?.result
+    const serviceType = res[2]?.data?.result
+    const segments = res[3]?.data?.result
 
     set({ loading: false })
 
     if (podrazdel) set({ podrazdel })
     if (serviceType) set({ serviceType })
     if (razdel) set({ razdel })
+    if (segments) set({ segments })
   },
 
   GET_FOR_EDIT: async (id: string) => {
@@ -74,6 +82,7 @@ const AddOrgSlicer = create(set => ({
 
 export const useAddorgSlicer: any = () => {
   const {
+    segments,
     razdel,
     setRazdel,
     podrazdel,
@@ -97,6 +106,7 @@ export const useAddorgSlicer: any = () => {
   } = AddOrgSlicer((state: any) => state)
 
   return {
+    segments,
     loading,
     razdel,
     setRazdel,

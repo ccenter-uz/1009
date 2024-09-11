@@ -9,7 +9,8 @@ export {
   getMyOrganizations,
   getUserInfo,
   getAllOrganizations,
-  getMyOrgsInProcess
+  getMyOrgsInProcess,
+  getSegments
 } from './getters'
 
 // export POSTS

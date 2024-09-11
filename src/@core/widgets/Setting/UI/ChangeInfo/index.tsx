@@ -7,18 +7,18 @@ import {
   FormLabel,
   Image,
   Input,
+  Spinner,
   StyleFunctionProps
 } from '@chakra-ui/react'
 import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { FieldValues, useForm } from 'react-hook-form'
-import { useFormStatus } from 'react-dom'
 import { useLang } from '@/@core/shared/hooks/useLang'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { User } from 'react-feather'
 import { patchChangeSettingData } from '@/@core/shared/api/patches'
 import { useGlobalStore } from '@/@core/apps/store/global'
 import { toast } from 'react-toastify'
-import { api } from '@/@core/apps/utils/api'
+import { IMG_URL } from '@/@core/apps/utils/api'
 
 const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
   const {
@@ -27,10 +27,9 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
     reset,
     formState: { errors }
   } = useForm()
-  const { pending } = useFormStatus()
   const { t } = useLang()
   const [image, setImage] = useState<any>(null)
-  const { userInfo, getUser } = useGlobalStore()
+  const { userInfo, getUser, loading, setLoading } = useGlobalStore()
 
   // FINISH
   const handleFinish = async ({ full_name, old_password, new_password }: FieldValues) => {
@@ -39,9 +38,10 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
     body.append('full_name', full_name)
     body.append('password', old_password)
     body.append('newpassword', new_password)
+    setLoading(true)
     const res = await patchChangeSettingData(userInfo?.id, body)
 
-    res?.status === 200 && (toast.success(t(`success`), { position: 'bottom-right' }), getUser())
+    res?.status === 204 && (toast.success(t(`success`), { position: 'bottom-right' }), getUser())
   }
 
   // LOAD
@@ -51,6 +51,7 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
       reset({
         full_name: userInfo?.full_name
       })
+      setLoading(false)
     } else {
       getUser()
     }
@@ -59,12 +60,10 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
   return (
     <form onSubmit={handleSubmit(handleFinish)} id='setting-form'>
       <FormControl w={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-        {image ? (
+        {image && !loading && (
           <Image
             src={
-              userInfo?.image_link
-                ? `${api.defaults.baseURL}/${userInfo?.image_link}`
-                : URL.createObjectURL(new Blob(image))
+              typeof image === 'string' ? `${IMG_URL}/${userInfo?.image_link}` : URL.createObjectURL(new Blob(image))
             }
             alt='image'
             w={{ base: '60px', sm: '60px', md: '80px', xl: '150px' }}
@@ -73,7 +72,15 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
             borderRadius={'50%'}
             objectFit={'cover'}
           />
-        ) : (
+        )}
+        {loading && (
+          <Spinner
+            color='teal'
+            w={{ base: '60px', sm: '60px', md: '80px', xl: '150px' }}
+            h={{ base: '60px', sm: '60px', md: '80px', xl: '150px' }}
+          />
+        )}
+        {!image && !loading && (
           <Box
             w={{ base: '60px', sm: '60px', md: '80px', xl: '150px' }}
             h={{ base: '60px', sm: '60px', md: '80px', xl: '150px' }}
@@ -101,7 +108,7 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
             onChange={(e: ChangeEvent<HTMLInputElement>) => e.target.files && setImage(e.target.files)}
             display={'none'}
             id='image'
-            isDisabled={pending}
+            isDisabled={loading}
           />
         </FormLabel>
       </FormControl>
@@ -116,7 +123,7 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
           aria-invalid={errors.full_name ? 'true' : 'false'}
           id='fio-setting'
           type='text'
-          isDisabled={pending}
+          isDisabled={loading}
           autoComplete='off'
         />
         <FormErrorMessage color={'red'} fontSize={'12px'}>
@@ -135,7 +142,7 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
           aria-invalid={errors.old_password ? 'true' : 'false'}
           id='oldPassword-setting'
           type='password'
-          isDisabled={pending}
+          isDisabled={loading}
         />
         <FormErrorMessage color={'red'} fontSize={'12px'}>
           {t('auth-password-error')}
@@ -153,14 +160,14 @@ const SettingChangeData: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
           aria-invalid={errors.new_password ? 'true' : 'false'}
           id='newPassword-setting'
           type='password'
-          isDisabled={pending}
+          isDisabled={loading}
         />
         <FormErrorMessage color={'red'} fontSize={'12px'}>
           {t('auth-password-error')}
         </FormErrorMessage>
       </FormControl>
       <Box {...styles.buttonBoxStyle} aria-label='submit'>
-        <Button {...styles.buttonStyle} isLoading={pending} type='submit' form='setting-form'>
+        <Button {...styles.buttonStyle} isLoading={loading} isDisabled={loading} type='submit' form='setting-form'>
           {t('save')}
         </Button>
       </Box>

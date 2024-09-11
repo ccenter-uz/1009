@@ -12,10 +12,7 @@ enum ENDPOINTS {
   myorgsAll = '/organization/my-organization',
   myorgsInprocess='/organization/my-organization/delete-or-update',
   allOrgs ='/organization/all',
-  POST = 'POST',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
-  PATCH = 'PATCH'
+ segments ='/segment/all'
 }
 
 export const getAllOrganizations=async(params:any)=>{
@@ -25,7 +22,7 @@ export const getAllOrganizations=async(params:any)=>{
 
     return response
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -36,29 +33,29 @@ export const getUserInfo = async () => {
 
     return response
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
 // RAZDEL
-export const getRazdel = async () => {
+export const getRazdel = async (params:{all:boolean} | {page:number,pageSize:number,search:string}) => {
   try {
-    const response = await api.get(`${ENDPOINTS.razdelAll}`)
+    const response = await api.get(`${ENDPOINTS.razdelAll}`,{params})
 
     return response
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
 // PODRAZDEL
-export const getPodrazdel =async()=>{
+export const getPodrazdel =async(params:{all:boolean} | {page:number,pageSize:number,search:string})=>{
   try {
-    const response = await api.get(`${ENDPOINTS.podrazdelAll}`)
+    const response = await api.get(`${ENDPOINTS.podrazdelAll}`,{params})
 
     return response
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -69,18 +66,18 @@ export const getPodrazdelByRazdel = async (id: string) => {
 
     return response
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
 // SERVICE-TYPE 
-export const getServiceType = async () => {
+export const getServiceType = async (params:{all:boolean} | {page:number,pageSize:number,search:string}) => {
   try {
-    const response = await api.get(`${ENDPOINTS.serviceType}`)
+    const response = await api.get(`${ENDPOINTS.serviceType}`,{params})
 
     return response
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -91,7 +88,7 @@ export const getOneOrganization = async (id: string) => {
 
     return response
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -107,7 +104,7 @@ export const getSavedOrganizations = async (page:number,pageSize:number) => {
 
     return response
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -123,7 +120,7 @@ export const getMyOrganizations = async (page:number,pageSize:number) => {
 
     return response
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -134,6 +131,17 @@ export const getMyOrgsInProcess = async () => {
 
     return response
   } catch (err) {
-    console.log(err)
+    console.error(err)
+  }
+}
+
+// GET-SEGMENTS
+export const getSegments = async (params:{all:boolean} | {page:number,pageSize:number,search:string}) => {
+  try {
+    const response = await api.get(`${ENDPOINTS.segments}`,{params}) 
+
+    return response
+  } catch (err) {
+    console.error(err)
   }
 }

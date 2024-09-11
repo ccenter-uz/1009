@@ -58,7 +58,7 @@ type IMoreFilterType = {
 const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const { GET, razdel, podrazdel, serviceType, setPodrazdel } = useAddorgSlicer()
+  const { GET, razdel, podrazdel, serviceType, setPodrazdel, segments } = useAddorgSlicer()
   const { t } = useLang()
   const { register, handleSubmit, reset } = useForm()
 
@@ -191,7 +191,16 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='segment'>
                 {t('segment')}
               </FormLabel>
-              <Input {...style.inputStyle} {...register('segment')} placeholder={t('segment')} id='segment' />
+              <Select {...style.inputStyle} {...register('segment')} id='segment'>
+                <option value='' disabled>
+                  {t('choose')}
+                </option>
+                {segments?.map((item: { id: string; title: string }) => (
+                  <option key={item.id} value={item.id}>
+                    {item.title}
+                  </option>
+                ))}
+              </Select>
             </FormControl>
             <FormControl>
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='region'>
