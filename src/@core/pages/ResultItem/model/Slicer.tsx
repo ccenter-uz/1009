@@ -1,15 +1,21 @@
 import { create } from 'zustand'
 
 const ResultItemSlicer = create(set => ({
+  // VARS
   resultItemData: [],
-  setResultItemData: (data: any) => set({ resultItemData: data })
+  loading: true,
+  // SETTERS
+  setResultItemData: (data: any) => set({ resultItemData: data }),
+  setLoading: (data: boolean) => set({ loading: data })
 }))
 
 export const useResultItemSlicer = () => {
-  const { resultItemData, setResultItemData } = ResultItemSlicer((state: any) => state)
+  const { resultItemData, setResultItemData, loading, setLoading } = ResultItemSlicer((state: any) => state)
 
   return {
     resultItemData,
-    setResultItemData
+    setResultItemData,
+    loading,
+    setLoading
   }
 }

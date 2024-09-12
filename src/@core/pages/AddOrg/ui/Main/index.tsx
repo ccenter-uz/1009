@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 import { useAddorgSlicer } from '../../model/Slicer'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { getPodrazdelByRazdel } from '@/@core/shared/api'
-import { api, IMG_URL } from '@/@core/apps/utils/api'
+import { IMG_URL } from '@/@core/apps/utils/api'
 import { useSearchParams } from 'next/navigation'
 // STYLE
 const style = {

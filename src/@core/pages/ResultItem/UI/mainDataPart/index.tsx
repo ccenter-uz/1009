@@ -16,7 +16,7 @@ const MainDataPart: FC = () => {
     { id: 6, label: t('main_org'), value: resultItemData[0]?.main_organization },
     { id: 7, label: t('address'), value: resultItemData[0]?.address },
     { id: 8, label: t('email'), value: resultItemData[0]?.email },
-    { id: 9, label: t('segment'), value: resultItemData[0]?.segment },
+    { id: 9, label: t('segment'), value: resultItemData[0]?.segment?.title },
     { id: 10, label: t('account'), value: resultItemData[0]?.account },
     { id: 11, label: t('inn'), value: resultItemData[0]?.inn },
     { id: 12, label: t('bank_account'), value: resultItemData[0]?.bank_account },

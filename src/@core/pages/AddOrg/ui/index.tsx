@@ -8,7 +8,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  ModalOverlay,
   SimpleGrid,
   Text,
   Textarea,
@@ -25,7 +24,6 @@ import Swal from 'sweetalert2'
 import { useAddorgSlicer } from '../model/Slicer'
 import { patchEditOrg, postCreateOrg } from '@/@core/shared/api'
 import { createOrgValues, editOrgValues } from '../model/helper'
-import LoaderUI from '@/@core/shared/UI/LoadingUI'
 import { GlassLoading } from '@/@core/feature'
 
 const AddOrg: FC = () => {
@@ -114,7 +112,7 @@ const AddOrg: FC = () => {
           organization_name: item?.organization_name,
           email: item?.email,
           address: item?.address,
-          segment: item?.segment,
+          segment: item?.segment?.id,
           account: item?.account,
           inn: item?.inn,
           bank_account: item?.bank_account,
