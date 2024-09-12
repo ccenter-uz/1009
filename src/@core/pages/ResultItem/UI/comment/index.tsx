@@ -19,7 +19,12 @@ const responsive = {
   1024: { items: 4 }
 }
 
-const Comment: FC = () => {
+type Props = {
+  get: () => void
+}
+
+const Comment: FC<Props> = props => {
+  const { get } = props
   const { t } = useLang()
   const { resultItemData } = useResultItemSlicer()
 
@@ -96,7 +101,7 @@ const Comment: FC = () => {
         ))}
       />
       {/* Comment */}
-      <LeaveCommentAsync />
+      <LeaveCommentAsync get={get} />
     </Box>
   )
 }

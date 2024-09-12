@@ -12,12 +12,13 @@ import { useLang } from '@/@core/shared/hooks/useLang'
 import { getOneOrganization } from '@/@core/shared/api'
 import { useResultItemSlicer } from '../model/Slicer'
 import { Details } from './details'
+import { GlassLoading } from '@/@core/feature'
 
 const ResultItem: FC = () => {
   const { t } = useLang()
   const router = useRouter()
   const params = useParams()
-  const { resultItemData, setResultItemData } = useResultItemSlicer()
+  const { resultItemData, setResultItemData, loading, setLoading } = useResultItemSlicer()
   const breadcrumblink = [
     {
       id: 1,
@@ -38,7 +39,7 @@ const ResultItem: FC = () => {
     const res = await getOneOrganization(params?.id as string)
     if (!res) return null
 
-    res?.status === 200 && setResultItemData(res.data)
+    res?.status === 200 && (setResultItemData(res.data), setLoading(false))
   }
 
   // EFFECT
@@ -50,13 +51,14 @@ const ResultItem: FC = () => {
 
   return (
     <Box id='result-item' className='wrapper fade-in' minH={'100dvh'}>
+      <GlassLoading loading={loading} />
       <BreadCrumb item={breadcrumblink} />
       <Banner />
       <MainDataPart />
       <Details />
       <GallaryPart />
       <Info />
-      <Comment />
+      <Comment get={get} />
     </Box>
   )
 }

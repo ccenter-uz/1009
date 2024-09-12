@@ -29,7 +29,7 @@ const SignIn: FC = () => {
     if (!res) return setPending(false)
     if (res.status === 200) {
       setPending(false)
-      await getUser(), toast.success(res.message, { position: 'bottom-right' }), router.push('/', { replace: true })
+      await getUser(), toast.success(t('success'), { position: 'bottom-right' }), router.push('/', { replace: true })
     }
 
     return setPending(false)

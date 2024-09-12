@@ -9,13 +9,18 @@ import { useParams } from 'next/navigation'
 import { FC } from 'react'
 import { useCommentSlicer } from '../model/Slicer'
 import { toast } from 'react-toastify'
+import { useResultItemSlicer } from '@/@core/pages/ResultItem/model/Slicer'
 
-type Props = {}
+type Props = {
+  get: () => void
+}
 
 export const LeaveComment: FC<Props> = props => {
+  const { get } = props
   const { t } = useLang()
   const { colorMode } = useColorMode()
   const { isOpen, onClose, onOpen } = useDisclosure()
+  const { setLoading } = useResultItemSlicer()
   const { commentData, setCommentData } = useCommentSlicer()
   const params = useParams()
 
@@ -31,7 +36,7 @@ export const LeaveComment: FC<Props> = props => {
     if (res.status === 201) {
       toast.success(t(`success`), { position: 'bottom-right' })
       setCommentData({ comment: '', rate: 0 })
-      onClose()
+      onClose(), setLoading(true), get()
     }
   }
 
