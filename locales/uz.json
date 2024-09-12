@@ -222,5 +222,6 @@
   "in-process": "Kutilmoqda",
   "setting-info": "Bu yerda siz shaxsiy ma'lumotlaringizni va telefon raqamingizni o'zgartirishingiz mumkin.",
   "razdels_and_podrazdels": "Bo'limlar va ichki bo'limlar",
-  "no-results-razdels": "Hech qanday bo'lim topilmadi"
+  "no-results-razdels": "Hech qanday bo'lim topilmadi",
+  "min-3-char": "Iltimos, qidirish uchun kamida 3 ta harf kiriting"
 }

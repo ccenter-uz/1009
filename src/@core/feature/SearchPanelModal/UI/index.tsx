@@ -3,6 +3,7 @@ import { useLang } from '@/@core/shared/hooks/useLang'
 import { Link } from '@/navigation'
 import {
   Flex,
+  Grid,
   Input,
   InputGroup,
   InputRightElement,
@@ -11,12 +12,13 @@ import {
   Modal,
   ModalContent,
   ModalOverlay,
+  Spinner,
   Text
 } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { FC, KeyboardEvent, memo } from 'react'
 
-const SearchModal: FC<any> = ({ open, close, onChange, value, data }) => {
+const SearchModal: FC<any> = ({ open, close, onChange, value, data, loading }) => {
   const router = useRouter()
   const { t } = useLang()
 
@@ -48,7 +50,12 @@ const SearchModal: FC<any> = ({ open, close, onChange, value, data }) => {
             </Link>
           </InputRightElement>
         </InputGroup>
-        {value.length > 2 && data?.length > 0 && (
+        {loading && value.length > 2 && (
+          <Grid placeItems={'center'} h='200px' bg={'#fff'}>
+            <Spinner color='teal' w={'20px'} h={'20px'} />
+          </Grid>
+        )}
+        {!loading && value.length > 2 && data?.length > 0 && (
           <List display={'flex'} flexDirection={'column'} h={'300px'} overflowY={'scroll'}>
             {data?.map((item: { id: string; address: string; organization_name: string }) => (
               <ListItem
@@ -69,9 +76,9 @@ const SearchModal: FC<any> = ({ open, close, onChange, value, data }) => {
             ))}
           </List>
         )}
-        {value.length > 2 && data?.length === 0 && (
+        {!loading && value.length > 2 && data?.length === 0 && (
           <Flex justifyContent={'center'} alignItems={'center'} h={'300px'}>
-            <Text>{t('no-results')}</Text>
+            <Text fontSize={scssVariables.fonts.paragraph}>{t('no-results')}</Text>
           </Flex>
         )}
       </ModalContent>

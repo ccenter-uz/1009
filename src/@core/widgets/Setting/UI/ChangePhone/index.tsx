@@ -18,7 +18,6 @@ import { ChangeEvent, FC, startTransition, useCallback, useState } from 'react'
 import CountDown from '@/@core/shared/UI/CountDown'
 import { useForm } from 'react-hook-form'
 import { useLang } from '@/@core/shared/hooks/useLang'
-import { useFormStatus } from 'react-dom'
 import { scssVariables } from '@/@core/apps/utils/scss-variables'
 import { toast } from 'react-toastify'
 import { patchChangeSettingPhone, patchPhoneChangeVerify, patchResendCode } from '@/@core/shared/api'
@@ -34,8 +33,7 @@ const SettingChangePhone: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
     getValues
   } = useForm()
   const { t } = useLang()
-  const { pending } = useFormStatus()
-  const { userInfo } = useGlobalStore()
+  const { userInfo, loading } = useGlobalStore()
   const [code, setCode] = useState<boolean>(false)
   const [resendButton, setResendButton] = useState<boolean>(true)
   const [initialTime, setInitialTime] = useState<number[]>([60])
@@ -94,7 +92,7 @@ const SettingChangePhone: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
               aria-label='number'
               aria-invalid={errors.number ? 'true' : 'false'}
               id='phone-setting'
-              isDisabled={pending}
+              isDisabled={loading}
             />
             <FormErrorMessage color={'red'} fontSize={'12px'}>
               {t('error-number')}
@@ -158,7 +156,7 @@ const SettingChangePhone: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
               <Button
                 w={{ base: '100%', sm: '100%', md: '200px', xl: '200px' }}
                 {...styles.buttonStyle}
-                isLoading={pending}
+                isLoading={loading}
                 type='submit'
                 form='phone-number-form'
               >
@@ -177,7 +175,7 @@ const SettingChangePhone: FC<Partial<StyleFunctionProps>> = ({ styles }) => {
         }
         aria-label='submit'
       >
-        <Button {...styles.buttonStyle} isLoading={pending} onClick={handleSendCode}>
+        <Button {...styles.buttonStyle} isLoading={loading} isDisabled={loading} onClick={handleSendCode}>
           {t('save')}
         </Button>
       </Box>

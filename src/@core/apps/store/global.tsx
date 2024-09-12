@@ -6,20 +6,23 @@ import Cookies from 'js-cookie'
 
 const GlobalStore = create(set => ({
   userInfo: null,
+  loading: true,
   // SETTER
   setUserInfo: (val: any) => set({ userInfo: val }),
+  setLoading: (loading: boolean) => set({ loading }),
   // GETTER
   getUser: async () => {
     const res = await getUserInfo()
 
     if (!res) return null
 
-    if (res?.status === 200) set({ userInfo: res?.data }), Cookies.set('userInfo', JSON.stringify(res?.data))
+    if (res?.status === 200)
+      return set({ userInfo: res?.data }), Cookies.set('userInfo', JSON.stringify(res?.data)), set({ loading: false })
   }
 }))
 
 export const useGlobalStore = () => {
-  const { userInfo, setUserInfo, getUser } = GlobalStore((state: any) => state)
+  const { userInfo, setUserInfo, getUser, loading, setLoading } = GlobalStore((state: any) => state)
 
   // SET-INITIAL-VALUES
   useEffect(() => {
@@ -32,5 +35,5 @@ export const useGlobalStore = () => {
     }
   }, [])
 
-  return { userInfo, setUserInfo, getUser }
+  return { userInfo, setUserInfo, getUser, loading, setLoading }
 }

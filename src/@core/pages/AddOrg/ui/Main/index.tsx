@@ -48,7 +48,8 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
     podrazdel,
     serviceType,
     razdel,
-    setPodrazdel
+    setPodrazdel,
+    segments
   } = useAddorgSlicer()
   const { t } = useLang()
 
@@ -147,6 +148,20 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
         </Select>
         <FormErrorMessage sx={style.errorMessage}>{t('required-field')}</FormErrorMessage>
       </FormControl>
+      <FormControl isInvalid={!!errors.segment} sx={style.formControl}>
+        <FormLabel sx={style.formLabel}>{t('segment')}</FormLabel>
+        <Select {...register('segment', { required: true })} sx={style.input} defaultValue={''}>
+          <option value='' disabled>
+            {t('choose')}
+          </option>
+          {segments?.map((item: any) => (
+            <option key={item?.id} value={item?.id}>
+              {item?.title}
+            </option>
+          ))}
+        </Select>
+        <FormErrorMessage sx={style.errorMessage}>{t('required-field')}</FormErrorMessage>
+      </FormControl>
       <AddorgAccordionInputs
         register={register}
         errors={errors}
@@ -154,21 +169,16 @@ export const AddOrgMainInfo: FC<MODEL_FORM_INCOME> = props => {
         inputs={[
           {
             id: 1,
-            value: 'segment',
-            placeholder: t('segment')
-          },
-          {
-            id: 2,
             value: 'account',
             placeholder: t('account')
           },
           {
-            id: 3,
+            id: 2,
             value: 'inn',
             placeholder: t('inn')
           },
           {
-            id: 4,
+            id: 3,
             value: 'bank_account',
             placeholder: t('bank_account')
           }

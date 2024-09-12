@@ -115,7 +115,6 @@ const Header: FC = () => {
                 transition={'all 0.3s ease'}
                 src='/header/dark-mode.svg'
                 alt='moon'
-                onClick={toggleColorMode}
               />
             ) : (
               <Img
@@ -124,7 +123,6 @@ const Header: FC = () => {
                 transition={'all 0.3s ease'}
                 src='/header/light-mode.svg'
                 alt='moon'
-                onClick={toggleColorMode}
               />
             )}
           </Box>
@@ -159,23 +157,6 @@ const Header: FC = () => {
               </Link>
             }
           />
-          {/* {isAuth ? (
-            <UserPopOver />
-          ) : (
-            <Link href={'/signin'} aria-current='page'>
-              <Box
-                border={colorMode === 'dark' ? '1px solid #fff' : `1px solid ${scssVariables.mainColor}`}
-                borderRadius={'20px'}
-                cursor={'pointer'}
-                p={'5px 15px'}
-                color={colorMode === 'dark' ? '#fff' : scssVariables.mainColor}
-                transition={'all 0.3s ease'}
-                _hover={{ bg: scssVariables.mainColor, color: '#fff' }}
-              >
-                <Text>{t('auth-login')}</Text>
-              </Box>
-            </Link>
-          )} */}
         </Box>
       </Flex>
       {/* Menu Drawer */}
