@@ -96,7 +96,7 @@ const SearchPanel: FC = () => {
               width={{ base: '387px', sm: '100%', md: '1000px', xl: '1164px' }}
               h={{ base: '32px', sm: '32px', md: '85px', xl: '92px' }}
               rightWidth={{ base: '0', sm: '0', md: '234px', xl: '234px' }}
-              borderRadius={'51px'}
+              borderRadius={showList ? '51px 51px 0 0' : '51px'}
               bg={'#fff'}
               alignItems={'center'}
               button={
@@ -119,7 +119,7 @@ const SearchPanel: FC = () => {
               bg={'white'}
               border={'1px solid rgba(0,0,0,0.08)'}
               boxShadow={scssVariables.boxShadowPartnerBox}
-              borderRadius={'31px 31px 51px 51px'}
+              borderRadius={showList ? '0 0 51px 51px' : '51px'}
               overflowY={'scroll'}
               sx={{ '&::-webkit-scrollbar': { display: 'none' } }}
               p={'8px 16px'}
