@@ -18,8 +18,7 @@ const theme = extendTheme({
     })
   },
   config: {
-    initialColorMode: 'system',
-    useSystemColorMode: true
+    initialColorMode: 'white',
   },
   components: {
     // Input
