@@ -111,7 +111,18 @@ const AddOrg: FC = () => {
           section: item?.sectionId?.id,
           organization_name: item?.organization_name,
           email: item?.email,
+          // BELOW OLD WAY SEND ADDRESS
           address: item?.address,
+
+          // START NEW WAY SEND ADDRESS
+          // region: item?.address?.region,
+          // district: item?.address?.district,
+          // street: item?.address?.street,
+          // block: item?.address?.block,
+          // house: item?.address?.house,
+          // apartment: item?.address?.apartment,
+          // END NEW WAY SEND ADDRESS
+
           segment: item?.segment?.id,
           account: item?.account,
           inn: item?.inn,

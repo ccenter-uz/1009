@@ -46,11 +46,23 @@ export function buildUrlParams(params, override = {}) {
     section: params.get('section'),
     mainorg: params.get('mainorg'),
     segment: params.get('segment'),
+
+    // NEW WAY SEARCH BY_ADDRESS
     region: params.get('region'),
-    city: params.get('city'),
     district: params.get('district'),
+    street: params.get('street'),
+    block: params.get('block'),
     house: params.get('house'),
-    home: params.get('home'),
+    apartment: params.get('apartment'),
+    // END NEW WAY SEARCH BY_ADDRESS
+
+    // BELOW OLD WAY SEARCH BY_ADDRESS
+    // region: params.get('region'),
+    // city: params.get('city'),
+    // district: params.get('district'),
+    // house: params.get('house'),
+    // home: params.get('home'),
+    
     page: params.get('page'),
     pageSize: params.get('pageSize'),
     ...override // Override any specific params

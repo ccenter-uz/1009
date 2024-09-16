@@ -44,7 +44,22 @@ export const createOrgValues = (values: any, phones: any, coordinates: any, phot
   // ADDRESS
   formData.append(
     'address',
-    `${values.index}, ${values.region}, ${values.city}, ${values.area}, ${values.house}, ${values.block}, ${values.apartment}`
+    // START NEW WAY SEND ADDRESS
+    // JSON.stringify(
+    //   {
+    //     index:values?.index,
+    //     region:values?.region,
+    //     district:values?.district,
+    //     street:values?.street,
+    //     block:values?.block,
+    //     house:values?.house,
+    //     apartment:values?.apartment
+    //   }
+    // )
+    // END NEW WAY SEND ADDRESS
+
+    // BELOW OLD WAY SEND ADDRESS
+    `${values?.index}, ${values.region}, ${values.district}, ${values.street}, ${values.block}, ${values.house}, ${values.apartment}`
   )
   // ORGANIZATION_NAME
   formData.append('organization_name', values.organization_name)
@@ -130,7 +145,22 @@ export const editOrgValues = (
   // SEGMENT
   formData.append('segment', values.segment)
   // ADDRESS
-  formData.append('address', values.address)
+  formData.append('address', 
+    // START NEW WAY SEND ADDRESS
+    //  JSON.stringify(
+    //   {
+    //     region:values?.region,
+    //     district:values?.district,
+    //     street:values?.street,
+    //     block:values?.block,
+    //     house:values?.house,
+    //     apartment:values?.apartment
+    //   })
+    // END NEW WAY SEND ADDRESS
+
+    // BELOW OLD WAY SEND ADDRESS
+    values.address
+  )
   // ORGANIZATION_NAME
   formData.append('organization_name', values.organization_name)
   // EMAIL

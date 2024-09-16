@@ -94,10 +94,21 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
           section: checkAndSetValues(searchParams, 'section'),
           segment: checkAndSetValues(searchParams, 'segment'),
           mainorg: checkAndSetValues(searchParams, 'mainorg'),
+
+          // NEW WAY SEARCH BY_ADDRESS
           region: checkAndSetValues(searchParams, 'region'),
           district: checkAndSetValues(searchParams, 'district'),
+          street: checkAndSetValues(searchParams, 'street'),
+          block: checkAndSetValues(searchParams, 'block'),
           house: checkAndSetValues(searchParams, 'house'),
-          home: checkAndSetValues(searchParams, 'home')
+          apartment: checkAndSetValues(searchParams, 'apartment')
+          // END NEW WAY SEARCH BY_ADDRESS
+
+          // BELOW OLD WAY SEARCH BY_ADDRESS
+          // region: checkAndSetValues(searchParams, 'region'),
+          // district: checkAndSetValues(searchParams, 'district'),
+          // house: checkAndSetValues(searchParams, 'house'),
+          // home: checkAndSetValues(searchParams, 'home')
         }),
       500
     )
@@ -228,16 +239,29 @@ const MoreFilter: FC<IMoreFilterType> = ({ open, close }) => {
               </Select>
             </FormControl>
             <FormControl>
+              <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='street'>
+                {t('street')}
+              </FormLabel>
+              <Input {...style.inputStyle} {...register('street')} placeholder={t('street')} id='street' />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='block'>
+                {t('block')}
+              </FormLabel>
+              <Input {...style.inputStyle} {...register('block')} placeholder={t('block')} id='block' />
+            </FormControl>
+            <FormControl>
               <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='house'>
                 {t('house')}
               </FormLabel>
               <Input {...style.inputStyle} {...register('house')} placeholder={t('house')} id='house' />
             </FormControl>
             <FormControl>
-              <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='home'>
-                {t('kv')}
+              <FormLabel fontSize={scssVariables.fonts.paragraph} htmlFor='apartment'>
+                {t('apartment')}
               </FormLabel>
-              <Input {...style.inputStyle} {...register('home')} placeholder={t('kv')} id='home' />
+              <Input {...style.inputStyle} {...register('apartment')} placeholder={t('apartment')} id='apartment' />
             </FormControl>
           </SimpleGrid>
           <Box mt={'36px'} display={'flex'} alignItems={'center'} justifyContent={'flex-end'} gap={'13px'}>
