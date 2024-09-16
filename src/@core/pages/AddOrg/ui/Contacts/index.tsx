@@ -149,6 +149,54 @@ export const AddOrgContacts: FC<MODEL_FORM_INCOME> = props => {
         errortext={t('required-field')}
       />
       <AddorgFormInput register={register} errors={errors} value='index' placeholder={'10000'} label={t('index')} />
+
+      {/* START NEW WAY SEND ADDRESS */}
+      {/* <AddorgAccordionInputs
+        register={register}
+        errors={errors}
+        label={t('address')}
+        inputs={[
+          {
+            id: 1,
+            value: 'region',
+            required: true,
+            placeholder: t('region')
+          },
+          {
+            id: 2,
+            value: 'district',
+            placeholder: t('district'),
+            required: true,
+            minLength: 3,
+            maxLength: 100,
+            errortext: t('required-field')
+          },
+          {
+            id: 3,
+            value: 'street',
+            required: true,
+            placeholder: t('street')
+          },
+          {
+            id: 4,
+            value: 'block',
+            placeholder: t('block')
+          },
+          {
+            id: 5,
+            value: 'house',
+            placeholder: t('house')
+          },
+          {
+            id: 6,
+            value: 'apartment',
+            placeholder: t('apartment')
+          }
+        ]}
+      /> */}
+      {/* END NEW WAY SEND ADDRESS */}
+
+      {/*BELOW OLD WAY SEND ADDRESS */}
       {searchParams.has('id') ? (
         <AddorgFormInput
           register={register}
@@ -170,8 +218,8 @@ export const AddOrgContacts: FC<MODEL_FORM_INCOME> = props => {
             },
             {
               id: 2,
-              value: 'city',
-              placeholder: t('city'),
+              value: 'district',
+              placeholder: t('district'),
               required: true,
               minLength: 3,
               maxLength: 100,
@@ -179,18 +227,18 @@ export const AddOrgContacts: FC<MODEL_FORM_INCOME> = props => {
             },
             {
               id: 3,
-              value: 'area',
-              placeholder: t('area')
+              value: 'street',
+              placeholder: t('street')
             },
             {
               id: 4,
-              value: 'house',
-              placeholder: t('house')
+              value: 'block',
+              placeholder: t('block')
             },
             {
               id: 5,
-              value: 'block',
-              placeholder: t('block')
+              value: 'house',
+              placeholder: t('house')
             },
             {
               id: 6,

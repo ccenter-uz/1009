@@ -72,10 +72,21 @@ const Results: FC = () => {
       section: params.section,
       mainOrganization: params.mainorg,
       segment: params.segment,
+
+      // NEW WAY SEARCH BY_ADDRESS
       region: params.region,
       district: params.district,
+      street: params.street,
+      block: params.block,
       house: params.house,
-      home: params.home
+      apartment: params.apartment
+      // END NEW WAY SEARCH BY_ADDRESS
+
+      // BELOW OLD WAY POST SEARCH BY_ADDRESS
+      // region: params.region,
+      // district: params.district,
+      // house: params.house,
+      // home: params.home
     }
 
     setLoading(true)

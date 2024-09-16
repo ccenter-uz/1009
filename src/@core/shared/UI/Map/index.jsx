@@ -20,7 +20,7 @@ import { useAddorgSlicer } from '@/@core/pages/AddOrg'
 const defaultMarker = new L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png',
   iconSize: [25, 41],
-  iconAnchor: [13, 0]
+  iconAnchor: [17, 46]
 })
 
 const LocationFinderDummy = props => {

@@ -112,7 +112,6 @@
   "address": "Manzil",
   "region": "Mintaqa",
   "city": "Shahar",
-  "area": "Hudud",
   "house": "Uy",
   "block": "Chorak",
   "apartment": "Xonadon",
@@ -203,8 +202,7 @@
   "error-code": "Bu maydon kamida 6 ta raqamdan iborat boʻlishi kerak",
   "found": "Topildi",
   "fill_the_field": "Maydonlarni to'ldiring",
-  "kv": "Xonadon",
-  "district": "Tuman",
+  "district": "Hudud",
   "more_filter": "Kengaytirilgan qidiruv",
   "reset": "Tozalash",
   "success-edit-organization": "Muvaffaqiyatli o'zgartirildi",
@@ -223,5 +221,6 @@
   "setting-info": "Bu yerda siz shaxsiy ma'lumotlaringizni va telefon raqamingizni o'zgartirishingiz mumkin.",
   "razdels_and_podrazdels": "Bo'limlar va ichki bo'limlar",
   "no-results-razdels": "Hech qanday bo'lim topilmadi",
-  "min-3-char": "Iltimos, qidirish uchun kamida 3 ta harf kiriting"
+  "min-3-char": "Iltimos, qidirish uchun kamida 3 ta harf kiriting",
+  "street": "Ko'cha"
 }

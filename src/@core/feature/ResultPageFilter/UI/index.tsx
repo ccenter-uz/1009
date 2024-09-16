@@ -90,6 +90,7 @@ const SearchFilter: FC = () => {
           </InputGroup>
         </form>
       </Box>
+      {/* MORE-FILTER-OPTION-MODAL */}
       <MoreFilter open={openMoreFilter} close={setOpenMoreFilter} />
     </Box>
   )
